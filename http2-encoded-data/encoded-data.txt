@@ -1,8 +1,18 @@
+Independent Submission                                         M. Kerwin
+Preliminary Draft
+Intended status: Standards Track                           June 14, 2014
+Expires: ???
+
 
 Abstract
 
    This document introduces a new encoded data frame for use in HTTP/2,
    and an associated setting parameter.
+
+
+Copyright Notice
+
+   Copyright (c) 2014 Matthew Kerwin.  All rights reserved.
 
 
 1. Introduction
