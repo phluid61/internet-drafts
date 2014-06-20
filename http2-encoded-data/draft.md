@@ -29,7 +29,9 @@ normative:
     author:
     - ins: T. A. Welch
       name: Terry A. Welch
-    date: 1984
+    date: 1984-06
+    seriesinfo:
+      IEEE: Computer 17(6)
   RFC1950:
   RFC1951:
   RFC1952:
@@ -50,16 +52,30 @@ This document introduces a new encoded data frame for use in HTTP/2, and an asso
 This document describes a mechanism for applying encoding, particularly compression, to data transported
 between two hops, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
 
+
 ## Notational Conventions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in {{RFC2119}}.
 
-# ENCODED_DATA Frame
 
-`ENCODED_DATA` frames (type=0xf0) are semantically identical to `DATA` frames {{I-D.ietf-httpbis-http2}},
-but have an encoding applied to their payload. Any encoding or decoding context for an `ENCODED_DATA`
+# Additions to HTTP/2 {#additions}
+
+This document introduces a new HTTP/2 frame type ({{I-D.ietf-httpbis-http2}}, Section 11.2), and a
+new setting ({{I-D.ietf-httpbis-http2}}, Section 11.3) to negotiate its use.
+
+Note that while encoding of some or all data in a stream might affect the total length of payload data,
+the `content-length` header, if present, should continue to reflect the total length of the _unencoded_
+data. This is particularly relevant when detecting malformed messages ({{I-D.ietf-httpbis-http2}},
+Section 8.1.2.5).
+
+
+## ENCODED_DATA Frame
+
+`ENCODED_DATA` frames (type code=0x10) are semantically identical to `DATA` frames ({{I-D.ietf-httpbis-http2}},
+Section 6.1), but have an encoding applied to their payload. Significantly, `ENCODED_DATA` frames are subject
+to flow control ({{I-D.ietf-httpbis-http2}}, Section 5.2). Any encoding or decoding context for an `ENCODED_DATA`
 frame is unique to that frame.
 
     0                   1                   2                   3
@@ -85,7 +101,7 @@ The `ENCODED_DATA` frame contains the following fields:
 
 * Encoding:
   An 8-bit identifier which describes the encoding that has been
-  applied to the Data field.
+  applied to the Data field (see {{schemes}}).
 
 * Data:
   Application data. The amount of data is the remainder of the frame
@@ -113,40 +129,32 @@ The `ENCODED_DATA` frame defines the following flags:
 * `PADDED` (0x8):
   Bit 4 being set indicates that the Pad Length field is present.
 
-On receiving an `ENCODED_DATA` frame, an intermediary MAY decode the
-data and forward it in one or more `DATA` frames. If the downstream
-peer does not support the encoding scheme used in the received frame,
-as advertised in a `SETTINGS_ACCEPT_ENCODED_DATA` setting, the
-intermediary MUST decode the data and either: forward it in one or
-more DATA frames, or encode it with a scheme supported by the
-downstream peer and forward it in one or more `ENCODED_DATA` frames.
+On receiving an `ENCODED_DATA` frame, an intermediary MAY decode the data and forward it in one or
+more `DATA` frames. If the downstream peer does not support the encoding scheme used in the
+received frame, as advertised in a `SETTINGS_ACCEPT_ENCODED_DATA` setting, the intermediary MUST
+decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
+supported by the downstream peer and forward it in one or more `ENCODED_DATA` frames.
 
-An `ENCODED_DATA` frame MUST NOT be sent on a connection before both
-receiving a `SETTINGS_ACCEPT_ENCODED_DATA` setting and sending the
-associated acknowledgement. A sender MUST NOT apply an encoding that
-has not first been advertised by the peer in a
-`SETTINGS_ACCEPT_ENCODED_DATA` setting, or was advertised with a rank
-of 0. Endpoints that receive a frame with an encoding they do not
-recognise or support MUST treat this is a connection error of type
-`PROTOCOL_ERROR`.
+An `ENCODED_DATA` frame MUST NOT be sent on a connection before both receiving a `SETTINGS_ACCEPT_ENCODED_DATA`
+setting and sending the associated acknowledgement. A sender MUST NOT apply an encoding that
+has not first been advertised by the peer in a `SETTINGS_ACCEPT_ENCODED_DATA` setting, or was
+advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not
+recognise or support MUST treat this is a connection error of type `PROTOCOL_ERROR`.
 
-If an endpoint detects that the payload of an `ENCODED_DATA` frame is
-incorrectly encoded it MUST treat this as a stream error of type
-`COMPRESSION_ERROR`.
+If an endpoint detects that the payload of an `ENCODED_DATA` frame is incorrectly encoded it MUST
+treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type `COMPRESSION_ERROR`
+({{I-D.ietf-httpbis-http2}}, Section 7).
 
 
-# SETTINGS_ACCEPT_ENCODED_DATA Setting
+## SETTINGS_ACCEPT_ENCODED_DATA Setting
 
 This document defines a new `SETTINGS` parameter:
 
-`SETTINGS_ACCEPT_ENCODED_DATA` (0xf000):
-Indicates the sender's ability and willingness to receive
-`ENCODED_DATA` frames that are encoded using the scheme identified
-in the Value.
+`SETTINGS_ACCEPT_ENCODED_DATA` (code=0x5): Indicates the sender's ability and willingness to
+receive `ENCODED_DATA` frames that are encoded using the scheme identified in the Value.
 
-The Value field is further divided into three sub-fields: an
-unsigned 8-bit encoding identifier, an unsigned 8-bit rank, and
-16 bits of padding.
+The Value field is further divided into three sub-fields: an unsigned 8-bit encoding
+identifier, an unsigned 8-bit rank, and 16 bits of padding.
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -167,23 +175,30 @@ supports that scheme.  After sending a `SETTINGS_ACCEPT_ENCODED_DATA` setting wi
 reasonable amount of time, until the acknowledgement arrives. (See {{I-D.ietf-httpbis-http2}},
 Section 6.5.3)
 
+Note that subsequent `SETTINGS_ACCEPT_ENCODED_DATA` parameters _do not_ replace existing
+values for the parameter unless they contain the same encoding identifier.  Effectively, one
+may consider this specification to introduce 256 new settings parameters, each having a 24-bit
+identifier (the 16-bit `SETTINGS` identifier plaus the 8-bit encoding parameter) and an 8-bit
+value (the encoding rank); however, as support for any given encoding is entirely optional,
+an endpoint only need track rankings for those encodings it supports for sending encoded data.
+
 
 # Encoding Schemes {#schemes}
 
 The following encoding schemes are defined:
 
-`ENCODING_COMPRESS` (1):
+* `ENCODING_COMPRESS` (1):
   The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding
   {{Welch}} that is commonly produced by the UNIX file compression program
   "compress".
 
-`ENCODING_DEFLATE` (2):
+* `ENCODING_DEFLATE` (2):
   The "deflate" coding is a "zlib" data format {{RFC1950}} containing
   a "deflate" compressed data stream {{RFC1951}} that uses a
   combination of the Lempel-Ziv (LZ77) compression algorithm and
   Huffman coding.
 
-`ENCODING_GZIP` (3):
+* `ENCODING_GZIP` (3):
   The "gzip" coding is an LZ77 coding with a 32 bit CRC that is
   commonly produced by the gzip file compression program {{RFC1952}}.
 
