@@ -50,7 +50,7 @@ This document introduces a new encoded data frame for use in HTTP/2, and an asso
 # Introduction {#intro}
 
 This document describes a mechanism for applying encoding, particularly compression, to data transported
-between two hops, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
+between two HTTP/2 hops, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
 
 
 ## Notational Conventions
@@ -62,10 +62,10 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Additions to HTTP/2 {#additions}
 
-This document introduces a new HTTP/2 frame type ({{I-D.ietf-httpbis-http2}}, Section 11.2), and a
+This document introduces a new HTTP/2 `ENCODED_DATA` frame type ({{I-D.ietf-httpbis-http2}}, Section 11.2), and a
 new setting ({{I-D.ietf-httpbis-http2}}, Section 11.3) to negotiate its use.
 
-Note that while encoding of some or all data in a stream might affect the total length of payload data,
+Note that while encoding some or all data in a stream might affect the total length of the corresponding HTTP message body,
 the `content-length` header, if present, should continue to reflect the total length of the _unencoded_
 data. This is particularly relevant when detecting malformed messages ({{I-D.ietf-httpbis-http2}},
 Section 8.1.2.5).
@@ -76,7 +76,7 @@ Section 8.1.2.5).
 `ENCODED_DATA` frames (type code=0x10) are semantically identical to `DATA` frames ({{I-D.ietf-httpbis-http2}},
 Section 6.1), but have an encoding applied to their payload. Significantly, `ENCODED_DATA` frames are subject
 to flow control ({{I-D.ietf-httpbis-http2}}, Section 5.2). Any encoding or decoding context for an `ENCODED_DATA`
-frame is unique to that frame.
+frame is _unique to that frame_.
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -100,11 +100,11 @@ The `ENCODED_DATA` frame contains the following fields:
   PADDED flag is set.
 
 * Encoding:
-  An 8-bit identifier which describes the encoding that has been
+  An 8-bit identifier which identifies the encoding that has been
   applied to the Data field (see {{schemes}}).
 
 * Data:
-  Application data. The amount of data is the remainder of the frame
+  Encoded application data. The amount of encoded data is the remainder of the frame
   payload after subtracting the length of the other fields that are
   present.
 
@@ -139,7 +139,7 @@ An `ENCODED_DATA` frame MUST NOT be sent on a connection before both receiving a
 setting and sending the associated acknowledgement. A sender MUST NOT apply an encoding that
 has not first been advertised by the peer in a `SETTINGS_ACCEPT_ENCODED_DATA` setting, or was
 advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not
-recognise or support MUST treat this is a connection error of type `PROTOCOL_ERROR`.
+recognise or support MUST treat this as a connection error of type `PROTOCOL_ERROR`.
 
 If an endpoint detects that the payload of an `ENCODED_DATA` frame is incorrectly encoded it MUST
 treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type `COMPRESSION_ERROR`
@@ -178,7 +178,7 @@ Section 6.5.3)
 Note that subsequent `SETTINGS_ACCEPT_ENCODED_DATA` parameters _do not_ replace existing
 values for the parameter unless they contain the same encoding identifier.  Effectively, one
 may consider this specification to introduce 256 new settings parameters, each having a 24-bit
-identifier (the 16-bit `SETTINGS` identifier plaus the 8-bit encoding parameter) and an 8-bit
+identifier (the 16-bit `SETTINGS` identifier plus the 8-bit encoding parameter) and an 8-bit
 value (the encoding rank); however, as support for any given encoding is entirely optional,
 an endpoint only need track rankings for those encodings it supports for sending encoded data.
 
@@ -207,7 +207,7 @@ The following encoding schemes are defined:
 
 Further to the Use of Compression in HTTP/2 ({{I-D.ietf-httpbis-http2}}, Section 10.6),
 intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
-`ENCODED_DATA` frames other than decompressing, unless additional information is available
+`ENCODED_DATA` frames, other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
 are not compressed cannot be compressed, and frames that are separately compressed cannot
 be merged into a single compressed frame.
@@ -215,15 +215,45 @@ be merged into a single compressed frame.
 
 # IANA Considerations
 
-This document establishes a registry for encoding schemes. This new registries is entered
-into the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.
+This document updates the registries for frame types and settings in
+the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.  This
+document also establishes a new registry for HTTP/2 encoding scheme
+codes.  This new registry is entered into the "Hypertext Transfer
+Protocol (HTTP) 2 Parameters" section. 
 
 
-## Encoding Schemes Registry
+## HTTP/2 Frame Type Registry Update
+
+This document updates the "HTTP/2 Frame Type" registry
+({{I-D.ietf-httpbis-http2}}, Section 11.2).  The entries in the
+following table are registered by this document.
+
+    +--------------+------+-------------+
+    | Frame Type   | Code | Section     |
+    +--------------+------+-------------+
+    | ENCODED_DATA | TBD  | Section 2.1 |
+    +--------------+------+-------------+ 
+
+
+## HTTP/2 Settings Registry Update
+
+This document updates the "HTTP/2 Settings" registry
+({{I-D.ietf-httpbis-http2}}, Section 11.3).  The entries in the
+following table are registered by this document.
+
+    +------------------------------+------+-------------+---------------+
+    | Name                         | Code | Initial     | Specification |
+    |                              |      | Value       |               |
+    +------------------------------+------+-------------+---------------+
+    | SETTINGS_ACCEPT_ENCODED_DATA | TBD  | N/A         | Section 2.2   |
+    +------------------------------+------+-------------+---------------+
+
+
+## HTTP/2 Encoding Schemes Registry
 
 This document establishes a registry for encoding scheme codes. The
-"HTTP/2 Encoding Scheme" registry manages an 8-bit space. The "HTTP/2
-Encoding Scheme" registry operates under either of the "IETF Review"
+"HTTP/2 Encoding Schemes" registry manages an 8-bit space. The "HTTP/2
+Encoding Schemes" registry operates under either of the "IETF Review"
 or "IESG Approval" policies {{RFC5226}} for values between 0x00 and
 0xef, with values between 0xf0 and 0xff being reserved for
 experimental use.

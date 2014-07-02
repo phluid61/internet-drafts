@@ -4,7 +4,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 ]>
 
-<rfc ipr="trust200902" docName="draft-kerwin-http2-encoded-data-00" category="info">
+<rfc ipr="trust200902" docName="draft-kerwin-http2-encoded-data-01" category="info">
 
 <?rfc toc="yes"?>
 <?rfc tocindent="yes"?>
@@ -50,7 +50,7 @@
 <section anchor="intro" title="Introduction">
 
 <t>This document describes a mechanism for applying encoding, particularly compression, to data transported
-between two hops, analogous to Transfer-Encoding in HTTP/1.1 <xref target="RFC7230"/>.</t>
+between two HTTP/2 hops, analogous to Transfer-Encoding in HTTP/1.1 <xref target="RFC7230"/>.</t>
 
 <section anchor="notational-conventions" title="Notational Conventions">
 
@@ -62,10 +62,10 @@ document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 </section>
 <section anchor="additions" title="Additions to HTTP/2">
 
-<t>This document introduces a new HTTP/2 frame type (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2), and a
-new setting (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.3) to negotiate its use.</t>
+<t>This document introduces a new HTTP/2 <spanx style="verb">ENCODED_DATA</spanx> frame type (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2), and a
+new <spanx style="verb">SETTINGS_ACCEPT_ENCODED_DATA</spanx> setting (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.3) to negotiate its use.</t>
 
-<t>Note that while encoding of some or all data in a stream might affect the total length of payload data,
+<t>Note that while encoding some or all data in a stream might affect the total length of the corresponding http message body,
 the <spanx style="verb">content-length</spanx> header, if present, should continue to reflect the total length of the <spanx style="emph">unencoded</spanx>
 data. This is particularly relevant when detecting malformed messages (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 8.1.2.5).</t>
@@ -75,9 +75,9 @@ Section 8.1.2.5).</t>
 <t><spanx style="verb">ENCODED_DATA</spanx> frames (type code=0x10) are semantically identical to <spanx style="verb">DATA</spanx> frames (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 6.1), but have an encoding applied to their payload. Significantly, <spanx style="verb">ENCODED_DATA</spanx> frames are subject
 to flow control (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.2). Any encoding or decoding context for an <spanx style="verb">ENCODED_DATA</spanx>
-frame is unique to that frame.</t>
+frame is _unique to that frame_.</t>
 
-<figure><artwork><![CDATA[
+<figure title="ENCODED_DATA Frame Payload"><artwork><![CDATA[
 0                   1                   2                   3
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -89,8 +89,6 @@ frame is unique to that frame.</t>
 +---------------------------------------------------------------+
 |                           Padding (*)                       ...
 +---------------------------------------------------------------+
-
-                    ENCODED_DATA Frame Payload
 ]]></artwork></figure>
 
 <t>The <spanx style="verb">ENCODED_DATA</spanx> frame contains the following fields:</t>
@@ -101,12 +99,12 @@ An 8-bit field containing the length of the frame padding in units
 of octets. This field is optional and is only present if the
 PADDED flag is set.</t>
   <t>Encoding:
-An 8-bit identifier which describes the encoding that has been
+An 8-bit identifier which identifies the encoding that has been
 applied to the Data field (see <xref target="schemes"/>).</t>
   <t>Data:
-Application data. The amount of data is the remainder of the frame
-payload after subtracting the length of the other fields that are
-present.</t>
+Encoded application data. The amount of encoded data is the remainder 
+of the frame payload after subtracting the length of the other fields 
+that are present.</t>
   <t>Padding:
 Padding octets that contain no application semantic value. Padding
 octets MUST be set to zero when sending and ignored when receiving.</t>
@@ -132,14 +130,14 @@ Bit 4 being set indicates that the Pad Length field is present.</t>
 <t>On receiving an <spanx style="verb">ENCODED_DATA</spanx> frame, an intermediary MAY decode the data and forward it in one or
 more <spanx style="verb">DATA</spanx> frames. If the downstream peer does not support the encoding scheme used in the
 received frame, as advertised in a <spanx style="verb">SETTINGS_ACCEPT_ENCODED_DATA</spanx> setting, the intermediary MUST
-decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
+decode the data and either: forward it in one or more <spanx style="verb">DATA</spanx> frames, or encode it with a scheme
 supported by the downstream peer and forward it in one or more <spanx style="verb">ENCODED_DATA</spanx> frames.</t>
 
 <t>An <spanx style="verb">ENCODED_DATA</spanx> frame MUST NOT be sent on a connection before both receiving a <spanx style="verb">SETTINGS_ACCEPT_ENCODED_DATA</spanx>
 setting and sending the associated acknowledgement. A sender MUST NOT apply an encoding that
 has not first been advertised by the peer in a <spanx style="verb">SETTINGS_ACCEPT_ENCODED_DATA</spanx> setting, or was
 advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not
-recognise or support MUST treat this is a connection error of type <spanx style="verb">PROTOCOL_ERROR</spanx>.</t>
+recognise or support MUST treat this as a connection error of type <spanx style="verb">PROTOCOL_ERROR</spanx>.</t>
 
 <t>If an endpoint detects that the payload of an <spanx style="verb">ENCODED_DATA</spanx> frame is incorrectly encoded it MUST
 treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type <spanx style="verb">COMPRESSION_ERROR</spanx>
@@ -180,7 +178,7 @@ Section 6.5.3)</t>
 <t>Note that subsequent <spanx style="verb">SETTINGS_ACCEPT_ENCODED_DATA</spanx> parameters <spanx style="emph">do not</spanx> replace existing
 values for the parameter unless they contain the same encoding identifier.  Effectively, one
 may consider this specification to introduce 256 new settings parameters, each having a 24-bit
-identifier (the 16-bit <spanx style="verb">SETTINGS</spanx> identifier plaus the 8-bit encoding parameter) and an 8-bit
+identifier (the 16-bit <spanx style="verb">SETTINGS</spanx> identifier plus the 8-bit encoding parameter) and an 8-bit
 value (the encoding rank); however, as support for any given encoding is entirely optional,
 an endpoint only need track rankings for those encodings it supports for sending encoded data.</t>
 
@@ -209,8 +207,7 @@ commonly produced by the gzip file compression program <xref target="RFC1952"/>.
 <section anchor="security-considerations" title="Security Considerations">
 
 <t>Further to the Use of Compression in HTTP/2 (<xref target="I-D.ietf-httpbis-http2"/>, Section 10.6),
-intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
-<spanx style="verb">ENCODED_DATA</spanx> frames other than decompressing, unless additional information is available
+intermediaries MUST NOT apply compression to <spanx style="verb">DATA</spanx> frames, or alter the compression of <spanx style="verb">ENCODED_DATA</spanx> frames, other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
 are not compressed cannot be compressed, and frames that are separately compressed cannot
 be merged into a single compressed frame.</t>
@@ -218,17 +215,49 @@ be merged into a single compressed frame.</t>
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
 
-<t>This document establishes a registry for encoding schemes. This new registries is entered
-into the “Hypertext Transfer Protocol (HTTP) 2 Parameters” section.</t>
+<t>
+This document updates the registries for frame types and settings in
+the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.  This
+document also establishes a new registry for HTTP/2 encoding scheme
+codes. This new registry is entered into the “Hypertext Transfer
+Protocol (HTTP) 2 Parameters” section.</t>
 
-<section anchor="encoding-schemes-registry" title="Encoding Schemes Registry">
+<section anchor="iana-frames-update" title="HTTP/2 Frame Type Registry Update">
 
-<t>This document establishes a registry for encoding scheme codes. The
-“HTTP/2 Encoding Scheme” registry manages an 8-bit space. The “HTTP/2
-Encoding Scheme” registry operates under either of the “IETF Review”
-or “IESG Approval” policies <xref target="RFC5226"/> for values between 0x00 and
-0xef, with values between 0xf0 and 0xff being reserved for
-experimental use.</t>
+<t>This document updates the "HTTP/2 Frame Type" registry (<xref
+target="I-D.ietf-httpbis-http2"/>, Section 11.2). The entries in the
+following table are registered by this document.</t>
+<texttable align="left" suppress-title="true">
+  <ttcol>Frame Type</ttcol>
+  <ttcol>Code</ttcol>
+  <ttcol>Section</ttcol>
+  <c>ENCODED_DATA</c><c>TBD</c><c><xref target="encodeddata-frame"/></c>
+</texttable>
+
+</section>
+<section anchor="iana-settings" title="HTTP/2 Settings Registry Update">
+
+<t>This document updates the "HTTP/2 Settings" registry (<xref
+target="I-D.ietf-httpbis-http2"/>, Section 11.3). The entries in the
+following table are registered by this document.</t>
+<texttable align="left" suppress-title="true">
+  <ttcol>Name</ttcol>
+  <ttcol>Code</ttcol>
+  <ttcol>Initial Value</ttcol>
+  <ttcol>Specification</ttcol>
+  <c>SETTINGS_ACCEPT_ENCODED_DATA</c>
+  <c>TBD</c><c>N/A</c><c><xref target="settingsacceptencodeddata-setting"/></c>
+</texttable>
+
+</section>
+<section anchor="iana-encoding-schemes" title="HTTP/2 Encoding Schemes Registry">
+
+<t>This document establishes a registry for HTTP/2 encoding scheme
+codes. The “HTTP/2 Encoding Schemes” registry manages an 8-bit
+space. The “HTTP/2 Encoding Schemes” registry operates under either of
+the “IETF Review” or “IESG Approval” policies <xref target="RFC5226"/>
+for values between 0x00 and 0xef, with values between 0xf0 and 0xff
+being reserved for experimental use.</t>
 
 <t>New entries in this registry require the following information:</t>
 
