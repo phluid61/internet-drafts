@@ -73,7 +73,7 @@ Section 8.1.2.5).
 
 ## ENCODED_DATA Frame
 
-`ENCODED_DATA` frames (type code=0x10) are semantically identical to `DATA` frames ({{I-D.ietf-httpbis-http2}},
+`ENCODED_DATA` frames (type code=0xTBA) are semantically identical to `DATA` frames ({{I-D.ietf-httpbis-http2}},
 Section 6.1), but have an encoding applied to their payload. Significantly, `ENCODED_DATA` frames are subject
 to flow control ({{I-D.ietf-httpbis-http2}}, Section 5.2). Any encoding or decoding context for an `ENCODED_DATA`
 frame is _unique to that frame_.
@@ -150,7 +150,7 @@ treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of 
 
 This document defines a new `SETTINGS` parameter:
 
-`SETTINGS_ACCEPT_ENCODED_DATA` (code=0x5): Indicates the sender's ability and willingness to
+`SETTINGS_ACCEPT_ENCODED_DATA` (code=0xTBA): Indicates the sender's ability and willingness to
 receive `ENCODED_DATA` frames that are encoded using the scheme identified in the Value.
 
 The Value field is further divided into three sub-fields: an unsigned 8-bit encoding
