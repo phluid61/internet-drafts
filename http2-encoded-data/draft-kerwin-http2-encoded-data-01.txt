@@ -4,7 +4,7 @@
 
 Network Working Group                                          M. Kerwin
 Internet-Draft
-Intended status: Informational                              July 3, 2014
+Intended status: Standards Track                            July 3, 2014
 Expires: January 4, 2015
 
 
@@ -141,7 +141,7 @@ Internet-Draft             http2-encoded-data                  July 2014
 
 2.1.  ENCODED_DATA Frame
 
-   "ENCODED_DATA" frames (type code=0x10) are semantically identical to
+   "ENCODED_DATA" frames (type code=0xTBA) are semantically identical to
    "DATA" frames ([I-D.ietf-httpbis-http2], Section 6.1), but have an
    encoding applied to their payload.  Significantly, "ENCODED_DATA"
    frames are subject to flow control ([I-D.ietf-httpbis-http2],
@@ -235,7 +235,7 @@ Internet-Draft             http2-encoded-data                  July 2014
 
    This document defines a new "SETTINGS" parameter:
 
-   "SETTINGS_ACCEPT_ENCODED_DATA" (code=0x5): Indicates the sender's
+   "SETTINGS_ACCEPT_ENCODED_DATA" (code=0xTBA): Indicates the sender's
    ability and willingness to receive "ENCODED_DATA" frames that are
    encoded using the scheme identified in the Value.
 
