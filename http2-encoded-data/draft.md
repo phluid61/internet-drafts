@@ -78,8 +78,8 @@ Section 6.1), but have an encoding applied to their payload. Significantly, `ENC
 to flow control ({{I-D.ietf-httpbis-http2}}, Section 5.2). Any encoding or decoding context for an `ENCODED_DATA`
 frame is _unique to that frame_.
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     |Pad Length? (8)|
     +---------------+
@@ -156,8 +156,8 @@ receive `ENCODED_DATA` frames that are encoded using the scheme identified in th
 The Value field is further divided into three sub-fields: an unsigned 8-bit encoding
 identifier, an unsigned 8-bit rank, and 16 bits of padding.
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     0                   1                   2                   3
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     | Encoding (8)  |     Rank (8)      |       Padding (16)        |
     +---------------+-------------------+---------------------------+
