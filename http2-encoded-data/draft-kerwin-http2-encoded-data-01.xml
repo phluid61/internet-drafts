@@ -4,7 +4,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 ]>
 
-<rfc ipr="trust200902" docName="draft-kerwin-http2-encoded-data-01" category="info">
+<rfc ipr="trust200902" docName="draft-kerwin-http2-encoded-data-01" category="std">
 
 <?rfc toc="yes"?>
 <?rfc tocindent="yes"?>
@@ -72,7 +72,7 @@ Section 8.1.2.5).</t>
 
 <section anchor="encodeddata-frame" title="ENCODED_DATA Frame">
 
-<t><spanx style="verb">ENCODED_DATA</spanx> frames (type code=0x10) are semantically identical to <spanx style="verb">DATA</spanx> frames (<xref target="I-D.ietf-httpbis-http2"/>,
+<t><spanx style="verb">ENCODED_DATA</spanx> frames (type code=0xTBA) are semantically identical to <spanx style="verb">DATA</spanx> frames (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 6.1), but have an encoding applied to their payload. Significantly, <spanx style="verb">ENCODED_DATA</spanx> frames are subject
 to flow control (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.2). Any encoding or decoding context for an <spanx style="verb">ENCODED_DATA</spanx>
 frame is <spanx style="emph">unique to that frame</spanx>.</t>
@@ -150,7 +150,7 @@ treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Secti
 
 <t>This document defines a new <spanx style="verb">SETTINGS</spanx> parameter:</t>
 
-<t><spanx style="verb">SETTINGS_ACCEPT_ENCODED_DATA</spanx> (code=0x5): Indicates the sender’s ability and willingness to
+<t><spanx style="verb">SETTINGS_ACCEPT_ENCODED_DATA</spanx> (code=0xTBA): Indicates the sender’s ability and willingness to
 receive <spanx style="verb">ENCODED_DATA</spanx> frames that are encoded using the scheme identified in the Value.</t>
 
 <t>The Value field is further divided into three sub-fields: an unsigned 8-bit encoding

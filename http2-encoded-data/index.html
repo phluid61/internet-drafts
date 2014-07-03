@@ -394,7 +394,7 @@
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Intended status: Informational</td>
+  <td class="left">Intended status: Standards Track</td>
   <td class="right">July 3, 2014</td>
 </tr>
 <tr>
@@ -458,7 +458,7 @@
 <p id="rfc.section.2.p.1">This document introduces a new HTTP/2 <samp>ENCODED_DATA</samp> frame type (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.2), and a new setting (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.3) to negotiate its use.</p>
 <p id="rfc.section.2.p.2">Note that while encoding some or all data in a stream might affect the total length of the corresponding HTTP message body, the <samp>content-length</samp> header, if present, should continue to reflect the total length of the <em>unencoded</em> data. This is particularly relevant when detecting malformed messages (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 8.1.2.5).</p>
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#encodeddata-frame" id="encodeddata-frame">ENCODED_DATA Frame</a></h1>
-<p><samp>ENCODED_DATA</samp> frames (type code=0x10) are semantically identical to <samp>DATA</samp> frames (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 6.1), but have an encoding applied to their payload. Significantly, <samp>ENCODED_DATA</samp> frames are subject to flow control (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.2). Any encoding or decoding context for an <samp>ENCODED_DATA</samp> frame is <em>unique to that frame</em>.</p>
+<p><samp>ENCODED_DATA</samp> frames (type code=0xTBA) are semantically identical to <samp>DATA</samp> frames (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 6.1), but have an encoding applied to their payload. Significantly, <samp>ENCODED_DATA</samp> frames are subject to flow control (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.2). Any encoding or decoding context for an <samp>ENCODED_DATA</samp> frame is <em>unique to that frame</em>.</p>
 <pre>
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -496,7 +496,7 @@
 <p id="rfc.section.2.1.p.8">If an endpoint detects that the payload of an <samp>ENCODED_DATA</samp> frame is incorrectly encoded it MUST treat this as a stream error (see <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.2) of type <samp>COMPRESSION_ERROR</samp> (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 7).</p>
 <h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#settingsacceptencodeddata-setting" id="settingsacceptencodeddata-setting">SETTINGS_ACCEPT_ENCODED_DATA Setting</a></h1>
 <p id="rfc.section.2.2.p.1">This document defines a new <samp>SETTINGS</samp> parameter:</p>
-<p><samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> (code=0x5): Indicates the sender&#8217;s ability and willingness to receive <samp>ENCODED_DATA</samp> frames that are encoded using the scheme identified in the Value.</p>
+<p><samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> (code=0xTBA): Indicates the sender&#8217;s ability and willingness to receive <samp>ENCODED_DATA</samp> frames that are encoded using the scheme identified in the Value.</p>
 <p id="rfc.section.2.2.p.3">The Value field is further divided into three sub-fields: an unsigned 8-bit encoding identifier, an unsigned 8-bit rank, and 16 bits of padding.</p>
 <pre>
  0                   1                   2                   3
