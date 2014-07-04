@@ -70,27 +70,25 @@ the <spanx style="verb">content-length</spanx> header, if present, should contin
 data. This is particularly relevant when detecting malformed messages (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 8.1.2.5).</t>
 
-<section anchor="encodeddata-frame" title="ENCODED_DATA Frame">
+<section anchor="frame" title="ENCODED_DATA Frame">
 
 <t><spanx style="verb">ENCODED_DATA</spanx> frames (type code=0xTBA) are semantically identical to <spanx style="verb">DATA</spanx> frames (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 6.1), but have an encoding applied to their payload. Significantly, <spanx style="verb">ENCODED_DATA</spanx> frames are subject
 to flow control (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.2). Any encoding or decoding context for an <spanx style="verb">ENCODED_DATA</spanx>
-frame is <spanx style="emph">unique to that frame</spanx>.</t>
+frame is unique to that frame.</t>
 
-<figure><artwork><![CDATA[
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|Pad Length? (8)|
-+---------------+
-| Encoding (8)  |
-+---------------+-----------------------------------------------+
-|                            Data (*)                         ...
-+---------------------------------------------------------------+
-|                           Padding (*)                       ...
-+---------------------------------------------------------------+
-
-                    ENCODED_DATA Frame Payload
+<figure title="ENCODED_DATA Frame Payload"><artwork><![CDATA[
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |Pad Length? (8)|
+  +---------------+
+  | Encoding (8)  |
+  +---------------+-----------------------------------------------+
+  |                            Data (*)                         ...
+  +---------------------------------------------------------------+
+  |                           Padding (*)                       ...
+  +---------------------------------------------------------------+
 ]]></artwork></figure>
 
 <t>The <spanx style="verb">ENCODED_DATA</spanx> frame contains the following fields:</t>
@@ -146,7 +144,7 @@ treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Secti
 (<xref target="I-D.ietf-httpbis-http2"/>, Section 7).</t>
 
 </section>
-<section anchor="settingsacceptencodeddata-setting" title="SETTINGS_ACCEPT_ENCODED_DATA Setting">
+<section anchor="setting" title="SETTINGS_ACCEPT_ENCODED_DATA Setting">
 
 <t>This document defines a new <spanx style="verb">SETTINGS</spanx> parameter:</t>
 
@@ -156,12 +154,12 @@ receive <spanx style="verb">ENCODED_DATA</spanx> frames that are encoded using t
 <t>The Value field is further divided into three sub-fields: an unsigned 8-bit encoding
 identifier, an unsigned 8-bit rank, and 16 bits of padding.</t>
 
-<figure><artwork><![CDATA[
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-| Encoding (8)  |     Rank (8)      |       Padding (16)        |
-+---------------+-------------------+---------------------------+
+<figure title="SETTINGS_ACCEPT_ENCODED_DATA Value"><artwork><![CDATA[
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  | Encoding (8)  |     Rank (8)      |       Padding (16)        |
+  +---------------+-------------------+---------------------------+
 ]]></artwork></figure>
 
 <t>The rank fulfils the same role as in the HTTP/1.1 TE header (<xref target="RFC7230"/> Section 4.3). The
@@ -230,13 +228,14 @@ Protocol (HTTP) 2 Parameters” section. </t>
 (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2).  The entries in the
 following table are registered by this document.</t>
 
-<figure><artwork><![CDATA[
-+--------------+------+-------------+
-| Frame Type   | Code | Section     |
-+--------------+------+-------------+
-| ENCODED_DATA | TBD  | Section 2.1 |
-+--------------+------+-------------+ 
-]]></artwork></figure>
+<texttable>
+      <ttcol align='left'>Frame Type</ttcol>
+      <ttcol align='left'>Code</ttcol>
+      <ttcol align='left'>Section</ttcol>
+      <c>ENCODED_DATA</c>
+      <c>TBD</c>
+      <c>Section 2.1</c>
+</texttable>
 
 </section>
 <section anchor="http2-settings-registry-update" title="HTTP/2 Settings Registry Update">
@@ -245,14 +244,16 @@ following table are registered by this document.</t>
 (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.3).  The entries in the
 following table are registered by this document.</t>
 
-<figure><artwork><![CDATA[
-+------------------------------+------+-------------+---------------+
-| Name                         | Code | Initial     | Specification |
-|                              |      | Value       |               |
-+------------------------------+------+-------------+---------------+
-| SETTINGS_ACCEPT_ENCODED_DATA | TBD  | N/A         | Section 2.2   |
-+------------------------------+------+-------------+---------------+
-]]></artwork></figure>
+<texttable>
+      <ttcol align='left'>Name</ttcol>
+      <ttcol align='left'>Code</ttcol>
+      <ttcol align='left'>Initial Value</ttcol>
+      <ttcol align='left'>Specification</ttcol>
+      <c>SETTINGS_ACCEPT_ENCODED_DATA</c>
+      <c>TBD</c>
+      <c>N/A</c>
+      <c>Section 2.2</c>
+</texttable>
 
 </section>
 <section anchor="http2-encoding-schemes-registry" title="HTTP/2 Encoding Schemes Registry">
@@ -280,6 +281,11 @@ encoding scheme.</t>
 in <xref target="schemes"/>.</t>
 
 </section>
+</section>
+<section anchor="acknowledgements" title="Acknowledgements">
+
+<t>Thanks to Keith Morgan for his advice, input, and editorial contributions.</t>
+
 </section>
 
 

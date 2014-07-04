@@ -71,26 +71,27 @@ data. This is particularly relevant when detecting malformed messages ({{I-D.iet
 Section 8.1.2.5).
 
 
-## ENCODED_DATA Frame
+## ENCODED\_DATA Frame {#frame}
 
 `ENCODED_DATA` frames (type code=0xTBA) are semantically identical to `DATA` frames ({{I-D.ietf-httpbis-http2}},
 Section 6.1), but have an encoding applied to their payload. Significantly, `ENCODED_DATA` frames are subject
 to flow control ({{I-D.ietf-httpbis-http2}}, Section 5.2). Any encoding or decoding context for an `ENCODED_DATA`
-frame is _unique to that frame_.
+frame is unique to that frame.
 
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |Pad Length? (8)|
-    +---------------+
-    | Encoding (8)  |
-    +---------------+-----------------------------------------------+
-    |                            Data (*)                         ...
-    +---------------------------------------------------------------+
-    |                           Padding (*)                       ...
-    +---------------------------------------------------------------+
-
-                        ENCODED_DATA Frame Payload
+~~~~~~~~~~
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  |Pad Length? (8)|
+  +---------------+
+  | Encoding (8)  |
+  +---------------+-----------------------------------------------+
+  |                            Data (*)                         ...
+  +---------------------------------------------------------------+
+  |                           Padding (*)                       ...
+  +---------------------------------------------------------------+
+~~~~~~~~~~
+{: title="ENCODED_DATA Frame Payload"}
 
 The `ENCODED_DATA` frame contains the following fields:
 
@@ -146,7 +147,7 @@ treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of 
 ({{I-D.ietf-httpbis-http2}}, Section 7).
 
 
-## SETTINGS_ACCEPT_ENCODED_DATA Setting
+## SETTINGS\_ACCEPT\_ENCODED\_DATA Setting {#setting}
 
 This document defines a new `SETTINGS` parameter:
 
@@ -156,11 +157,14 @@ receive `ENCODED_DATA` frames that are encoded using the scheme identified in th
 The Value field is further divided into three sub-fields: an unsigned 8-bit encoding
 identifier, an unsigned 8-bit rank, and 16 bits of padding.
 
-     0                   1                   2                   3
-     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    | Encoding (8)  |     Rank (8)      |       Padding (16)        |
-    +---------------+-------------------+---------------------------+
+~~~~~~~~~~
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  | Encoding (8)  |     Rank (8)      |       Padding (16)        |
+  +---------------+-------------------+---------------------------+
+~~~~~~~~~~
+{: title="SETTINGS_ACCEPT_ENCODED_DATA Value"}
 
 The rank fulfils the same role as in the HTTP/1.1 TE header ({{RFC7230}} Section 4.3). The
 rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255
@@ -228,11 +232,11 @@ This document updates the "HTTP/2 Frame Type" registry
 ({{I-D.ietf-httpbis-http2}}, Section 11.2).  The entries in the
 following table are registered by this document.
 
-    +--------------+------+-------------+
-    | Frame Type   | Code | Section     |
-    +--------------+------+-------------+
-    | ENCODED_DATA | TBD  | Section 2.1 |
-    +--------------+------+-------------+ 
+ |--------------|------|-------------|
+ | Frame Type   | Code | Section     |
+ |--------------|------|-------------|
+ | ENCODED_DATA | TBD  | Section 2.1 |
+ |--------------|------|-------------|
 
 
 ## HTTP/2 Settings Registry Update
@@ -241,12 +245,11 @@ This document updates the "HTTP/2 Settings" registry
 ({{I-D.ietf-httpbis-http2}}, Section 11.3).  The entries in the
 following table are registered by this document.
 
-    +------------------------------+------+-------------+---------------+
-    | Name                         | Code | Initial     | Specification |
-    |                              |      | Value       |               |
-    +------------------------------+------+-------------+---------------+
-    | SETTINGS_ACCEPT_ENCODED_DATA | TBD  | N/A         | Section 2.2   |
-    +------------------------------+------+-------------+---------------+
+ |------------------------------|------|---------------|---------------|
+ | Name                         | Code | Initial Value | Specification |
+ |------------------------------|------|---------------|---------------|
+ | SETTINGS_ACCEPT_ENCODED_DATA | TBD  | N/A           | Section 2.2   |
+ |------------------------------|------|---------------|---------------|
 
 
 ## HTTP/2 Encoding Schemes Registry
@@ -273,5 +276,9 @@ New entries in this registry require the following information:
 An initial set of encoding scheme code registrations can be found
 in {{schemes}}.
 
+
+# Acknowledgements
+
+Thanks to Keith Morgan for his advice, input, and editorial contributions.
 
 --- back
