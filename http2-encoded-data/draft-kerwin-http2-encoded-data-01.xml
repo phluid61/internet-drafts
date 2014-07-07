@@ -35,7 +35,8 @@
     <abstract>
 
 
-<t>This document introduces a new encoded data frame for use in HTTP/2, and an associated setting parameter.</t>
+<t>This document introduces a new frame for transporting encoded data in HTTP/2, and associated setting parameters
+and error codes.</t>
 
 
 
@@ -49,8 +50,8 @@
 
 <section anchor="intro" title="Introduction">
 
-<t>This document describes a mechanism for applying encoding, particularly compression, to data transported
-between two HTTP/2 hops, analogous to Transfer-Encoding in HTTP/1.1 <xref target="RFC7230"/>.</t>
+<t>This document introduces a mechanism for applying encoding, particularly compression, to data transported
+between two HTTP/2 endpoints, analogous to Transfer-Encoding in HTTP/1.1 <xref target="RFC7230"/>.</t>
 
 <section anchor="notational-conventions" title="Notational Conventions">
 
@@ -62,15 +63,16 @@ document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 </section>
 <section anchor="additions" title="Additions to HTTP/2">
 
-<t>This document introduces a new HTTP/2 <spanx style="verb">ENCODED_DATA</spanx> frame type (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2), and a
-new setting (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.3) to negotiate its use.</t>
+<t>This document introduces a new HTTP/2 <spanx style="verb">ENCODED_DATA</spanx> frame type (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2), a
+new setting (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.3) to negotiate its use, and a new error code
+(<xref target="I-D.ietf-httpbis-http2"/>, Section 7).</t>
 
 <t>Note that while encoding some or all data in a stream might affect the total length of the corresponding HTTP message body,
 the <spanx style="verb">content-length</spanx> header, if present, should continue to reflect the total length of the <spanx style="emph">unencoded</spanx>
 data. This is particularly relevant when detecting malformed messages (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 8.1.2.5).</t>
 
-<section anchor="frame" title="ENCODED_DATA Frame">
+<section anchor="frame" title="ENCODED_DATA">
 
 <t><spanx style="verb">ENCODED_DATA</spanx> frames (type code=0xTBA) are semantically identical to <spanx style="verb">DATA</spanx> frames (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 6.1), but have an encoding applied to their payload. Significantly, <spanx style="verb">ENCODED_DATA</spanx> frames are subject
@@ -117,7 +119,7 @@ octets MUST be set to zero when sending and ignored when receiving.</t>
 Bit 1 being set indicates that this frame is the last that the
 endpoint will send for the identified stream. Setting this flag
 causes the stream to enter one of the “half closed” states or the
-“closed” state (Section 5.1).</t>
+“closed” state (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.1).</t>
   <t><spanx style="verb">END_SEGMENT</spanx> (0x2):
 Bit 2 being set indicates that this frame is the last for the
 current segment. Intermediaries MUST NOT coalesce frames across a
@@ -140,11 +142,11 @@ advertised with a rank of 0. Endpoints that receive a frame with an encoding the
 recognise or support MUST treat this as a connection error of type <spanx style="verb">PROTOCOL_ERROR</spanx>.</t>
 
 <t>If an endpoint detects that the payload of an <spanx style="verb">ENCODED_DATA</spanx> frame is incorrectly encoded it MUST
-treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type <spanx style="verb">COMPRESSION_ERROR</spanx>
-(<xref target="I-D.ietf-httpbis-http2"/>, Section 7).</t>
+treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type
+<spanx style="verb">DATA_ENCODING_ERROR</spanx> (<xref target="error"/>).</t>
 
 </section>
-<section anchor="setting" title="SETTINGS_ACCEPT_ENCODED_DATA Setting">
+<section anchor="setting" title="SETTINGS_ACCEPT_ENCODED_DATA">
 
 <t>This document defines a new <spanx style="verb">SETTINGS</spanx> parameter:</t>
 
@@ -183,6 +185,16 @@ value (the encoding rank); however, as support for any given encoding is entirel
 an endpoint only need track rankings for those encodings it supports for sending encoded data.</t>
 
 </section>
+<section anchor="error" title="DATA_ENCODING_ERROR">
+
+<t>The following new error code is defined:</t>
+
+<t><list style="symbols">
+  <t>DATA_ENCODING_ERROR (0xTBA):
+The endpoint detected that its peer sent an <spanx style="verb">ENCODED_DATA</spanx> frame with an invalid encoding.</t>
+</list></t>
+
+</section>
 </section>
 <section anchor="schemes" title="Encoding Schemes">
 
@@ -216,7 +228,7 @@ be merged into a single compressed frame.</t>
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
 
-<t>This document updates the registries for frame types and settings in
+<t>This document updates the registries for frame types, settings, and error codes in
 the “Hypertext Transfer Protocol (HTTP) 2 Parameters” section.  This
 document also establishes a new registry for HTTP/2 encoding scheme
 codes.  This new registry is entered into the “Hypertext Transfer
@@ -234,7 +246,7 @@ following table are registered by this document.</t>
       <ttcol align='left'>Section</ttcol>
       <c>ENCODED_DATA</c>
       <c>TBD</c>
-      <c>Section 2.1</c>
+      <c><xref target="frame"/></c>
 </texttable>
 
 </section>
@@ -252,7 +264,25 @@ following table are registered by this document.</t>
       <c>SETTINGS_ACCEPT_ENCODED_DATA</c>
       <c>TBD</c>
       <c>N/A</c>
-      <c>Section 2.2</c>
+      <c><xref target="setting"/></c>
+</texttable>
+
+</section>
+<section anchor="http2-error-code-registry-update" title="HTTP/2 Error Code Registry Update">
+
+<t>This document updates the “HTTP/2 Error Code” registry
+(<xref target="I-D.ietf-httpbis-http2"/>, Section 11.4).  The entries in the
+following table are registered by this document.</t>
+
+<texttable>
+      <ttcol align='left'>Name</ttcol>
+      <ttcol align='left'>Code</ttcol>
+      <ttcol align='left'>Description</ttcol>
+      <ttcol align='left'>Specification</ttcol>
+      <c>DATA_ENCODING_ERROR</c>
+      <c>TBD</c>
+      <c>Invalid encoding detected</c>
+      <c><xref target="error"/></c>
 </texttable>
 
 </section>
