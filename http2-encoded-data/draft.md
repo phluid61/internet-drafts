@@ -119,7 +119,7 @@ The `ENCODED_DATA` frame defines the following flags:
   Bit 1 being set indicates that this frame is the last that the
   endpoint will send for the identified stream. Setting this flag
   causes the stream to enter one of the "half closed" states or the
-  "closed" state (Section 5.1).
+  "closed" state ({{I-D.ietf-httpbis-http2}}, Section 5.1).
 
 * `END_SEGMENT` (0x2):
   Bit 2 being set indicates that this frame is the last for the
