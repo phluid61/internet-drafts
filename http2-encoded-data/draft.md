@@ -43,14 +43,15 @@ informative:
 
 --- abstract
 
-This document introduces a new encoded data frame for use in HTTP/2, and an associated setting parameter.
+This document introduces a new frame for transporting encoded data in HTTP/2, and associated setting parameters
+and error codes.
 
 --- middle
 
 # Introduction {#intro}
 
-This document describes a mechanism for applying encoding, particularly compression, to data transported
-between two HTTP/2 hops, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
+This document introduces a mechanism for applying encoding, particularly compression, to data transported
+between two HTTP/2 endpoints, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
 
 
 ## Notational Conventions
@@ -62,8 +63,9 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Additions to HTTP/2 {#additions}
 
-This document introduces a new HTTP/2 `ENCODED_DATA` frame type ({{I-D.ietf-httpbis-http2}}, Section 11.2), and a
-new setting ({{I-D.ietf-httpbis-http2}}, Section 11.3) to negotiate its use.
+This document introduces a new HTTP/2 `ENCODED_DATA` frame type ({{I-D.ietf-httpbis-http2}}, Section 11.2), a
+new setting ({{I-D.ietf-httpbis-http2}}, Section 11.3) to negotiate its use, and a new error code
+({{I-D.ietf-httpbis-http2}}, Section 7).
 
 Note that while encoding some or all data in a stream might affect the total length of the corresponding HTTP message body,
 the `content-length` header, if present, should continue to reflect the total length of the _unencoded_
@@ -71,7 +73,7 @@ data. This is particularly relevant when detecting malformed messages ({{I-D.iet
 Section 8.1.2.5).
 
 
-## ENCODED\_DATA Frame {#frame}
+## ENCODED\_DATA  {#frame}
 
 `ENCODED_DATA` frames (type code=0xTBA) are semantically identical to `DATA` frames ({{I-D.ietf-httpbis-http2}},
 Section 6.1), but have an encoding applied to their payload. Significantly, `ENCODED_DATA` frames are subject
@@ -143,11 +145,11 @@ advertised with a rank of 0. Endpoints that receive a frame with an encoding the
 recognise or support MUST treat this as a connection error of type `PROTOCOL_ERROR`.
 
 If an endpoint detects that the payload of an `ENCODED_DATA` frame is incorrectly encoded it MUST
-treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type `COMPRESSION_ERROR`
-({{I-D.ietf-httpbis-http2}}, Section 7).
+treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
+`DATA_ENCODING_ERROR` ({{error}}).
 
 
-## SETTINGS\_ACCEPT\_ENCODED\_DATA Setting {#setting}
+## SETTINGS\_ACCEPT\_ENCODED\_DATA  {#setting}
 
 This document defines a new `SETTINGS` parameter:
 
@@ -187,6 +189,14 @@ value (the encoding rank); however, as support for any given encoding is entirel
 an endpoint only need track rankings for those encodings it supports for sending encoded data.
 
 
+## DATA\_ENCODING\_ERROR  {#error}
+
+The following new error code is defined:
+
+* DATA\_ENCODING\_ERROR (0xTBA):
+  The endpoint detected that its peer sent an `ENCODED_DATA` frame with an invalid encoding.
+
+
 # Encoding Schemes {#schemes}
 
 The following encoding schemes are defined:
@@ -219,7 +229,7 @@ be merged into a single compressed frame.
 
 # IANA Considerations
 
-This document updates the registries for frame types and settings in
+This document updates the registries for frame types, settings, and error codes in
 the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.  This
 document also establishes a new registry for HTTP/2 encoding scheme
 codes.  This new registry is entered into the "Hypertext Transfer
@@ -232,11 +242,11 @@ This document updates the "HTTP/2 Frame Type" registry
 ({{I-D.ietf-httpbis-http2}}, Section 11.2).  The entries in the
 following table are registered by this document.
 
- |--------------|------|-------------|
- | Frame Type   | Code | Section     |
- |--------------|------|-------------|
- | ENCODED_DATA | TBD  | Section 2.1 |
- |--------------|------|-------------|
+ |---------------|------|-------------|
+ | Frame Type    | Code | Section     |
+ |---------------|------|-------------|
+ | ENCODED\_DATA | TBD  | {{frame}}   |
+ |---------------|------|-------------|
 
 
 ## HTTP/2 Settings Registry Update
@@ -245,11 +255,24 @@ This document updates the "HTTP/2 Settings" registry
 ({{I-D.ietf-httpbis-http2}}, Section 11.3).  The entries in the
 following table are registered by this document.
 
- |------------------------------|------|---------------|---------------|
- | Name                         | Code | Initial Value | Specification |
- |------------------------------|------|---------------|---------------|
- | SETTINGS_ACCEPT_ENCODED_DATA | TBD  | N/A           | Section 2.2   |
- |------------------------------|------|---------------|---------------|
+ |---------------------------------|------|---------------|---------------|
+ | Name                            | Code | Initial Value | Specification |
+ |---------------------------------|------|---------------|---------------|
+ | SETTINGS\_ACCEPT\_ENCODED\_DATA | TBD  | N/A           | {{setting}}   |
+ |---------------------------------|------|---------------|---------------|
+
+
+## HTTP/2 Error Code Registry Update
+
+This document updates the "HTTP/2 Error Code" registry
+({{I-D.ietf-httpbis-http2}}, Section 11.4).  The entries in the
+following table are registered by this document.
+
+ |-----------------------|------|---------------------------|---------------|
+ | Name                  | Code | Description               | Specification |
+ |-----------------------|------|---------------------------|---------------|
+ | DATA\_ENCODING\_ERROR | TBD  | Invalid encoding detected | {{error}}     |
+ |-----------------------|------|---------------------------|---------------|
 
 
 ## HTTP/2 Encoding Schemes Registry
