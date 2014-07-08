@@ -1,7 +1,7 @@
 ---
 title: The file URI Scheme
-abbrev: file-uri-scheme
-docname: draft-kerwin-file-uri-scheme-00
+abbrev: file-scheme
+docname: draft-kerwin-file-scheme-00
 date: 2014
 category: std
 

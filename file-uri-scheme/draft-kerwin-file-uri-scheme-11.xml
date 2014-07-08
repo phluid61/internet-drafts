@@ -4,7 +4,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 ]>
 
-<rfc ipr="trust200902" docName="draft-kerwin-file-uri-scheme-00" category="std">
+<rfc ipr="trust200902" docName="draft-kerwin-file-scheme-00" category="std">
 
 <?rfc toc="yes"?>
 <?rfc tocindent="yes"?>
@@ -16,7 +16,7 @@
 <?rfc inline="yes"?>
 
   <front>
-    <title abbrev="file-uri-scheme">The file URI Scheme</title>
+    <title abbrev="file-scheme">The file URI Scheme</title>
 
     <author initials="M." surname="Kerwin" fullname="Matthew Kerwin">
       <organization>Queensland University of Technology</organization>
