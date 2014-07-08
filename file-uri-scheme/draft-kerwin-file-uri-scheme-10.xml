@@ -158,7 +158,7 @@ drive-marker   = ":" / "|"
         <postamble>
           * The 'unc-path' rule within 'auth-path' is there for legacy reasons.
           ** The 'windows-path' rule within 'auth-path' allows for dubious URIs that encode a Windows drive letter as the authority component.
-        </postabmle>
+        </postamble>
       </figure>
     </section>
 
