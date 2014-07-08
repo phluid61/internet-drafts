@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="lib/rfc2629.xslt" ?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+  <!-- Metadata -->
+  <!ENTITY title 'The &#x27;file&#x27; URI Scheme'>
+  <!ENTITY title-abbrev '&#x27;file&#x27; URI'>
+  <!ENTITY rfc 'RFC XXXX'>
+  <!ENTITY rfcXXXX '[Note to RFC Editor: please replace XXXX with the number issued to this document.]'>
+
+  <!-- References -->
+  <!ENTITY rfc20   PUBLIC '' 'refs/RFC.20.xml'>
+  <!--ENTITY rfc791  PUBLIC '' 'refs/RFC.791.xml'-->
+  <!ENTITY rfc1630 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.1630.xml'>
+  <!ENTITY rfc1738 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.1738.xml'>
+  <!ENTITY rfc2119 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
+  <!ENTITY rfc3530 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3530.xml'>
+  <!ENTITY rfc3629 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml'>
+  <!ENTITY rfc3986 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3986.xml'>
+  <!ENTITY rfc4395 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4395.xml'>
+  <!ENTITY rfc5234 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'>
+  <!ENTITY rfc5890 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5890.xml'>
+  <!ENTITY rfc5892 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5892.xml'>
+  <!ENTITY rfc6874 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6874.xml'>
+  <!ENTITY iso10646 PUBLIC '' 'refs/ISO.10646.xml'>
+  <!--ENTITY unicode PUBLIC '' 'refs/UNICODE.xml'-->
+  <!ENTITY utr15 PUBLIC '' 'refs/UTR.15.xml'>
+  <!ENTITY draft-hoffman-file-uri PUBLIC '' 'refs/draft-hoffman-file-uri-03.xml'>
+
+  <!-- Keywords -->
+  <!ENTITY MAY '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">MAY</bcp14>'>
+  <!ENTITY MUST '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">MUST</bcp14>'>
+  <!ENTITY MUST-NOT '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">MUST NOT</bcp14>'>
+  <!ENTITY OPTIONAL '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">OPTIONAL</bcp14>'>
+  <!ENTITY RECOMMENDED '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">RECOMMENDED</bcp14>'>
+  <!ENTITY REQUIRED '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">REQUIRED</bcp14>'>
+  <!ENTITY SHALL '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">SHALL</bcp14>'>
+  <!ENTITY SHALL-NOT '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">SHALL NOT</bcp14>'>
+  <!ENTITY SHOULD '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">SHOULD</bcp14>'>
+  <!ENTITY SHOULD-NOT '<bcp14 xmlns="http://purl.org/net/xml2rfc/ext">SHOULD NOT</bcp14>'>
+
+  <!-- Common entities -->
+  <!ENTITY NON-NORMATIVE '<t><spanx>This section is non-normative.</spanx></t>'>
+
+  <!ENTITY file-URI-scheme '&#x27;file&#x27; URI scheme'>
+  <!ENTITY file '<spanx>file</spanx>'>
+  <!ENTITY ftp '<spanx>ftp</spanx>'>
+]>
+<?rfc toc="yes" ?>
+<?rfc strict="yes"?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no" ?>
+<?rfc linkmailto="no" ?>
+<?rfc editing="no" ?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc rfcedstyle="yes"?>
+<?rfc-ext allow-markup-in-artwork="yes" ?>
+<?rfc-ext include-index="no" ?>
+<rfc ipr="trust200811"
+     category="std"
+     docName="draft-kerwin-file-scheme-latest"
+     x:maturity-level="draft"
+     xmlns:x="http://purl.org/net/xml2rfc/ext">
+
+  <x:feedback template="https://github.com/phluid61/file-uri-scheme/issues/new?title={docname},%20%22{section}%22&amp;body=&lt;{ref}&gt;:"/>
+  <front>
+    <title abbrev="&title-abbrev;">&title;</title>
+    <author surname="Kerwin" fullname="Matthew Kerwin" initials="M. V.">
+      <organization abbrev="QUT">Queensland University of Technology</organization>
+      <address>
+        <postal>
+          <street>Victoria Park Rd</street>
+          <city>Kelvin Grove</city>
+          <region>QLD</region>
+          <code>4059</code>
+          <country>Australia</country>
+        </postal>
+        <email>matthew.kerwin@qut.edu.au</email>
+      </address>
+    </author>
+    <date year="2014" month="March" day="7" />
+    <area>Applications</area>
+    <workgroup>Independent Submission</workgroup>
+    <keyword>URI</keyword>
+    <keyword>scheme</keyword>
+    <keyword>file</keyword>
+    <abstract>
+      <t>This document specifies the file Uniform Resource Identifier (URI) scheme that was originally specified in RFC 1738.  The purpose of this document is to keep the information about the scheme on standards track, since RFC 1738 has been made obsolete, and to promote interoperability by addressing differences between various implementations.</t>
+    </abstract>
+    <note title="Note to Readers">
+      <t>This draft should be discussed on its <xref target="github">github project page</xref>.</t>
+    </note>
+  </front>
+  <middle>
+    <section title="Introduction" anchor="intro">
+
+      <section title="What it is/What it's for">
+        <t>A file URI is a string that identifies a file, and can be used to access the file if other conditions are met (locality, etc.)</t>
+      </section>
+
+      <section title="How to use it">
+        <t>File system, e.g. POSIX open(), read(), close()</t>
+      </section>
+
+      <section title="History" anchor="history">
+        &NON-NORMATIVE;
+        <t>The &file-URI-scheme; was first defined in <xref target="RFC1630"/>, which, being an informational RFC, does not specify an Internet standard.  The definition was standardised in <xref target="RFC1738"/>, and the scheme was registered with the <xref target="IANA-URI-Schemes">Internet Assigned Numbers Authority (IANA)</xref>;  however that definition omitted certain language included by former that clarified aspects such as:
+          <list style="symbols">
+            <t>the use of slashes to denote boundaries between directory levels of a hierarchical file system; and</t>
+            <t>the requirement that client software convert the &file; URI into a file name in the local file name conventions.</t>
+          </list>
+        </t>
+        <t>The Internet draft <xref target="I-D.draft-hoffman-file-uri"/> was written in an effort to keep the &file-URI-scheme; on standards track when <xref target="RFC1738"/> was made obsolete, but that draft expired in 2005.  It enumerated concerns arising from the various, often conflicting implementations of the scheme.  It serves as the basis of this document.</t>
+        <t>The &file-URI-scheme; defined in <xref target="RFC1738"/> is referenced three times in the current <xref target="RFC3986">URI Generic Syntax standard</xref>, despite the former's obsoletion:
+          <list style="numbers">
+            <t><eref target="http://xml.resource.org/public/rfc/html/rfc3986.html#overview">Section 1.1</eref> uses "file:///etc/hosts" as an example for identifying a resource in relation to the end-user's local context.</t>
+            <t><eref target="http://xml.resource.org/public/rfc/html/rfc3986.html#hierarchical">Section 1.2.3</eref> mentions the "file" scheme regarding relative references.</t>
+            <t><eref target="http://xml.resource.org/public/rfc/html/rfc3986.html#host">Section 3.2.2</eref> says that '...the "file" URI scheme is defined so that no authority, an empty host, and "localhost" all mean the end-user's machine...'.</t>
+          </list>
+        </t>
+        <t>Finally the WHATWG defines a <xref target="WHATWG-URL">living URL standard</xref>, which includes algorithms for interpreting file URIs (as URLs).</t>
+      </section>
+
+      <section title="UNC">
+        <t>UNC paths do a similar job. They have three parts: host, share, path. You can translate between UNC paths and file URIs.</t>
+      </section>
+
+      <section title="Conventions and Terminology" anchor="conventions">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119"/>.</t>
+      </section>
+    </section>
+
+    <section title="Syntax">
+      <figure>
+        <artwork type="inline"><![CDATA[
+file-URI       = f-scheme ":" f-hier-part
+
+f-scheme       = "file"
+
+f-hier-part    = "//" auth-path ; file://...
+               / local-path
+
+auth-path      = [ authority ] path-absolute
+               / unc-path       ; file:////host/share/... *
+               / windows-path   ; file://c:/... **
+
+local-path     = path-absolute  ; file:/...
+               / windows-path   ; file:c:/...
+
+unc-path       = 2*3"/" authority path-absolute
+
+windows-path   = drive-letter path-absolute
+drive-letter   = ALPHA [ drive-marker ]
+drive-marker   = ":" / "|"
+]]></artwork>
+        <postamble>
+          * The 'unc-path' rule within 'auth-path' is there for legacy reasons.
+          ** The 'windows-path' rule within 'auth-path' allows for dubious URIs that encode a Windows drive letter as the authority component.
+        </postamble>
+      </figure>
+    </section>
+
+    <section title="Semantics">
+    </section>
+
+    <section title="Encoding">
+      <t>Use-cases:</t>
+      <list style="handing">
+        <t hangText="Transcription">
+          E.g. a human hearing a spoken URI and entering it into a text file. I don’t think there’s any encoding happening here, per se; that would be handled by #3 or #4 below.
+          <vspace/>Input: analogue signal
+          <vspace/>Output: visual representation of URI, as character sequence
+        </t>
+        <t hangText="Manual encoding">
+          E.g. a human entering a URI as a string literal in a program (they’d need to perform all the encoding steps, down to the byte/character level.)
+          <vspace/>Input: any
+          <vspace/>Output: expression of fully encoded URI, as byte sequence
+        </t>
+        <t hangText="Keyboard to URI encoding">
+          A UI text box accepting keyboard input; silently percent-encoding (or not) as appropriate, etc.
+          <vspace/>Input: keypress events/characters
+          <vspace/>Output: URI
+        </t>
+        <t hangText="File path to URI encoding">
+          UrlCreateFromPath()
+          <vspace/>Input: file path
+          <vspace/>Output: URI
+        </t>
+        <t hangText="Parsing">
+          E.g. a browser following a clicked hyperlink. Probably just doing enough to detect that it’s a file URI, then relying on #6 to do the real work.
+          <vspace/>Input: URI
+          <vspace/>Output: ?
+        </t>
+        <t hangText="URI to file path decoding">
+          PathCreateFromUrl(), CreateURLMonikerEx()
+          <vspace/>Input: URI
+          <vspace/>Output: file path
+        </t>
+      </list>
+      <t>Anything that outputs a URI should use percent-encoded UTF-8, except in Windows, when it should be [an IRI?]</t>
+    </section>
+
+    <section title="IANA Considerations" anchor="iana-considerations">
+      <t>In accordance with the guidelines and registration procedures for new URI schemes <xref target="RFC4395"/>, this section provides the information needed to update the registration of the &file-URI-scheme;.</t>
+      <section title="URI Scheme Name" anchor="iana.name">
+        <t>file</t>
+      </section>
+      <section title="Status" anchor="iana.status">
+        <t>permanent</t>
+      </section>
+      <section title="URI Scheme Syntax" anchor="iana.syntax">
+        <t>See <xref target="syntax"/> of &rfc;.  &rfcXXXX;</t>
+      </section>
+      <section title="URI Scheme Semantics" anchor="iana.semantics">
+        <t>See <xref target="scheme"/> of &rfc;.  &rfcXXXX;</t>
+        <!--t>There is no media type associated with the &file-URI-scheme;.</t-->
+      </section>
+      <section title="Encoding Considerations" anchor="iana.encoding">
+        <t>See <xref target="encoding"/> of &rfc;.  &rfcXXXX;</t>
+      </section>
+      <section title="Applications/Protocols That Use This URI Scheme Name" anchor="iana.implementations">
+        <t>Web browsers:
+          <list style="symbols">
+            <t>Firefox
+              <list style="empty">
+                <t>Note: Firefox has an interpretation of RFC 1738 which affects UNC paths.  See: <xref target="unc-rfc1738"/>, <eref target="https://bugzilla.mozilla.org/show_bug.cgi?id=107540">Bugzilla#107540</eref></t>
+                <!--t><eref target="https://hg.mozilla.org/mozilla-central/file/5976b9c673f8/netwerk/protocol/file">source code repository</eref></t-->
+              </list>
+            </t>
+            <t>Chromium
+              <!--list style="empty">
+                <t><eref target="http://src.chromium.org/viewvc/chrome/trunk/src/url/url_file.h">source code repository</eref></t>
+              </list-->
+            </t>
+            <t>Internet Explorer <!-- since 4 --></t>
+            <t>Opera</t>
+          </list>
+        </t>
+        <t>Other applications/protocols:
+          <list style="symbols">
+            <t>Windows API
+              <list style="empty">
+                <t><eref target="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773581(v=vs.85).aspx">PathCreateFromUrl function</eref>, MSDN</t>
+                <t><eref target="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx">UrlCreateFromPath function</eref>, MSDN</t>
+              </list>
+            </t>
+            <t>Perl LWP
+              <!--list style="empty">
+                <t><eref target="http://cpansearch.perl.org/src/GAAS/libwww-perl-6.05/lib/LWP/Protocol/file.pm">source code repository</eref></t>
+              </list-->
+            </t>
+          </list>
+        </t>
+        <t>These lists are non-exhaustive.</t>
+      </section>
+      <section title="Interoperability Considerations" anchor="iana.interop">
+        <t>Due to the convoluted history of the &file-URI-scheme; there a many, varied implementations in existence.  Many have converged over time, forming a few kernels of closely-related functionality, and &rfc; attempts to accommodate such common functionality.  &rfcXXXX;  However there will always be exceptions, and this fact is recognised.</t>
+        <!--t><eref target="http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx">IE Blog</eref></t-->
+      </section>
+      <section title="Security Considerations" anchor="iana.security">
+        <t>See Section 4 of &rfc;  &rfcXXXX;</t>
+      </section>
+      <section title="Contact" anchor="iana.contact">
+        <t>Matthew Kerwin, matthew.kerwin@qut.edu.au</t>
+      </section>
+      <section title="Author/Change Controller" anchor="iana.author">
+        <t>This scheme is registered under the IETF tree.  As such, the IETF maintains change control.</t>
+      </section>
+      <section title="References" anchor="iana.references">
+        <t>None.</t>
+      </section>
+    </section>
+    <section title="Acknowledgements">
+      <t>This specification is derived from <xref target="RFC1738">RFC 1738</xref>, <xref target="RFC3986">RFC 3986</xref>, and <xref target="I-D.draft-hoffman-file-uri">I-D draft-hoffman-file-uri (expired)</xref>; the acknowledgements in those documents still apply.</t>
+    </section>
+  </middle>
+  <back>
+    <references title="Normative References">
+      &rfc20;
+      &rfc3629;
+      &rfc2119;
+      &rfc3986;
+      &rfc5234;
+      &rfc5890;
+      &rfc5892;
+      &rfc6874;
+      &iso10646;
+      <!--&unicode;-->
+      &utr15;
+    </references>
+    <references title="Informative References">
+      &draft-hoffman-file-uri;
+      <!--&rfc791;-->
+      &rfc1630;
+      &rfc1738;
+      &rfc3530;
+      &rfc4395;
+      <reference anchor="WHATWG-URL" target="http://url.spec.whatwg.org/">
+        <front>
+          <title>URL Living Standard</title>
+          <author>
+            <organization>WHATWG</organization>
+            <address>
+              <uri>http://www.whatwg.org/</uri>
+            </address>
+          </author>
+          <date year='2013' month='May' />
+        </front>
+        <format type='HTML' target='http://url.spec.whatwg.org/' />
+      </reference>
+      <reference anchor="MS-DTYP" target="http://msdn.microsoft.com/en-us/library/gg465305.aspx">
+        <front>
+          <title>Windows Data Types, 2.2.56 UNC</title>
+          <author>
+            <organization>Microsoft Open Specifications</organization>
+            <address>
+              <uri>http://www.microsoft.com/openspecifications/en/us/default.aspx</uri>
+            </address>
+          </author>
+          <date year="2013" month="January"/>
+        </front>
+      </reference>
+      <!--reference anchor="MS-SMB" target="http://msdn.microsoft.com/en-us/library/cc246231.aspx">
+        <front>
+          <title>Server Message Block (SMB) Protocol</title>
+          <author>
+            <organization>Microsoft Open Specifications</organization>
+            <address>
+              <uri>http://www.microsoft.com/openspecifications/en/us/default.aspx</uri>
+            </address>
+          </author>
+          <date year="2013" month="January"/>
+        </front>
+      </reference-->
+      <reference anchor="MS-SMB2" target="http://msdn.microsoft.com/en-us/library/cc246482.aspx">
+        <front>
+          <title>Server Message Block (SMB) Protocol Versions 2 and 3</title>
+          <author>
+            <organization>Microsoft Open Specifications</organization>
+            <address>
+              <uri>http://www.microsoft.com/openspecifications/en/us/default.aspx</uri>
+            </address>
+          </author>
+          <date year="2013" month="January"/>
+        </front>
+      </reference>
+      <reference anchor="NOVELL" target="http://www.novell.com/developer/ndk/netware_core_protocols.html">
+        <front>
+          <title>NetWare Core Protocols</title>
+          <author>
+            <organization>Novell</organization>
+            <address>
+              <uri>http://www.novell.com/</uri>
+            </address>
+          </author>
+          <date year="2013"/>
+        </front>
+      </reference>
+      <reference anchor="IANA-URI-Schemes" target="http://www.iana.org/assignments/uri-schemes/uri-schemes.xml">
+        <front>
+          <title abbrev='URI Schemes registry'>Uniform Resource Identifier (URI) Schemes registry</title>
+          <author>
+            <organization abbrev="IANA">Internet Assigned Numbers Authority</organization>
+          </author>
+          <date year='2013' month='June' />
+        </front>
+        <format type='TXT' octets='20046' target='http://www.iana.org/assignments/uri-schemes/uri-schemes.txt' />
+        <format type='XML' octets='32231' target='http://www.iana.org/assignments/uri-schemes/uri-schemes.xml' />
+      </reference>
+      <reference anchor="POSIX" target="http://www.unix.org/version4/">
+        <front>
+          <title abbrev='POSIX.1-2008'>IEEE Std 1003.1, 2013 Edition</title>
+          <author>
+            <organization>IEEE</organization>
+          </author>
+          <date year="2013"/>
+        </front>
+      </reference>
+      <reference anchor="Win32-Namespaces" target="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#namespaces">
+        <front>
+          <title>Naming Files, Paths, and Namespaces</title>
+          <author>
+            <organization abbrev="MSDN">Microsoft Developer Network</organization>
+          </author>
+          <date year="2013" month="June"/>
+        </front>
+      </reference>
+      <reference anchor="github" target="https://github.com/phluid61/file-uri-scheme">
+        <front>
+          <title>file-uri-scheme GitHub repository</title>
+          <author surname="Kerwin" fullname="Matthew Kerwin" initials="M. V.">
+            <address>
+              <email>matthew@kerwin.net.au</email>
+            </address>
+          </author>
+          <date year="n.d."/>
+        </front>
+      </reference>
+    </references>
+  </back>
+</rfc>

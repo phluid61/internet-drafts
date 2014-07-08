@@ -1,0 +1,955 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+   <head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>The 'file' URI Scheme</title><script>
+var buttonsAdded = false;
+
+function init() {
+  var fb = document.createElement("div");
+  fb.className = "feedback noprint";
+  fb.setAttribute("onclick", "feedback();");
+  fb.appendChild(document.createTextNode("feedback"));
+
+  var bodyl = document.getElementsByTagName("body");
+  bodyl.item(0).appendChild(fb);
+}
+
+function feedback() {
+  toggleButtonsToElementsByName("h1");
+  toggleButtonsToElementsByName("h2");
+  toggleButtonsToElementsByName("h3");
+  toggleButtonsToElementsByName("h4");
+
+  buttonsAdded = !buttonsAdded;
+}
+
+function toggleButtonsToElementsByName(name) {
+  var list = document.getElementsByTagName(name);
+  for (var i = 0; i < list.length; i++) {
+    toggleButton(list.item(i));
+  }
+}
+
+function toggleButton(node) {
+  if (! buttonsAdded) {
+
+    // docname
+    var template = "https://github.com/phluid61/file-uri-scheme/issues/new?title={docname},%20%22{section}%22&body=<{ref}>:";
+
+    var id = node.getAttribute("id");
+    // better id available?
+    var titlelinks = node.getElementsByTagName("a");
+    for (var i = 0; i < titlelinks.length; i++) {
+      var tl = titlelinks.item(i);
+      if (tl.getAttribute("id")) {
+        id = tl.getAttribute("id");
+      }
+    }
+
+    // ref
+    var ref = window.location.toString();
+    var hash = ref.indexOf("#");
+    if (hash != -1) {
+      ref = ref.substring(0, hash);
+    }
+    if (id != "") {
+      ref += "#" + id;
+    }
+
+    // docname
+    var docname = "draft-kerwin-file-scheme-latest";
+
+    // section
+    var section = node.textContent;
+    section = section.replace("\u00a0", " ");
+
+    // build URI from template
+    var uri = template.replace("{docname}", encodeURIComponent(docname));
+    uri = uri.replace("{section}", encodeURIComponent(section));
+    uri = uri.replace("{ref}", encodeURIComponent(ref));
+
+    var button = document.createElement("a");
+    button.className = "fbbutton noprint";
+    button.setAttribute("href", uri);
+    button.appendChild(document.createTextNode("send feedback"));
+    node.appendChild(button);
+  }
+  else {
+    var buttons = node.getElementsByTagName("a");
+    for (var i = 0; i < buttons.length; i++) {
+      var b = buttons.item(i);
+      if (b.className == "fbbutton noprint") {
+        node.removeChild(b);
+      }
+    }
+  }
+}</script><style type="text/css" title="Xml2Rfc (sans serif)">
+a {
+  text-decoration: none;
+}
+a.smpl {
+  color: black;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:active {
+  text-decoration: underline;
+}
+address {
+  margin-top: 1em;
+  margin-left: 2em;
+  font-style: normal;
+}
+body {
+  color: black;
+  font-family: verdana, helvetica, arial, sans-serif;
+  font-size: 10pt;
+  margin-right: 2em;
+}
+cite {
+  font-style: normal;
+}
+dl {
+  margin-left: 2em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+dl p {
+  margin-left: 0em;
+}
+dt {
+  margin-top: .5em;
+}
+h1 {
+  font-size: 14pt;
+  line-height: 21pt;
+  page-break-after: avoid;
+}
+h1.np {
+  page-break-before: always;
+}
+h1 a {
+  color: #333333;
+}
+h2 {
+  font-size: 12pt;
+  line-height: 15pt;
+  page-break-after: avoid;
+}
+h3, h4, h5, h6 {
+  font-size: 10pt;
+  page-break-after: avoid;
+}
+h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: black;
+}
+img {
+  margin-left: 3em;
+}
+li {
+  margin-left: 2em;
+}
+ol {
+  margin-left: 2em;
+}
+ol.la {
+  list-style-type: lower-alpha;
+}
+ol.ua {
+  list-style-type: upper-alpha;
+}
+ol p {
+  margin-left: 0em;
+}
+p {
+  margin-left: 2em;
+}
+pre {
+  margin-left: 3em;
+  background-color: lightyellow;
+  padding: .25em;
+  page-break-inside: avoid;
+}
+pre.text2 {
+  border-style: dotted;
+  border-width: 1px;
+  background-color: #f0f0f0;
+  width: 69em;
+}
+pre.inline {
+  background-color: white;
+  padding: 0em;
+}
+pre.text {
+  border-style: dotted;
+  border-width: 1px;
+  background-color: #f8f8f8;
+  width: 69em;
+}
+pre.drawing {
+  border-style: solid;
+  border-width: 1px;
+  background-color: #f8f8f8;
+  padding: 2em;
+}
+table {
+  margin-left: 2em;
+}
+table.header {
+  border-spacing: 1px;
+  width: 95%;
+  font-size: 10pt;
+  color: white;
+}
+td.top {
+  vertical-align: top;
+}
+td.topnowrap {
+  vertical-align: top;
+  white-space: nowrap;
+}
+table.header td {
+  background-color: gray;
+  width: 50%;
+}
+table.header a {
+  color: white;
+}
+td.reference {
+  vertical-align: top;
+  white-space: nowrap;
+  padding-right: 1em;
+}
+thead {
+  display:table-header-group;
+}
+ul.toc, ul.toc ul {
+  list-style: none;
+  margin-left: 1.5em;
+  padding-left: 0em;
+}
+ul.toc li {
+  line-height: 150%;
+  font-weight: bold;
+  font-size: 10pt;
+  margin-left: 0em;
+}
+ul.toc li li {
+  line-height: normal;
+  font-weight: normal;
+  font-size: 9pt;
+  margin-left: 0em;
+}
+li.excluded {
+  font-size: 0pt;
+}
+ul p {
+  margin-left: 0em;
+}
+.bcp14 {
+  font-style: normal;
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
+.comment {
+  background-color: yellow;
+}
+.center {
+  text-align: center;
+}
+.error {
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+}
+.figure {
+  font-weight: bold;
+  text-align: center;
+  font-size: 9pt;
+}
+.filename {
+  color: #333333;
+  font-weight: bold;
+  font-size: 12pt;
+  line-height: 21pt;
+  text-align: center;
+}
+.fn {
+  font-weight: bold;
+}
+.hidden {
+  display: none;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.title {
+  color: #990000;
+  font-size: 18pt;
+  line-height: 18pt;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 36pt;
+}
+.vcardline {
+  display: block;
+}
+.warning {
+  font-size: 14pt;
+  background-color: yellow;
+}
+.feedback {
+  position: fixed;
+  bottom: 1%;
+  right: 1%;
+  padding: 3px 5px;
+  color: white;
+  border-radius: 5px;
+  background: #a00000;
+  border: 1px solid silver;
+}
+.fbbutton {
+  margin-left: 1em;
+  color: #303030;
+  font-size: small;
+  font-weight: normal;
+  background: #d0d000;
+  padding: 1px 4px;
+  border: 1px solid silver;
+  border-radius: 5px;
+}
+
+@media print {
+  .noprint {
+    display: none;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  table.header {
+    width: 90%;
+  }
+
+  td.header {
+    width: 50%;
+    color: black;
+    background-color: white;
+    vertical-align: top;
+    font-size: 12pt;
+  }
+
+  ul.toc a:nth-child(2)::after {
+    content: leader('.') target-counter(attr(href), page);
+  }
+
+  ul.ind li li a {
+    content: target-counter(attr(href), page);
+  }
+
+  .print2col {
+    column-count: 2;
+    -moz-column-count: 2;
+    column-fill: auto;
+  }
+}
+
+@page {
+  @top-left {
+       content: "Internet-Draft";
+  }
+  @top-right {
+       content: "March 2014";
+  }
+  @top-center {
+       content: "'file' URI";
+  }
+  @bottom-left {
+       content: "Kerwin";
+  }
+  @bottom-center {
+       content: "Expires September 8, 2014";
+  }
+  @bottom-right {
+       content: "[Page " counter(page) "]";
+  }
+}
+
+@page:first {
+    @top-left {
+      content: normal;
+    }
+    @top-right {
+      content: normal;
+    }
+    @top-center {
+      content: normal;
+    }
+}
+</style><style tyle="text/css">body {   font: 10pt/12pt verdana, helvetica, arial, sans-serif;   margin: 1em auto;   max-width: 700px; }  table {   margin-left: 0em; }  table.header {   width: 100%; }  table.header td {   background-color: inherit;   color: black; }  pre.text, pre.text2 {   width: 90%; }</style><link rel="Contents" href="#rfc.toc">
+      <link rel="Author" href="#rfc.authors">
+      <link rel="Copyright" href="#rfc.copyrightnotice">
+      <link rel="Chapter" title="1 Introduction" href="#rfc.section.1">
+      <link rel="Chapter" title="2 Scheme Definition" href="#rfc.section.2">
+      <link rel="Chapter" title="3 Encoding and Character Set Considerations" href="#rfc.section.3">
+      <link rel="Chapter" title="4 Security Considerations" href="#rfc.section.4">
+      <link rel="Chapter" title="5 Implementation Notes" href="#rfc.section.5">
+      <link rel="Chapter" title="6 IANA Considerations" href="#rfc.section.6">
+      <link rel="Chapter" title="7 Acknowledgements" href="#rfc.section.7">
+      <link rel="Chapter" href="#rfc.section.8" title="8 References">
+      <meta name="generator" content="http://greenbytes.de/tech/webdav/rfc2629.xslt, Revision 1.597, 2013/05/27 06:39:42, XSLT vendor: SAXON 8.9.0.4 from Saxonica http://www.saxonica.com/">
+      <meta name="keywords" content="URI, scheme, file">
+      <link rel="schema.dct" href="http://purl.org/dc/terms/">
+      <meta name="dct.creator" content="Kerwin, M. V.">
+      <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-file-scheme-latest">
+      <meta name="dct.issued" scheme="ISO8601" content="2014-03-07">
+      <meta name="dct.abstract" content="This document specifies the file Uniform Resource Identifier (URI) scheme that was originally specified in RFC 1738. The purpose of this document is to keep the information about the scheme on standards track, since RFC 1738 has been made obsolete, and to promote interoperability by addressing differences between various implementations.">
+      <meta name="description" content="This document specifies the file Uniform Resource Identifier (URI) scheme that was originally specified in RFC 1738. The purpose of this document is to keep the information about the scheme on standards track, since RFC 1738 has been made obsolete, and to promote interoperability by addressing differences between various implementations.">
+   </head>
+   <body onload="init();">
+      <table class="header">
+         <tbody>
+            <tr>
+               <td class="left">Independent Submission</td>
+               <td class="right">M. Kerwin</td>
+            </tr>
+            <tr>
+               <td class="left">Internet-Draft</td>
+               <td class="right">QUT</td>
+            </tr>
+            <tr>
+               <td class="left">Intended status: Standards Track</td>
+               <td class="right">March 7, 2014</td>
+            </tr>
+            <tr>
+               <td class="left">Expires: September 8, 2014</td>
+               <td class="right"></td>
+            </tr>
+         </tbody>
+      </table>
+      <p class="title">The 'file' URI Scheme<br><span class="filename">draft-kerwin-file-scheme-latest</span></p>
+      <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
+      <p>This document specifies the file Uniform Resource Identifier (URI) scheme that was originally specified in RFC 1738. The purpose
+         of this document is to keep the information about the scheme on standards track, since RFC 1738 has been made obsolete, and
+         to promote interoperability by addressing differences between various implementations.
+      </p>
+      <h1 id="rfc.note.1"><a href="#rfc.note.1">Note to Readers</a></h1>
+      <p>This draft should be discussed on its <a href="#github">github project page</a> <cite title="file-uri-scheme GitHub repository">[github]</cite>.
+      </p>
+      <h1><a id="rfc.status" href="#rfc.status">Status of This Memo</a></h1>
+      <p>This Internet-Draft is submitted to IETF in full conformance with the provisions of BCP 78 and BCP 79.</p>
+      <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF). Note that other groups may also distribute
+         working documents as Internet-Drafts. The list of current Internet-Drafts is at <a href="http://datatracker.ietf.org/drafts/current/">http://datatracker.ietf.org/drafts/current/</a>.
+      </p>
+      <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other
+         documents at any time. It is inappropriate to use Internet-Drafts as reference material or to cite them other than as “work
+         in progress”.
+      </p>
+      <p>This Internet-Draft will expire on September 8, 2014.</p>
+      <h1><a id="rfc.copyrightnotice" href="#rfc.copyrightnotice">Copyright Notice</a></h1>
+      <p>Copyright © 2014 IETF Trust and the persons identified as the document authors. All rights reserved.</p>
+      <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (<a href="http://trustee.ietf.org/license-info">http://trustee.ietf.org/license-info</a>) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights
+         and restrictions with respect to this document. Code Components extracted from this document must include Simplified BSD License
+         text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified
+         BSD License.
+      </p>
+      <hr class="noprint">
+      <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+      <ul class="toc">
+         <li><a href="#rfc.section.1">1.</a>&nbsp;&nbsp;&nbsp;<a href="#intro">Introduction</a><ul>
+               <li><a href="#rfc.section.1.1">1.1</a>&nbsp;&nbsp;&nbsp;<a href="#history">History</a></li>
+               <li><a href="#rfc.section.1.2">1.2</a>&nbsp;&nbsp;&nbsp;<a href="#conventions">Conventions and Terminology</a></li>
+            </ul>
+         </li>
+         <li><a href="#rfc.section.2">2.</a>&nbsp;&nbsp;&nbsp;<a href="#scheme">Scheme Definition</a><ul>
+               <li><a href="#rfc.section.2.1">2.1</a>&nbsp;&nbsp;&nbsp;<a href="#components">Components</a></li>
+               <li><a href="#rfc.section.2.2">2.2</a>&nbsp;&nbsp;&nbsp;<a href="#syntax">Syntax</a></li>
+            </ul>
+         </li>
+         <li><a href="#rfc.section.3">3.</a>&nbsp;&nbsp;&nbsp;<a href="#encoding">Encoding and Character Set Considerations</a></li>
+         <li><a href="#rfc.section.4">4.</a>&nbsp;&nbsp;&nbsp;<a href="#security">Security Considerations</a></li>
+         <li><a href="#rfc.section.5">5.</a>&nbsp;&nbsp;&nbsp;<a href="#implementation">Implementation Notes</a><ul>
+               <li><a href="#rfc.section.5.1">5.1</a>&nbsp;&nbsp;&nbsp;<a href="#leading-slash">Leading Slash</a></li>
+               <li><a href="#rfc.section.5.2">5.2</a>&nbsp;&nbsp;&nbsp;<a href="#hierarchy">Hierarchical Structure</a></li>
+               <li><a href="#rfc.section.5.3">5.3</a>&nbsp;&nbsp;&nbsp;<a href="#absolute-relative-paths">Absolute and relative file paths</a></li>
+               <li><a href="#rfc.section.5.4">5.4</a>&nbsp;&nbsp;&nbsp;<a href="#drive-letters">Drive Letters</a></li>
+               <li><a href="#rfc.section.5.5">5.5</a>&nbsp;&nbsp;&nbsp;<a href="#unc-file-paths">UNC File Paths</a><ul>
+                     <li><a href="#rfc.section.5.5.1">5.5.1</a>&nbsp;&nbsp;&nbsp;<a href="#unc-rfc1738">Historical Issues with UNC File Paths</a></li>
+                  </ul>
+               </li>
+               <li><a href="#rfc.section.5.6">5.6</a>&nbsp;&nbsp;&nbsp;<a href="#namespaces">Namespaces</a></li>
+               <li><a href="#rfc.section.5.7">5.7</a>&nbsp;&nbsp;&nbsp;<a href="#media-type">Media Type</a></li>
+            </ul>
+         </li>
+         <li><a href="#rfc.section.6">6.</a>&nbsp;&nbsp;&nbsp;<a href="#iana-considerations">IANA Considerations</a><ul>
+               <li><a href="#rfc.section.6.1">6.1</a>&nbsp;&nbsp;&nbsp;<a href="#iana.name">URI Scheme Name</a></li>
+               <li><a href="#rfc.section.6.2">6.2</a>&nbsp;&nbsp;&nbsp;<a href="#iana.status">Status</a></li>
+               <li><a href="#rfc.section.6.3">6.3</a>&nbsp;&nbsp;&nbsp;<a href="#iana.syntax">URI Scheme Syntax</a></li>
+               <li><a href="#rfc.section.6.4">6.4</a>&nbsp;&nbsp;&nbsp;<a href="#iana.semantics">URI Scheme Semantics</a></li>
+               <li><a href="#rfc.section.6.5">6.5</a>&nbsp;&nbsp;&nbsp;<a href="#iana.encoding">Encoding Considerations</a></li>
+               <li><a href="#rfc.section.6.6">6.6</a>&nbsp;&nbsp;&nbsp;<a href="#iana.implementations">Applications/Protocols That Use This URI Scheme Name</a></li>
+               <li><a href="#rfc.section.6.7">6.7</a>&nbsp;&nbsp;&nbsp;<a href="#iana.interop">Interoperability Considerations</a></li>
+               <li><a href="#rfc.section.6.8">6.8</a>&nbsp;&nbsp;&nbsp;<a href="#iana.security">Security Considerations</a></li>
+               <li><a href="#rfc.section.6.9">6.9</a>&nbsp;&nbsp;&nbsp;<a href="#iana.contact">Contact</a></li>
+               <li><a href="#rfc.section.6.10">6.10</a>&nbsp;&nbsp;&nbsp;<a href="#iana.author">Author/Change Controller</a></li>
+               <li><a href="#rfc.section.6.11">6.11</a>&nbsp;&nbsp;&nbsp;<a href="#iana.references">References</a></li>
+            </ul>
+         </li>
+         <li><a href="#rfc.section.7">7.</a>&nbsp;&nbsp;&nbsp;<a href="#rfc.section.7">Acknowledgements</a></li>
+         <li><a href="#rfc.section.8">8.</a>&nbsp;&nbsp;&nbsp;<a href="#rfc.references">References</a><ul>
+               <li><a href="#rfc.section.8.1">8.1</a>&nbsp;&nbsp;&nbsp;<a href="#rfc.references.1">Normative References</a></li>
+               <li><a href="#rfc.section.8.2">8.2</a>&nbsp;&nbsp;&nbsp;<a href="#rfc.references.2">Informative References</a></li>
+            </ul>
+         </li>
+         <li><a href="#rfc.authors">Author's Address</a></li>
+      </ul>
+      <h1 id="rfc.section.1" class="np"><a href="#rfc.section.1">1.</a>&nbsp;<a id="intro" href="#intro">Introduction</a></h1>
+      <p id="rfc.section.1.p.1">The 'file' URI scheme has historically had little or no interoperability between platforms. Further, implementers on a single
+         platform have often disagreed on the syntax to use for a particular file system. This document attempts to resolve those problems,
+         and define a standard scheme which is interoperable between different extant and future implementations. Additionally, it
+         aims to ease implementation by conforming to a general syntax that allows existing URI parsing machinery to parse <em>file</em> URIs.
+      </p>
+      <p id="rfc.section.1.p.2">URIs were previously defined in <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a>, which was updated by <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>. Those documents also specify how to define schemes for URIs.
+      </p>
+      <p id="rfc.section.1.p.3">The first definition for many URI schemes appeared in <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a>. Because that document has been made obsolete, this document replaces the 'file' URI scheme from it to allow the scheme to
+         remain on standards track.
+      </p>
+      <h2 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1</a>&nbsp;<a id="history" href="#history">History</a></h2>
+      <p id="rfc.section.1.1.p.1"><em>This section is non-normative.</em></p>
+      <p id="rfc.section.1.1.p.2">The 'file' URI scheme was first defined in <a href="#RFC1630"><cite title="Universal Resource Identifiers in WWW: A Unifying Syntax for the Expression of Names and Addresses of Objects on the Network as used in the World-Wide Web">[RFC1630]</cite></a>, which, being an informational RFC, does not specify an Internet standard. The definition was standardised in <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a>, and the scheme was registered with the <a href="#IANA-URI-Schemes">Internet Assigned Numbers Authority (IANA)</a> <cite title="Uniform Resource Identifier (URI) Schemes registry">[IANA-URI-Schemes]</cite>; however that definition omitted certain language included by former that clarified aspects such as: 
+      </p>
+      <ul>
+         <li>the use of slashes to donate boundaries between directory levels of a hierarchical file system; and</li>
+         <li>the requirement that client software convert the <em>file</em> URI into a file name in the local file name conventions.
+         </li>
+      </ul>
+      <p id="rfc.section.1.1.p.3">The Internet draft <a href="#I-D.draft-hoffman-file-uri"><cite title="The file URI Scheme">[I-D.draft-hoffman-file-uri]</cite></a> was written in an effort to keep the 'file' URI scheme on standards track when <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a> was made obsolete, but that draft expired in 2005. It enumerated concerns arising from the various, often conflicting implementations
+         of the scheme. It serves as the basis of this document.
+      </p>
+      <p id="rfc.section.1.1.p.4">The 'file' URI scheme defined in <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a> is referenced three times in the current <a href="#RFC3986">URI Generic Syntax standard</a> <cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite>, despite the former's obsoletion: 
+      </p>
+      <ol>
+         <li><a href="http://xml.resource.org/public/rfc/html/rfc3986.html#overview">Section 1.1</a> uses "file:///etc/hosts" as an example for identifying a resource in relation to the end-user's local context.
+         </li>
+         <li><a href="http://xml.resource.org/public/rfc/html/rfc3986.html#hierarchical">Section 1.2.3</a> mentions the "file" scheme regarding relative references.
+         </li>
+         <li><a href="http://xml.resource.org/public/rfc/html/rfc3986.html#host">Section 3.2.2</a> says that '...the "file" URI scheme is defined so that no authority, an empty host, and "localhost" all mean the end-user's
+            machine...'.
+         </li>
+      </ol>
+      <p id="rfc.section.1.1.p.5">Finally the WHATWG defines a <a href="#WHATWG-URL">living URL standard</a> <cite title="URL Living Standard">[WHATWG-URL]</cite>, which includes algorithms for interpreting file URIs (as URLs).
+      </p>
+      <h2 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2</a>&nbsp;<a id="conventions" href="#conventions">Conventions and Terminology</a></h2>
+      <p id="rfc.section.1.2.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL"
+         in this document are to be interpreted as described in <a href="#RFC2119"><cite title="Key words for use in RFCs to Indicate Requirement Levels">[RFC2119]</cite></a>.
+      </p>
+      <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a>&nbsp;<a id="scheme" href="#scheme">Scheme Definition</a></h1>
+      <p id="rfc.section.2.p.1">The 'file' URI scheme is used to identify and retrieve <em>files</em> accessible on a particular host computer, where a "file" is a named resource which can be accessed through the computer's
+         file system interface. These file names are interpreted from the perspective of the user of a reference, rather than in relation
+         to a globally-defined naming authority, so care ought to be taken when distributing <em>file</em> URIs to ensure that such references are actually intended to be interpreted in relation to the end user's file system interface.
+      </p>
+      <p id="rfc.section.2.p.2">This scheme, unlike most other URI schemes, does not identify a resource that is universally accessible over the Internet.</p>
+      <p id="rfc.section.2.p.3">The operations that can be performed on a dereferenced <em>file</em> URI are determined by the computer's file system interface. Typical operations include retrieving, updating, creating, and
+         deleting files. For example, to retrieve a representation of a dereferenced <em>file</em> URI on a UNIX-like system, one might use the POSIX <samp>open</samp>, <samp>read</samp> and <samp>close</samp> functions <a href="#POSIX"><cite title="IEEE Std 1003.1, 2013 Edition">[POSIX]</cite></a>.
+      </p>
+      <p id="rfc.section.2.p.4">This document does not define a mechanism for determining the media type of a file, and there is no media type associated
+         with a <em>file</em> URI. See <a href="#media-type" title="Media Type">Section&nbsp;5.7</a>.
+      </p>
+      <p id="rfc.section.2.p.5">Also note that <em>file</em> and <em>ftp</em> URIs are not the same, even when the target of the <em>ftp</em> URI is the local host.
+      </p>
+      <h2 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1</a>&nbsp;<a id="components" href="#components">Components</a></h2>
+      <p id="rfc.section.2.1.p.1">The 'file' URI scheme conforms with the generic structure defined in <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>, and can be described in terms of its components: 
+      </p>
+      <dl>
+         <dt>Scheme</dt>
+         <dd>The literal value <samp>file</samp></dd>
+         <dt>Authority</dt>
+         <dd>The authority component of a <em>file</em> URI describes the machine or system on which the file is accessible. If the authority refers to a remote system, from the
+            point of view of the user of the URI, the implication is that the file system cannot be accessed, or perhaps that some other
+            mechanism must be used to access the file. It does not imply that the file ought to be accessible over a network connection.
+            No retrieval mechanism for files stored on a remote machine is defined by this specification. <br><br> The authority component is optional in a <em>file</em> URI. <br><br> If present it is either: one of the special values <samp>localhost</samp> or the empty string (""); or the host name of the system on which the file is accessible. <br><br> If the authority component is omitted, or has either of the special values <samp>localhost</samp> or the empty string (""), it is interpreted as "the machine from which the URI is being interpreted".
+         </dd>
+         <dt>Path</dt>
+         <dd>The path component of a <em>file</em> URI describes the hierarchical directory path to the file, using the slash ("/") character to separate directories. Implementations <em class="bcp14">SHOULD</em> translate between the slash-separated URI syntax and the local system's conventions for specifying file paths, where they
+            differ. (See: <a href="#hierarchy" title="Hierarchical Structure">Section&nbsp;5.2</a>) <br><br> Note that the leading slash, if any, is included in the path value. This is in accordance with the generic syntax provided
+            in <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>, but at odds with the previous definition of the "url-path" given in <a href="http://tools.ietf.org/html/rfc1738#section-3.1">Section 3.1</a> of <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a>. See discussions in <a href="#implementation" title="Implementation Notes">Section&nbsp;5</a> for the effect this has on Microsoft DOS and Windows drive letters, and on UNC file paths. <br><br> Some systems allow <em>file</em> URIs to refer to directories. In this case, implementations <em class="bcp14">MAY</em> include a terminating slash character in the path, such as in: 
+            <div id="rfc.figure.u.1"></div><pre class="inline">file:///usr/local/bin/</pre> The presence of a terminating slash character always indicates that the <em>file</em> URI refers to a directory, but the absence of a slash does not necessarily indicate that it refers to a file system object
+            other than a directory. Implementations <em class="bcp14">MUST NOT</em> include a trailing slash in any <em>file</em> URIs they generate that do not refer to a directory, and ought to use other mechanisms to detect directories in any <em>file</em> URIs they receive, if and when such detection is required.
+         </dd>
+         <dt>Query</dt>
+         <dd>The query component of a <em>file</em> URI contains non-hierarchical data that, along with data in the path component, serves to identify a file. For example, in
+            a versioning file system, the query component might be used to refer to a specific version of a file. <br><br> Few implementations are known to use or support query components in <em>file</em> URIs.
+         </dd>
+         <dt>Fragment</dt>
+         <dd>The semantics of a fragment component are undefined by this specification because they depend on the media type of the entity.
+            A protocol that employs <em>file</em> URIs <em class="bcp14">MAY</em> define its own semantics for fragment components in the context of that protocol.
+         </dd>
+      </dl>
+      <p id="rfc.section.2.1.p.2">Previous definitions of the 'file' URI scheme required two (or three) slashes between the scheme and path, so implementations
+         that wish to remain interoperable with older implementations ought to include an authority component in any <em>file</em> URIs they generate. See also: <a href="#leading-slash" title="Leading Slash">Section&nbsp;5.1</a>.
+      </p>
+      <h2 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2</a>&nbsp;<a id="syntax" href="#syntax">Syntax</a></h2>
+      <p id="rfc.section.2.2.p.1">The <em>file</em> URI syntax is defined here in <a href="#RFC5234">Augmented Backus-Naur Form (ABNF)</a> <cite title="Augmented BNF for Syntax Specifications: ABNF">[RFC5234]</cite>, including the core ABNF syntax rule 'ALPHA' defined by that specification, and borrowing the 'host', 'path-absolute' and
+         'segment' rules from <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a> (as updated by <a href="#RFC6874"><cite title="Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers">[RFC6874]</cite></a>).
+      </p>
+      <div id="rfc.figure.u.2"></div><pre class="inline">fileURI       = "file" ":" ( auth-file / local-file )
+
+auth-file     = "//" ( host-file / nohost-file )
+
+host-file     = hostpart path-absolute
+                               ;   file://&lt;host&gt;/&lt;path&gt;
+                               ;   file://localhost/&lt;path&gt;
+
+nohost-file   = path-abs       ; begins with "/"
+              / path-abs-win   ; begins with drive-letter
+                               ;   file:///&lt;path&gt;
+                               ;   file:////&lt;UNC-path&gt;
+                               ;   file://c:/&lt;path&gt; *
+
+local-file    = path-absolute  ;   file:/&lt;path&gt;
+              / path-abs-win   ;   file:c:/&lt;path&gt;
+
+hostpart      = "localhost" / host
+
+path-abs      = 1*( "/" segment )
+
+path-abs-win  = drive-letter path-absolute
+drive-letter  = ALPHA [ drive-marker ]
+drive-marker  = ":" / "|"
+</pre><p>* The 'no-host-file' rule allows for dubious URIs that encode a Windows drive letter as the authority component. See: <a href="#drive-letters" title="Drive Letters">Section&nbsp;5.4</a>.
+      </p>
+      <p id="rfc.section.2.2.p.3">Note the difference between the <samp>path-abs</samp> and <samp>path-absolute</samp> rules: only the former allows a zero-length first segment followed by a slash, e.g. <samp>//foo/bar</samp></p>
+      <p id="rfc.section.2.2.p.4">Systems exhibit different levels of case-sensitivity. Implementations <em class="bcp14">SHOULD</em> maintain the case of file and directory names when translating <em>file</em> URIs to and from the local system's representation of file paths, and any systems or devices that transport <em>file</em> URIs <em class="bcp14">SHOULD NOT</em> alter the case of <em>file</em> URIs they transport.
+      </p>
+      <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a>&nbsp;<a id="encoding" href="#encoding">Encoding and Character Set Considerations</a></h1>
+      <p id="rfc.section.3.p.1">As specified in <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>, the 'file' URI scheme allows any character from the <a href="#ISO10646">Universal Character Set (UCS)</a> <cite title="Information Technology - Universal Multiple-Octet Coded Character Set (UCS)">[ISO10646]</cite> encoded as <a href="#RFC3629">UTF-8</a> <cite title="UTF-8, a transformation format of ISO 10646">[RFC3629]</cite> and then percent-encoded in valid <a href="#RFC20">ASCII</a> <cite title="ASCII format for Network Interchange">[RFC20]</cite>.
+      </p>
+      <p id="rfc.section.3.p.2">If the local file system uses a known non-Unicode character encoding, the file path <em class="bcp14">SHOULD</em> be converted to a sequence of Unicode characters normalized according to Normalization Form C (NFC, <a href="#UTR15"><cite title="Unicode Normalization Forms">[UTR15]</cite></a>).
+      </p>
+      <p id="rfc.section.3.p.3">Before applying any percent-encoding, an application MUST ensure the following about the string that is used as input to the
+         URI-construction process: 
+      </p>
+      <ul>
+         <li>The host, if any, consists only of Unicode code points that conform to the rules specified in <a href="#RFC5892"><cite title="The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)">[RFC5892]</cite></a>.
+         </li>
+         <li>Internationalized domain name (IDN) labels are encoded as A-labels <a href="#RFC5890"><cite title="Internationalized Domain Names for Applications (IDNA): Definitions and Document Framework">[RFC5890]</cite></a>.
+         </li>
+      </ul>
+      <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a>&nbsp;<a id="security" href="#security">Security Considerations</a></h1>
+      <p id="rfc.section.4.p.1">There are many security considerations for URI schemes discussed in <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>.
+      </p>
+      <p id="rfc.section.4.p.2">File access and the granting of privileges for specific operations are complex topics, and the use of <em>file</em> URIs can complicate the security model in effect for file privileges. Software using <em>file</em> URIs <em class="bcp14">MUST NOT</em> grant greater access than would be available for other file access methods.
+      </p>
+      <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a>&nbsp;<a id="implementation" href="#implementation">Implementation Notes</a></h1>
+      <h2 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1</a>&nbsp;<a id="leading-slash" href="#leading-slash">Leading Slash</a></h2>
+      <p id="rfc.section.5.1.p.1">The historical definition of <em>file</em> URIs stated that "... the "/" between the host (or port) and the url-path is NOT part of the url-path", <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a>, <a href="http://tools.ietf.org/html/rfc1738#section-3.1">Section 3.1</a>, and that the "... &lt;host&gt; can be ... the empty string", <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a>, <a href="http://tools.ietf.org/html/rfc1738#section-3.10">Section 3.10</a>.
+      </p>
+      <p id="rfc.section.5.1.p.2">The implication of this definition is that absolute file paths in a UNIX-like environment, when encoded as <em>file</em> URIs, ought to have begun with "file:////". This rarely, if ever, eventuated, and historically <em>file</em> URIs interpreted in UNIX-like environments have included the first slash as part of the file path. This is compatible with
+         the updated generic syntax provided in <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>.
+      </p>
+      <p id="rfc.section.5.1.p.3">In Microsoft DOS- and Windows-based systems the historical definition resulted in <em>file</em> URIs of the form
+      </p>
+      <div id="rfc.figure.u.3"></div><pre class="inline">file:///c:/path/to/file</pre><p id="rfc.section.5.1.p.5">This structure, with an empty host/authority, can be mapped directly to the the updated generic syntax provided in <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a> by omitting the authority entirely; for example:
+      </p>
+      <div id="rfc.figure.u.4"></div><pre class="inline">file:c:/path/to/file</pre><p id="rfc.section.5.1.p.7">However the same is not true for a URI with a non-empty authority. For example:</p>
+      <div id="rfc.figure.u.5"></div><pre class="inline">file://smb.example.com/c:/path/to/file</pre><p id="rfc.section.5.1.p.9">As such, and to maintain interoperability with existing implementations, and with any historically-generated static URIs,
+         implementations likely to interact with Microsoft DOS and Windows file systems <em class="bcp14">SHOULD</em> ignore the leading slash in the path component of any <em>file</em> URIs they receive, where an authority component is included (even if it is blank) and the first path segment is a drive letter.
+      </p>
+      <p id="rfc.section.5.1.p.10">See <a href="#drive-letters" title="Drive Letters">Section&nbsp;5.4</a> below for discussion on recognising drive letters.
+      </p>
+      <h2 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2</a>&nbsp;<a id="hierarchy" href="#hierarchy">Hierarchical Structure</a></h2>
+      <p id="rfc.section.5.2.p.1">Most implementations of the 'file' URI scheme do a reasonable job of mapping the hierarchical part of a directory structure
+         into the slash ("/") delimited hierarchy of the URI syntax, independent of the native platform's delimiter.
+      </p>
+      <p id="rfc.section.5.2.p.2">For example, on Microsoft Windows platforms, it is typical that the file system presents backslash ("\") as the file delimeter
+         for file names, yet the URI's forward slash ("/") can be used in <em>file</em> URIs interpreted on those platforms. Similarly, on older Macintosh OS versions, at least in some contexts, the colon (":")
+         is used as the delimiter in the native presentation of file path names. UNIX systems natively use the same forward slash ("/")
+         delimiter for hierarchy, so there is a closer mapping between <em>file</em> URI paths and native path names.
+      </p>
+      <p id="rfc.section.5.2.p.3">In accordance with <a href="http://xml.resource.org/public/rfc/html/rfc3986.html#path">Section 3.3</a> of <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>, the path segments <samp>.</samp> and <samp>..</samp>, also known as dot-segments, are only interpreted within the URI path hierarchy and are removed as part of the resolution
+         process (<a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>, <a href="http://xml.resource.org/public/rfc/html/rfc3986.html#absolutize">Section 5.2</a>). Implementations operating on or interacting with systems that allow dot-segments in their native path representation may
+         be required to escape those segments using some other means when translating to and from <em>file</em> URIs.
+      </p>
+      <h2 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3</a>&nbsp;<a id="absolute-relative-paths" href="#absolute-relative-paths">Absolute and relative file paths</a></h2>
+      <p id="rfc.section.5.3.p.1">The conventions for specifying absolute file paths differ from system to system. For example, in a UNIX-based system an absolute
+         file path begins with a slash ("/") character, denoting the root of the file system, whereas on a Microsoft DOS- or Windows-based
+         system an absolute file path begins with a drive letter (e.g. "c:\").
+      </p>
+      <p id="rfc.section.5.3.p.2">As relative references are resolved into their respective (absolute) target URIs according to <a href="http://xml.resource.org/public/rfc/html/rfc3986.html#reference-resolution">Section 5</a> of <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a>, this document does not describe that resolution. However, a fully resolved URI may contain a non-absolute file path. For
+         example, using a generic URI parser, the URI: 
+      </p>
+      <div id="rfc.figure.u.6"></div><pre class="inline">file:alpha/bravo/charlie</pre><p> might be parsed and interpreted as: file <em>charlie</em>, in directory <em>bravo</em>, in directory <em>alpha</em>, on the machine on which the URI is being interpreted (i.e. localhost); however there is no indication of the location of
+         the directory <em>alpha</em> on that machine. By convention an absolute file path would begin with a slash ("/") character on a UNIX-based system, or a
+         drive letter (e.g. "c:\") on a Microsoft Windows system, etc.
+      </p>
+      <p id="rfc.section.5.3.p.3">Resolution of non-absolute file paths is undefined by this specification. A protocol that employs <em>file</em> URIs <em class="bcp14">MAY</em> define its own rules for resolution of relative file paths in <em>file</em> URIs used in the context of that protocol.
+      </p>
+      <h2 id="rfc.section.5.4"><a href="#rfc.section.5.4">5.4</a>&nbsp;<a id="drive-letters" href="#drive-letters">Drive Letters</a></h2>
+      <p id="rfc.section.5.4.p.1">Historically drive letters have been mapped into the top of a <em>file</em> URI in various ways. On systems running some versions of Microsoft Windows the drive letter may be specified with a colon
+         (":") character, however sometimes the colon is replaced with a pipe ("|") character, and in some implementations the colon
+         is omitted entirely. The three representations <em class="bcp14">MAY</em> be considered equivalent, and any implementation which could interact with a Microsoft Windows environment <em class="bcp14">SHOULD</em> interpret a single letter, optionally followed by a colon or pipe character, in the first segment of the path as a drive letter
+         (see the <samp>drive-letter</samp> rule in <a href="#syntax" title="Syntax">Section&nbsp;2.2</a>). For example, the following URIs: 
+      </p>
+      <div id="rfc.figure.u.7"></div><pre class="inline">file:///c:/TMP/test.txt
+file:///c|/TMP/test.txt
+file:///c/TMP/test.txt</pre><p> when interpreted on the same machine, would refer to the same file: </p>
+      <div id="rfc.figure.u.8"></div><pre class="inline">c:\TMP\test.txt</pre><p id="rfc.section.5.4.p.2">Implementations <em class="bcp14">SHOULD</em> use a colon (":") character to specify drive letters when generating URIs for Microsoft DOS- and Windows-based systems.
+      </p>
+      <p id="rfc.section.5.4.p.3">Note that the generic URI syntax in <a href="#RFC3986"><cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite></a> dictates that "if a URI contains an authority component [even if it's a blank authority], then the path component must ...
+         begin with a slash ("/") character." However some systems running some versions of Microsoft Windows are known to omit the
+         slash before the drive letter, effectively replacing the URI's authority component with the drive specification; for example, <samp>file://c:/TMP/test.txt</samp>. Implementations that are likely to encounter such a URI <em class="bcp14">MAY</em> interpret it as a drive letter, but <em class="bcp14">SHOULD NOT</em> generate such URIs.
+      </p>
+      <h2 id="rfc.section.5.5"><a href="#rfc.section.5.5">5.5</a>&nbsp;<a id="unc-file-paths" href="#unc-file-paths">UNC File Paths</a></h2>
+      <p id="rfc.section.5.5.p.1">The Microsoft Windows <a href="#MS-DTYP">Universal Naming Convention (UNC)</a> <cite title="Windows Data Types, 2.2.56 UNC">[MS-DTYP]</cite> defines a convention for specifying the location of resources such as shared files or devices, for example Windows shares
+         accessed via the <a href="#MS-SMB2">SMB/CIFS protocol</a> <cite title="Server Message Block (SMB) Protocol Versions 2 and 3">[MS-SMB2]</cite>. The general structure of a UNC file path, given in <a href="#RFC5234">Augmented Backus-Naur Form (ABNF)</a> <cite title="Augmented BNF for Syntax Specifications: ABNF">[RFC5234]</cite>, is: 
+      </p>
+      <div id="rfc.figure.u.9"></div><pre class="inline">UNC        = "\\" hostname "\" sharename *( "\" objectname )
+hostname   = &lt;NetBIOS name, FQDN, or IP address of a server&gt;
+sharename  = &lt;name of a share or resource to be accessed&gt;
+objectname = &lt;the name of an object&gt;
+          </pre><p>Note that this syntax description is non-normative.</p>
+      <p id="rfc.section.5.5.p.2">There are two prevalent means of representing a UNC file path as a <em>file</em> URI, and they differ subtly in their semantics.
+      </p>
+      <p id="rfc.section.5.5.p.3">The first representation of a UNC file path as a <em>file</em> URI copies the UNC <em>hostname</em> into the URI <em>host</em> field, and the UNC <em>sharename</em> and <em>objectname</em>s, concatenated with forward slash ("/") characters, into the <em>path</em>. For example, the following UNC path: 
+      </p>
+      <div id="rfc.figure.u.10"></div><pre class="inline">\\server.example.com\Share\path\to\file.doc</pre><p> would be represented as a <em>file</em> URI as: 
+      </p>
+      <div id="rfc.figure.u.11"></div><pre class="inline">file://server.example.com/Share/path/to/file.doc
+       \________________/\_____________________/
+            hostname      sharename+objectnames</pre><p> The implication of this representation is that, because of the presence of a non-localhost authority, the file path is not
+         accessible using the regular file system interface from the machine on which the URI is being interpreted. As noted in <a href="#components" title="Components">Section&nbsp;2.1</a>, this doesn't necessarily preclude that the file might be accessible through some other mechanism.
+      </p>
+      <p id="rfc.section.5.5.p.4">The 'file' URI scheme is unusual in that it does not specify an Internet protocol or access method for shared files; as such,
+         its utility in network protocols between hosts is limited. Examples of file server protocols that do define such access methods
+         include <a href="#MS-SMB2">SMB/CIFS</a> <cite title="Server Message Block (SMB) Protocol Versions 2 and 3">[MS-SMB2]</cite>, <a href="#RFC3530">NFS</a> <cite title="Network File System (NFS) version 4 Protocol">[RFC3530]</cite>, and <a href="#NOVELL">NCP</a> <cite title="NetWare Core Protocols">[NOVELL]</cite>.
+      </p>
+      <p id="rfc.section.5.5.p.5">The second representation translates the UNC file path entirely into the <em>path</em> segment of a <em>file</em> URI, including both leading slashes. For example, the UNC path given above would be represented as a <em>file</em> URI as: 
+      </p>
+      <div id="rfc.figure.u.12"></div><pre class="inline">file:////server.example.com/Share/path/to/file.doc
+       \_________________________________________/
+                  translated UNC path</pre><p> The implication of this representation is that the full UNC path can be accessed from the machine on which the URI is being
+         interpreted using its regular file system interface.
+      </p>
+      <h3 id="rfc.section.5.5.1"><a href="#rfc.section.5.5.1">5.5.1</a>&nbsp;<a id="unc-rfc1738" href="#unc-rfc1738">Historical Issues with UNC File Paths</a></h3>
+      <p id="rfc.section.5.5.1.p.1">As mentioned in <a href="#leading-slash" title="Leading Slash">Section&nbsp;5.1</a>, the historical definition of <em>file</em> URIs in <a href="#RFC1738"><cite title="Uniform Resource Locators (URL)">[RFC1738]</cite></a> excluded the first slash ("/") character after the protocol identifier ("file://") from the file path. As such there exists
+         a common variant of the second representation above, notably used by the Firefox web browser, that includes a fifth slash
+         between the protocol identifier/authority and the UNC hostname. For example: 
+      </p>
+      <div id="rfc.figure.u.13"></div><pre class="inline">file://///server.example.com/Share/path/to/file.doc
+       |\_________________________________________/
+       |           translated UNC path
+       extra slash</pre><p> Implementations <em class="bcp14">MAY</em> interpret <em>file</em> URIs with five slashes (three between a blank authority and the first non-empty path segment) as a UNC file path, but <em class="bcp14">SHOULD NOT</em> generate such URIs.
+      </p>
+      <h2 id="rfc.section.5.6"><a href="#rfc.section.5.6">5.6</a>&nbsp;<a id="namespaces" href="#namespaces">Namespaces</a></h2>
+      <p id="rfc.section.5.6.p.1">The Microsoft Windows API defines <a href="#Win32-Namespaces">Win32 Namespaces</a> <cite title="Naming Files, Paths, and Namespaces">[Win32-Namespaces]</cite> for interacting with files and devices using Windows API functions. These namespaced paths are prefixed by <samp>\\?\</samp> for Win32 File Namespaces and <samp>\\.\</samp> for Win32 Device Namespaces. There is also a special case for UNC file paths <a href="#MS-DTYP"><cite title="Windows Data Types, 2.2.56 UNC">[MS-DTYP]</cite></a> in Win32 File Namespaces, referred to as "Long UNC", using the prefix <samp>\\?\UNC\</samp>.
+      </p>
+      <p id="rfc.section.5.6.p.2">This specification does not define a mechanism for translating namespaced file paths to or from <em>file</em> URIs.
+      </p>
+      <h2 id="rfc.section.5.7"><a href="#rfc.section.5.7">5.7</a>&nbsp;<a id="media-type" href="#media-type">Media Type</a></h2>
+      <p id="rfc.section.5.7.p.1">This specification does not define a mechanism for determining the media type of a file, however it is worth noting that many
+         implementations have traditionally used heuristics such as filename extensions or magic numbers to this end.
+      </p>
+      <p id="rfc.section.5.7.p.2">A protocol that employs <em>file</em> URIs <em class="bcp14">MAY</em> define its own mechanisms for determining the media type of files accessed under that protocol.
+      </p>
+      <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a>&nbsp;<a id="iana-considerations" href="#iana-considerations">IANA Considerations</a></h1>
+      <p id="rfc.section.6.p.1">In accordance with the guidelines and registration procedures for new URI schemes <a href="#RFC4395"><cite title="Guidelines and Registration Procedures for New URI Schemes">[RFC4395]</cite></a>, this section provides the information needed to update the registration of the 'file' URI scheme.
+      </p>
+      <h2 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1</a>&nbsp;<a id="iana.name" href="#iana.name">URI Scheme Name</a></h2>
+      <p id="rfc.section.6.1.p.1">file</p>
+      <h2 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2</a>&nbsp;<a id="iana.status" href="#iana.status">Status</a></h2>
+      <p id="rfc.section.6.2.p.1">permanent</p>
+      <h2 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3</a>&nbsp;<a id="iana.syntax" href="#iana.syntax">URI Scheme Syntax</a></h2>
+      <p id="rfc.section.6.3.p.1">See <a href="#syntax" title="Syntax">Section&nbsp;2.2</a> of RFC XXXX. [Note to RFC Editor: please replace XXXX with the number issued to this document.]
+      </p>
+      <h2 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4</a>&nbsp;<a id="iana.semantics" href="#iana.semantics">URI Scheme Semantics</a></h2>
+      <p id="rfc.section.6.4.p.1">See <a href="#scheme" title="Scheme Definition">Section&nbsp;2</a> of RFC XXXX. [Note to RFC Editor: please replace XXXX with the number issued to this document.]
+      </p>
+      <h2 id="rfc.section.6.5"><a href="#rfc.section.6.5">6.5</a>&nbsp;<a id="iana.encoding" href="#iana.encoding">Encoding Considerations</a></h2>
+      <p id="rfc.section.6.5.p.1">See <a href="#encoding" title="Encoding and Character Set Considerations">Section&nbsp;3</a> of RFC XXXX. [Note to RFC Editor: please replace XXXX with the number issued to this document.]
+      </p>
+      <h2 id="rfc.section.6.6"><a href="#rfc.section.6.6">6.6</a>&nbsp;<a id="iana.implementations" href="#iana.implementations">Applications/Protocols That Use This URI Scheme Name</a></h2>
+      <p id="rfc.section.6.6.p.1">Web browsers: </p>
+      <ul>
+         <li>Firefox 
+            <ul class="empty">
+               <li>Note: Firefox has an interpretation of RFC 1738 which affects UNC paths. See: <a href="#unc-rfc1738" title="Historical Issues with UNC File Paths">Section&nbsp;5.5.1</a>, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=107540">Bugzilla#107540</a></li>
+            </ul> 
+         </li>
+         <li>Chromium  </li>
+         <li>Internet Explorer </li>
+         <li>Opera</li>
+      </ul>
+      <p id="rfc.section.6.6.p.2">Other applications/protocols: </p>
+      <ul>
+         <li>Windows API 
+            <ul class="empty">
+               <li><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773581(v=vs.85).aspx">PathCreateFromUrl function</a>, MSDN
+               </li>
+               <li><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx">UrlCreateFromPath function</a>, MSDN
+               </li>
+            </ul> 
+         </li>
+         <li>Perl LWP  </li>
+      </ul>
+      <p id="rfc.section.6.6.p.3">These lists are non-exhaustive.</p>
+      <h2 id="rfc.section.6.7"><a href="#rfc.section.6.7">6.7</a>&nbsp;<a id="iana.interop" href="#iana.interop">Interoperability Considerations</a></h2>
+      <p id="rfc.section.6.7.p.1">Due to the convoluted history of the 'file' URI scheme there a many, varied implementations in existence. Many have converged
+         over time, forming a few kernels of closely-related functionality, and RFC XXXX attempts to accommodate such common functionality.
+         [Note to RFC Editor: please replace XXXX with the number issued to this document.] However there will always be exceptions,
+         and this fact is recognised.
+      </p>
+      <h2 id="rfc.section.6.8"><a href="#rfc.section.6.8">6.8</a>&nbsp;<a id="iana.security" href="#iana.security">Security Considerations</a></h2>
+      <p id="rfc.section.6.8.p.1">See Section 4 of RFC XXXX [Note to RFC Editor: please replace XXXX with the number issued to this document.]</p>
+      <h2 id="rfc.section.6.9"><a href="#rfc.section.6.9">6.9</a>&nbsp;<a id="iana.contact" href="#iana.contact">Contact</a></h2>
+      <p id="rfc.section.6.9.p.1">Matthew Kerwin, matthew.kerwin@qut.edu.au</p>
+      <h2 id="rfc.section.6.10"><a href="#rfc.section.6.10">6.10</a>&nbsp;<a id="iana.author" href="#iana.author">Author/Change Controller</a></h2>
+      <p id="rfc.section.6.10.p.1">This scheme is registered under the IETF tree. As such, the IETF maintains change control.</p>
+      <h2 id="rfc.section.6.11"><a href="#rfc.section.6.11">6.11</a>&nbsp;<a id="iana.references" href="#iana.references">References</a></h2>
+      <p id="rfc.section.6.11.p.1">None.</p>
+      <h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a>&nbsp;Acknowledgements
+      </h1>
+      <p id="rfc.section.7.p.1">This specification is derived from <a href="#RFC1738">RFC 1738</a> <cite title="Uniform Resource Locators (URL)">[RFC1738]</cite>, <a href="#RFC3986">RFC 3986</a> <cite title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</cite>, and <a href="#I-D.draft-hoffman-file-uri">I-D draft-hoffman-file-uri (expired)</a> <cite title="The file URI Scheme">[I-D.draft-hoffman-file-uri]</cite>; the acknowledgements in those documents still apply.
+      </p>
+      <h1 id="rfc.references"><a id="rfc.section.8" href="#rfc.section.8">8.</a> References
+      </h1>
+      <h2 id="rfc.references.1"><a href="#rfc.section.8.1" id="rfc.section.8.1">8.1</a> Normative References
+      </h2>
+      <table>
+         <tr>
+            <td class="reference"><b id="ISO10646">[ISO10646]</b></td>
+            <td class="top">International Organization for Standardization, “Information Technology - Universal Multiple-Octet Coded Character Set (UCS)”, ISO/IEC&nbsp;10646:2003, December&nbsp;2003.</td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC20">[RFC20]</b></td>
+            <td class="top">Cerf, V., “<a href="http://tools.ietf.org/html/rfc20">ASCII format for Network Interchange</a>”, RFC&nbsp;20, October&nbsp;1969.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC2119">[RFC2119]</b></td>
+            <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, “<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>”, BCP&nbsp;14, RFC&nbsp;2119, March&nbsp;1997.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC3629">[RFC3629]</b></td>
+            <td class="top">Yergeau, F., “<a href="http://tools.ietf.org/html/rfc3629">UTF-8, a transformation format of ISO 10646</a>”, STD&nbsp;63, RFC&nbsp;3629, November&nbsp;2003.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC3986">[RFC3986]</b></td>
+            <td class="top"><a href="mailto:timbl@w3.org" title="World Wide Web Consortium">Berners-Lee, T.</a>, <a href="mailto:fielding@gbiv.com" title="Day Software">Fielding, R.</a>, and <a href="mailto:LMM@acm.org" title="Adobe Systems Incorporated">L. Masinter</a>, “<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>”, STD&nbsp;66, RFC&nbsp;3986, January&nbsp;2005.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC5234">[RFC5234]</b></td>
+            <td class="top">Crocker, D. and P. Overell, “<a href="http://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>”, STD&nbsp;68, RFC&nbsp;5234, January&nbsp;2008.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC5890">[RFC5890]</b></td>
+            <td class="top">Klensin, J., “<a href="http://tools.ietf.org/html/rfc5890">Internationalized Domain Names for Applications (IDNA): Definitions and Document Framework</a>”, RFC&nbsp;5890, August&nbsp;2010.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC5892">[RFC5892]</b></td>
+            <td class="top">Faltstrom, P., “<a href="http://tools.ietf.org/html/rfc5892">The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)</a>”, RFC&nbsp;5892, August&nbsp;2010.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC6874">[RFC6874]</b></td>
+            <td class="top">Carpenter, B., Cheshire, S., and R. Hinden, “<a href="http://tools.ietf.org/html/rfc6874">Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers</a>”, RFC&nbsp;6874, February&nbsp;2013.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="UTR15">[UTR15]</b></td>
+            <td class="top"><a href="mailto:markdavis@google.com">Davis, M.</a> and <a href="mailto:ken@unicode.org">K. Whistler</a>, “<a href="http://www.unicode.org/reports/tr15/tr15-37.html">Unicode Normalization Forms</a>”, August&nbsp;2012, &lt;<a href="http://www.unicode.org/reports/tr15/tr15-37.html">http://www.unicode.org/reports/tr15/tr15-37.html</a>&gt;.
+            </td>
+         </tr>
+      </table>
+      <h2 id="rfc.references.2"><a href="#rfc.section.8.2" id="rfc.section.8.2">8.2</a> Informative References
+      </h2>
+      <table>
+         <tr>
+            <td class="reference"><b id="I-D.draft-hoffman-file-uri">[I-D.draft-hoffman-file-uri]</b></td>
+            <td class="top">Hoffman, P., “<a href="http://tools.ietf.org/html/draft-hoffman-file-uri-03">The file URI Scheme</a>”, Internet-Draft&nbsp;draft-hoffman-file-uri-03 (work in progress), January&nbsp;2005.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="IANA-URI-Schemes">[IANA-URI-Schemes]</b></td>
+            <td class="top">Internet Assigned Numbers Authority, “<a href="http://www.iana.org/assignments/uri-schemes/uri-schemes.xml">Uniform Resource Identifier (URI) Schemes registry</a>”, June&nbsp;2013, &lt;<a href="http://www.iana.org/assignments/uri-schemes/uri-schemes.xml">http://www.iana.org/assignments/uri-schemes/uri-schemes.xml</a>&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="MS-DTYP">[MS-DTYP]</b></td>
+            <td class="top"><a href="http://www.microsoft.com/openspecifications/en/us/default.aspx">Microsoft Open Specifications</a>, “<a href="http://msdn.microsoft.com/en-us/library/gg465305.aspx">Windows Data Types, 2.2.56 UNC</a>”, January&nbsp;2013, &lt;<a href="http://msdn.microsoft.com/en-us/library/gg465305.aspx">http://msdn.microsoft.com/en-us/library/gg465305.aspx</a>&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="MS-SMB2">[MS-SMB2]</b></td>
+            <td class="top"><a href="http://www.microsoft.com/openspecifications/en/us/default.aspx">Microsoft Open Specifications</a>, “<a href="http://msdn.microsoft.com/en-us/library/cc246482.aspx">Server Message Block (SMB) Protocol Versions 2 and 3</a>”, January&nbsp;2013, &lt;<a href="http://msdn.microsoft.com/en-us/library/cc246482.aspx">http://msdn.microsoft.com/en-us/library/cc246482.aspx</a>&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="NOVELL">[NOVELL]</b></td>
+            <td class="top"><a href="http://www.novell.com/">Novell</a>, “<a href="http://www.novell.com/developer/ndk/netware_core_protocols.html">NetWare Core Protocols</a>”, 2013, &lt;<a href="http://www.novell.com/developer/ndk/netware_core_protocols.html">http://www.novell.com/developer/ndk/netware_core_protocols.html</a>&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="POSIX">[POSIX]</b></td>
+            <td class="top">IEEE, “<a href="http://www.unix.org/version4/">IEEE Std 1003.1, 2013 Edition</a>”, 2013, &lt;<a href="http://www.unix.org/version4/">http://www.unix.org/version4/</a>&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC1630">[RFC1630]</b></td>
+            <td class="top"><a href="mailto:timbl@info.cern.ch" title="CERN, World-Wide Web project">Berners-Lee, T.</a>, “<a href="http://tools.ietf.org/html/rfc1630">Universal Resource Identifiers in WWW: A Unifying Syntax for the Expression of Names and Addresses of Objects on the Network
+                  as used in the World-Wide Web</a>”, RFC&nbsp;1630, June&nbsp;1994.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC1738">[RFC1738]</b></td>
+            <td class="top"><a href="mailto:timbl@info.cern.ch" title="CERN, World-Wide Web project">Berners-Lee, T.</a>, <a href="mailto:masinter@parc.xerox.com" title="Xerox PARC">Masinter, L.</a>, and <a href="mailto:mpm@boombox.micro.umn.edu" title="University of Minnesota, Computer and Information Services">M. McCahill</a>, “<a href="http://tools.ietf.org/html/rfc1738">Uniform Resource Locators (URL)</a>”, RFC&nbsp;1738, December&nbsp;1994.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC3530">[RFC3530]</b></td>
+            <td class="top">Shepler, S., Callaghan, B., Robinson, D., Thurlow, R., Beame, C., Eisler, M., and D. Noveck, “<a href="http://tools.ietf.org/html/rfc3530">Network File System (NFS) version 4 Protocol</a>”, RFC&nbsp;3530, April&nbsp;2003.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="RFC4395">[RFC4395]</b></td>
+            <td class="top">Hansen, T., Hardie, T., and L. Masinter, “<a href="http://tools.ietf.org/html/rfc4395">Guidelines and Registration Procedures for New URI Schemes</a>”, BCP&nbsp;35, RFC&nbsp;4395, February&nbsp;2006.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="WHATWG-URL">[WHATWG-URL]</b></td>
+            <td class="top"><a href="http://www.whatwg.org/">WHATWG</a>, “<a href="http://url.spec.whatwg.org/">URL Living Standard</a>”, May&nbsp;2013, &lt;<a href="http://url.spec.whatwg.org/">http://url.spec.whatwg.org/</a>&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="Win32-Namespaces">[Win32-Namespaces]</b></td>
+            <td class="top">Microsoft Developer Network, “<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#namespaces">Naming Files, Paths, and Namespaces</a>”, June&nbsp;2013, &lt;<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#namespaces">http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx#namespaces</a>&gt;.
+            </td>
+         </tr>
+         <tr>
+            <td class="reference"><b id="github">[github]</b></td>
+            <td class="top"><a href="mailto:matthew@kerwin.net.au">Kerwin, M.</a>, “<a href="https://github.com/phluid61/file-uri-scheme">file-uri-scheme GitHub repository</a>”, n.d., &lt;<a href="https://github.com/phluid61/file-uri-scheme">https://github.com/phluid61/file-uri-scheme</a>&gt;.
+            </td>
+         </tr>
+      </table>
+      <div class="avoidbreak">
+         <h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
+         <address class="vcard"><span class="vcardline"><span class="fn">Matthew Kerwin</span><span class="n hidden"><span class="family-name">Kerwin</span><span class="given-name">Matthew</span></span></span><span class="org vcardline">Queensland University of Technology</span><span class="adr"><span class="street-address vcardline">Victoria Park Rd</span><span class="vcardline"><span class="locality">Kelvin Grove</span>, <span class="region">QLD</span>&nbsp;<span class="postal-code">4059</span></span><span class="country-name vcardline">Australia</span></span><span class="vcardline">Email: <a href="mailto:matthew.kerwin@qut.edu.au"><span class="email">matthew.kerwin@qut.edu.au</span></a></span></address>
+      </div>
+   </body>
+</html>

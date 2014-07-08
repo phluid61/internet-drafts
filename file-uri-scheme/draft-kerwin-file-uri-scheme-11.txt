@@ -1,0 +1,616 @@
+
+
+
+
+Independent Submission                                         M. Kerwin
+Internet-Draft                       Queensland University of Technology
+Intended status: Standards Track                            July 8, 2014
+Expires: January 9, 2015
+
+
+                          The file URI Scheme
+                    draft-kerwin-file-uri-scheme-00
+
+Abstract
+
+   This document specifies the file Uniform Resource Identifier (URI)
+   scheme.
+
+   *Note to Readers (To be removed by the RFC Editor)*
+
+   This draft should be discussed on its github project page ([GITHUB]).
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on January 9, 2015.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 1]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  What it is/What it's for  . . . . . . . . . . . . . . . .   3
+     1.2.  How to use it . . . . . . . . . . . . . . . . . . . . . .   3
+     1.3.  History . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.4.  UNC . . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+     1.5.  Notational Conventions  . . . . . . . . . . . . . . . . .   4
+   2.  Syntax  . . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   3.  Translations  . . . . . . . . . . . . . . . . . . . . . . . .   4
+     3.1.  Translating File Path . . . . . . . . . . . . . . . . . .   5
+       3.1.1.  Not RFC1738 . . . . . . . . . . . . . . . . . . . . .   5
+       3.1.2.  Deviants  . . . . . . . . . . . . . . . . . . . . . .   5
+     3.2.  Translating UNC . . . . . . . . . . . . . . . . . . . . .   5
+       3.2.1.  Deviants  . . . . . . . . . . . . . . . . . . . . . .   6
+   4.  Semantics . . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   5.  Encoding  . . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+     7.1.  URI Scheme Name {#iana.name}  . . . . . . . . . . . . . .   8
+     7.2.  Status {#iana.status} . . . . . . . . . . . . . . . . . .   8
+     7.3.  URI Scheme Syntax {#iana.syntax}  . . . . . . . . . . . .   8
+     7.4.  URI Scheme Semantics {#iana.semantics}  . . . . . . . . .   8
+     7.5.  Encoding Considerations #{iana.encoding}  . . . . . . . .   8
+     7.6.  Applications/Protocols That Use This URI Scheme Name
+           {#iana.implementations} . . . . . . . . . . . . . . . . .   8
+     7.7.  Interoperability Considerations {#iana.interop} . . . . .   9
+     7.8.  Security Considerations {#iana.security}  . . . . . . . .   9
+     7.9.  Contact {#iana.contact} . . . . . . . . . . . . . . . . .   9
+     7.10. Author/Change Controller {#iana.author} . . . . . . . . .   9
+     7.11. References {#iana.references} . . . . . . . . . . . . . .   9
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  11
+
+
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 2]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+1.  Introduction
+
+1.1.  What it is/What it's for
+
+   A file URI identifies a file on a particular file system.  It can be
+   used in discussions about the file, and it can be dereferenced to
+   directly access the file if other conditions are met (locality, etc.)
+
+   The file URI scheme is not coupled with a specific protocol.  As
+   such, there is no well-defined set of methods that can be performed
+   on a file URI, nor a media type associated with them.  A file URI is
+   simply a means of describing the location of a file on a particular
+   file system.
+
+1.2.  How to use it
+
+   In the simplest terms, the only methods that can be performed on a
+   file URI are translating it to and from a file path; subsequent
+   methods are performed on the resulting file path, and depend entirely
+   on the file system's APIs.
+
+   For example, consider the POSIX "open()", "read()", and "close()"
+   methods ([POSIX]) for reading a file's contents into memory.
+
+   If there's a non-blank authority, you can't use the file system.
+   E.g. SMB, NFS, etc.
+
+   (Different from RFC1738 - "localhost" used to mean "", now means a
+   service on loopback)
+
+1.3.  History
+
+   The file URI scheme was first defined in [RFC1630], which, being an
+   informational RFC, does not specify an Internet standard.  The
+   definition was standardised in [RFC1738], and the scheme was
+   registered with the Internet Assigned Numbers Authority (IANA,
+   [IANA-URI-Schemes]); however that definition omitted certain language
+   included by former that clarified aspects such as:
+
+   o  the use of slashes to denote boundaries between directory levels
+      of a hierarchical file system; and
+
+   o  the requirement that client software convert the file URI into a
+      file name in the local file name conventions.
+
+   The Internet draft [I-D.draft-hoffman-file-uri] was written in an
+   effort to keep the file URI scheme on standards track when [RFC1738]
+   was made obsolete, but that draft expired in 2005.  It enumerated
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 3]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+   concerns arising from the various, often conflicting implementations
+   of the scheme.  It serves as the spiritual predecessor of this
+   document.
+
+   Additionally the WHATWG defines a living URL standard ([WHATWG-URL]),
+   which includes algorithms for interpreting file URIs (as URLs).
+
+1.4.  UNC
+
+   A Universal Naming Convention (UNC) string does a similar job.  It
+   has three parts: host, share, path.  You can translate between UNC
+   paths and file URIs.
+
+1.5.  Notational Conventions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119].
+
+2.  Syntax
+
+     file-URI       = f-scheme ":" f-hier-part
+
+     f-scheme       = "file"
+
+     f-hier-part    = "//" auth-path ; file://...
+                    / local-path
+
+     auth-path      = [ authority ] path-absolute
+                    / unc-path       ; file:////host/share/... *
+                    / windows-path   ; file://c:/... **
+
+     local-path     = path-absolute  ; file:/...
+                    / windows-path   ; file:c:/...
+
+     unc-path       = 2\*3"/" authority path-absolute
+
+     windows-path   = drive-letter path-absolute
+     drive-letter   = ALPHA [ drive-marker ]
+     drive-marker   = ":" / "|"
+
+
+   * The 'unc-path' rule within 'auth-path' is there for legacy reasons.
+   ** The 'windows-path' rule within 'auth-path' allows for dubious URIs
+   that encode a Windows drive letter as the authority component.
+
+3.  Translations
+
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 4]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+3.1.  Translating File Path
+
+   1.  Resolve to fully qualified/absolute path
+
+   2.  On DOS/Windows, put drive letter + ":" in first segment, on UNIX
+       path starts with "/"
+
+   3.  note: authority, if used, must be followed by a "/"; on DOS/
+       Windows this implies "file://authority/c:/.."
+
+   4.  convert each directory in the path to path segments, e.g. percent
+       encoding reserved characters, as per [RFC3986], Section 2.
+
+   5.  concatenate segments with appropriate "file:" and slashes
+
+   ... gives an IRI in file system's encoding, which can be translated
+   to a URI as per [RFC3987], Section 3.1.
+
+   Simplest example:
+
+   file:/path/to/file.txt    |  file:c:/path/to/file.txt
+
+   Standard example:
+
+   file:///path/to/file.txt  |  file:///c:/path/to/file.txt
+
+3.1.1.  Not RFC1738
+
+   In [RFC1738] always started with "file://", and first "/" wasn't part
+   of path (although nobody ever used "file:////path/to/file.txt")
+
+3.1.2.  Deviants
+
+   DOS/Windows: Some deviants leave the leading slash off before the
+   drive letter when authority is blank, e.g. "file://c:/..."
+
+   DOS/Windows: Some deviants replace ":" with "|", and others leave it
+   off completely. e.g. "file:///c|/..." or "file:///c/..."
+
+3.2.  Translating UNC
+
+   The syntax of a UNC path [MS-DTYP]:
+
+   UNC = "\\" hostname "\" sharename \*( "\" objectname )
+   hostname = netbios-name / fqdn / ip-address
+   sharename = <name of share or resource to be accessed>
+   objectname = <depends on resource being accessed>
+
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 5]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+   o netbios-name from [MS-NBTE], Section 2.2.1 [1].  o fqdn from
+   [RFC1035] or [RFC1123] o ip-address from [RFC1123], Section 2.1, or
+   [RFC4921], Section 2.2.
+
+   o  format of sharename depends on protocol; see [MS-SMB], [RFC3530],
+      NCP ([NOVELL]).
+
+   Translates directly to file URI: hostname=:authority,
+   sharename=:first path segment, objectnames=:subsequent path segments
+
+   1.  ensure hostname matches authority
+
+   2.  convert sharename, objectnames to path segments, e.g. percent
+       encoding reserved characters, as per RFC3986, Section 2.
+
+   3.  concatenate with appropriate "file://" and slashes
+
+   ... gives a UTF-16 IRI, which can be translated to a URI as per
+   [RFC3987], Section 3.1.
+
+3.2.1.  Deviants
+
+   Many implementations accept the full UNC path in the URI path (with
+   all backslashes converted to slashes).  Additionally, because
+   [RFC1738] said that the first "/" after "file://[authority]" wasn't
+   part of the path, Firefox requires an additional slash.
+
+   E.g.:
+
+   file:////hostname/share/object/names
+   file://///hostname/share/object/names  ; (FF)
+
+4.  Semantics
+
+5.  Encoding
+
+   Use-cases:
+
+   Transcription
+      E.g. a human hearing a spoken URI and entering it into a text
+      file.  I don't think there's any encoding happening here, per se;
+      that would be handled by #3 or #4 below.
+
+      Input: analogue signal
+
+      Output: visual representation of a URI, as a character sequence
+
+   Manual encoding
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 6]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+      E.g. a human entering a URI as a string literal in a program
+      (they'd need to perform all the encoding steps, down to the byte/
+      character level.)
+
+      Input: any
+
+      Output: expression of fully encoded URI, as byte sequence
+
+   Keyboard to URI encoding
+      A UI text box accepting keyboard input; silently percent-encoding
+      (or not) as appropriate, etc.
+
+      Input: keypress events/characters
+
+      Output: URI
+
+   File path to URI encoding
+      "UrlCreateFromPath()"
+
+      Input: file path
+
+      Output: URI
+
+   Parsing
+      E.g. a browser following a clicked hyperlink.  Probably just doing
+      enough to detect that it's a file URI, then relying on #6 to do
+      the real work.
+
+      Input: URI
+
+      Output: ?
+
+   URI to file path decoding
+      "PathCreateFromUrl()", "CreateURLMonikerEx()"
+
+      Input: URI
+
+      Output: file path
+
+   Anything that outputs a URI should use percent-encoded UTF-8, except
+   in Windows, when it should be [an IRI?]
+
+6.  Security Considerations
+
+7.  IANA Considerations
+
+
+
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 7]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+   In accordance with the guidelines and registration procedures for new
+   URI schemes [RFC4395], this section provides the information needed
+   to update the registration of the file URI scheme.
+
+7.1.  URI Scheme Name {#iana.name}
+
+   file
+
+7.2.  Status {#iana.status}
+
+   permanent
+
+7.3.  URI Scheme Syntax {#iana.syntax}
+
+   See Section 2.
+
+7.4.  URI Scheme Semantics {#iana.semantics}
+
+   See Section 4.
+
+7.5.  Encoding Considerations #{iana.encoding}
+
+   See Section 5.
+
+7.6.  Applications/Protocols That Use This URI Scheme Name
+      {#iana.implementations}
+
+   Web browsers:
+
+   o  Firefox
+
+      *  Note: Firefox has an interpretation of RFC 1738 which affects
+         UNC paths.  See: , Bugzilla#107540 [2]
+
+   o  Chromium
+
+   o  Internet Explorer
+
+   o  Opera
+
+   Other applications/protocols:
+
+   o  Windows API
+
+      *  PathCreateFromUrl function [3]
+
+         , MSDN
+
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 8]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+      *  UrlCreateFromPath function [4]
+
+         , MSDN
+
+   o  Perl LWP
+
+   These lists are non-exhaustive.
+
+7.7.  Interoperability Considerations {#iana.interop}
+
+   Due to the convoluted history of the file URI scheme there are many,
+   varied implementations in existence.  Many have converged over time,
+   forming a few kernels of closely-related functionality, and RFCXXXX
+   attempts to accommodate such common functionality.  However there
+   will always be exceptions, and this fact is recognised.
+
+7.8.  Security Considerations {#iana.security}
+
+   See Section 6.
+
+7.9.  Contact {#iana.contact}
+
+   Matthew Kerwin, matthew.kerwin@qut.edu.au
+
+7.10.  Author/Change Controller {#iana.author}
+
+   This scheme is registered under the IETF tree.  As such, the IETF
+   maintains change control.
+
+7.11.  References {#iana.references}
+
+   None.
+
+8.  Acknowledgements
+
+   This specification is derived from [RFC1738], [RFC3986], and
+   [I-D.draft-hoffman-file-uri] (expired); the acknowledgements in those
+   documents still apply.
+
+9.  References
+
+9.1.  Normative References
+
+   [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.56
+              UNC", January 2013,
+              <http://msdn.microsoft.com/en-us/library/gg465305.aspx>.
+
+
+
+
+
+Kerwin                   Expires January 9, 2015                [Page 9]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+   [MS-NBTE]  Microsoft Open Specifications, "NetBIOS over TCP (NBT)
+              Extensions", May 2014,
+              <http://msdn.microsoft.com/en-us/library/dd891412.aspx>.
+
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
+              specification", STD 13, RFC 1035, November 1987.
+
+   [RFC1123]  Braden, R., "Requirements for Internet Hosts - Application
+              and Support", STD 3, RFC 1123, October 1989.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66, RFC
+              3986, January 2005.
+
+   [RFC3987]  Duerst, M. and M. Suignard, "Internationalized Resource
+              Identifiers (IRIs)", RFC 3987, January 2005.
+
+   [RFC4921]  Hinden, R. and S. Deering, "IP Version 6 Addressing
+              Architecture", RFC 4921, February 2006.
+
+9.2.  Informative References
+
+   [GITHUB]   Kerwin, M., "file-uri-scheme GitHub repository", July
+              2014.
+
+   [I-D.draft-hoffman-file-uri]
+              Hoffman, P., "The file URI Scheme", draft-hoffman-file-
+              uri-03 (work in progress), January 2005.
+
+   [IANA-URI-Schemes]
+              Internet Assigned Numbers Authority, "Uniform Resource
+              Identifier (URI) Schemes registry", June 2013, <http://
+              www.iana.org/assignments/uri-schemes/uri-schemes.xml>.
+
+   [MS-SMB]   Microsoft Open Specifications, "Server Message Block (SMB)
+              Protocol", January 2013,
+              <http://msdn.microsoft.com/en-us/library/cc246231.aspx>.
+
+   [NOVELL]   Novell, "NetWare Core Protocols", 2013, <http://
+              www.novell.com/developer/ndk/netware_core_protocols.html>.
+
+   [POSIX]    IEEE, "IEEE Std 1003.1, 2013 Edition", 2013.
+
+   [RFC1630]  Berners-Lee, T., "Universal Resource Identifiers in WWW: A
+              Unifying Syntax for the Expression of Names and Addresses
+
+
+
+Kerwin                   Expires January 9, 2015               [Page 10]
+
+Internet-Draft               file-uri-scheme                   July 2014
+
+
+              of Objects on the Network as used in the World-Wide Web",
+              RFC 1630, June 1994.
+
+   [RFC1738]  Berners-Lee, T., Masinter, L., and M. McCahill, "Uniform
+              Resource Locators (URL)", RFC 1738, December 1994.
+
+   [RFC3530]  Shepler, S., Callaghan, B., Robinson, D., Thurlow, R.,
+              Beame, C., Eisler, M., and D. Noveck, "Network File System
+              (NFS) version 4 Protocol", RFC 3530, April 2003.
+
+   [RFC4395]  Hansen, T., Hardie, T., and L. Masinter, "Guidelines and
+              Registration Procedures for New URI Schemes", BCP 35, RFC
+              4395, February 2006.
+
+   [WHATWG-URL]
+              WHATWG, "URL Living Standard", May 2013,
+              <http://url.spec.whatwg.org/>.
+
+Author's Address
+
+   Matthew Kerwin
+   Queensland University of Technology
+
+   Email: matthew.kerwin@qut.edu.au
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kerwin                   Expires January 9, 2015               [Page 11]
