@@ -175,6 +175,8 @@ is the most preferred; a value of 0 means "not acceptable".
 An endpoint that receives a `SETTINGS_ACCEPT_ENCODED_DATA` setting with any unknown or
 unsupported encoding identifier MUST ignore that setting.
 
+Padding MUST be set to zero when sending and ignored when receiving.
+
 An endpoint may advertise support for an encoding scheme and later decide that it no longer
 supports that scheme.  After sending a `SETTINGS_ACCEPT_ENCODED_DATA` setting with a rank of
 0, the endpoint SHOULD continue to accept `ENCODED_DATA` frames using that scheme for a
