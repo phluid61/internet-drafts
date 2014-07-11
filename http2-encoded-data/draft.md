@@ -43,15 +43,16 @@ informative:
 
 --- abstract
 
-This document introduces a new frame for transporting encoded data in HTTP/2, and associated setting parameters
-and error codes.
+This document introduces new frame types for transporting encoded data in HTTP/2, and an
+associated error code.
+
 
 --- middle
 
 # Introduction {#intro}
 
-This document introduces a mechanism for applying encoding, particularly compression, to data transported
-between two HTTP/2 endpoints, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
+This document introduces a mechanism for applying encoding, particularly compression, to data
+transported between two HTTP/2 endpoints, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
 
 
 ## Notational Conventions
@@ -63,22 +64,71 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Additions to HTTP/2 {#additions}
 
-This document introduces a new HTTP/2 `ENCODED_DATA` frame type ({{I-D.ietf-httpbis-http2}}, Section 11.2), a
-new setting ({{I-D.ietf-httpbis-http2}}, Section 11.3) to negotiate its use, and a new error code
-({{I-D.ietf-httpbis-http2}}, Section 7).
+This document introduces two new HTTP/2 frame types ({{I-D.ietf-httpbis-http2}}, Section 11.2),
+and a new error code ({{I-D.ietf-httpbis-http2}}, Section 7).
 
-Note that while encoding some or all data in a stream might affect the total length of the corresponding HTTP message body,
-the `content-length` header, if present, should continue to reflect the total length of the _unencoded_
-data. This is particularly relevant when detecting malformed messages ({{I-D.ietf-httpbis-http2}},
-Section 8.1.2.5).
+Note that while encoding some or all data in a stream might affect the total length of the
+corresponding HTTP message body, the `content-length` header, if present, should continue to
+reflect the total length of the _unencoded_ data. This is particularly relevant when detecting
+malformed messages ({{I-D.ietf-httpbis-http2}}, Section 8.1.2.5).
 
 
-## ENCODED\_DATA  {#frame}
+## ACCEPT\_ENCODED\_DATA  {#accept-encoded-data}
 
-`ENCODED_DATA` frames (type code=0xTBA) are semantically identical to `DATA` frames ({{I-D.ietf-httpbis-http2}},
-Section 6.1), but have an encoding applied to their payload. Significantly, `ENCODED_DATA` frames are subject
-to flow control ({{I-D.ietf-httpbis-http2}}, Section 5.2). Any encoding or decoding context for an `ENCODED_DATA`
-frame is unique to that frame.
+An `ACCEPT_ENCODED_DATA` frame (type code=0xTBA) is used to indicate the sender's ability and
+willingness to receive `ENCODED_DATA` frames that are encoded using the schemes identified in
+its payload.
+
+The payload length of an `ACCEPT_ENCODED_DATA` frame MUST be an exact multiple of 16 bits (2 bytes).
+An endpoint that receives an `ACCEPT_ENCODED_DATA` frame with an odd length MUST treat this as a
+connection error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type `PROTOCOL_ERROR`.
+
+~~~~~~~~~~
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  | Encoding (8)  |   Rank (8)    | ...
+  +---------------+---------------+-------------------------------+
+~~~~~~~~~~
+{: title="ACCEPT_ENCODED_DATA Frame Payload"}
+
+The `ACCEPT_ENCODED_DATA` frame contains zero or more tuples comprising the following fields:
+
+* Encoding:
+  An 8-bit identifier which identifies the encoding being advertised (see {{schemes}}).
+
+* Rank:
+  An 8-bit integer value.
+
+The rank fulfils the same role as in the HTTP/1.1 TE header ({{RFC7230}} Section 4.3). The
+rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255
+is the most preferred; a value of 0 means "not acceptable".
+
+An endpoint that receives an `ACCEPT_ENCODED_DATA` frame containing an \{encoding,rank\} tuple
+with an unknown or unsupported encoding identifier MUST ignore that tuple.
+
+Each `ACCEPT_ENCODED_DATA` frame fully replaces the set of tuples sent in a previous frame;
+if an encoding identifier is omitted from a subsequent `ACCEPT_ENCODED_DATA` frame it is deemed
+"not acceptable".
+
+An endpoint may advertise support for an encoding scheme and later decide that it no longer
+supports that scheme.  After sending an `ACCEPT_ENCODED_DATA` that omits the encoding identifier
+in question, or includes it with a rank of 0, the endpoint SHOULD continue to accept
+`ENCODED_DATA` frames using that scheme for a reasonable amount of time to account for encoded
+frames that are already in flight.
+
+The `ACCEPT_ENCODED_DATA` frame does not define any flags, and is not subject to flow control.
+
+
+## ENCODED\_DATA  {#encoded-data}
+
+`ENCODED_DATA` frames (type code=0xTBA) are semantically identical to `DATA` frames
+({{I-D.ietf-httpbis-http2}}, Section 6.1), but have an encoding applied to their payload.
+Significantly, `ENCODED_DATA` frames are subject to flow control ({{I-D.ietf-httpbis-http2}},
+Section 5.2). The amount of flow control window consumed by an `ENCODED_DATA` frame is the length
+of its encoded payload.
+
+Any encoding or decoding context for an `ENCODED_DATA` frame is unique to that frame.
 
 ~~~~~~~~~~
    0                   1                   2                   3
@@ -134,61 +184,19 @@ The `ENCODED_DATA` frame defines the following flags:
 
 On receiving an `ENCODED_DATA` frame, an intermediary MAY decode the data and forward it in one or
 more `DATA` frames. If the downstream peer does not support the encoding scheme used in the
-received frame, as advertised in a `SETTINGS_ACCEPT_ENCODED_DATA` setting, the intermediary MUST
+received frame, as advertised in an `ACCEPT_ENCODED_DATA` frame, the intermediary MUST
 decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
 supported by the downstream peer and forward it in one or more `ENCODED_DATA` frames.
 
-An `ENCODED_DATA` frame MUST NOT be sent on a connection before both receiving a `SETTINGS_ACCEPT_ENCODED_DATA`
-setting and sending the associated acknowledgement. A sender MUST NOT apply an encoding that
-has not first been advertised by the peer in a `SETTINGS_ACCEPT_ENCODED_DATA` setting, or was
-advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not
-recognise or support MUST treat this as a connection error of type `PROTOCOL_ERROR`.
+An `ENCODED_DATA` frame MUST NOT be sent on a connection before receiving an `ACCEPT_ENCODED_DATA`
+frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an
+`ACCEPT_ENCODED_DATA` frame, or was advertised with a rank of 0. Endpoints that receive a frame
+with an encoding they do not recognise or support MUST treat this as a connection error of type
+`PROTOCOL_ERROR`.
 
 If an endpoint detects that the payload of an `ENCODED_DATA` frame is incorrectly encoded it MUST
 treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
 `DATA_ENCODING_ERROR` ({{error}}).
-
-
-## SETTINGS\_ACCEPT\_ENCODED\_DATA  {#setting}
-
-This document defines a new `SETTINGS` parameter:
-
-`SETTINGS_ACCEPT_ENCODED_DATA` (code=0xTBA): Indicates the sender's ability and willingness to
-receive `ENCODED_DATA` frames that are encoded using the scheme identified in the Value.
-
-The Value field is further divided into three sub-fields: an unsigned 8-bit encoding
-identifier, an unsigned 8-bit rank, and 16 bits of padding.
-
-~~~~~~~~~~
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  | Encoding (8)  |     Rank (8)      |       Padding (16)        |
-  +---------------+-------------------+---------------------------+
-~~~~~~~~~~
-{: title="SETTINGS_ACCEPT_ENCODED_DATA Value"}
-
-The rank fulfils the same role as in the HTTP/1.1 TE header ({{RFC7230}} Section 4.3). The
-rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255
-is the most preferred; a value of 0 means "not acceptable".
-
-An endpoint that receives a `SETTINGS_ACCEPT_ENCODED_DATA` setting with any unknown or
-unsupported encoding identifier MUST ignore that setting.
-
-Padding MUST be set to zero when sending and ignored when receiving.
-
-An endpoint may advertise support for an encoding scheme and later decide that it no longer
-supports that scheme.  After sending a `SETTINGS_ACCEPT_ENCODED_DATA` setting with a rank of
-0, the endpoint SHOULD continue to accept `ENCODED_DATA` frames using that scheme for a
-reasonable amount of time, until the acknowledgement arrives. (See {{I-D.ietf-httpbis-http2}},
-Section 6.5.3)
-
-Note that subsequent `SETTINGS_ACCEPT_ENCODED_DATA` parameters _do not_ replace existing
-values for the parameter unless they contain the same encoding identifier.  Effectively, one
-may consider this specification to introduce 256 new settings parameters, each having a 24-bit
-identifier (the 16-bit `SETTINGS` identifier plus the 8-bit encoding parameter) and an 8-bit
-value (the encoding rank); however, as support for any given encoding is entirely optional,
-an endpoint only need track rankings for those encodings it supports for sending encoded data.
 
 
 ## DATA\_ENCODING\_ERROR  {#error}
@@ -231,7 +239,7 @@ be merged into a single compressed frame.
 
 # IANA Considerations
 
-This document updates the registries for frame types, settings, and error codes in
+This document updates the registries for frame types and error codes in
 the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.  This
 document also establishes a new registry for HTTP/2 encoding scheme
 codes.  This new registry is entered into the "Hypertext Transfer
@@ -244,24 +252,13 @@ This document updates the "HTTP/2 Frame Type" registry
 ({{I-D.ietf-httpbis-http2}}, Section 11.2).  The entries in the
 following table are registered by this document.
 
- |---------------|------|-------------|
- | Frame Type    | Code | Section     |
- |---------------|------|-------------|
- | ENCODED\_DATA | TBD  | {{frame}}   |
- |---------------|------|-------------|
-
-
-## HTTP/2 Settings Registry Update
-
-This document updates the "HTTP/2 Settings" registry
-({{I-D.ietf-httpbis-http2}}, Section 11.3).  The entries in the
-following table are registered by this document.
-
- |---------------------------------|------|---------------|---------------|
- | Name                            | Code | Initial Value | Specification |
- |---------------------------------|------|---------------|---------------|
- | SETTINGS\_ACCEPT\_ENCODED\_DATA | TBD  | N/A           | {{setting}}   |
- |---------------------------------|------|---------------|---------------|
+ |-----------------------|------|---------------------------|
+ | Frame Type            | Code | Section                   |
+ |-----------------------|------|---------------------------|
+ | ACCPET\_ENCODED\_DATA | TBD  | {{accept-encoded-data}}   |
+ |-----------------------|------|---------------------------|
+ | ENCODED\_DATA         | TBD  | {{encoded-data}}          |
+ |-----------------------|------|---------------------------|
 
 
 ## HTTP/2 Error Code Registry Update
