@@ -355,16 +355,15 @@
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Notational Conventions"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Additions to HTTP/2"/>
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 ENCODED_DATA"/>
-<link href="#rfc.section.2.2" rel="Chapter" title="2.2 SETTINGS_ACCEPT_ENCODED_DATA"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 ACCEPT_ENCODED_DATA"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 ENCODED_DATA"/>
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 DATA_ENCODING_ERROR"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Encoding Schemes"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Security Considerations"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 IANA Considerations"/>
 <link href="#rfc.section.5.1" rel="Chapter" title="5.1 HTTP/2 Frame Type Registry Update"/>
-<link href="#rfc.section.5.2" rel="Chapter" title="5.2 HTTP/2 Settings Registry Update"/>
-<link href="#rfc.section.5.3" rel="Chapter" title="5.3 HTTP/2 Error Code Registry Update"/>
-<link href="#rfc.section.5.4" rel="Chapter" title="5.4 HTTP/2 Encoding Schemes Registry"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 HTTP/2 Error Code Registry Update"/>
+<link href="#rfc.section.5.3" rel="Chapter" title="5.3 HTTP/2 Encoding Schemes Registry"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 Acknowledgements"/>
 <link href="#rfc.references" rel="Chapter" title="7 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="7.1 Normative References"/>
@@ -378,8 +377,8 @@
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-encoded-data-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2014-7-11" />
-  <meta name="dct.abstract" content="This document introduces a new frame for transporting encoded data in HTTP/2, and associated setting parameters and error codes." />
-  <meta name="description" content="This document introduces a new frame for transporting encoded data in HTTP/2, and associated setting parameters and error codes." />
+  <meta name="dct.abstract" content="This document introduces new frame types for transporting encoded data in HTTP/2, and an associated error code." />
+  <meta name="description" content="This document introduces new frame types for transporting encoded data in HTTP/2, and an associated error code." />
 
 </head>
 
@@ -415,7 +414,7 @@
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This document introduces a new frame for transporting encoded data in HTTP/2, and associated setting parameters and error codes.</p>
+<p>This document introduces new frame types for transporting encoded data in HTTP/2, and an associated error code.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
@@ -437,16 +436,15 @@
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
 <li>1.1.   <a href="#rfc.section.1.1">Notational Conventions</a></li>
 <li>2.   <a href="#rfc.section.2">Additions to HTTP/2</a></li>
-<li>2.1.   <a href="#rfc.section.2.1">ENCODED_DATA</a></li>
-<li>2.2.   <a href="#rfc.section.2.2">SETTINGS_ACCEPT_ENCODED_DATA</a></li>
+<li>2.1.   <a href="#rfc.section.2.1">ACCEPT_ENCODED_DATA</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">ENCODED_DATA</a></li>
 <li>2.3.   <a href="#rfc.section.2.3">DATA_ENCODING_ERROR</a></li>
 <li>3.   <a href="#rfc.section.3">Encoding Schemes</a></li>
 <li>4.   <a href="#rfc.section.4">Security Considerations</a></li>
 <li>5.   <a href="#rfc.section.5">IANA Considerations</a></li>
 <li>5.1.   <a href="#rfc.section.5.1">HTTP/2 Frame Type Registry Update</a></li>
-<li>5.2.   <a href="#rfc.section.5.2">HTTP/2 Settings Registry Update</a></li>
-<li>5.3.   <a href="#rfc.section.5.3">HTTP/2 Error Code Registry Update</a></li>
-<li>5.4.   <a href="#rfc.section.5.4">HTTP/2 Encoding Schemes Registry</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">HTTP/2 Error Code Registry Update</a></li>
+<li>5.3.   <a href="#rfc.section.5.3">HTTP/2 Encoding Schemes Registry</a></li>
 <li>6.   <a href="#rfc.section.6">Acknowledgements</a></li>
 <li>7.   <a href="#rfc.references">References</a></li>
 <li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
@@ -461,10 +459,34 @@
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
 <p id="rfc.section.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#additions" id="additions">Additions to HTTP/2</a></h1>
-<p id="rfc.section.2.p.1">This document introduces a new HTTP/2 <samp>ENCODED_DATA</samp> frame type (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.2), a new setting (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.3) to negotiate its use, and a new error code (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 7).</p>
+<p id="rfc.section.2.p.1">This document introduces two new HTTP/2 frame types (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.2), and a new error code (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 7).</p>
 <p id="rfc.section.2.p.2">Note that while encoding some or all data in a stream might affect the total length of the corresponding HTTP message body, the <samp>content-length</samp> header, if present, should continue to reflect the total length of the <em>unencoded</em> data. This is particularly relevant when detecting malformed messages (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 8.1.2.5).</p>
-<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#frame" id="frame">ENCODED_DATA</a></h1>
-<p><samp>ENCODED_DATA</samp> frames (type code=0xTBA) are semantically identical to <samp>DATA</samp> frames (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 6.1), but have an encoding applied to their payload. Significantly, <samp>ENCODED_DATA</samp> frames are subject to flow control (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.2). Any encoding or decoding context for an <samp>ENCODED_DATA</samp> frame is unique to that frame.</p>
+<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#accept-encoded-data" id="accept-encoded-data">ACCEPT_ENCODED_DATA</a></h1>
+<p id="rfc.section.2.1.p.1">An <samp>ACCEPT_ENCODED_DATA</samp> frame (type code=0xTBA) is used to indicate the sender&#8217;s ability and willingness to receive <samp>ENCODED_DATA</samp> frames that are encoded using the schemes identified in its payload.</p>
+<p id="rfc.section.2.1.p.2">The payload length of an <samp>ACCEPT_ENCODED_DATA</samp> frame MUST be an exact multiple of 16 bits (2 bytes).  An endpoint that receives an <samp>ACCEPT_ENCODED_DATA</samp> frame with an odd length MUST treat this as a connection error (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.1) of type <samp>PROTOCOL_ERROR</samp>.</p>
+<pre>
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  | Encoding (8)  |   Rank (8)    | ...
+  +---------------+---------------+-------------------------------+
+</pre>
+<p class="figure">ACCEPT_ENCODED_DATA Frame Payload</p>
+<p id="rfc.section.2.1.p.3">The <samp>ACCEPT_ENCODED_DATA</samp> frame contains zero or more tuples comprising the following fields:</p>
+<p/>
+
+<ul>
+  <li>Encoding: An 8-bit identifier which identifies the encoding being advertised (see <a href="#schemes">Section 3</a>).</li>
+  <li>Rank: An 8-bit integer value.</li>
+</ul>
+<p id="rfc.section.2.1.p.5">The rank fulfils the same role as in the HTTP/1.1 TE header (<a href="#RFC7230">[RFC7230]</a> Section 4.3). The rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255 is the most preferred; a value of 0 means &#8220;not acceptable&#8221;.</p>
+<p id="rfc.section.2.1.p.6">An endpoint that receives an <samp>ACCEPT_ENCODED_DATA</samp> frame containing an {encoding,rank} tuple with an unknown or unsupported encoding identifier MUST ignore that tuple.</p>
+<p id="rfc.section.2.1.p.7">Each <samp>ACCEPT_ENCODED_DATA</samp> frame fully replaces the set of tuples sent in a previous frame; if an encoding identifier is omitted from a subsequent <samp>ACCEPT_ENCODED_DATA</samp> frame it is deemed &#8220;not acceptable&#8221;.</p>
+<p id="rfc.section.2.1.p.8">An endpoint may advertise support for an encoding scheme and later decide that it no longer supports that scheme.  After sending an <samp>ACCEPT_ENCODED_DATA</samp> that omits the encoding identifier in question, or includes it with a rank of 0, the endpoint SHOULD continue to accept <samp>ENCODED_DATA</samp> frames using that scheme for a reasonable amount of time to account for encoded frames that are already in flight.</p>
+<p id="rfc.section.2.1.p.9">The <samp>ACCEPT_ENCODED_DATA</samp> frame does not define any flags, and is not subject to flow control.</p>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#encoded-data" id="encoded-data">ENCODED_DATA</a></h1>
+<p><samp>ENCODED_DATA</samp> frames (type code=0xTBA) are semantically identical to <samp>DATA</samp> frames (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 6.1), but have an encoding applied to their payload.  Significantly, <samp>ENCODED_DATA</samp> frames are subject to flow control (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.2). The amount of flow control window consumed by an <samp>ENCODED_DATA</samp> frame is the length of its encoded payload.</p>
+<p id="rfc.section.2.2.p.2">Any encoding or decoding context for an <samp>ENCODED_DATA</samp> frame is unique to that frame.</p>
 <pre>
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -479,7 +501,7 @@
   +---------------------------------------------------------------+
 </pre>
 <p class="figure">ENCODED_DATA Frame Payload</p>
-<p id="rfc.section.2.1.p.2">The <samp>ENCODED_DATA</samp> frame contains the following fields:</p>
+<p id="rfc.section.2.2.p.3">The <samp>ENCODED_DATA</samp> frame contains the following fields:</p>
 <p/>
 
 <ul>
@@ -488,7 +510,7 @@
   <li>Data: Encoded application data. The amount of encoded data is the remainder of the frame payload after subtracting the length of the other fields that are present.</li>
   <li>Padding: Padding octets that contain no application semantic value. Padding octets MUST be set to zero when sending and ignored when receiving.</li>
 </ul>
-<p id="rfc.section.2.1.p.4">The <samp>ENCODED_DATA</samp> frame defines the following flags:</p>
+<p id="rfc.section.2.2.p.5">The <samp>ENCODED_DATA</samp> frame defines the following flags:</p>
 <p/>
 
 <ul>
@@ -496,26 +518,9 @@
   <li><samp>END_SEGMENT</samp> (0x2): Bit 2 being set indicates that this frame is the last for the current segment. Intermediaries MUST NOT coalesce frames across a segment boundary and MUST preserve segment boundaries when forwarding frames.</li>
   <li><samp>PADDED</samp> (0x8): Bit 4 being set indicates that the Pad Length field is present.</li>
 </ul>
-<p id="rfc.section.2.1.p.6">On receiving an <samp>ENCODED_DATA</samp> frame, an intermediary MAY decode the data and forward it in one or more <samp>DATA</samp> frames. If the downstream peer does not support the encoding scheme used in the received frame, as advertised in a <samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> setting, the intermediary MUST decode the data and either: forward it in one or more DATA frames, or encode it with a scheme supported by the downstream peer and forward it in one or more <samp>ENCODED_DATA</samp> frames.</p>
-<p id="rfc.section.2.1.p.7">An <samp>ENCODED_DATA</samp> frame MUST NOT be sent on a connection before both receiving a <samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> setting and sending the associated acknowledgement. A sender MUST NOT apply an encoding that has not first been advertised by the peer in a <samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> setting, or was advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not recognise or support MUST treat this as a connection error of type <samp>PROTOCOL_ERROR</samp>.</p>
-<p id="rfc.section.2.1.p.8">If an endpoint detects that the payload of an <samp>ENCODED_DATA</samp> frame is incorrectly encoded it MUST treat this as a stream error (see <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.2) of type <samp>DATA_ENCODING_ERROR</samp> (<a href="#error">Section 2.3</a>).</p>
-<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#setting" id="setting">SETTINGS_ACCEPT_ENCODED_DATA</a></h1>
-<p id="rfc.section.2.2.p.1">This document defines a new <samp>SETTINGS</samp> parameter:</p>
-<p><samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> (code=0xTBA): Indicates the sender&#8217;s ability and willingness to receive <samp>ENCODED_DATA</samp> frames that are encoded using the scheme identified in the Value.</p>
-<p id="rfc.section.2.2.p.3">The Value field is further divided into three sub-fields: an unsigned 8-bit encoding identifier, an unsigned 8-bit rank, and 16 bits of padding.</p>
-<pre>
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  | Encoding (8)  |     Rank (8)      |       Padding (16)        |
-  +---------------+-------------------+---------------------------+
-</pre>
-<p class="figure">SETTINGS_ACCEPT_ENCODED_DATA Value</p>
-<p id="rfc.section.2.2.p.4">The rank fulfils the same role as in the HTTP/1.1 TE header (<a href="#RFC7230">[RFC7230]</a> Section 4.3). The rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255 is the most preferred; a value of 0 means &#8220;not acceptable&#8221;.</p>
-<p id="rfc.section.2.2.p.5">An endpoint that receives a <samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> setting with any unknown or unsupported encoding identifier MUST ignore that setting.</p>
-<p id="rfc.section.2.2.p.6">Padding MUST be set to zero when sending and ignored when receiving.</p>
-<p id="rfc.section.2.2.p.7">An endpoint may advertise support for an encoding scheme and later decide that it no longer supports that scheme.  After sending a <samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> setting with a rank of 0, the endpoint SHOULD continue to accept <samp>ENCODED_DATA</samp> frames using that scheme for a reasonable amount of time, until the acknowledgement arrives. (See <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 6.5.3)</p>
-<p id="rfc.section.2.2.p.8">Note that subsequent <samp>SETTINGS_ACCEPT_ENCODED_DATA</samp> parameters <em>do not</em> replace existing values for the parameter unless they contain the same encoding identifier.  Effectively, one may consider this specification to introduce 256 new settings parameters, each having a 24-bit identifier (the 16-bit <samp>SETTINGS</samp> identifier plus the 8-bit encoding parameter) and an 8-bit value (the encoding rank); however, as support for any given encoding is entirely optional, an endpoint only need track rankings for those encodings it supports for sending encoded data.</p>
+<p id="rfc.section.2.2.p.7">On receiving an <samp>ENCODED_DATA</samp> frame, an intermediary MAY decode the data and forward it in one or more <samp>DATA</samp> frames. If the downstream peer does not support the encoding scheme used in the received frame, as advertised in an <samp>ACCEPT_ENCODED_DATA</samp> frame, the intermediary MUST decode the data and either: forward it in one or more DATA frames, or encode it with a scheme supported by the downstream peer and forward it in one or more <samp>ENCODED_DATA</samp> frames.</p>
+<p id="rfc.section.2.2.p.8">An <samp>ENCODED_DATA</samp> frame MUST NOT be sent on a connection before receiving an <samp>ACCEPT_ENCODED_DATA</samp> frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an <samp>ACCEPT_ENCODED_DATA</samp> frame, or was advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not recognise or support MUST treat this as a connection error of type <samp>PROTOCOL_ERROR</samp>.</p>
+<p id="rfc.section.2.2.p.9">If an endpoint detects that the payload of an <samp>ENCODED_DATA</samp> frame is incorrectly encoded it MUST treat this as a stream error (see <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.2) of type <samp>DATA_ENCODING_ERROR</samp> (<a href="#error">Section 2.3</a>).</p>
 <h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#error" id="error">DATA_ENCODING_ERROR</a></h1>
 <p id="rfc.section.2.3.p.1">The following new error code is defined:</p>
 <p/>
@@ -535,7 +540,7 @@
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.4.p.1">Further to the Use of Compression in HTTP/2 (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 10.6), intermediaries MUST NOT apply compression to DATA frames, or alter the compression of <samp>ENCODED_DATA</samp> frames, other than decompressing, unless additional information is available that allows the intermediary to identify the source of data. In particular, frames that are not compressed cannot be compressed, and frames that are separately compressed cannot be merged into a single compressed frame.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
-<p id="rfc.section.5.p.1">This document updates the registries for frame types, settings, and error codes in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.  This document also establishes a new registry for HTTP/2 encoding scheme codes.  This new registry is entered into the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section. </p>
+<p id="rfc.section.5.p.1">This document updates the registries for frame types and error codes in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.  This document also establishes a new registry for HTTP/2 encoding scheme codes.  This new registry is entered into the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section. </p>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#http2-frame-type-registry-update" id="http2-frame-type-registry-update">HTTP/2 Frame Type Registry Update</a></h1>
 <p id="rfc.section.5.1.p.1">This document updates the &#8220;HTTP/2 Frame Type&#8221; registry (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.2).  The entries in the following table are registered by this document.</p>
 <table cellpadding="3" cellspacing="0" class="tt full center">
@@ -548,38 +553,23 @@
   </thead>
   <tbody>
     <tr>
+      <td class="left">ACCPET_ENCODED_DATA</td>
+      <td class="left">TBD</td>
+      <td class="left">
+        <a href="#accept-encoded-data">Section 2.1</a>
+      </td>
+    </tr>
+    <tr>
       <td class="left">ENCODED_DATA</td>
       <td class="left">TBD</td>
       <td class="left">
-        <a href="#frame">Section 2.1</a>
+        <a href="#encoded-data">Section 2.2</a>
       </td>
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#http2-settings-registry-update" id="http2-settings-registry-update">HTTP/2 Settings Registry Update</a></h1>
-<p id="rfc.section.5.2.p.1">This document updates the &#8220;HTTP/2 Settings&#8221; registry (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.3).  The entries in the following table are registered by this document.</p>
-<table cellpadding="3" cellspacing="0" class="tt full center">
-  <thead>
-    <tr>
-      <th class="left">Name</th>
-      <th class="left">Code</th>
-      <th class="left">Initial Value</th>
-      <th class="left">Specification</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="left">SETTINGS_ACCEPT_ENCODED_DATA</td>
-      <td class="left">TBD</td>
-      <td class="left">N/A</td>
-      <td class="left">
-        <a href="#setting">Section 2.2</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#http2-error-code-registry-update" id="http2-error-code-registry-update">HTTP/2 Error Code Registry Update</a></h1>
-<p id="rfc.section.5.3.p.1">This document updates the &#8220;HTTP/2 Error Code&#8221; registry (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.4).  The entries in the following table are registered by this document.</p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#http2-error-code-registry-update" id="http2-error-code-registry-update">HTTP/2 Error Code Registry Update</a></h1>
+<p id="rfc.section.5.2.p.1">This document updates the &#8220;HTTP/2 Error Code&#8221; registry (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 11.4).  The entries in the following table are registered by this document.</p>
 <table cellpadding="3" cellspacing="0" class="tt full center">
   <thead>
     <tr>
@@ -600,9 +590,9 @@
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.5.4"><a href="#rfc.section.5.4">5.4.</a> <a href="#http2-encoding-schemes-registry" id="http2-encoding-schemes-registry">HTTP/2 Encoding Schemes Registry</a></h1>
-<p id="rfc.section.5.4.p.1">This document establishes a registry for encoding scheme codes. The &#8220;HTTP/2 Encoding Schemes&#8221; registry manages an 8-bit space. The &#8220;HTTP/2 Encoding Schemes&#8221; registry operates under either of the &#8220;IETF Review&#8221; or &#8220;IESG Approval&#8221; policies <a href="#RFC5226">[RFC5226]</a> for values between 0x00 and 0xef, with values between 0xf0 and 0xff being reserved for experimental use.</p>
-<p id="rfc.section.5.4.p.2">New entries in this registry require the following information:</p>
+<h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#http2-encoding-schemes-registry" id="http2-encoding-schemes-registry">HTTP/2 Encoding Schemes Registry</a></h1>
+<p id="rfc.section.5.3.p.1">This document establishes a registry for encoding scheme codes. The &#8220;HTTP/2 Encoding Schemes&#8221; registry manages an 8-bit space. The &#8220;HTTP/2 Encoding Schemes&#8221; registry operates under either of the &#8220;IETF Review&#8221; or &#8220;IESG Approval&#8221; policies <a href="#RFC5226">[RFC5226]</a> for values between 0x00 and 0xef, with values between 0xf0 and 0xff being reserved for experimental use.</p>
+<p id="rfc.section.5.3.p.2">New entries in this registry require the following information:</p>
 <p/>
 
 <ul>
@@ -610,7 +600,7 @@
   <li>Code: The 8-bit code assigned to the encoding scheme.</li>
   <li>Specification: A reference to a specification that includes a description of the encoding scheme.</li>
 </ul>
-<p id="rfc.section.5.4.p.4">An initial set of encoding scheme code registrations can be found in <a href="#schemes">Section 3</a>.</p>
+<p id="rfc.section.5.3.p.4">An initial set of encoding scheme code registrations can be found in <a href="#schemes">Section 3</a>.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
 <p id="rfc.section.6.p.1">Thanks to Keith Morgan for his advice, input, and editorial contributions.</p>
 <h1 id="rfc.references"><a href="#rfc.references">7.</a> References</h1>
