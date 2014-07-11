@@ -75,7 +75,7 @@ Table of Contents
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   8
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
 
@@ -205,8 +205,7 @@ Internet-Draft             http2-encoded-data                  July 2014
    "DATA" frames ([I-D.ietf-httpbis-http2], Section 6.1), but have an
    encoding applied to their payload.  Significantly, "ENCODED_DATA"
    frames are subject to flow control ([I-D.ietf-httpbis-http2],
-   Section 5.2).  The amount of flow control window consumed by an
-   "ENCODED_DATA" frame is the length of its encoded payload.
+   Section 5.2).
 
    Any encoding or decoding context for an "ENCODED_DATA" frame is
    unique to that frame.
@@ -218,6 +217,7 @@ Internet-Draft             http2-encoded-data                  July 2014
    +---------------+
    | Encoding (8)  |
    +---------------+-----------------------------------------------+
+   |                            Data (*)                         ...
 
 
 
@@ -226,7 +226,6 @@ Kerwin                  Expires January 12, 2015                [Page 4]
 Internet-Draft             http2-encoded-data                  July 2014
 
 
-   |                            Data (*)                         ...
    +---------------------------------------------------------------+
    |                           Padding (*)                       ...
    +---------------------------------------------------------------+
@@ -277,6 +276,7 @@ Internet-Draft             http2-encoded-data                  July 2014
 
 
 
+
 Kerwin                  Expires January 12, 2015                [Page 5]
 
 Internet-Draft             http2-encoded-data                  July 2014
@@ -294,6 +294,15 @@ Internet-Draft             http2-encoded-data                  July 2014
    incorrectly encoded it MUST treat this as a stream error (see
    [I-D.ietf-httpbis-http2], Section 5.4.2) of type
    "DATA_ENCODING_ERROR" (Section 2.3).
+
+   "ENCODED_DATA" frames are subject to flow control and can only be
+   sent when a stream is in the "open" or "half closed (remote)" states.
+   The entire "ENCODED_DATA" frame payload is included in flow control,
+   including the encoded data, and Pad Length and Padding fields if
+   present.  If an "ENCODED_DATA" frame is received whose stream is not
+   in "open" or "half closed (local)" state, the recipient MUST respond
+   with a stream error ([I-D.ietf-httpbis-http2], Section 5.4.2) of type
+   STREAM_CLOSED.
 
 2.3.  DATA_ENCODING_ERROR
 
@@ -321,6 +330,14 @@ Internet-Draft             http2-encoded-data                  July 2014
 
 4.  Security Considerations
 
+
+
+
+Kerwin                  Expires January 12, 2015                [Page 6]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
+
    Further to the Use of Compression in HTTP/2
    ([I-D.ietf-httpbis-http2], Section 10.6), intermediaries MUST NOT
    apply compression to DATA frames, or alter the compression of
@@ -329,14 +346,6 @@ Internet-Draft             http2-encoded-data                  July 2014
    source of data.  In particular, frames that are not compressed cannot
    be compressed, and frames that are separately compressed cannot be
    merged into a single compressed frame.
-
-
-
-
-Kerwin                  Expires January 12, 2015                [Page 6]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
 
 5.  IANA Considerations
 
@@ -377,6 +386,14 @@ Internet-Draft             http2-encoded-data                  July 2014
 
    This document establishes a registry for encoding scheme codes.  The
    "HTTP/2 Encoding Schemes" registry manages an 8-bit space.  The "HTTP
+
+
+
+Kerwin                  Expires January 12, 2015                [Page 7]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
+
    /2 Encoding Schemes" registry operates under either of the "IETF
    Review" or "IESG Approval" policies [RFC5226] for values between 0x00
    and 0xef, with values between 0xf0 and 0xff being reserved for
@@ -385,14 +402,6 @@ Internet-Draft             http2-encoded-data                  July 2014
    New entries in this registry require the following information:
 
    o  Frame Type: A name or label for the encoding scheme.
-
-
-
-
-Kerwin                  Expires January 12, 2015                [Page 7]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
 
    o  Code: The 8-bit code assigned to the encoding scheme.
 
@@ -433,6 +442,14 @@ Internet-Draft             http2-encoded-data                  July 2014
               IANA Considerations Section in RFCs", BCP 26, RFC 5226,
               May 2008.
 
+
+
+
+Kerwin                  Expires January 12, 2015                [Page 8]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
+
    [Welch]    Welch, T., "A Technique for High-Performance Data
               Compression", IEEE Computer 17(6), June 1984.
 
@@ -442,29 +459,12 @@ Internet-Draft             http2-encoded-data                  July 2014
               (HTTP/1.1): Message Syntax and Routing", RFC 7230, June
               2014.
 
-
-
-
-Kerwin                  Expires January 12, 2015                [Page 8]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
-
 Author's Address
 
    Matthew Kerwin
 
    Email: matthew@kerwin.net.au
    URI:   http://matthew.kerwin.net.au/
-
-
-
-
-
-
-
-
-
 
 
 
