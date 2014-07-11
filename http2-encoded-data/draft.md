@@ -125,8 +125,7 @@ The `ACCEPT_ENCODED_DATA` frame does not define any flags, and is not subject to
 `ENCODED_DATA` frames (type code=0xTBA) are semantically identical to `DATA` frames
 ({{I-D.ietf-httpbis-http2}}, Section 6.1), but have an encoding applied to their payload.
 Significantly, `ENCODED_DATA` frames are subject to flow control ({{I-D.ietf-httpbis-http2}},
-Section 5.2). The amount of flow control window consumed by an `ENCODED_DATA` frame is the length
-of its encoded payload.
+Section 5.2).
 
 Any encoding or decoding context for an `ENCODED_DATA` frame is unique to that frame.
 
@@ -197,6 +196,13 @@ with an encoding they do not recognise or support MUST treat this as a connectio
 If an endpoint detects that the payload of an `ENCODED_DATA` frame is incorrectly encoded it MUST
 treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
 `DATA_ENCODING_ERROR` ({{error}}).
+
+`ENCODED_DATA` frames are subject to flow control and can only be sent when a stream is in the
+"open" or "half closed (remote)" states. The entire `ENCODED_DATA` frame payload is included in
+flow control, including the encoded data, and Pad Length and Padding fields if present. If an
+`ENCODED_DATA` frame is received whose stream is not in "open" or "half closed (local)" state, the
+recipient MUST respond with a stream error ({{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
+STREAM_CLOSED.
 
 
 ## DATA\_ENCODING\_ERROR  {#error}
