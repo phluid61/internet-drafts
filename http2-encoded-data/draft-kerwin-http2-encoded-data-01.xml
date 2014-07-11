@@ -123,8 +123,7 @@ frames that are already in flight.</t>
 <t><spanx style="verb">ENCODED_DATA</spanx> frames (type code=0xTBA) are semantically identical to <spanx style="verb">DATA</spanx> frames
 (<xref target="I-D.ietf-httpbis-http2"/>, Section 6.1), but have an encoding applied to their payload.
 Significantly, <spanx style="verb">ENCODED_DATA</spanx> frames are subject to flow control (<xref target="I-D.ietf-httpbis-http2"/>,
-Section 5.2). The amount of flow control window consumed by an <spanx style="verb">ENCODED_DATA</spanx> frame is the length
-of its encoded payload.</t>
+Section 5.2).</t>
 
 <t>Any encoding or decoding context for an <spanx style="verb">ENCODED_DATA</spanx> frame is unique to that frame.</t>
 
@@ -193,6 +192,13 @@ with an encoding they do not recognise or support MUST treat this as a connectio
 <t>If an endpoint detects that the payload of an <spanx style="verb">ENCODED_DATA</spanx> frame is incorrectly encoded it MUST
 treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type
 <spanx style="verb">DATA_ENCODING_ERROR</spanx> (<xref target="error"/>).</t>
+
+<t><spanx style="verb">ENCODED_DATA</spanx> frames are subject to flow control and can only be sent when a stream is in the
+“open” or “half closed (remote)” states. The entire <spanx style="verb">ENCODED_DATA</spanx> frame payload is included in
+flow control, including the encoded data, and Pad Length and Padding fields if present. If an
+<spanx style="verb">ENCODED_DATA</spanx> frame is received whose stream is not in “open” or “half closed (local)” state, the
+recipient MUST respond with a stream error (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type
+STREAM_CLOSED.</t>
 
 </section>
 <section anchor="error" title="DATA_ENCODING_ERROR">
