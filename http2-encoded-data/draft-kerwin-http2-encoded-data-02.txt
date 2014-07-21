@@ -9,7 +9,7 @@ Expires: January 23, 2015
 
 
                           HTTP/2 Encoded Data
-                   draft-kerwin-http2-encoded-data-01
+                   draft-kerwin-http2-encoded-data-02
 
 Abstract
 
