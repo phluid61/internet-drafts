@@ -221,8 +221,8 @@ The endpoint detected that its peer sent an <spanx style="verb">ENCODED_DATA</sp
 The “compress” coding is an adaptive Lempel-Ziv-Welch (LZW) coding
 <xref target="Welch"/> that is commonly produced by the UNIX file compression program
 “compress”.</t>
-  <t><spanx style="verb">ENCODING_DEFLATE</spanx> (2):
-The “deflate” coding is a “zlib” data format <xref target="RFC1950"/> containing
+  <t><spanx style="verb">ENCODING_ZLIB</spanx> (2):
+The zlib” coding is a “zlib” data format <xref target="RFC1950"/> containing
 a “deflate” compressed data stream <xref target="RFC1951"/> that uses a
 combination of the Lempel-Ziv (LZ77) compression algorithm and
 Huffman coding.</t>
