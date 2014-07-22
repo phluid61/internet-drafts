@@ -261,7 +261,7 @@ following table are registered by this document.
  |-----------------------|------|---------------------------|
  | Frame Type            | Code | Section                   |
  |-----------------------|------|---------------------------|
- | ACCPET\_ENCODED\_DATA | TBD  | {{accept-encoded-data}}   |
+ | ACCEPT\_ENCODED\_DATA | TBD  | {{accept-encoded-data}}   |
  |-----------------------|------|---------------------------|
  | ENCODED\_DATA         | TBD  | {{encoded-data}}          |
  |-----------------------|------|---------------------------|
