@@ -260,7 +260,7 @@ following table are registered by this document.</t>
       <ttcol align='left'>Frame Type</ttcol>
       <ttcol align='left'>Code</ttcol>
       <ttcol align='left'>Section</ttcol>
-      <c>ACCPET_ENCODED_DATA</c>
+      <c>ACCEPT_ENCODED_DATA</c>
       <c>TBD</c>
       <c><xref target="accept-encoded-data"/></c>
       <c>ENCODED_DATA</c>
