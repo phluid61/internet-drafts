@@ -232,6 +232,14 @@ The following encoding schemes are defined:
   The "gzip" coding is an LZ77 coding with a 32 bit CRC that is
   commonly produced by the gzip file compression program {{RFC1952}}.
 
+<!--
+
+* PHK derides compress
+* LZ4 ?
+* LZMA ? (i.e. 7z)
+
+-->
+
 
 # Security Considerations
 
