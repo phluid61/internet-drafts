@@ -222,8 +222,8 @@ The following encoding schemes are defined:
   {{Welch}} that is commonly produced by the UNIX file compression program
   "compress".
 
-* `ENCODING_DEFLATE` (2):
-  The "deflate" coding is a "zlib" data format {{RFC1950}} containing
+* `ENCODING_ZLIB` (2):
+  The zlib" coding is a "zlib" data format {{RFC1950}} containing
   a "deflate" compressed data stream {{RFC1951}} that uses a
   combination of the Lempel-Ziv (LZ77) compression algorithm and
   Huffman coding.
