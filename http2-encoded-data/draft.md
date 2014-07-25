@@ -218,18 +218,18 @@ The following new error code is defined:
 The following encoding schemes are defined:
 
 * `ENCODING_COMPRESS` (1):
-  The "compress" coding is an adaptive Lempel-Ziv-Welch (LZW) coding
+  The compress coding is an adaptive Lempel-Ziv-Welch (LZW) coding
   {{Welch}} that is commonly produced by the UNIX file compression program
   "compress".
 
 * `ENCODING_ZLIB` (2):
-  The zlib" coding is a "zlib" data format {{RFC1950}} containing
+  The zlib coding is a "zlib" data format {{RFC1950}} containing
   a "deflate" compressed data stream {{RFC1951}} that uses a
   combination of the Lempel-Ziv (LZ77) compression algorithm and
   Huffman coding.
 
 * `ENCODING_GZIP` (3):
-  The "gzip" coding is an LZ77 coding with a 32 bit CRC that is
+  The gzip coding is an LZ77 coding with a 32 bit CRC that is
   commonly produced by the gzip file compression program {{RFC1952}}.
 
 <!--
