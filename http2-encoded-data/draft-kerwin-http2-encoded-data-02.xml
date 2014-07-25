@@ -92,9 +92,9 @@ connection error (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.1) of typ
 <t>The <spanx style="verb">ACCEPT_ENCODED_DATA</spanx> frame contains zero or more tuples comprising the following fields:</t>
 
 <t><list style="symbols">
-  <t>Encoding:
+  <t>Encoding:<vspace />
 An 8-bit identifier which identifies the encoding being advertised (see <xref target="schemes"/>).</t>
-  <t>Rank:
+  <t>Rank:<vspace />
 An 8-bit integer value.</t>
 </list></t>
 
@@ -232,9 +232,9 @@ commonly produced by the gzip file compression program <xref target="RFC1952"/>.
 </list></t>
 
 <!--
-* compress is obsolete(?)
-* LZ4 ?
-* LZMA ? (i.e. 7z)
+- compress
++ LZ4 ?
++ LZMA ? (i.e. 7z)
 -->
 
 </section>

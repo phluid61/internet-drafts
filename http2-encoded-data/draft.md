@@ -64,13 +64,17 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Additions to HTTP/2 {#additions}
 
-This document introduces two new HTTP/2 frame types ({{I-D.ietf-httpbis-http2}}, Section 11.2),
-and a new HTTP/2 error code ({{I-D.ietf-httpbis-http2}}, Section 7).
+This document introduces two new HTTP/2 frame types ({{I-D.ietf-httpbis-http2}}, Section 11.2)
+and a new HTTP/2 error code ({{I-D.ietf-httpbis-http2}}, Section 7), and adds a flag to
+the `DATA` frame type ({{I-D.ietf-httpbis-http2}}, Section 6.1), to allow encoding, particularly
+compression, of data.
 
 Note that while encoding some or all data in a stream might affect the total length of the
 corresponding HTTP message body, the `content-length` header, if present, should continue to
 reflect the total length of the _unencoded_ data. This is particularly relevant when detecting
 malformed messages ({{I-D.ietf-httpbis-http2}}, Section 8.1.2.5).
+
+It also introduces the concept of "segments" (see {{segments}}).
 
 
 ## ACCEPT\_ENCODED\_DATA  {#accept-encoded-data}
@@ -172,20 +176,27 @@ The `ENCODED_DATA` frame defines the following flags:
   causes the stream to enter one of the "half closed" states or the
   "closed" state ({{I-D.ietf-httpbis-http2}}, Section 5.1).
 
-* `END_SEGMENT` (0x2):
-  Bit 2 being set indicates that this frame is the last for the
-  current segment. Intermediaries MUST NOT coalesce frames across a
-  segment boundary and MUST preserve segment boundaries when
-  forwarding frames.
-
 * `PADDED` (0x8):
   Bit 4 being set indicates that the Pad Length field is present.
+
+* `CONTINUE_SEGMENT` (0x10):
+  Bit 5 being set indicates that the current segment continues after
+  the current frame (see {{segments}}). Intermediaries MUST NOT
+  coalesce frames across a segment boundary and MUST preserve
+  segment boundaries when forwarding frames.
 
 On receiving an `ENCODED_DATA` frame, an intermediary MAY decode the data and forward it in one or
 more `DATA` frames. If the downstream peer does not support the encoding scheme used in the
 received frame, as advertised in an `ACCEPT_ENCODED_DATA` frame, the intermediary MUST
 decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
 supported by the downstream peer and forward it in one or more `ENCODED_DATA` frames.
+
+An intermediary MAY coalesce multiple adjacent `ENCODED_DATA` and `DATA` frames if all of the
+frames, with the optional exception of the final frame in the sequence, have the `CONTINUE_SEGMENT`
+flag set. The coalesced payload MAY be subsequently emitted in any combination of `ENCODED_DATA`
+and `DATA` frames. The payload of any resulting `ENCODED_DATA` frame MUST be correctly encoded
+according to those frames' encodings; this could require the payloads of the original frames to be
+decoded and subsequently re-encoded into the new frames rather than simply concatenated.
 
 An `ENCODED_DATA` frame MUST NOT be sent on a connection before receiving an `ACCEPT_ENCODED_DATA`
 frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an
@@ -213,6 +224,23 @@ The following new error code is defined:
   The endpoint detected that its peer sent an `ENCODED_DATA` frame with an invalid encoding.
 
 
+## Changes to DATA  {#data}
+
+The following new flag is defined for the `DATA` frame ({{I-D.ietf-httpbis-http2}}, Section 6.1):
+
+* `CONTINUE_SEGMENT` (0x10):
+  Bit 5 being set indicates that the current segment continues after
+  the current frame (see {{segments}}). Intermediaries MUST NOT
+  coalesce frames across a segment boundary and MUST preserve
+  segment boundaries when forwarding frames.
+
+
+# Segments  {#segments}
+
+A "segment" is a contiguous region of a HTTP/2 message's payload data which can be freely
+fragmented, recombined, and re-encoded.
+
+
 # Encoding Schemes {#schemes}
 
 The following encoding schemes are defined:
@@ -233,9 +261,9 @@ The following encoding schemes are defined:
   commonly produced by the gzip file compression program {{RFC1952}}.
 
 <!--
-* compress is obsolete(?)
-* LZ4 ?
-* LZMA ? (i.e. 7z)
+- compress
++ LZ4 ?
++ LZMA ? (i.e. 7z)
 -->
 
 
@@ -245,8 +273,7 @@ Further to the Use of Compression in HTTP/2 ({{I-D.ietf-httpbis-http2}}, Section
 intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
 `ENCODED_DATA` frames, other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
-are not compressed cannot be compressed, and frames that are separately compressed cannot
-be merged into a single compressed frame.
+are not compressed cannot be compressed.
 
 
 # IANA Considerations
