@@ -12,6 +12,28 @@
 	  a {
 	  text-decoration: none;
 	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
 	  a.smpl {
 	  color: black;
 	  }
@@ -371,7 +393,7 @@
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.3 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.4.8 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Kerwin, M." />
@@ -534,9 +556,9 @@
 <p/>
 
 <ul>
-  <li><samp>ENCODING_COMPRESS</samp> (1): The &#8220;compress&#8221; coding is an adaptive Lempel-Ziv-Welch (LZW) coding <a href="#Welch">[Welch]</a> that is commonly produced by the UNIX file compression program &#8220;compress&#8221;.</li>
-  <li><samp>ENCODING_ZLIB</samp> (2): The zlib&#8221; coding is a &#8220;zlib&#8221; data format <a href="#RFC1950">[RFC1950]</a> containing a &#8220;deflate&#8221; compressed data stream <a href="#RFC1951">[RFC1951]</a> that uses a combination of the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.</li>
-  <li><samp>ENCODING_GZIP</samp> (3): The &#8220;gzip&#8221; coding is an LZ77 coding with a 32 bit CRC that is commonly produced by the gzip file compression program <a href="#RFC1952">[RFC1952]</a>.</li>
+  <li><samp>ENCODING_COMPRESS</samp> (1): The compress coding is an adaptive Lempel-Ziv-Welch (LZW) coding <a href="#Welch">[Welch]</a> that is commonly produced by the UNIX file compression program &#8220;compress&#8221;.</li>
+  <li><samp>ENCODING_ZLIB</samp> (2): The zlib coding is a &#8220;zlib&#8221; data format <a href="#RFC1950">[RFC1950]</a> containing a &#8220;deflate&#8221; compressed data stream <a href="#RFC1951">[RFC1951]</a> that uses a combination of the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.</li>
+  <li><samp>ENCODING_GZIP</samp> (3): The gzip coding is an LZ77 coding with a 32 bit CRC that is commonly produced by the gzip file compression program <a href="#RFC1952">[RFC1952]</a>.</li>
 </ul>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.4.p.1">Further to the Use of Compression in HTTP/2 (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 10.6), intermediaries MUST NOT apply compression to DATA frames, or alter the compression of <samp>ENCODED_DATA</samp> frames, other than decompressing, unless additional information is available that allows the intermediary to identify the source of data. In particular, frames that are not compressed cannot be compressed, and frames that are separately compressed cannot be merged into a single compressed frame.</p>
