@@ -60,59 +60,23 @@ Internet-Draft             http2-encoded-data                  July 2014
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
-     1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
-   2.  Additions to HTTP/2 . . . . . . . . . . . . . . . . . . . . .   3
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
+   2.  Additions to HTTP/2 . . . . . . . . . . . . . . . . . . . . .   2
      2.1.  ACCEPT_ENCODED_DATA . . . . . . . . . . . . . . . . . . .   3
      2.2.  ENCODED_DATA  . . . . . . . . . . . . . . . . . . . . . .   4
      2.3.  DATA_ENCODING_ERROR . . . . . . . . . . . . . . . . . . .   6
    3.  Encoding Schemes  . . . . . . . . . . . . . . . . . . . . . .   6
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
-     5.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   7
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+     5.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   6
      5.2.  HTTP/2 Error Code Registry Update . . . . . . . . . . . .   7
      5.3.  HTTP/2 Encoding Schemes Registry  . . . . . . . . . . . .   7
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   8
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 2]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   8
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
 
@@ -139,6 +103,17 @@ Internet-Draft             http2-encoded-data                  July 2014
    when detecting malformed messages ([I-D.ietf-httpbis-http2],
    Section 8.1.2.5).
 
+
+
+
+
+
+
+Kerwin                  Expires January 26, 2015                [Page 2]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
+
 2.1.  ACCEPT_ENCODED_DATA
 
    An "ACCEPT_ENCODED_DATA" frame (type code=0xTBA) is used to indicate
@@ -151,24 +126,16 @@ Internet-Draft             http2-encoded-data                  July 2014
    connection error ([I-D.ietf-httpbis-http2], Section 5.4.1) of type
    "PROTOCOL_ERROR".
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Encoding (8)  |   Rank (8)    | ...
-   +---------------+---------------+-------------------------------+
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     | Encoding (8)  |   Rank (8)    | ...
+     +---------------+---------------+-------------------------------+
 
                      ACCEPT_ENCODED_DATA Frame Payload
 
    The "ACCEPT_ENCODED_DATA" frame contains zero or more tuples
    comprising the following fields:
-
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 3]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
 
    o  Encoding: An 8-bit identifier which identifies the encoding being
       advertised (see Section 3).
@@ -196,6 +163,13 @@ Internet-Draft             http2-encoded-data                  July 2014
    amount of time to account for encoded frames that are already in
    flight.
 
+
+
+Kerwin                  Expires January 26, 2015                [Page 3]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
+
    The "ACCEPT_ENCODED_DATA" frame does not define any flags, and is not
    subject to flow control.
 
@@ -210,25 +184,17 @@ Internet-Draft             http2-encoded-data                  July 2014
    Any encoding or decoding context for an "ENCODED_DATA" frame is
    unique to that frame.
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |Pad Length? (8)|
-   +---------------+
-   | Encoding (8)  |
-   +---------------+-----------------------------------------------+
-   |                            Data (*)                         ...
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 4]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
-
-   +---------------------------------------------------------------+
-   |                           Padding (*)                       ...
-   +---------------------------------------------------------------+
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |Pad Length? (8)|
+     +---------------+
+     | Encoding (8)  |
+     +---------------+-----------------------------------------------+
+     |                            Data (*)                         ...
+     +---------------------------------------------------------------+
+     |                           Padding (*)                       ...
+     +---------------------------------------------------------------+
 
                         ENCODED_DATA Frame Payload
 
@@ -250,6 +216,15 @@ Internet-Draft             http2-encoded-data                  July 2014
       ignored when receiving.
 
    The "ENCODED_DATA" frame defines the following flags:
+
+
+
+
+
+Kerwin                  Expires January 26, 2015                [Page 4]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
 
    o  "END_STREAM" (0x1): Bit 1 being set indicates that this frame is
       the last that the endpoint will send for the identified stream.
@@ -273,15 +248,6 @@ Internet-Draft             http2-encoded-data                  July 2014
    frames, or encode it with a scheme supported by the downstream peer
    and forward it in one or more "ENCODED_DATA" frames.
 
-
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 5]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
-
    An "ENCODED_DATA" frame MUST NOT be sent on a connection before
    receiving an "ACCEPT_ENCODED_DATA" frame.  A sender MUST NOT apply an
    encoding that has not first been advertised by the peer in an
@@ -304,6 +270,18 @@ Internet-Draft             http2-encoded-data                  July 2014
    with a stream error ([I-D.ietf-httpbis-http2], Section 5.4.2) of type
    STREAM_CLOSED.
 
+
+
+
+
+
+
+
+Kerwin                  Expires January 26, 2015                [Page 5]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
+
 2.3.  DATA_ENCODING_ERROR
 
    The following new error code is defined:
@@ -315,28 +293,20 @@ Internet-Draft             http2-encoded-data                  July 2014
 
    The following encoding schemes are defined:
 
-   o  "ENCODING_COMPRESS" (1): The "compress" coding is an adaptive
+   o  "ENCODING_COMPRESS" (1): The compress coding is an adaptive
       Lempel-Ziv-Welch (LZW) coding [Welch] that is commonly produced by
       the UNIX file compression program "compress".
 
-   o  "ENCODING_ZLIB" (2): The zlib" coding is a "zlib" data format
+   o  "ENCODING_ZLIB" (2): The zlib coding is a "zlib" data format
       [RFC1950] containing a "deflate" compressed data stream [RFC1951]
       that uses a combination of the Lempel-Ziv (LZ77) compression
       algorithm and Huffman coding.
 
-   o  "ENCODING_GZIP" (3): The "gzip" coding is an LZ77 coding with a 32
+   o  "ENCODING_GZIP" (3): The gzip coding is an LZ77 coding with a 32
       bit CRC that is commonly produced by the gzip file compression
       program [RFC1952].
 
 4.  Security Considerations
-
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 6]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
 
    Further to the Use of Compression in HTTP/2
    ([I-D.ietf-httpbis-http2], Section 10.6), intermediaries MUST NOT
@@ -361,6 +331,13 @@ Internet-Draft             http2-encoded-data                  July 2014
    ([I-D.ietf-httpbis-http2], Section 11.2).  The entries in the
    following table are registered by this document.
 
+
+
+Kerwin                  Expires January 26, 2015                [Page 6]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
+
                +---------------------+------+-------------+
                | Frame Type          | Code | Section     |
                +---------------------+------+-------------+
@@ -374,27 +351,18 @@ Internet-Draft             http2-encoded-data                  July 2014
    ([I-D.ietf-httpbis-http2], Section 11.4).  The entries in the
    following table are registered by this document.
 
-   +-----------------------+-------+-----------------+-----------------+
-   | Name                  | Code  | Description     | Specification   |
-   +-----------------------+-------+-----------------+-----------------+
-   | DATA_ENCODING_ERROR   | TBD   | Invalid         | Section 2.3     |
-   |                       |       | encoding        |                 |
-   |                       |       | detected        |                 |
-   +-----------------------+-------+-----------------+-----------------+
+   +---------------------+------+----------------------+---------------+
+   | Name                | Code | Description          | Specification |
+   +---------------------+------+----------------------+---------------+
+   | DATA_ENCODING_ERROR | TBD  | Invalid encoding     | Section 2.3   |
+   |                     |      | detected             |               |
+   +---------------------+------+----------------------+---------------+
 
 5.3.  HTTP/2 Encoding Schemes Registry
 
    This document establishes a registry for encoding scheme codes.  The
-   "HTTP/2 Encoding Schemes" registry manages an 8-bit space.  The "HTTP
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 7]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
-
-   /2 Encoding Schemes" registry operates under either of the "IETF
+   "HTTP/2 Encoding Schemes" registry manages an 8-bit space.  The
+   "HTTP/2 Encoding Schemes" registry operates under either of the "IETF
    Review" or "IESG Approval" policies [RFC5226] for values between 0x00
    and 0xef, with values between 0xf0 and 0xff being reserved for
    experimental use.
@@ -415,6 +383,16 @@ Internet-Draft             http2-encoded-data                  July 2014
 
    Thanks to Keith Morgan for his advice, input, and editorial
    contributions.
+
+
+
+
+
+
+Kerwin                  Expires January 26, 2015                [Page 7]
+
+Internet-Draft             http2-encoded-data                  July 2014
+
 
 7.  References
 
@@ -442,14 +420,6 @@ Internet-Draft             http2-encoded-data                  July 2014
               IANA Considerations Section in RFCs", BCP 26, RFC 5226,
               May 2008.
 
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 8]
-
-Internet-Draft             http2-encoded-data                  July 2014
-
-
    [Welch]    Welch, T., "A Technique for High-Performance Data
               Compression", IEEE Computer 17(6), June 1984.
 
@@ -475,30 +445,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kerwin                  Expires January 26, 2015                [Page 9]
+Kerwin                  Expires January 26, 2015                [Page 8]
