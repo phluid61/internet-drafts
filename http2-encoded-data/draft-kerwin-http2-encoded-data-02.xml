@@ -63,13 +63,13 @@ document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 </section>
 <section anchor="additions" title="Additions to HTTP/2">
 
-<t>This document introduces two new HTTP/2 frame types (<xref target="I-D.ietf-httpbis-http2"/> Section 11.2),
-and a new error code (<xref target="I-D.ietf-httpbis-http2"/> Section 7).</t>
+<t>This document introduces two new HTTP/2 frame types (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2),
+and a new HTTP/2 error code (<xref target="I-D.ietf-httpbis-http2"/>, Section 7).</t>
 
 <t>Note that while encoding some or all data in a stream might affect the total length of the
 corresponding HTTP message body, the <spanx style="verb">content-length</spanx> header, if present, should continue to
 reflect the total length of the <spanx style="emph">unencoded</spanx> data. This is particularly relevant when detecting
-malformed messages (<xref target="I-D.ietf-httpbis-http2"/> Section 8.1.2.5).</t>
+malformed messages (<xref target="I-D.ietf-httpbis-http2"/>, Section 8.1.2.5).</t>
 
 <section anchor="accept-encoded-data" title="ACCEPT_ENCODED_DATA">
 
@@ -79,7 +79,7 @@ its payload.</t>
 
 <t>The payload length of an <spanx style="verb">ACCEPT_ENCODED_DATA</spanx> frame MUST be an exact multiple of 16 bits (2 bytes).
 An endpoint that receives an <spanx style="verb">ACCEPT_ENCODED_DATA</spanx> frame with an odd length MUST treat this as a
-connection error (<xref target="I-D.ietf-httpbis-http2"/> Section 5.4.1) of type <spanx style="verb">PROTOCOL_ERROR</spanx>.</t>
+connection error (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.1) of type <spanx style="verb">PROTOCOL_ERROR</spanx>.</t>
 
 <figure title="ACCEPT_ENCODED_DATA Frame Payload"><artwork><![CDATA[
    0                   1                   2                   3
@@ -98,7 +98,7 @@ An 8-bit identifier which identifies the encoding being advertised (see <xref ta
 An 8-bit integer value.</t>
 </list></t>
 
-<t>The rank fulfils the same role as in the HTTP/1.1 TE header (<xref target="RFC7230"/> Section 4.3). The
+<t>The rank fulfils the same role as in the HTTP/1.1 TE header (<xref target="RFC7230"/>, Section 4.3). The
 rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255
 is the most preferred; a value of 0 means “not acceptable”.</t>
 
@@ -121,7 +121,7 @@ frames that are already in flight.</t>
 <section anchor="encoded-data" title="ENCODED_DATA">
 
 <t><spanx style="verb">ENCODED_DATA</spanx> frames (type code=0xTBA) are semantically identical to <spanx style="verb">DATA</spanx> frames
-(<xref target="I-D.ietf-httpbis-http2"/> Section 6.1), but have an encoding applied to their payload.
+(<xref target="I-D.ietf-httpbis-http2"/>, Section 6.1), but have an encoding applied to their payload.
 Significantly, <spanx style="verb">ENCODED_DATA</spanx> frames are subject to flow control (<xref target="I-D.ietf-httpbis-http2"/>,
 Section 5.2).</t>
 
@@ -167,7 +167,7 @@ octets MUST be set to zero when sending and ignored when receiving.</t>
 Bit 1 being set indicates that this frame is the last that the
 endpoint will send for the identified stream. Setting this flag
 causes the stream to enter one of the “half closed” states or the
-“closed” state (<xref target="I-D.ietf-httpbis-http2"/> Section 5.1).</t>
+“closed” state (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.1).</t>
   <t><spanx style="verb">END_SEGMENT</spanx> (0x2):
 Bit 2 being set indicates that this frame is the last for the
 current segment. Intermediaries MUST NOT coalesce frames across a
@@ -190,14 +190,14 @@ with an encoding they do not recognise or support MUST treat this as a connectio
 <spanx style="verb">PROTOCOL_ERROR</spanx>.</t>
 
 <t>If an endpoint detects that the payload of an <spanx style="verb">ENCODED_DATA</spanx> frame is incorrectly encoded it MUST
-treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/> Section 5.4.2) of type
+treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type
 <spanx style="verb">DATA_ENCODING_ERROR</spanx> (<xref target="error"/>).</t>
 
 <t><spanx style="verb">ENCODED_DATA</spanx> frames are subject to flow control and can only be sent when a stream is in the
 “open” or “half closed (remote)” states. The entire <spanx style="verb">ENCODED_DATA</spanx> frame payload is included in
 flow control, including the encoded data, and Pad Length and Padding fields if present. If an
 <spanx style="verb">ENCODED_DATA</spanx> frame is received whose stream is not in “open” or “half closed (local)” state, the
-recipient MUST respond with a stream error (<xref target="I-D.ietf-httpbis-http2"/> Section 5.4.2) of type
+recipient MUST respond with a stream error (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type
 STREAM_CLOSED.</t>
 
 </section>
@@ -232,17 +232,15 @@ commonly produced by the gzip file compression program <xref target="RFC1952"/>.
 </list></t>
 
 <!--
-
-* PHK derides compress
+* compress is obsolete(?)
 * LZ4 ?
 * LZMA ? (i.e. 7z)
-
 -->
 
 </section>
 <section anchor="security-considerations" title="Security Considerations">
 
-<t>Further to the Use of Compression in HTTP/2 (<xref target="I-D.ietf-httpbis-http2"/> Section 10.6),
+<t>Further to the Use of Compression in HTTP/2 (<xref target="I-D.ietf-httpbis-http2"/>, Section 10.6),
 intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
 <spanx style="verb">ENCODED_DATA</spanx> frames, other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
@@ -261,7 +259,7 @@ Protocol (HTTP) 2 Parameters” section. </t>
 <section anchor="http2-frame-type-registry-update" title="HTTP/2 Frame Type Registry Update">
 
 <t>This document updates the “HTTP/2 Frame Type” registry
-(<xref target="I-D.ietf-httpbis-http2"/> Section 11.2).  The entries in the
+(<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2).  The entries in the
 following table are registered by this document.</t>
 
 <texttable>
@@ -280,7 +278,7 @@ following table are registered by this document.</t>
 <section anchor="http2-error-code-registry-update" title="HTTP/2 Error Code Registry Update">
 
 <t>This document updates the “HTTP/2 Error Code” registry
-(<xref target="I-D.ietf-httpbis-http2"/> Section 11.4).  The entries in the
+(<xref target="I-D.ietf-httpbis-http2"/>, Section 11.4).  The entries in the
 following table are registered by this document.</t>
 
 <texttable>
