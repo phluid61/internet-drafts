@@ -218,16 +218,16 @@ The endpoint detected that its peer sent an <spanx style="verb">ENCODED_DATA</sp
 
 <t><list style="symbols">
   <t><spanx style="verb">ENCODING_COMPRESS</spanx> (1):
-The “compress” coding is an adaptive Lempel-Ziv-Welch (LZW) coding
+The compress coding is an adaptive Lempel-Ziv-Welch (LZW) coding
 <xref target="Welch"/> that is commonly produced by the UNIX file compression program
 “compress”.</t>
   <t><spanx style="verb">ENCODING_ZLIB</spanx> (2):
-The zlib” coding is a “zlib” data format <xref target="RFC1950"/> containing
+The zlib coding is a “zlib” data format <xref target="RFC1950"/> containing
 a “deflate” compressed data stream <xref target="RFC1951"/> that uses a
 combination of the Lempel-Ziv (LZ77) compression algorithm and
 Huffman coding.</t>
   <t><spanx style="verb">ENCODING_GZIP</spanx> (3):
-The “gzip” coding is an LZ77 coding with a 32 bit CRC that is
+The gzip coding is an LZ77 coding with a 32 bit CRC that is
 commonly produced by the gzip file compression program <xref target="RFC1952"/>.</t>
 </list></t>
 
