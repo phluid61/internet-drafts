@@ -172,12 +172,6 @@ The `ENCODED_DATA` frame defines the following flags:
   causes the stream to enter one of the "half closed" states or the
   "closed" state ({{I-D.ietf-httpbis-http2}}, Section 5.1).
 
-* `END_SEGMENT` (0x2):
-  Bit 2 being set indicates that this frame is the last for the
-  current segment. Intermediaries MUST NOT coalesce frames across a
-  segment boundary and MUST preserve segment boundaries when
-  forwarding frames.
-
 * `PADDED` (0x8):
   Bit 4 being set indicates that the Pad Length field is present.
 
@@ -233,17 +227,17 @@ The following encoding schemes are defined:
   commonly produced by the gzip file compression program {{RFC1952}}.
 
 <!--
-* compress is obsolete(?)
-* LZ4 ?
-* LZMA ? (i.e. 7z)
+- compress
++ LZ4 ?
++ LZMA ? (i.e. 7z)
 -->
 
 
 # Security Considerations
 
 Further to the Use of Compression in HTTP/2 ({{I-D.ietf-httpbis-http2}}, Section 10.6),
-intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
-`ENCODED_DATA` frames, other than decompressing, unless additional information is available
+intermediaries MUST NOT apply compression to `DATA` frames, or alter the compression of
+`ENCODED_DATA` frames other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
 are not compressed cannot be compressed, and frames that are separately compressed cannot
 be merged into a single compressed frame.
