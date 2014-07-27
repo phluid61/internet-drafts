@@ -74,7 +74,8 @@ corresponding HTTP message body, the `content-length` header, if present, should
 reflect the total length of the _unencoded_ data. This is particularly relevant when detecting
 malformed messages ({{I-D.ietf-httpbis-http2}}, Section 8.1.2.5).
 
-It also introduces the concept of "segments" (see {{segments}}).
+It also introduces the concept of "segments" (see {{segments}}). Note that segments are an
+experimental feature and may be removed in a future version of this draft.
 
 
 ## ACCEPT\_ENCODED\_DATA  {#accept-encoded-data}
