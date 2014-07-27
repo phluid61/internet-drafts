@@ -228,8 +228,8 @@ The following encoding schemes are defined:
 
 <!--
 - compress
-+ LZ4 ?
-+ LZMA ? (i.e. 7z)
++ LZ4 (Yann Collet, http://fastcompression.blogspot.fr/2013/04/lz4-streaming-format-final.html)
++ xz (7z=Pavlov, xz=???)
 -->
 
 
