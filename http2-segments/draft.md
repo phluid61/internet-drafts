@@ -1,7 +1,7 @@
 ---
 title: HTTP/2 Segments
 abbrev: http2-segments
-docname: draft-kerwin-http2-segments-00
+docname: draft-kerwin-http2-segments-01
 date: 2014
 category: std
 
@@ -80,5 +80,9 @@ The following new flag is defined for the `DATA` frame
 
 # Security Considerations  {#security}
 
+
+# IANA Considerations  {#iana}
+
+This document has no actions for IANA.
 
 --- back
