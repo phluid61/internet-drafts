@@ -1,7 +1,7 @@
 ---
 title: HTTP/2 Encoded Data
 abbrev: http2-encoded-data
-docname: draft-kerwin-http2-encoded-data-02
+docname: draft-kerwin-http2-encoded-data-03
 date: 2014
 category: std
 
@@ -24,6 +24,7 @@ author:
 normative:
   RFC2119:
   I-D.ietf-httpbis-http2:
+  I-D.kerwin-http2-segments:
   Welch:
     title: A Technique for High-Performance Data Compression
     author:
@@ -64,8 +65,9 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Additions to HTTP/2 {#additions}
 
-This document introduces two new HTTP/2 frame types ({{I-D.ietf-httpbis-http2}}, Section 11.2),
-and a new HTTP/2 error code ({{I-D.ietf-httpbis-http2}}, Section 7).
+This document introduces two new HTTP/2 frame types ({{I-D.ietf-httpbis-http2}}, Section 11.2)
+and a new HTTP/2 error code ({{I-D.ietf-httpbis-http2}}, Section 7), to allow the application of
+encoding, particularly compression, to data.
 
 Note that while encoding some or all data in a stream might affect the total length of the
 corresponding HTTP message body, the `content-length` header, if present, should continue to
@@ -175,11 +177,24 @@ The `ENCODED_DATA` frame defines the following flags:
 * `PADDED` (0x8):
   Bit 4 being set indicates that the Pad Length field is present.
 
+* `SEGMENT_CONTINUES` (0x10):
+  Bit 5 being set indicates that the current segment continues after
+  the current frame ({{I-D.kerwin-http2-segments}}, Section 2).
+  Intermediaries MUST NOT coalesce frames across a segment boundary and
+  MUST preserve segment boundaries when forwarding frames.
+
 On receiving an `ENCODED_DATA` frame, an intermediary MAY decode the data and forward it in one or
 more `DATA` frames. If the downstream peer does not support the encoding scheme used in the
 received frame, as advertised in an `ACCEPT_ENCODED_DATA` frame, the intermediary MUST
 decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
 supported by the downstream peer and forward it in one or more `ENCODED_DATA` frames.
+
+An intermediary MAY coalesce multiple adjacent `ENCODED_DATA` and `DATA` frames if all of the
+frames, with the optional exception of the final frame in the sequence, have the `SEGMENT_CONTINUES`
+flag set. The coalesced payload MAY be subsequently emitted in any combination of `ENCODED_DATA`
+and `DATA` frames. The payloads of any resulting `ENCODED_DATA` frame MUST be correctly encoded
+according to those frames' encodings; this could require the payloads of the original frames to be
+decoded and subsequently re-encoded into the new frames rather than simply concatenated.
 
 An `ENCODED_DATA` frame MUST NOT be sent on a connection before receiving an `ACCEPT_ENCODED_DATA`
 frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an
@@ -239,8 +254,8 @@ Further to the Use of Compression in HTTP/2 ({{I-D.ietf-httpbis-http2}}, Section
 intermediaries MUST NOT apply compression to `DATA` frames, or alter the compression of
 `ENCODED_DATA` frames other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
-are not compressed cannot be compressed, and frames that are separately compressed cannot
-be merged into a single compressed frame.
+are not compressed cannot be compressed, and frames that are separately compressed can only
+be merged into a single compressed frame if they occupy the same segment.
 
 
 # IANA Considerations
