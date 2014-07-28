@@ -63,8 +63,9 @@ document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 </section>
 <section anchor="additions" title="Additions to HTTP/2">
 
-<t>This document introduces two new HTTP/2 frame types (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2),
-and a new HTTP/2 error code (<xref target="I-D.ietf-httpbis-http2"/>, Section 7).</t>
+<t>This document introduces two new HTTP/2 frame types (<xref target="I-D.ietf-httpbis-http2"/>, Section 11.2)
+and a new HTTP/2 error code (<xref target="I-D.ietf-httpbis-http2"/>, Section 7), to allow the application of
+encoding, particularly compression, to data.</t>
 
 <t>Note that while encoding some or all data in a stream might affect the total length of the
 corresponding HTTP message body, the <spanx style="verb">content-length</spanx> header, if present, should continue to
@@ -168,13 +169,13 @@ Bit 1 being set indicates that this frame is the last that the
 endpoint will send for the identified stream. Setting this flag
 causes the stream to enter one of the “half closed” states or the
 “closed” state (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.1).</t>
-  <t><spanx style="verb">END_SEGMENT</spanx> (0x2):
-Bit 2 being set indicates that this frame is the last for the
-current segment. Intermediaries MUST NOT coalesce frames across a
-segment boundary and MUST preserve segment boundaries when
-forwarding frames.</t>
   <t><spanx style="verb">PADDED</spanx> (0x8):
 Bit 4 being set indicates that the Pad Length field is present.</t>
+  <t><spanx style="verb">SEGMENT_CONTINUES</spanx> (0x10):
+Bit 5 being set indicates that the current segment continues after
+the current frame (<xref target="I-D.kerwin-http2-segments"/>, Section 2).
+Intermediaries MUST NOT coalesce frames across a segment boundary and
+MUST preserve segment boundaries when forwarding frames.</t>
 </list></t>
 
 <t>On receiving an <spanx style="verb">ENCODED_DATA</spanx> frame, an intermediary MAY decode the data and forward it in one or
@@ -182,6 +183,13 @@ more <spanx style="verb">DATA</spanx> frames. If the downstream peer does not su
 received frame, as advertised in an <spanx style="verb">ACCEPT_ENCODED_DATA</spanx> frame, the intermediary MUST
 decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
 supported by the downstream peer and forward it in one or more <spanx style="verb">ENCODED_DATA</spanx> frames.</t>
+
+<t>An intermediary MAY coalesce multiple adjacent <spanx style="verb">ENCODED_DATA</spanx> and <spanx style="verb">DATA</spanx> frames if all of the
+frames, with the optional exception of the final frame in the sequence, have the <spanx style="verb">SEGMENT_CONTINUES</spanx>
+flag set. The coalesced payload MAY be subsequently emitted in any combination of <spanx style="verb">ENCODED_DATA</spanx>
+and <spanx style="verb">DATA</spanx> frames. The payloads of any resulting <spanx style="verb">ENCODED_DATA</spanx> frame MUST be correctly encoded
+according to those frames’ encodings; this could require the payloads of the original frames to be
+decoded and subsequently re-encoded into the new frames rather than simply concatenated.</t>
 
 <t>An <spanx style="verb">ENCODED_DATA</spanx> frame MUST NOT be sent on a connection before receiving an <spanx style="verb">ACCEPT_ENCODED_DATA</spanx>
 frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an
@@ -232,20 +240,20 @@ commonly produced by the gzip file compression program <xref target="RFC1952"/>.
 </list></t>
 
 <!--
-* compress is obsolete(?)
-* LZ4 ?
-* LZMA ? (i.e. 7z)
+- compress
++ LZ4 (Yann Collet, http://fastcompression.blogspot.fr/2013/04/lz4-streaming-format-final.html)
++ xz (7z=Pavlov, xz=???)
 -->
 
 </section>
 <section anchor="security-considerations" title="Security Considerations">
 
 <t>Further to the Use of Compression in HTTP/2 (<xref target="I-D.ietf-httpbis-http2"/>, Section 10.6),
-intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
-<spanx style="verb">ENCODED_DATA</spanx> frames, other than decompressing, unless additional information is available
+intermediaries MUST NOT apply compression to <spanx style="verb">DATA</spanx> frames, or alter the compression of
+<spanx style="verb">ENCODED_DATA</spanx> frames other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
-are not compressed cannot be compressed, and frames that are separately compressed cannot
-be merged into a single compressed frame.</t>
+are not compressed cannot be compressed, and frames that are separately compressed can only
+be merged into a single compressed frame if they occupy the same segment.</t>
 
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
@@ -406,6 +414,27 @@ in <xref target="schemes"/>.</t>
 <seriesInfo name='Internet-Draft' value='draft-ietf-httpbis-http2-13' />
 <format type='TXT'
         target='http://www.ietf.org/internet-drafts/draft-ietf-httpbis-http2-13.txt' />
+</reference>
+
+
+
+<reference anchor='I-D.kerwin-http2-segments'>
+<front>
+  <title>HTTP/2 Segments</title>
+
+<author initials='M' surname='Kerwin' fullname='Matthew Kerwin'>
+    <organization />
+</author>
+
+<date month='July' day='28' year='2014' />
+
+<abstract><t>This document introduces the concept of "segments" to HTTP/2, and adds a flag to the DATA frame type to allow the expression segments.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-kerwin-http2-segments-00' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-kerwin-http2-segments-00.txt' />
 </reference>
 
 
