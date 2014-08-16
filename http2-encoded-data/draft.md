@@ -14,12 +14,11 @@ stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
 
 author:
- -
-    ins: M. Kerwin
-    name: Matthew Kerwin
-    organization: 
-    email: matthew@kerwin.net.au
-    uri: http://matthew.kerwin.net.au/
+ - ins: M. Kerwin
+   name: Matthew Kerwin
+   organization: 
+   email: matthew@kerwin.net.au
+   uri: http://matthew.kerwin.net.au/
 
 normative:
   RFC2119:
@@ -77,13 +76,13 @@ malformed messages ({{I-D.ietf-httpbis-http2}}, Section 8.1.2.5).
 
 ## ACCEPT\_ENCODED\_DATA  {#accept-encoded-data}
 
-An `ACCEPT_ENCODED_DATA` frame (type code=0xTBA) is used to indicate the sender's ability and
-willingness to receive `ENCODED_DATA` frames that are encoded using the schemes identified in
+An ACCEPT\_ENCODED\_DATA frame (type code=0xTBA) is used to indicate the sender's ability and
+willingness to receive ENCODED\_DATA frames that are encoded using the schemes identified in
 its payload.
 
-The payload length of an `ACCEPT_ENCODED_DATA` frame MUST be an exact multiple of 16 bits (2 bytes).
-An endpoint that receives an `ACCEPT_ENCODED_DATA` frame with an odd length MUST treat this as a
-connection error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type `PROTOCOL_ERROR`.
+The payload length of an ACCEPT\_ENCODED\_DATA frame MUST be an exact multiple of 16 bits (2 bytes).
+An endpoint that receives an ACCEPT\_ENCODED\_DATA frame with an odd length MUST treat this as a
+connection error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type PROTOCOL\_ERROR.
 
 ~~~~~~~~~~
    0                   1                   2                   3
@@ -94,7 +93,7 @@ connection error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type `PROTOCOL_E
 ~~~~~~~~~~
 {: title="ACCEPT_ENCODED_DATA Frame Payload"}
 
-The `ACCEPT_ENCODED_DATA` frame contains zero or more tuples comprising the following fields:
+The ACCEPT\_ENCODED\_DATA frame contains zero or more tuples comprising the following fields:
 
 * Encoding:
   An 8-bit identifier which identifies the encoding being advertised (see {{schemes}}).
@@ -106,30 +105,30 @@ The rank fulfils the same role as in the HTTP/1.1 TE header ({{RFC7230}}, Sectio
 rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255
 is the most preferred; a value of 0 means "not acceptable".
 
-An endpoint that receives an `ACCEPT_ENCODED_DATA` frame containing an \{encoding,rank\} tuple
+An endpoint that receives an ACCEPT\_ENCODED\_DATA frame containing an \{encoding,rank\} tuple
 with an unknown or unsupported encoding identifier MUST ignore that tuple.
 
-Each `ACCEPT_ENCODED_DATA` frame fully replaces the set of tuples sent in a previous frame;
-if an encoding identifier is omitted from a subsequent `ACCEPT_ENCODED_DATA` frame it is deemed
+Each ACCEPT\_ENCODED\_DATA frame fully replaces the set of tuples sent in a previous frame;
+if an encoding identifier is omitted from a subsequent ACCEPT\_ENCODED\_DATA frame it is deemed
 "not acceptable".
 
 An endpoint may advertise support for an encoding scheme and later decide that it no longer
-supports that scheme.  After sending an `ACCEPT_ENCODED_DATA` that omits the encoding identifier
+supports that scheme.  After sending an ACCEPT\_ENCODED\_DATA that omits the encoding identifier
 in question, or includes it with a rank of 0, the endpoint SHOULD continue to accept
-`ENCODED_DATA` frames using that scheme for a reasonable amount of time to account for encoded
+ENCODED\_DATA frames using that scheme for a reasonable amount of time to account for encoded
 frames that are already in flight.
 
-The `ACCEPT_ENCODED_DATA` frame does not define any flags, and is not subject to flow control.
+The ACCEPT\_ENCODED\_DATA frame does not define any flags, and is not subject to flow control.
 
 
 ## ENCODED\_DATA  {#encoded-data}
 
-`ENCODED_DATA` frames (type code=0xTBA) are semantically identical to `DATA` frames
+ENCODED\_DATA frames (type code=0xTBA) are semantically identical to DATA frames
 ({{I-D.ietf-httpbis-http2}}, Section 6.1), but have an encoding applied to their payload.
-Significantly, `ENCODED_DATA` frames are subject to flow control ({{I-D.ietf-httpbis-http2}},
+Significantly, ENCODED\_DATA frames are subject to flow control ({{I-D.ietf-httpbis-http2}},
 Section 5.2).
 
-Any encoding or decoding context for an `ENCODED_DATA` frame is unique to that frame.
+Any encoding or decoding context for an ENCODED\_DATA frame is unique to that frame.
 
 ~~~~~~~~~~
    0                   1                   2                   3
@@ -146,7 +145,7 @@ Any encoding or decoding context for an `ENCODED_DATA` frame is unique to that f
 ~~~~~~~~~~
 {: title="ENCODED_DATA Frame Payload"}
 
-The `ENCODED_DATA` frame contains the following fields:
+The ENCODED\_DATA frame contains the following fields:
 
 * Pad Length:
   An 8-bit field containing the length of the frame padding in units
@@ -166,7 +165,7 @@ The `ENCODED_DATA` frame contains the following fields:
   Padding octets that contain no application semantic value. Padding
   octets MUST be set to zero when sending and ignored when receiving.
 
-The `ENCODED_DATA` frame defines the following flags:
+The ENCODED\_DATA frame defines the following flags:
 
 * `END_STREAM` (0x1):
   Bit 1 being set indicates that this frame is the last that the
@@ -183,43 +182,53 @@ The `ENCODED_DATA` frame defines the following flags:
   Intermediaries MUST NOT coalesce frames across a segment boundary and
   MUST preserve segment boundaries when forwarding frames.
 
-On receiving an `ENCODED_DATA` frame, an intermediary MAY decode the data and forward it in one or
-more `DATA` frames. If the downstream peer does not support the encoding scheme used in the
-received frame, as advertised in an `ACCEPT_ENCODED_DATA` frame, the intermediary MUST
+  The SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
+  remote endpoint has indicated support by sending a USE\_SEGMENTS
+  setting ({{I-D.kerwin-http-segments}}, Section 3) with a value of 1.
+
+On receiving an ENCODED\_DATA frame, an intermediary MAY decode the data and forward it in one or
+more DATA frames. If the downstream peer does not support the encoding scheme used in the
+received frame, as advertised in an ACCEPT\_ENCODED\_DATA frame, the intermediary MUST
 decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
-supported by the downstream peer and forward it in one or more `ENCODED_DATA` frames.
+supported by the downstream peer and forward it in one or more ENCODED\_DATA frames.
 
-An intermediary MAY coalesce multiple adjacent `ENCODED_DATA` and `DATA` frames if all of the
-frames, with the optional exception of the final frame in the sequence, have the `SEGMENT_CONTINUES`
-flag set. The coalesced payload MAY be subsequently emitted in any combination of `ENCODED_DATA`
-and `DATA` frames. The payloads of any resulting `ENCODED_DATA` frame MUST be correctly encoded
-according to those frames' encodings; this could require the payloads of the original frames to be
-decoded and subsequently re-encoded into the new frames rather than simply concatenated.
-
-An `ENCODED_DATA` frame MUST NOT be sent on a connection before receiving an `ACCEPT_ENCODED_DATA`
+An ENCODED\_DATA frame MUST NOT be sent on a connection before receiving an ACCEPT\_ENCODED\_DATA
 frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an
-`ACCEPT_ENCODED_DATA` frame, or was advertised with a rank of 0. Endpoints that receive a frame
+ACCEPT\_ENCODED\_DATA frame, or was advertised with a rank of 0. Endpoints that receive a frame
 with an encoding they do not recognise or support MUST treat this as a connection error of type
-`PROTOCOL_ERROR`.
+PROTOCOL\_ERROR.
 
-If an endpoint detects that the payload of an `ENCODED_DATA` frame is incorrectly encoded it MUST
+If an endpoint detects that the payload of an ENCODED\_DATA frame is incorrectly encoded it MUST
 treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
-`DATA_ENCODING_ERROR` ({{error}}).
+DATA\_ENCODING\_ERROR ({{error}}).
 
-`ENCODED_DATA` frames are subject to flow control and can only be sent when a stream is in the
-"open" or "half closed (remote)" states. The entire `ENCODED_DATA` frame payload is included in
+ENCODED\_DATA frames are subject to flow control and can only be sent when a stream is in the
+"open" or "half closed (remote)" states. The entire ENCODED\_DATA frame payload is included in
 flow control, including the encoded data, and Pad Length and Padding fields if present. If an
-`ENCODED_DATA` frame is received whose stream is not in "open" or "half closed (local)" state, the
+ENCODED\_DATA frame is received whose stream is not in "open" or "half closed (local)" state, the
 recipient MUST respond with a stream error ({{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
-STREAM_CLOSED.
+STREAM\_CLOSED.
+
+### Fragmentation and Segments {#frag-segments}
+
+Traversing a network segment with small frame size restrictions introduces the risk of fragmenting
+an encoded stream. This can be avoided using segments, as defined in {{I-D.kerwin-http2-segments}}.
+
+An intermediary MAY coalesce multiple adjacent ENCODED\_DATA and DATA frames if all of the
+frames, with the optional exception of the final frame in the sequence, have the SEGMENT\_CONTINUES
+flag set. The coalesced payload MAY be subsequently emitted in any combination of ENCODED\_DATA
+and DATA frames. The payloads of any resulting ENCODED\_DATA frame MUST be correctly encoded
+according to those frames' encodings; note that this could require the payloads of the original
+frames to be decoded and subsequently re-encoded into the new frames, rather than simply
+concatenated.
 
 
 ## DATA\_ENCODING\_ERROR  {#error}
 
 The following new error code is defined:
 
-* DATA\_ENCODING\_ERROR (0xTBA):
-  The endpoint detected that its peer sent an `ENCODED_DATA` frame with an invalid encoding.
+* `DATA_ENCODING_ERROR` (0xTBA):
+  The endpoint detected that its peer sent an ENCODED\_DATA frame with an invalid encoding.
 
 
 # Encoding Schemes {#schemes}
@@ -251,8 +260,8 @@ The following encoding schemes are defined:
 # Security Considerations
 
 Further to the Use of Compression in HTTP/2 ({{I-D.ietf-httpbis-http2}}, Section 10.6),
-intermediaries MUST NOT apply compression to `DATA` frames, or alter the compression of
-`ENCODED_DATA` frames other than decompressing, unless additional information is available
+intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
+ENCODED\_DATA frames other than decompressing, unless additional information is available
 that allows the intermediary to identify the source of data. In particular, frames that
 are not compressed cannot be compressed, and frames that are separately compressed can only
 be merged into a single compressed frame if they occupy the same segment.
