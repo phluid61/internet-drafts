@@ -65,12 +65,12 @@ downstream peer without the same frame size restrictions knows that it
 can safely coalesce the frames.
 
 
-# USE\_SEGMENTS Setting {#setting}
+# SETTINGS\_USE\_SEGMENTS Setting {#setting}
 
 The following new SETTINGS parameter ({{I-D.ietf-httpbis-http2}},
 Section 6.5.2) is defined:
 
-* `USE_SEGMENTS` (0xTBA):
+* `SETTINGS_USE_SEGMENTS` (0xTBA):
   Informs the remote endpoint of whether or not the sender supports the
   SEGMENT\_CONTINUES flag ({{flag}}). A value of 1 indicates that the
   sender supports the flag. Any other value MUST be treated as a
@@ -90,8 +90,8 @@ The following new flag is defined for the DATA frame
   segment boundaries when forwarding frames.
 
   The SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
-  remote endpoint has indicated support by sending a USE\_SEGMENTS
-  setting ({{setting}}) with a value of 1.
+  remote endpoint has indicated support by sending a 
+  SETTINGS\_USE\_SEGMENTS setting ({{setting}}) with a value of 1.
 
 
 # Security Considerations  {#security}
@@ -99,6 +99,19 @@ The following new flag is defined for the DATA frame
 
 # IANA Considerations  {#iana}
 
-This document has no actions for IANA.
+This document updates the registry for settings in the "Hypertext
+Transfer Protocol (HTTP) 2 Parameters" section.
+
+## HTTP/2 Settings Registry Update
+
+This document updates the "HTTP/2 Settings" registry
+({{I-D.ietf-httpbis-http2}}, Section 11.3). The entries in the
+following table are registered by this document.
+
+ |-------------------------|------|---------------|---------------|
+ | Name                    | Code | Initial Value | Specification |
+ |-------------------------|------|---------------|---------------|
+ | SETTINGS\_USE\_SEGMENTS | TBD  | N/A           | {{setting}}   |
+ |-------------------------|------|---------------|---------------|
 
 --- back

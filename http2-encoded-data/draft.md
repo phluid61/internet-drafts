@@ -183,7 +183,7 @@ The ENCODED\_DATA frame defines the following flags:
   MUST preserve segment boundaries when forwarding frames.
 
   The SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
-  remote endpoint has indicated support by sending a USE\_SEGMENTS
+  remote endpoint has indicated support by sending a SETTINGS\_USE\_SEGMENTS
   setting ({{I-D.kerwin-http-segments}}, Section 3) with a value of 1.
 
 On receiving an ENCODED\_DATA frame, an intermediary MAY decode the data and forward it in one or
