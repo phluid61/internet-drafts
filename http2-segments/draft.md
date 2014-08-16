@@ -14,12 +14,11 @@ stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
 
 author:
- -
-    ins: M. Kerwin
-    name: Matthew Kerwin
-    organization: 
-    email: matthew@kerwin.net.au
-    uri: http://matthew.kerwin.net.au/
+ - ins: M. Kerwin
+   name: Matthew Kerwin
+   organization: 
+   email: matthew@kerwin.net.au
+   uri: http://matthew.kerwin.net.au/
 
 normative:
   RFC2119:
@@ -54,8 +53,8 @@ document are to be interpreted as described in {{RFC2119}}.
 A "segment" is a contiguous region of a HTTP/2 message's payload data
 which can be freely fragmented and recombined. A segment is expressed by
 marking all but the final frame in the segment with the
-`SEGMENT_CONTINUES` flag ({{flag}}). Any data-bearing frame that does
-not have the `SEGMENT_CONTINUES` flag set, and does not follow one that
+SEGMENT\_CONTINUES flag ({{flag}}). Any data-bearing frame that does
+not have the SEGMENT\_CONTINUES flag set, and does not follow one that
 does, comprises a single segment.
 
 Segments can be used to mitigate the effects of fragmentation within a
@@ -66,9 +65,22 @@ downstream peer without the same frame size restrictions knows that it
 can safely coalesce the frames.
 
 
+# USE\_SEGMENTS Setting {#setting}
+
+The following new SETTINGS parameter ({{I-D.ietf-httpbis-http2}},
+Section 6.5.2) is defined:
+
+* `USE_SEGMENTS` (0xTBA):
+  Informs the remote endpoint of whether or not the sender supports the
+  SEGMENT\_CONTINUES flag ({{flag}}). A value of 1 indicates that the
+  sender supports the flag. Any other value MUST be treated as a
+  connection error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type
+  PROTOCOL\_ERROR.
+
+
 # SEGMENT\_CONTINUES Flag  {#flag}
 
-The following new flag is defined for the `DATA` frame
+The following new flag is defined for the DATA frame
 ({{I-D.ietf-httpbis-http2}}, Section 6.1):
 
 * `SEGMENT_CONTINUES` (0x10):
@@ -76,6 +88,10 @@ The following new flag is defined for the `DATA` frame
   the current frame (see {{segments}}). Intermediaries MUST NOT
   coalesce frames across a segment boundary and MUST preserve
   segment boundaries when forwarding frames.
+
+  The SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
+  remote endpoint has indicated support by sending a USE\_SEGMENTS
+  setting ({{setting}}) with a value of 1.
 
 
 # Security Considerations  {#security}
