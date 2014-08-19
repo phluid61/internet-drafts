@@ -4,7 +4,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 ]>
 
-<rfc ipr="trust200902" docName="draft-kerwin-http2-segments-00" category="std">
+<rfc ipr="trust200902" docName="draft-kerwin-http2-segments-01" category="std">
 
 <?rfc toc="yes"?>
 <?rfc tocindent="yes"?>
@@ -68,8 +68,8 @@ document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 <t>A “segment” is a contiguous region of a HTTP/2 message’s payload data
 which can be freely fragmented and recombined. A segment is expressed by
 marking all but the final frame in the segment with the
-<spanx style="verb">SEGMENT_CONTINUES</spanx> flag (<xref target="flag"/>). Any data-bearing frame that does
-not have the <spanx style="verb">SEGMENT_CONTINUES</spanx> flag set, and does not follow one that
+SEGMENT_CONTINUES flag (<xref target="flag"/>). Any data-bearing frame that does
+not have the SEGMENT_CONTINUES flag set, and does not follow one that
 does, comprises a single segment.</t>
 
 <t>Segments can be used to mitigate the effects of fragmentation within a
@@ -80,9 +80,24 @@ downstream peer without the same frame size restrictions knows that it
 can safely coalesce the frames.</t>
 
 </section>
+<section anchor="setting" title="SETTINGS_USE_SEGMENTS Setting">
+
+<t>The following new SETTINGS parameter (<xref target="I-D.ietf-httpbis-http2"/>,
+Section 6.5.2) is defined:</t>
+
+<t><list style="symbols">
+  <t><spanx style="verb">SETTINGS_USE_SEGMENTS</spanx> (0xTBA):
+Informs the remote endpoint of whether or not the sender supports the
+SEGMENT_CONTINUES flag (<xref target="flag"/>). A value of 1 indicates that the
+sender supports the flag. Any other value MUST be treated as a
+connection error (<xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.1) of type
+PROTOCOL_ERROR.</t>
+</list></t>
+
+</section>
 <section anchor="flag" title="SEGMENT_CONTINUES Flag">
 
-<t>The following new flag is defined for the <spanx style="verb">DATA</spanx> frame
+<t>The following new flag is defined for the DATA frame
 (<xref target="I-D.ietf-httpbis-http2"/>, Section 6.1):</t>
 
 <t><list style="symbols">
@@ -90,7 +105,10 @@ can safely coalesce the frames.</t>
 Bit 5 being set indicates that the current segment continues after
 the current frame (see <xref target="segments"/>). Intermediaries MUST NOT
 coalesce frames across a segment boundary and MUST preserve
-segment boundaries when forwarding frames.</t>
+segment boundaries when forwarding frames.  <vspace blankLines='1'/>
+The SEGMENT_CONTINUES flag MUST NOT be set on any frames unless the
+remote endpoint has indicated support by sending a 
+SETTINGS_USE_SEGMENTS setting (<xref target="setting"/>) with a value of 1.</t>
 </list></t>
 
 </section>
@@ -99,8 +117,27 @@ segment boundaries when forwarding frames.</t>
 </section>
 <section anchor="iana" title="IANA Considerations">
 
-<t>This document has no actions for IANA.</t>
+<t>This document updates the registry for settings in the “Hypertext
+Transfer Protocol (HTTP) 2 Parameters” section.</t>
 
+<section anchor="http2-settings-registry-update" title="HTTP/2 Settings Registry Update">
+
+<t>This document updates the “HTTP/2 Settings” registry
+(<xref target="I-D.ietf-httpbis-http2"/>, Section 11.3). The entries in the
+following table are registered by this document.</t>
+
+<texttable>
+      <ttcol align='left'>Name</ttcol>
+      <ttcol align='left'>Code</ttcol>
+      <ttcol align='left'>Initial Value</ttcol>
+      <ttcol align='left'>Specification</ttcol>
+      <c>SETTINGS_USE_SEGMENTS</c>
+      <c>TBD</c>
+      <c>N/A</c>
+      <c><xref target="setting"/></c>
+</texttable>
+
+</section>
 </section>
 
 
@@ -175,15 +212,15 @@ segment boundaries when forwarding frames.</t>
     <organization />
 </author>
 
-<date month='June' day='17' year='2014' />
+<date month='July' day='30' year='2014' />
 
 <abstract><t>This specification describes an optimized expression of the syntax of the Hypertext Transfer Protocol (HTTP).  HTTP/2 enables a more efficient use of network resources and a reduced perception of latency by introducing header field compression and allowing multiple concurrent messages on the same connection.  It also introduces unsolicited push of representations from servers to clients.  This specification is an alternative to, but does not obsolete, the HTTP/1.1 message syntax.  HTTP's existing semantics remain unchanged.</t></abstract>
 
 </front>
 
-<seriesInfo name='Internet-Draft' value='draft-ietf-httpbis-http2-13' />
+<seriesInfo name='Internet-Draft' value='draft-ietf-httpbis-http2-14' />
 <format type='TXT'
-        target='http://www.ietf.org/internet-drafts/draft-ietf-httpbis-http2-13.txt' />
+        target='http://www.ietf.org/internet-drafts/draft-ietf-httpbis-http2-14.txt' />
 </reference>
 
 
