@@ -32,6 +32,12 @@ informative:
 This document introduces the concept of "segments" to HTTP/2, and adds a
 flag to the DATA frame type to allow the expression segments.
 
+A "segment" is a contiguous block of HTTP message data that can be freely
+split apart and recombined at any time, allowing transmission in multiple
+HTTP/2 frames across network segments with smaller frame size limits
+without risk of permanent fragmentation when traversing network segments
+with much larger limits.
+
 --- middle
 
 # Introduction
@@ -92,7 +98,6 @@ The following new flag is defined for the DATA frame
   The SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
   remote endpoint has indicated support by sending a 
   SETTINGS\_USE\_SEGMENTS setting ({{setting}}) with a value of 1.
-
 
 # Security Considerations  {#security}
 
