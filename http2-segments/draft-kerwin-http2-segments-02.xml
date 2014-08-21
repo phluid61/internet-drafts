@@ -4,7 +4,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 ]>
 
-<rfc ipr="trust200902" docName="draft-kerwin-http2-segments-01" category="std">
+<rfc ipr="trust200902" docName="draft-kerwin-http2-segments-02" category="std">
 
 <?rfc toc="yes"?>
 <?rfc tocindent="yes"?>
@@ -37,6 +37,12 @@
 
 <t>This document introduces the concept of “segments” to HTTP/2, and adds a
 flag to the DATA frame type to allow the expression segments.</t>
+
+<t>A “segment” is a contiguous block of HTTP message data that can be freely
+split apart and recombined at any time, allowing transmission in multiple
+HTTP/2 frames across network segments with smaller frame size limits
+without risk of permanent fragmentation when traversing network segments
+with much larger limits.</t>
 
 
 
