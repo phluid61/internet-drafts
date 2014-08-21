@@ -43,8 +43,9 @@ informative:
 
 --- abstract
 
-This document introduces new frame types for transporting encoded data in HTTP/2, and an
-associated error code.
+This document introduces new frame types for transporting encoded data between peers in the
+Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling
+invalid encoding.
 
 
 --- middle
@@ -52,7 +53,8 @@ associated error code.
 # Introduction {#intro}
 
 This document introduces a mechanism for applying encoding, particularly compression, to data
-transported between two HTTP/2 endpoints, analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
+transported between two endpoints in version 2 of the Hypertext Transfer Protocol (HTTP/2),
+analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
 
 
 ## Notational Conventions
@@ -80,6 +82,12 @@ An ACCEPT\_ENCODED\_DATA frame (type code=0xTBA) is used to indicate the sender'
 willingness to receive ENCODED\_DATA frames that are encoded using the schemes identified in
 its payload.
 
+ACCEPT\_ENCODED\_DATA always apply to a connection, never a single stream. The stream identifier
+for an ACCEPT\_ENCODED\_DATA frame MUST be zero (0x0). If an endpoint receives an
+ACCEPT\_ENCODED\_DATA frame whose stream identifier field is anything other than 0x0, the endpoint
+MUST respond with a connection error (({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type
+PROTOCOL\_ERROR.
+
 The payload length of an ACCEPT\_ENCODED\_DATA frame MUST be an exact multiple of 16 bits (2 bytes).
 An endpoint that receives an ACCEPT\_ENCODED\_DATA frame with an odd length MUST treat this as a
 connection error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type PROTOCOL\_ERROR.
@@ -105,12 +113,17 @@ The rank fulfils the same role as in the HTTP/1.1 TE header ({{RFC7230}}, Sectio
 rank value is an integer in the range 0 through 255, where 1 is the least preferred and 255
 is the most preferred; a value of 0 means "not acceptable".
 
+The ENCODING\_IDENTITY encoding ({{schemes}}) is always acceptable with a default rank of 1, and
+MUST NOT be advertised with a rank of 0. And endpoint that receives an ACCEPT\_ENCODED\_DATA frame
+including an \{encoding,rank\} tuple of \{ENCODING\_IDENTITY,0\} MUST respond with a connection
+error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type PROTOCOL\_ERROR.
+
 An endpoint that receives an ACCEPT\_ENCODED\_DATA frame containing an \{encoding,rank\} tuple
 with an unknown or unsupported encoding identifier MUST ignore that tuple.
 
 Each ACCEPT\_ENCODED\_DATA frame fully replaces the set of tuples sent in a previous frame;
 if an encoding identifier is omitted from a subsequent ACCEPT\_ENCODED\_DATA frame it is deemed
-"not acceptable".
+"not acceptable", with the exception of ENCODING\_IDENTITY which defaults to a rank of 1.
 
 An endpoint may advertise support for an encoding scheme and later decide that it no longer
 supports that scheme.  After sending an ACCEPT\_ENCODED\_DATA that omits the encoding identifier
@@ -186,11 +199,6 @@ The ENCODED\_DATA frame defines the following flags:
   remote endpoint has indicated support by sending a SETTINGS\_USE\_SEGMENTS
   setting ({{I-D.kerwin-http2-segments}}, Section 3) with a value of 1.
 
-On receiving an ENCODED\_DATA frame, an intermediary MAY decode the data and forward it in one or
-more DATA frames. If the downstream peer does not support the encoding scheme used in the
-received frame, as advertised in an ACCEPT\_ENCODED\_DATA frame, the intermediary MUST
-decode the data and either: forward it in one or more DATA frames, or encode it with a scheme
-supported by the downstream peer and forward it in one or more ENCODED\_DATA frames.
 
 An ENCODED\_DATA frame MUST NOT be sent on a connection before receiving an ACCEPT\_ENCODED\_DATA
 frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an
@@ -198,28 +206,50 @@ ACCEPT\_ENCODED\_DATA frame, or was advertised with a rank of 0. Endpoints that 
 with an encoding they do not recognise or support MUST treat this as a connection error of type
 PROTOCOL\_ERROR.
 
+An intermediary, on receiving an ENCODED\_DATA frame, MAY decode the data and forward it to its
+downstream peer in one or more DATA frames. If the received ENCODED\_DATA frame has an encoding
+the downstream peer does not support (as advertised in an ACCEPT\_ENCODED\_DATA frame) the
+intermediary MUST decode the data before forwarding it. The intermediary MAY re-encode the data
+with a scheme supported by the downstream peer and forward it in one or more ENCODED\_DATA frames.
+
 If an endpoint detects that the payload of an ENCODED\_DATA frame is incorrectly encoded it MUST
 treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
 DATA\_ENCODING\_ERROR ({{error}}).
 
+ENCODED\_DATA frames MUST be associated with a stream. If an ENCODED\_DATA frame is received whose
+stream identifier field is 0x0, the recipient MUST respond with a connection error
+({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type PROTOCOL\_ERROR.
+
 ENCODED\_DATA frames are subject to flow control and can only be sent when a stream is in the
-"open" or "half closed (remote)" states. The entire ENCODED\_DATA frame payload is included in
-flow control, including the encoded data, and Pad Length and Padding fields if present. If an
+"open" or "half closed (remote)" states. The entire ENCODED\_DATA frame payload is included in flow
+control, including the encoding identifier, and Pad Length and Padding fields if present. If an
 ENCODED\_DATA frame is received whose stream is not in "open" or "half closed (local)" state, the
 recipient MUST respond with a stream error ({{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
 STREAM\_CLOSED.
 
+The total number of padding octets is determined by the value of the Pad Length field. If the
+length of the padding is greater than the length of the remainder of the frame payload, the
+recipient MUST treat this as a connection error ({{I-D.ietf-httpbis-http2}}, Section 5.4.1) of type
+PROTOCOL\_ERROR.
+
+Note: A frame can be increased in size by one octet by including a Pad Length field
+  with a value of zero.
+
+Use of padding is a security feature; as such, its use demands some care, see
+Section 10.7 of {{I-D.ietf-httpbis-http2}}.
+
+
 ### Fragmentation and Segments {#frag-segments}
 
-Traversing a network segment with small frame size restrictions introduces the risk of fragmenting
-an encoded stream. This can be avoided using segments, as defined in {{I-D.kerwin-http2-segments}}.
+Traversing a network segment with small frame size limits introduces the risk of fragmenting an
+encoded stream. This can be avoided using segments, as defined in {{I-D.kerwin-http2-segments}}.
 
-An intermediary MAY coalesce multiple adjacent ENCODED\_DATA and DATA frames if all of the
-frames, with the optional exception of the final frame in the sequence, have the SEGMENT\_CONTINUES
-flag set. The coalesced payload MAY be subsequently emitted in any combination of ENCODED\_DATA
-and DATA frames. The payloads of any resulting ENCODED\_DATA frame MUST be correctly encoded
-according to those frames' encodings; note that this could require the payloads of the original
-frames to be decoded and subsequently re-encoded into the new frames, rather than simply
+An intermediary MAY coalesce multiple adjacent ENCODED\_DATA frames if all of them, with the
+optional exception of the final frame in the sequence, have the SEGMENT\_CONTINUES flag set. The
+coalesced payload MAY be subsequently emitted in any combination of ENCODED\_DATA and DATA frames.
+The payloads of any resulting ENCODED\_DATA frames MUST be correctly encoded according to those
+frames' encodings; note that for some encoding schemes this could require that the payloads of the
+original frames be decoded and subsequently re-encoded into the new frames, rather than simply
 concatenated.
 
 
@@ -231,9 +261,13 @@ The following new error code is defined:
   The endpoint detected that its peer sent an ENCODED\_DATA frame with an invalid encoding.
 
 
-# Encoding Schemes {#schemes}
+# Encoding Schemes  {#schemes}
 
 The following encoding schemes are defined:
+
+* `ENCODING_IDENTITY` (0):
+  The identity encoding identifier is used to indicate that no encoding is
+  applied.
 
 * `ENCODING_COMPRESS` (1):
   The compress coding is an adaptive Lempel-Ziv-Welch (LZW) coding
@@ -257,7 +291,7 @@ The following encoding schemes are defined:
 -->
 
 
-# Security Considerations
+# Security Considerations  {#security}
 
 Further to the Use of Compression in HTTP/2 ({{I-D.ietf-httpbis-http2}}, Section 10.6),
 intermediaries MUST NOT apply compression to DATA frames, or alter the compression of
@@ -267,7 +301,7 @@ are not compressed cannot be compressed, and frames that are separately compress
 be merged into a single compressed frame if they occupy the same segment.
 
 
-# IANA Considerations
+# IANA Considerations  {#iana}
 
 This document updates the registries for frame types and error codes in
 the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.  This
