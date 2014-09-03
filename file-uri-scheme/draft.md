@@ -102,13 +102,12 @@ This draft should be discussed on its github project page ({{GITHUB}}).
 # Introduction
 
 A file URI identifies a file on a particular file system.  It can be
-used in discussions about the file, and it can be dereferenced to
-directly access the file if other conditions are met.
+used in discussions about the file, and if other conditions are met it
+can be dereferenced to directly access the file.
 
-The file URI scheme is not coupled with a specific protocol.  As such,
-there is no well-defined set of methods that can be performed on a file
-URI, nor a media type associated with them.  A file URI is simply a
-means of describing the location of a file on a particular file system.
+The file URI scheme is not coupled with a specific protocol. As such,
+there is no well-defined set of methods that can be performed on file
+URIs, nor a media type associated with them.
 
 
 ## History {#history}
@@ -135,7 +134,7 @@ Additionally the WHATWG defines a living URL standard ({{WHATWG-URL}}),
 which includes algorithms for interpreting file URIs (as URLs).
 
 
-## UNC
+### UNC
 
 A Universal Naming Convention (UNC) string does a similar job. It has
 three parts: host, share, path. You can translate between UNC paths and
@@ -155,9 +154,9 @@ Because the file URI scheme has a long history of loosely-defined
 standardisation and divergent implementations, this document will
 inevitably make some assertions that go against some implementers'
 expectations. We will attempt to label all assertions as either
-"ideal" preferred behaviour or "practical" compatibility and
-interoperability behaviour, and in all cases will attempt to describe
-the difference between this and any previous specifications.
+"ideal" preferred behaviour or practical behaviour to support
+compatibility and interoperability, and in all cases we will attempt to
+describe the difference between this and any previous specifications.
 
 
 # Syntax {#syntax}
@@ -189,32 +188,37 @@ specification, and importing the `host` and `path-absolute` rules from
   drive-marker   = ":" / "|"
 ~~~~~~~~~~
 
-This definition is necessarily different from that given in {{RFC1630}} or {{RFC1738}}
-because it depends on the generic syntax from {{RFC3986}} that post-dates all previous
-specifications.  It is intended to support file URIs that take the following forms:
+This definition is necessarily different from that given in {{RFC1630}}
+or {{RFC1738}} because it depends on the generic syntax from {{RFC3986}}
+that post-dates all previous specifications. It is intended to support
+file URIs that take the following forms:
 
 Local files:
 
 * `file:///path/to/file`  
-   A "traditional" file URI for a local file, with an empty authority. This is the
-   most common format in use today, despite being technically incompatible with the
-   definition from {{RFC1738}}.
+   A "traditional" file URI for a local file, with an empty authority.
+   This is the most common format in use today, despite being
+   technically incompatible with the definition from {{RFC1738}}.
 
 * `file:///c:/path/to/file`  
-   The traditional representation of a local file in a DOS- or Windows-based environment.
+   The traditional representation of a local file in a DOS- or
+   Windows-based environment.
 
 * `file:/path/to/file`  
-   The ideal representation of a local file in a UNIX-like environment, with no authority
-   component and an absolute path that begins with a slash "/".
+   The ideal representation of a local file in a UNIX-like environment,
+   with no authority component and an absolute path that begins with a
+   slash "/".
 
 * `file:c:/path/to/file`  
-   The ideal representation of a local file in a DOS- or Windows-based environment, with
-   no authority component and an absolute path that begins with a drive letter.
+   The ideal representation of a local file in a DOS- or Windows-based
+   environment, with no authority component and an absolute path that
+   begins with a drive letter.
 
 * `file:/c:/path/to/file`
-   A representation of a local file in a DOS- or Windows-based environment, with no
-   authority component and a slash preceding the drive letter. This representation is
-   less common than those above, and is deprecated by this specification.
+   A representation of a local file in a DOS- or Windows-based
+   environment, with no authority component and a slash preceding the
+   drive letter. This representation is less common than those above,
+   and is deprecated by this specification.
 
 * `file:///c|/path/to/file`
 * `file:///c/path/to/file`
@@ -222,73 +226,94 @@ Local files:
 * `file:/c/path/to/file`
 * `file:c|/path/to/file`
 * `file:c/path/to/file`  
-   Representations of a local file in a DOS- or Windows-based environment, using
-   alternative representations of drive letters. These are supported for compatibility
-   with historical implementationsm, but deprecated by this specification.
+   Representations of a local file in a DOS- or Windows-based
+   environment, using alternative representations of drive letters.
+   These are supported for compatibility with historical
+   implementationsm, but deprecated by this specification.
 
 Non-local files:
 
 * `file://smb.example.com/path/to/file`  
-   The ideal representation of a non-local file, with an explicit authority.
+   The ideal representation of a non-local file, with an explicit
+   authority.
 
 * `file:////smb.example.com/path/to/file`  
-   The "traditional" representation of a non-local file, with an empty authority
-   and a complete (transformed) UNC path. This encoding is commonly implemented,
-   but the ideal representation above is preferred by this specification.
+   The "traditional" representation of a non-local file, with an empty
+   authority and a complete (transformed) UNC path. This encoding is
+   commonly implemented, but the ideal representation above is
+   preferred by this specification.
 
 * `file://///smb.example.com/path/to/file`  
-   As above, with an extra slash between the empty authority and the transformed
-   UNC path, conformant with the definition from {{RFC1738}}. This representation is
-   deprecated by this specification. It is notably used by the Firefox web browser.
+   As above, with an extra slash between the empty authority and the
+   transformed UNC path, conformant with the definition from
+   {{RFC1738}}. This representation is deprecated by this specification.
+   It is notably used by the Firefox web browser.
 
 Dubious encodings:
 
 * `file://c:/path/to/file`
 * `file://c|/path/to/file`
 * `file://c/path/to/file`  
-   A dubious encoding that includes a Windows drive letter as the authority component.
-   This encoding exists in some extant implementations, and is supported by the grammar
-   for historical reasons.
+   A dubious encoding that includes a Windows drive letter as the
+   authority component. This encoding exists in some extant
+   implementations, and is supported by the grammar for historical
+   reasons.
 
 It also intentionally excludes URIs of the form:
 
 * `file://auth.example.com//smb.example.com/path/to/file`  
-   An encoding that includes both a non-local authority, and a UNC file path,
-   implying that the UNC path may only be accessed from `auth.example.com`.
-   This encoding has been theorised, but has never seen wide implementation.
+   An encoding that includes both a non-local authority, and a UNC file
+   path, implying that the UNC path may only be accessed from
+   `auth.example.com`. This encoding has been theorised, but has never
+   seen wide implementation.
 
 
 # Methods on file URIs
 
-In the strictest terms, the only operations that can be performed on a file
-URI are translating it to and from a file path; subsequent methods are
-performed on the resulting file path, and depend entirely on the file
-system's APIs.
+In the strictest terms, the only operations that can be performed on a
+file URI are translating it to and from a file path; subsequent methods
+are performed on the resulting file path, and depend entirely on the
+file system's APIs.
 
 For example, consider the POSIX `open()`, `read()`, and `close()`
 methods ({{POSIX}}) for reading a file's contents into memory.
 
 The local file system API can only be used if the file URI has a blank
-(or absent) authority and the path, when transformed to the local system's
-conventions, is not a UNC path. Note that this is different from the
-definition in {{RFC1738}} -- previously an authority containing the text
-"localhost" was used to refer to the local file system, but 
-
-(Different from RFC1738 - "localhost" used to mean "", now means a
-service on loopback)
+(or absent) authority and the path, when transformed to the local
+system's conventions, is not a UNC path. Note that this differs from
+the definition in {{RFC1738}} in that previously an authority containing
+the text "localhost" was used to refer to the local file system, but in
+this specification it translates to a UNC path referring to the host
+"localhost".
 
 
 ## Translating File Path to file URI
 
-1. Resolve to fully qualified/absolute path
-2. On DOS/Windows, put the drive letter + ":" in first segment,
-   on UNIX the absolute path starts with "/"
-    1. note: to distinguish authority 
-       even when blank. So on a DOS- or Windows-based system
-       the 
-       "file://authority/c:/.." or "file:///c:/..."
-3. convert each directory in the path to path segments, e.g. percent
-   encoding reserved characters, as per {{RFC3986}}, Section 2.
+Below is an algorithmic description of the process used to convert a
+file path to a file URI:
+
+1.  Resolve the file path to its fully qualified absolute form.
+
+2.  Initialise the URI with the "file:" scheme identifier.
+
+3.  If including an empty authority component, append the "//" sigil to
+    the URI.
+
+4.  On a DOS- or Windows-based system, assign the drive letter
+    (e.g. "c:") as the first path segment.
+
+    *   If an empty authority was included at step 3, a slash "/" is
+        prepended to the drive letter (e.g. "/c:") to distinguish it
+        from the authority.
+
+5.  For each directory in the path, starting at the root:
+
+    1.  Transform the directory name to a path segment (e.g. by percent
+        encoding reserved characters, etc.) as per {{RFC3986}},
+        Section 2.
+
+    2.  
+
 4. concatenate segments with appropriate "file:" and slashes
 
 ... gives an IRI in file system's encoding, which can be translated to
