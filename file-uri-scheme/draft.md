@@ -17,7 +17,7 @@ author:
  -
     ins: M. Kerwin
     name: Matthew Kerwin
-    organization: Queensland University of Technology
+    organization: QUT
     email: matthew.kerwin@qut.edu.au
 
 normative:
@@ -27,6 +27,8 @@ normative:
   RFC3986:
   RFC3987:
   RFC4921:
+  RFC5234:
+  RFC6874:
   MS-DTYP:
     title: Windows Data Types, 2.2.56 UNC
     author:
@@ -134,7 +136,7 @@ Additionally the WHATWG defines a living URL standard ({{WHATWG-URL}}),
 which includes algorithms for interpreting file URIs (as URLs).
 
 
-### UNC
+## UNC
 
 A Universal Naming Convention (UNC) string does a similar job. It has
 three parts: host, share, path. You can translate between UNC paths and
@@ -163,30 +165,43 @@ describe the difference between this and any previous specifications.
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 {{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `host` and `path-absolute` rules from
-{{RFC3986}} (as updated by {{RFC6874}}.)
+specification, and importing the `host`, `path-absolute`, and `query`
+rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
 ~~~~~~~~~~
-  file-URI       = f-scheme ":" f-hier-part
+file-URI       = f-scheme ":" f-hier-part [ "?" query ]
 
-  f-scheme       = "file"
+f-scheme       = "file"
 
-  f-hier-part    = "//" auth-path
-                 / local-path
+f-hier-part    = "//" auth-path
+               / local-path
 
-  auth-path      = [ host ] path-absolute
-                 / unc-path       ; file:////host/share/...
-                 / windows-path   ; file://c:/...
+auth-path      = [ host ] path-absolute
+               / unc-path       ; file:////host/share/...
+               / windows-path   ; file://c:/...
 
-  local-path     = path-absolute  ; file:/...
-                 / windows-path   ; file:c:/...
+local-path     = path-absolute  ; file:/...
+               / windows-path   ; file:c:/...
 
-  unc-path       = 2\*3"/" authority path-absolute
+unc-path       = 2\*3"/" authority path-absolute
 
-  windows-path   = drive-letter path-absolute
-  drive-letter   = ALPHA [ drive-marker ]
-  drive-marker   = ":" / "|"
+windows-path   = drive-letter path-absolute
+drive-letter   = ALPHA [ drive-marker ]
+drive-marker   = ":" / "|"
 ~~~~~~~~~~
+
+The query component contains non-hierarchical data that, along with
+data in the path components (path-absolute, unc-path, or windows-path)
+serves to identify a resource. This is not commonly used in practice,
+but could be used to refer to a specific version of a file in a
+versioning file system, for example.
+
+Systems exhibit different levels of case-sensitivity. Implementations
+SHOULD maintain the case of file and directory names when translating
+file URIs to and from the local system's representation of file paths,
+and any systems or devices that transport file URIs SHOULD NOT alter
+the case of file URIs they transport.
+<!-- TODO: drive letter case-insensitivity -->
 
 This definition is necessarily different from that given in {{RFC1630}}
 or {{RFC1738}} because it depends on the generic syntax from {{RFC3986}}
@@ -214,7 +229,7 @@ Local files:
    environment, with no authority component and an absolute path that
    begins with a drive letter.
 
-* `file:/c:/path/to/file`
+* `file:/c:/path/to/file`  
    A representation of a local file in a DOS- or Windows-based
    environment, with no authority component and a slash preceding the
    drive letter. This representation is less common than those above,
@@ -287,10 +302,12 @@ this specification it translates to a UNC path referring to the host
 "localhost".
 
 
-## Translating File Path to file URI
+## Translating Local File Path to file URI
 
 Below is an algorithmic description of the process used to convert a
-file path to a file URI:
+file path to an Internationalized Resource Identifier (IRI)
+{{RFC3987}}), which can then be translated to a URI as per Section 3.1
+of {{RFC3987}}.
 
 1.  Resolve the file path to its fully qualified absolute form.
 
@@ -299,50 +316,78 @@ file path to a file URI:
 3.  If including an empty authority component, append the "//" sigil to
     the URI.
 
-4.  On a DOS- or Windows-based system, assign the drive letter
-    (e.g. "c:") as the first path segment.
+4.  Append the root directory:
 
-    *   If an empty authority was included at step 3, a slash "/" is
-        prepended to the drive letter (e.g. "/c:") to distinguish it
-        from the authority.
+    *   On a DOS- or Windows-based system, assign the drive letter
+        (e.g. "c:") as the first path segment, and append it to the
+        URI, followed by a slash character "/".
 
-5.  For each directory in the path, starting at the root:
+        *   If an empty authority was included at step 3, a slash "/"
+            is prepended to the drive letter (e.g. "/c:") to
+            distinguish it from the authority.
+
+    *   On an OpenVMS Files-11 system, append a slash "/" to the URI,
+        and encode the disk name as the first segment as per step 5,
+        below, except that the dollars sign character "$" is not
+        treated as a reserved character.
+
+    *   On a UNIX-like system, append a slash "/" to the URI, to
+        denote the root directory.
+
+5.  For each directory in the path after the root:
 
     1.  Transform the directory name to a path segment (e.g. by percent
         encoding reserved characters, etc.) as per {{RFC3986}},
         Section 2.
 
-    2.  
+    2.  Append the transformed segment and a delimiting slash character
+        "/" to the URI.
 
-4. concatenate segments with appropriate "file:" and slashes
+6.  If the path includes a file name:
 
-... gives an IRI in file system's encoding, which can be translated to
-a URI as per {{RFC3987}}, Section 3.1.
+    1.  Transform the file name to a path segment as above.
+
+    2.  Append the transformed segment to the URI.
+
 
 Examples:
+
 ~~~~~~~~~~
-                UNIX-Like         |   DOS- or Windows-based
-       ---------------------------+-------------------------------
-file:   /path/to/file.txt         |  c:\path\to\file.txt
-                                  |
-URIs:   file:/path/to/file.txt    |  file:c:/path/to/file.txt
-        file:///path/to/file.txt  |  file:///c:/path/to/file.txt
+File Path                      | URIs
+-------------------------------+--------------------------------
+UNIX-Like:                     |
+  /path/to/file                | file:/path/to/file
+                               | file:///path/to/file
+                               |
+/path/to/dir/                  | file:/path/to/dir/
+                               | file:///path/to/dir/
+                               |
+DOS- or Windows-based:         |
+  c:\path\to\file.txt          | file:c:/path/to/file.txt
+                               | file:///c:/path/to/file.txt
+                               |
+  c:\path\to\dir\              | file:c:/path/to/dir/
+                               | file:///c:/path/to/dir/
+VMS Files-11:                  |
+  ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
+                               | file:///DISK1/PATH/TO/FILE.TXT?2
+                               |
 ~~~~~~~~~~
 
 __Differences from RFC1738__
 
 In {{RFC1738}} a file URL always started with the token "file://",
 followed by an authority and a "/". That "/" was not considered part
-of the path -- however this implies that the correct encoding for the
-example file path in a UNIX-like environment above would be:
+of the path. This implies that the correct encoding for the above
+example file path in a UNIX-like environment would be:
 
 ~~~~~~~~~~
-  token     + authority + slash + path
-= "file://" + ""        + "/"   + "/path/to/file.txt"
-= "file:////path/to/file.txt"
+     token     + authority + slash + path
+   = "file://" + ""        + "/"   + "/path/to/file.txt"
+   = "file:////path/to/file.txt"
 ~~~~~~~~~~
 
-However this never eventuated.
+However that structure never eventuated.
 
 
 __Exceptions__
@@ -354,40 +399,38 @@ DOS/Windows: Some deviants replace ":" with "|", and others leave it
 off completely. e.g. `file:///c|/...` or `file:///c/...`
 
 
-## Translating UNC
+## Translating UNC Path to file URI
 
-The syntax of a UNC path {{MS-DTYP}}:
+A UNC path can be directly translated to an Internationalized Resource
+Identifier (IRI) {{RFC3987}}), which can then be translated to a URI
+as per Section 3.1 of {{RFC3987}}.
 
-~~~~~~~~~~
-  UNC = "\\" hostname "\" sharename \*( "\" objectname )
-  hostname = netbios-name / fqdn / ip-address
-  sharename = <name of share or resource to be accessed>
-  objectname = <depends on resource being accessed>
-~~~~~~~~~~
+Translates directly to file URI:
+* hostname => authority
+* sharename => first path segment
+* objectnames => subsequent path segments
 
-o netbios-name from {{MS-NBTE}}, <eref target="http://msdn.microsoft.com/en-us/library/dd891456.aspx">Section 2.2.1</eref>.
-o fqdn from {{RFC1035}} or {{RFC1123}}
-o ip-address from {{RFC1123}}, Section 2.1, or {{RFC4921}}, Section 2.2.
+1.  Initialise the URI with the "file:" scheme identifier.
 
-* format of sharename depends on protocol; see {{MS-SMB}}, {{RFC3530}}, NCP ({{NOVELL}}).
+2.  Append the "//" authority sigil and the hostname to the identifier.
 
-Translates directly to file URI: hostname=:authority, sharename=:first
-path segment, objectnames=:subsequent path segments
+3.  For each objectname:
 
-1. ensure hostname matches authority
-2. convert sharename, objectnames to path segments, e.g. percent
-   encoding reserved characters, as per RFC3986, Section 2.
-3. concatenate with appropriate "file://" and slashes
+    1.  Transform the objectname to a path segment (e.g. by percent
+        encoding reserved characters, etc.) as per {{RFC3986}},
+        Section 2.
 
-... gives a UTF-16 IRI, which can be translated to a URI as per
-{{RFC3987}}, Section 3.1.
+    2.  Append a delimiting slash character "/" and the transformed
+        segment to the URI.
+
 
 ### Deviants
 
 Many implementations accept the full UNC path in the URI path (with
 all backslashes converted to slashes).  Additionally, because
 {{RFC1738}} said that the first "/" after "file://\[authority\]" wasn't
-part of the path, Firefox requires an additional slash.
+part of the path, Firefox requires an additional slash before the
+UNC path.
 
 E.g.:
 
@@ -528,5 +571,24 @@ This specification is derived from {{RFC1738}}, {{RFC3986}}, and
 {{I-D.draft-hoffman-file-uri}} (expired); the acknowledgements in
 those documents still apply.
 
-
 --- back
+
+# UNC Syntax
+
+The syntax of a UNC path, as defined by {{MS-DTYP}}:
+
+~~~~~~~~~~
+  UNC = "\\" hostname "\" sharename \*( "\" objectname )
+  hostname   = netbios-name / fqdn / ip-address
+  sharename  = <name of share or resource to be accessed>
+  objectname = <depends on resource being accessed>
+~~~~~~~~~~
+
+* netbios-name from {{MS-NBTE}}, <eref target="http://msdn.microsoft.com/en-us/library/dd891456.aspx">Section 2.2.1</eref>.
+* fqdn from {{RFC1035}} or {{RFC1123}}
+* ip-address from {{RFC1123}}, Section 2.1, or {{RFC4921}}, Section 2.2.
+
+The precise format of `sharename` depends on the protocol;
+see {{MS-SMB}}, {{RFC3530}}, NCP ({{NOVELL}}).
+
+
