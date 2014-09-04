@@ -19,7 +19,7 @@
     <title abbrev="file-scheme">The file URI Scheme</title>
 
     <author initials="M." surname="Kerwin" fullname="Matthew Kerwin">
-      <organization>Queensland University of Technology</organization>
+      <organization>QUT</organization>
       <address>
         <email>matthew.kerwin@qut.edu.au</email>
       </address>
@@ -52,35 +52,14 @@
 
 <section anchor="introduction" title="Introduction">
 
-<section anchor="what-it-iswhat-its-for" title="What it is/What it’s for">
-
 <t>A file URI identifies a file on a particular file system.  It can be
-used in discussions about the file, and it can be dereferenced to
-directly access the file if other conditions are met (locality, etc.)</t>
+used in discussions about the file, and if other conditions are met it
+can be dereferenced to directly access the file.</t>
 
-<t>The file URI scheme is not coupled with a specific protocol.  As such,
-there is no well-defined set of methods that can be performed on a file
-URI, nor a media type associated with them.  A file URI is simply a
-means of describing the location of a file on a particular file system.</t>
+<t>The file URI scheme is not coupled with a specific protocol. As such,
+there is no well-defined set of methods that can be performed on file
+URIs, nor a media type associated with them.</t>
 
-</section>
-<section anchor="how-to-use-it" title="How to use it">
-
-<t>In the simplest terms, the only methods that can be performed on a file
-URI are translating it to and from a file path; subsequent methods are
-performed on the resulting file path, and depend entirely on the file
-system’s APIs.</t>
-
-<t>For example, consider the POSIX <spanx style="verb">open()</spanx>, <spanx style="verb">read()</spanx>, and <spanx style="verb">close()</spanx>
-methods (<xref target="POSIX"/>) for reading a file’s contents into memory.</t>
-
-<t>If there’s a non-blank authority, you can’t use the file system.
-E.g. SMB, NFS, etc.</t>
-
-<t>(Different from RFC1738 - “localhost” used to mean “”, now means a
-service on loopback)</t>
-
-</section>
 <section anchor="history" title="History">
 
 <t>The file URI scheme was first defined in <xref target="RFC1630"/>, which, being an
@@ -121,73 +100,239 @@ file URIs.</t>
 document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 
 </section>
+<section anchor="idealism-vs-pragmatism-vs-history" title="Idealism vs Pragmatism vs History">
+
+<t>Because the file URI scheme has a long history of loosely-defined
+standardisation and divergent implementations, this document will
+inevitably make some assertions that go against some implementers’
+expectations. We will attempt to label all assertions as either
+“ideal” preferred behaviour or practical behaviour to support
+compatibility and interoperability, and in all cases we will attempt to
+describe the difference between this and any previous specifications.</t>
+
+</section>
 </section>
 <section anchor="syntax" title="Syntax">
 
+<t>The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
+<xref target="RFC5234"/>, including the core ABNF syntax rule <spanx style="verb">ALPHA</spanx> defined by that
+specification, and importing the <spanx style="verb">host</spanx>, <spanx style="verb">path-absolute</spanx>, and <spanx style="verb">query</spanx>
+rules from <xref target="RFC3986"/> (as updated by <xref target="RFC6874"/>.)</t>
+
 <figure><artwork><![CDATA[
-  file-URI       = f-scheme ":" f-hier-part
+file-URI       = f-scheme ":" f-hier-part [ "?" query ]
 
-  f-scheme       = "file"
+f-scheme       = "file"
 
-  f-hier-part    = "//" auth-path ; file://...
-                 / local-path
+f-hier-part    = "//" auth-path
+               / local-path
 
-  auth-path      = [ authority ] path-absolute
-                 / unc-path       ; file:////host/share/... *
-                 / windows-path   ; file://c:/... **
+auth-path      = [ host ] path-absolute
+               / unc-path       ; file:////host/share/...
+               / windows-path   ; file://c:/...
 
-  local-path     = path-absolute  ; file:/...
-                 / windows-path   ; file:c:/...
+local-path     = path-absolute  ; file:/...
+               / windows-path   ; file:c:/...
 
-  unc-path       = 2\*3"/" authority path-absolute
+unc-path       = 2\*3"/" authority path-absolute
 
-  windows-path   = drive-letter path-absolute
-  drive-letter   = ALPHA [ drive-marker ]
-  drive-marker   = ":" / "|"
-
+windows-path   = drive-letter path-absolute
+drive-letter   = ALPHA [ drive-marker ]
+drive-marker   = ":" / "|"
 ]]></artwork></figure>
 
-<t>* The ‘unc-path’ rule within ‘auth-path’ is there for legacy reasons.<vspace />
-** The ‘windows-path’ rule within ‘auth-path’ allows for dubious URIs that encode a Windows drive letter as the authority component.</t>
+<t>The query component contains non-hierarchical data that, along with
+data in the path components (path-absolute, unc-path, or windows-path)
+serves to identify a resource. This is not commonly used in practice,
+but could be used to refer to a specific version of a file in a
+versioning file system, for example.</t>
 
-</section>
-<section anchor="translations" title="Translations">
+<t>Systems exhibit different levels of case-sensitivity. Implementations
+SHOULD maintain the case of file and directory names when translating
+file URIs to and from the local system’s representation of file paths,
+and any systems or devices that transport file URIs SHOULD NOT alter
+the case of file URIs they transport.
+<!-- TODO: drive letter case-insensitivity --></t>
 
-<section anchor="translating-file-path" title="Translating File Path">
+<t>This definition is necessarily different from that given in <xref target="RFC1630"/>
+or <xref target="RFC1738"/> because it depends on the generic syntax from <xref target="RFC3986"/>
+that post-dates all previous specifications. It is intended to support
+file URIs that take the following forms:</t>
 
-<t><list style="numbers">
-  <t>Resolve to fully qualified/absolute path</t>
-  <t>On DOS/Windows, put drive letter + “:” in first segment, on UNIX
-path starts with “/”</t>
-  <t>note: authority, if used, must be followed by a “/”; on
-DOS/Windows this implies “file://authority/c:/..”</t>
-  <t>convert each directory in the path to path segments, e.g. percent
-encoding reserved characters, as per <xref target="RFC3986"/>, Section 2.</t>
-  <t>concatenate segments with appropriate “file:” and slashes</t>
+<t>Local files:</t>
+
+<t><list style="symbols">
+  <t><spanx style="verb">file:///path/to/file</spanx><vspace />
+ A “traditional” file URI for a local file, with an empty authority.
+ This is the most common format in use today, despite being
+ technically incompatible with the definition from <xref target="RFC1738"/>.</t>
+  <t><spanx style="verb">file:///c:/path/to/file</spanx><vspace />
+ The traditional representation of a local file in a DOS- or
+ Windows-based environment.</t>
+  <t><spanx style="verb">file:/path/to/file</spanx><vspace />
+ The ideal representation of a local file in a UNIX-like environment,
+ with no authority component and an absolute path that begins with a
+ slash “/”.</t>
+  <t><spanx style="verb">file:c:/path/to/file</spanx><vspace />
+ The ideal representation of a local file in a DOS- or Windows-based
+ environment, with no authority component and an absolute path that
+ begins with a drive letter.</t>
+  <t><spanx style="verb">file:/c:/path/to/file</spanx><vspace />
+ A representation of a local file in a DOS- or Windows-based
+ environment, with no authority component and a slash preceding the
+ drive letter. This representation is less common than those above,
+ and is deprecated by this specification.</t>
+  <t><spanx style="verb">file:///c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file:///c/path/to/file</spanx></t>
+  <t><spanx style="verb">file:/c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file:/c/path/to/file</spanx></t>
+  <t><spanx style="verb">file:c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file:c/path/to/file</spanx><vspace />
+ Representations of a local file in a DOS- or Windows-based
+ environment, using alternative representations of drive letters.
+ These are supported for compatibility with historical
+ implementationsm, but deprecated by this specification.</t>
 </list></t>
 
-<t>… gives an IRI in file system’s encoding, which can be translated to
-a URI as per <xref target="RFC3987"/>, Section 3.1.</t>
+<t>Non-local files:</t>
 
-<t>Simplest example:</t>
+<t><list style="symbols">
+  <t><spanx style="verb">file://smb.example.com/path/to/file</spanx><vspace />
+ The ideal representation of a non-local file, with an explicit
+ authority.</t>
+  <t><spanx style="verb">file:////smb.example.com/path/to/file</spanx><vspace />
+ The “traditional” representation of a non-local file, with an empty
+ authority and a complete (transformed) UNC path. This encoding is
+ commonly implemented, but the ideal representation above is
+ preferred by this specification.</t>
+  <t><spanx style="verb">file://///smb.example.com/path/to/file</spanx><vspace />
+ As above, with an extra slash between the empty authority and the
+ transformed UNC path, conformant with the definition from
+ <xref target="RFC1738"/>. This representation is deprecated by this specification.
+ It is notably used by the Firefox web browser.</t>
+</list></t>
 
-<figure><artwork><![CDATA[
-file:/path/to/file.txt    |  file:c:/path/to/file.txt
-]]></artwork></figure>
+<t>Dubious encodings:</t>
 
-<t>Standard example:</t>
+<t><list style="symbols">
+  <t><spanx style="verb">file://c:/path/to/file</spanx></t>
+  <t><spanx style="verb">file://c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file://c/path/to/file</spanx><vspace />
+ A dubious encoding that includes a Windows drive letter as the
+ authority component. This encoding exists in some extant
+ implementations, and is supported by the grammar for historical
+ reasons.</t>
+</list></t>
 
-<figure><artwork><![CDATA[
-file:///path/to/file.txt  |  file:///c:/path/to/file.txt
-]]></artwork></figure>
+<t>It also intentionally excludes URIs of the form:</t>
 
-<section anchor="not-rfc1738" title="Not RFC1738">
-
-<t>In <xref target="RFC1738"/> always started with “file://”, and first “/” wasn’t part
-of path (although nobody ever used “file:////path/to/file.txt”)</t>
+<t><list style="symbols">
+  <t><spanx style="verb">file://auth.example.com//smb.example.com/path/to/file</spanx><vspace />
+ An encoding that includes both a non-local authority, and a UNC file
+ path, implying that the UNC path may only be accessed from
+ <spanx style="verb">auth.example.com</spanx>. This encoding has been theorised, but has never
+ seen wide implementation.</t>
+</list></t>
 
 </section>
-<section anchor="deviants" title="Deviants">
+<section anchor="methods-on-file-uris" title="Methods on file URIs">
+
+<t>In the strictest terms, the only operations that can be performed on a
+file URI are translating it to and from a file path; subsequent methods
+are performed on the resulting file path, and depend entirely on the
+file system’s APIs.</t>
+
+<t>For example, consider the POSIX <spanx style="verb">open()</spanx>, <spanx style="verb">read()</spanx>, and <spanx style="verb">close()</spanx>
+methods (<xref target="POSIX"/>) for reading a file’s contents into memory.</t>
+
+<t>The local file system API can only be used if the file URI has a blank
+(or absent) authority and the path, when transformed to the local
+system’s conventions, is not a UNC path. Note that this differs from
+the definition in <xref target="RFC1738"/> in that previously an authority containing
+the text “localhost” was used to refer to the local file system, but in
+this specification it translates to a UNC path referring to the host
+“localhost”.</t>
+
+<section anchor="translating-local-file-path-to-file-uri" title="Translating Local File Path to file URI">
+
+<t>Below is an algorithmic description of the process used to convert a
+file path to an Internationalized Resource Identifier (IRI)
+<xref target="RFC3987"/>), which can then be translated to a URI as per Section 3.1
+of <xref target="RFC3987"/>.</t>
+
+<t><list style="numbers">
+  <t>Resolve the file path to its fully qualified absolute form.</t>
+  <t>Initialise the URI with the “file:” scheme identifier.</t>
+  <t>If including an empty authority component, append the “//” sigil to
+the URI.</t>
+  <t>Append the root directory:  <list style="symbols">
+      <t>On a DOS- or Windows-based system, assign the drive letter
+(e.g. “c:”) as the first path segment, and append it to the
+URI, followed by a slash character “/”.      <list style="symbols">
+          <t>If an empty authority was included at step 3, a slash “/”
+is prepended to the drive letter (e.g. “/c:”) to
+distinguish it from the authority.</t>
+        </list></t>
+      <t>On an OpenVMS Files-11 system, append a slash “/” to the URI,
+and encode the disk name as the first segment as per step 5,
+below, except that the dollars sign character “$” is not
+treated as a reserved character.</t>
+      <t>On a UNIX-like system, append a slash “/” to the URI, to
+denote the root directory.</t>
+    </list></t>
+  <t>For each directory in the path after the root:  <list style="numbers">
+      <t>Transform the directory name to a path segment (e.g. by percent
+encoding reserved characters, etc.) as per <xref target="RFC3986"/>,
+Section 2.</t>
+      <t>Append the transformed segment and a delimiting slash character
+“/” to the URI.</t>
+    </list></t>
+  <t>If the path includes a file name:  <list style="numbers">
+      <t>Transform the file name to a path segment as above.</t>
+      <t>Append the transformed segment to the URI.</t>
+    </list></t>
+</list></t>
+
+<t>Examples:</t>
+
+<figure><artwork><![CDATA[
+File Path                      | URIs
+-------------------------------+--------------------------------
+UNIX-Like:                     |
+  /path/to/file                | file:/path/to/file
+                               | file:///path/to/file
+                               |
+/path/to/dir/                  | file:/path/to/dir/
+                               | file:///path/to/dir/
+                               |
+DOS- or Windows-based:         |
+  c:\path\to\file.txt          | file:c:/path/to/file.txt
+                               | file:///c:/path/to/file.txt
+                               |
+  c:\path\to\dir\              | file:c:/path/to/dir/
+                               | file:///c:/path/to/dir/
+VMS Files-11:                  |
+  ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
+                               | file:///DISK1/PATH/TO/FILE.TXT?2
+                               |
+]]></artwork></figure>
+
+<t><spanx style="strong">Differences from RFC1738</spanx></t>
+
+<t>In <xref target="RFC1738"/> a file URL always started with the token “file://”,
+followed by an authority and a “/”. That “/” was not considered part
+of the path. This implies that the correct encoding for the above
+example file path in a UNIX-like environment would be:</t>
+
+<figure><artwork><![CDATA[
+     token     + authority + slash + path
+   = "file://" + ""        + "/"   + "/path/to/file.txt"
+   = "file:////path/to/file.txt"
+]]></artwork></figure>
+
+<t>However that structure never eventuated.</t>
+
+<t><spanx style="strong">Exceptions</spanx></t>
 
 <t>DOS/Windows: Some deviants leave the leading slash off before the drive
 letter when authority is blank, e.g. <spanx style="verb">file://c:/...</spanx></t>
@@ -196,45 +341,36 @@ letter when authority is blank, e.g. <spanx style="verb">file://c:/...</spanx></
 off completely. e.g. <spanx style="verb">file:///c|/...</spanx> or <spanx style="verb">file:///c/...</spanx></t>
 
 </section>
-</section>
-<section anchor="translating-unc" title="Translating UNC">
+<section anchor="translating-unc-path-to-file-uri" title="Translating UNC Path to file URI">
 
-<t>The syntax of a UNC path <xref target="MS-DTYP"/>:</t>
+<t>A UNC path can be directly translated to an Internationalized Resource
+Identifier (IRI) <xref target="RFC3987"/>), which can then be translated to a URI
+as per Section 3.1 of <xref target="RFC3987"/>.</t>
 
-<figure><artwork><![CDATA[
-  UNC = "\\" hostname "\" sharename \*( "\" objectname )
-  hostname = netbios-name / fqdn / ip-address
-  sharename = <name of share or resource to be accessed>
-  objectname = <depends on resource being accessed>
-]]></artwork></figure>
-
-<t>o netbios-name from <xref target="MS-NBTE"/>, <eref target="http://msdn.microsoft.com/en-us/library/dd891456.aspx">Section 2.2.1</eref>.
-o fqdn from <xref target="RFC1035"/> or <xref target="RFC1123"/>
-o ip-address from <xref target="RFC1123"/>, Section 2.1, or <xref target="RFC4921"/>, Section 2.2.</t>
-
-<t><list style="symbols">
-  <t>format of sharename depends on protocol; see <xref target="MS-SMB"/>, <xref target="RFC3530"/>, NCP (<xref target="NOVELL"/>).</t>
-</list></t>
-
-<t>Translates directly to file URI: hostname=:authority, sharename=:first
-path segment, objectnames=:subsequent path segments</t>
+<t>Translates directly to file URI:
+* hostname =&gt; authority
+* sharename =&gt; first path segment
+* objectnames =&gt; subsequent path segments</t>
 
 <t><list style="numbers">
-  <t>ensure hostname matches authority</t>
-  <t>convert sharename, objectnames to path segments, e.g. percent
-encoding reserved characters, as per RFC3986, Section 2.</t>
-  <t>concatenate with appropriate “file://” and slashes</t>
+  <t>Initialise the URI with the “file:” scheme identifier.</t>
+  <t>Append the “//” authority sigil and the hostname to the identifier.</t>
+  <t>For each objectname:  <list style="numbers">
+      <t>Transform the objectname to a path segment (e.g. by percent
+encoding reserved characters, etc.) as per <xref target="RFC3986"/>,
+Section 2.</t>
+      <t>Append a delimiting slash character “/” and the transformed
+segment to the URI.</t>
+    </list></t>
 </list></t>
 
-<t>… gives a UTF-16 IRI, which can be translated to a URI as per
-<xref target="RFC3987"/>, Section 3.1.</t>
-
-<section anchor="deviants-1" title="Deviants">
+<section anchor="deviants" title="Deviants">
 
 <t>Many implementations accept the full UNC path in the URI path (with
 all backslashes converted to slashes).  Additionally, because
 <xref target="RFC1738"/> said that the first “/” after “file://[authority]” wasn’t
-part of the path, Firefox requires an additional slash.</t>
+part of the path, Firefox requires an additional slash before the
+UNC path.</t>
 
 <t>E.g.:</t>
 
@@ -623,6 +759,45 @@ specifications of each URI scheme.
 </reference>
 
 
+
+<reference anchor='RFC5234'>
+
+<front>
+<title>Augmented BNF for Syntax Specifications: ABNF</title>
+<author initials='D.' surname='Crocker' fullname='D. Crocker'>
+<organization /></author>
+<author initials='P.' surname='Overell' fullname='P. Overell'>
+<organization /></author>
+<date year='2008' month='January' />
+<abstract>
+<t>Internet technical specifications often need to define a formal syntax.  Over the years, a modified version of Backus-Naur Form (BNF), called Augmented BNF (ABNF), has been popular among many Internet specifications.  The current specification documents ABNF.  It balances compactness and simplicity with reasonable representational power.  The differences between standard BNF and ABNF involve naming rules, repetition, alternatives, order-independence, and value ranges.  This specification also supplies additional rule definitions and encoding for a core lexical analyzer of the type common to several Internet specifications. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name='STD' value='68' />
+<seriesInfo name='RFC' value='5234' />
+<format type='TXT' octets='26359' target='http://www.rfc-editor.org/rfc/rfc5234.txt' />
+</reference>
+
+
+
+<reference anchor='RFC6874'>
+
+<front>
+<title>Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers</title>
+<author initials='B.' surname='Carpenter' fullname='B. Carpenter'>
+<organization /></author>
+<author initials='S.' surname='Cheshire' fullname='S. Cheshire'>
+<organization /></author>
+<author initials='R.' surname='Hinden' fullname='R. Hinden'>
+<organization /></author>
+<date year='2013' month='February' />
+<abstract>
+<t>This document describes how the zone identifier of an IPv6 scoped address, defined as &amp;lt;zone_id&amp;gt; in the IPv6 Scoped Address Architecture (RFC 4007), can be represented in a literal IPv6 address and in a Uniform Resource Identifier that includes such a literal address.  It updates the URI Generic Syntax specification (RFC 3986) accordingly.</t></abstract></front>
+
+<seriesInfo name='RFC' value='6874' />
+<format type='TXT' octets='19361' target='http://www.rfc-editor.org/rfc/rfc6874.txt' />
+</reference>
+
+
 <reference anchor="MS-DTYP" target="http://msdn.microsoft.com/en-us/library/gg465305.aspx">
   <front>
     <title>Windows Data Types, 2.2.56 UNC</title>
@@ -845,13 +1020,35 @@ specifications of each URI scheme.
     <author initials="M." surname="Kerwin" fullname="Matthew Kerwin">
       <organization></organization>
     </author>
-    <date year="2014" month="July"/>
+    <date year="2014" month="September"/>
   </front>
 </reference>
 
 
     </references>
 
+
+<section anchor="unc-syntax" title="UNC Syntax">
+
+<t>The syntax of a UNC path, as defined by <xref target="MS-DTYP"/>:</t>
+
+<figure><artwork><![CDATA[
+  UNC = "\\" hostname "\" sharename \*( "\" objectname )
+  hostname   = netbios-name / fqdn / ip-address
+  sharename  = <name of share or resource to be accessed>
+  objectname = <depends on resource being accessed>
+]]></artwork></figure>
+
+<t><list style="symbols">
+  <t>netbios-name from <xref target="MS-NBTE"/>, <eref target="http://msdn.microsoft.com/en-us/library/dd891456.aspx">Section 2.2.1</eref>.</t>
+  <t>fqdn from <xref target="RFC1035"/> or <xref target="RFC1123"/></t>
+  <t>ip-address from <xref target="RFC1123"/>, Section 2.1, or <xref target="RFC4921"/>, Section 2.2.</t>
+</list></t>
+
+<t>The precise format of <spanx style="verb">sharename</spanx> depends on the protocol;
+see <xref target="MS-SMB"/>, <xref target="RFC3530"/>, NCP (<xref target="NOVELL"/>).</t>
+
+</section>
 
 
   </back>
