@@ -10,17 +10,21 @@ area: General
 workgroup: Independent Submission
 keyword: Internet-Draft
 
+updates: RFC3986
+obsoletes: RFC1738
+
 stand_alone: yes #_
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
 
 author:
- -
+-
     ins: M. Kerwin
     name: Matthew Kerwin
     organization: QUT
     email: matthew.kerwin@qut.edu.au
 
 normative:
+  RFC20:
   RFC1035:
   RFC1123:
   RFC2119:
@@ -28,7 +32,18 @@ normative:
   RFC3987:
   RFC4921:
   RFC5234:
+  RFC5890:
+  RFC5892:
   RFC6874:
+  STD63:
+    title: UTF-8, a transformation format of ISO 10646
+    author:
+    - ins: F. Yergeau
+      name: F. Yergeau
+    date: 2003-11
+    seriesinfo:
+      STD: 63
+      RFC: 3629
   MS-DTYP:
     title: Windows Data Types, 2.2.56 UNC
     author:
@@ -43,6 +58,23 @@ normative:
       #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
     date: 2014-05
     target: http://msdn.microsoft.com/en-us/library/dd891412.aspx
+  ISO10646:
+    title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
+    author:
+    - organization: International Organization for Standardization
+    date: 2003-12
+    seriesinfo:
+      ISO/IEC: 10646:2003
+  UTR15:
+    title: Unicode Normalization Forms
+    author:
+    - ins: M. Davis
+      name: Mark Davis
+      #email: markdavis@google.com
+    - ins: K. Whistler
+      name: Ken Whistler
+      #email: ken@unicode.org
+    date: 2012-08-31
 
 informative:
   RFC1630:
@@ -138,9 +170,11 @@ which includes algorithms for interpreting file URIs (as URLs).
 
 ## UNC
 
-A Universal Naming Convention (UNC) string does a similar job. It has
-three parts: host, share, path. You can translate between UNC paths and
-file URIs.
+The Universal Naming Convention (UNC) {{MS-DTYP}} defines a string
+format that can perform a similar role in describing the location of
+files. This UNC filespace selector string has three parts: host,
+share, and path. This document describes a means of translating
+between UNC filespace selector strings and file URIs.
 
 
 ## Notational Conventions
@@ -210,77 +244,88 @@ file URIs that take the following forms:
 
 Local files:
 
-* `file:///path/to/file`  
-   A "traditional" file URI for a local file, with an empty authority.
-   This is the most common format in use today, despite being
-   technically incompatible with the definition from {{RFC1738}}.
+* `file:///path/to/file`
 
-* `file:///c:/path/to/file`  
-   The traditional representation of a local file in a DOS- or
-   Windows-based environment.
+   > A "traditional" file URI for a local file, with an empty
+     authority. This is the most common format in use today, despite
+     being technically incompatible with the definition in {{RFC1738}}.
 
-* `file:/path/to/file`  
-   The ideal representation of a local file in a UNIX-like environment,
-   with no authority component and an absolute path that begins with a
-   slash "/".
+* `file:///c:/path/to/file`
 
-* `file:c:/path/to/file`  
-   The ideal representation of a local file in a DOS- or Windows-based
-   environment, with no authority component and an absolute path that
-   begins with a drive letter.
+   > The traditional representation of a local file in a DOS- or
+     Windows-based environment.
 
-* `file:/c:/path/to/file`  
-   A representation of a local file in a DOS- or Windows-based
-   environment, with no authority component and a slash preceding the
-   drive letter. This representation is less common than those above,
-   and is deprecated by this specification.
+* `file:/path/to/file`
+
+   > The ideal representation of a local file in a UNIX-like
+     environment, with no authority component and an absolute path
+     that begins with a slash "/".
+
+* `file:c:/path/to/file`
+
+   > The ideal representation of a local file in a DOS- or
+     Windows-based environment, with no authority component and an
+     absolute path that begins with a drive letter.
+
+* `file:/c:/path/to/file`
+
+   > A representation of a local file in a DOS- or Windows-based
+     environment, with no authority component and a slash preceding
+     the drive letter. This representation is less common than those
+     above, and is deprecated by this specification.
 
 * `file:///c|/path/to/file`
 * `file:///c/path/to/file`
 * `file:/c|/path/to/file`
 * `file:/c/path/to/file`
 * `file:c|/path/to/file`
-* `file:c/path/to/file`  
-   Representations of a local file in a DOS- or Windows-based
-   environment, using alternative representations of drive letters.
-   These are supported for compatibility with historical
-   implementationsm, but deprecated by this specification.
+* `file:c/path/to/file`
+
+   > Representations of a local file in a DOS- or Windows-based
+     environment, using alternative representations of drive letters.
+     These are supported for compatibility with historical
+     implementationsm, but deprecated by this specification.
 
 Non-local files:
 
-* `file://smb.example.com/path/to/file`  
-   The ideal representation of a non-local file, with an explicit
-   authority.
+* `file://host.example.com/path/to/file`
 
-* `file:////smb.example.com/path/to/file`  
-   The "traditional" representation of a non-local file, with an empty
-   authority and a complete (transformed) UNC path. This encoding is
-   commonly implemented, but the ideal representation above is
-   preferred by this specification.
+   > The ideal representation of a non-local file, with an explicit
+     authority.
 
-* `file://///smb.example.com/path/to/file`  
-   As above, with an extra slash between the empty authority and the
-   transformed UNC path, conformant with the definition from
-   {{RFC1738}}. This representation is deprecated by this specification.
-   It is notably used by the Firefox web browser.
+* `file:////host.example.com/path/to/file`
+
+   > The "traditional" representation of a non-local file, with an
+     empty authority and a complete (transformed) UNC string. This
+     encoding is commonly implemented, but the ideal representation
+     above is preferred by this specification.
+
+* `file://///host.example.com/path/to/file`
+
+   > As above, with an extra slash between the empty authority and the
+     transformed UNC string, conformant with the definition from
+     {{RFC1738}}. This representation is deprecated by this
+     specification. It is notably used by the Firefox web browser.
 
 Dubious encodings:
 
 * `file://c:/path/to/file`
 * `file://c|/path/to/file`
-* `file://c/path/to/file`  
-   A dubious encoding that includes a Windows drive letter as the
-   authority component. This encoding exists in some extant
-   implementations, and is supported by the grammar for historical
-   reasons.
+* `file://c/path/to/file`
+
+   > A dubious encoding that includes a Windows drive letter as the
+     authority component. This encoding exists in some extant
+     implementations, and is supported by the grammar for historical
+     reasons.
 
 It also intentionally excludes URIs of the form:
 
-* `file://auth.example.com//smb.example.com/path/to/file`  
-   An encoding that includes both a non-local authority, and a UNC file
-   path, implying that the UNC path may only be accessed from
-   `auth.example.com`. This encoding has been theorised, but has never
-   seen wide implementation.
+* `file://auth.example.com//host.example.com/path/to/file`
+
+   > An encoding that includes both a non-local authority, and a UNC
+     string. The traditional implication is that the shared object
+     described by the UNC string may only be accessed from the machine
+     `auth.example.com`.
 
 
 # Methods on file URIs
@@ -295,11 +340,14 @@ methods ({{POSIX}}) for reading a file's contents into memory.
 
 The local file system API can only be used if the file URI has a blank
 (or absent) authority and the path, when transformed to the local
-system's conventions, is not a UNC path. Note that this differs from
+system's conventions, is not a UNC string. Note that this differs from
 the definition in {{RFC1738}} in that previously an authority containing
 the text "localhost" was used to refer to the local file system, but in
-this specification it translates to a UNC path referring to the host
+this specification it translates to a UNC string referring to the host
 "localhost".
+
+This specification does not define a mechanism for accessing files
+stored on non-local file systems.
 
 
 ## Translating Local File Path to file URI
@@ -336,9 +384,8 @@ of {{RFC3987}}.
 
 5.  For each directory in the path after the root:
 
-    1.  Transform the directory name to a path segment (e.g. by percent
-        encoding reserved characters, etc.) as per {{RFC3986}},
-        Section 2.
+    1.  Transform the directory name to a path segment ({{RFC3986}},
+        Section 3.3) as per Section 2 of {{RFC3986}}.
 
     2.  Append the transformed segment and a delimiting slash character
         "/" to the URI.
@@ -349,17 +396,27 @@ of {{RFC3987}}.
 
     2.  Append the transformed segment to the URI.
 
+7.  If any non-hierarchical data is required to identify the file (for
+    example a version number in a versioning file system):
+
+    1.   Append a question mark character "?" to the URI.
+
+    2.   Transform the non-hierarchical data to a query component
+         ({{RFC3986}}, Section 3.4) as per Section 2 of {{RFC3986}}.
+
+    3.  Append the transformed query component to the URI.
+
 
 Examples:
 
 ~~~~~~~~~~
-File Path                      | URIs
+File Path                      | URIs (ideal, traditional)
 -------------------------------+--------------------------------
 UNIX-Like:                     |
   /path/to/file                | file:/path/to/file
                                | file:///path/to/file
                                |
-/path/to/dir/                  | file:/path/to/dir/
+  /path/to/dir/                | file:/path/to/dir/
                                | file:///path/to/dir/
                                |
 DOS- or Windows-based:         |
@@ -379,7 +436,7 @@ __Differences from RFC1738__
 In {{RFC1738}} a file URL always started with the token "file://",
 followed by an authority and a "/". That "/" was not considered part
 of the path. This implies that the correct encoding for the above
-example file path in a UNIX-like environment would be:
+example file path in a UNIX-like environment would have been:
 
 ~~~~~~~~~~
      token     + authority + slash + path
@@ -387,103 +444,112 @@ example file path in a UNIX-like environment would be:
    = "file:////path/to/file.txt"
 ~~~~~~~~~~
 
-However that structure never eventuated.
+However that construct was never used in practice.
 
 
 __Exceptions__
 
-DOS/Windows: Some deviants leave the leading slash off before the drive
-letter when authority is blank, e.g. `file://c:/...`
+DOS/Windows: Some implementations leave the leading slash off before
+the drive letter when authority is blank, e.g. `file://c:/...`
 
-DOS/Windows: Some deviants replace ":" with "|", and others leave it
-off completely. e.g. `file:///c|/...` or `file:///c/...`
+DOS/Windows: Some implementations replace ":" with "|", and others
+leave it off completely. e.g. `file:///c|/...` or `file:///c/...`
 
 
-## Translating UNC Path to file URI
+## Translating UNC String to file URI
 
-A UNC path can be directly translated to an Internationalized Resource
-Identifier (IRI) {{RFC3987}}), which can then be translated to a URI
-as per Section 3.1 of {{RFC3987}}.
-
-Translates directly to file URI:
-* hostname => authority
-* sharename => first path segment
-* objectnames => subsequent path segments
+A UNC filespace selector string can be directly translated to an
+Internationalized Resource Identifier (IRI) {{RFC3987}}), which can
+then be translated to a URI as per Section 3.1 of {{RFC3987}}.
 
 1.  Initialise the URI with the "file:" scheme identifier.
 
-2.  Append the "//" authority sigil and the hostname to the identifier.
+2.  Append the authority:
+
+    1.  Append the "//" authority sigil to the URI.
+
+    2.  Append the hostname component of the UNC string to the URI.
 
 3.  For each objectname:
 
-    1.  Transform the objectname to a path segment (e.g. by percent
-        encoding reserved characters, etc.) as per {{RFC3986}},
-        Section 2.
+    1.  Transform the objectname to a path segment ({{RFC3986}},
+        Section 3.3) as per Section 2 of {{RFC3986}}.
 
     2.  Append a delimiting slash character "/" and the transformed
         segment to the URI.
 
+Example:
 
-### Deviants
+~~~~~~~~~~
+UNC String:   \\host.example.com\Share\path\to\file.txt
+URI:          file://host.example.com/Share/path/to/file.txt
+~~~~~~~~~~
 
-Many implementations accept the full UNC path in the URI path (with
+__Exceptions__
+
+Many implementations accept the full UNC string in the URI path (with
 all backslashes converted to slashes).  Additionally, because
 {{RFC1738}} said that the first "/" after "file://\[authority\]" wasn't
 part of the path, Firefox requires an additional slash before the
-UNC path.
+UNC string.
 
-E.g.:
+For example:
 
+~~~~~~~~~~
+Traditional:
     file:////hostname/share/object/names
-    file://///hostname/share/object/names  ; (FF)
+    \_____/\__________________________ /
+    Scheme     Transformed UNC string
 
-
-# Semantics {#semantics}
+Firefox:
+    file://///hostname/share/object/names
+    \_____/|\__________________________ /
+    Scheme |    Transformed UNC string
+           Extra slash
+~~~~~~~~~~
 
 
 # Encoding {#encoding}
 
-Use-cases:
+* not all URIs contains %-HH UTF-8
 
-Transcription
-: E.g. a human hearing a spoken URI and entering it into a text file.
-  I don’t think there’s any encoding happening here, per se; that
-  would be handled by #3 or #4 below.
-: Input: analogue signal
-: Output: visual representation of a URI, as a character sequence
+* LATIN SMALL LETTER C WITH CEDILLA (U+00E7) could be:
+    * %C3%A7 -- UTF-8
+    * %87    -- CP 850
+    * %E7%00 -- UTF-16LE
+    * etc.
 
-Manual encoding
-: E.g. a human entering a URI as a string literal in a program
-  (they’d need to perform all the encoding steps, down to the
-  byte/character level.)
-: Input: any
-: Output: expression of fully encoded URI, as byte sequence
+* %C3%97 could be:
+    * MULTIPLICATION SIGN (U+00D7) -- UTF-8
+    * "Cp"                         -- EBCDIC
+    * "├ù"                         -- CP 850
+    * etc.
 
-Keyboard to URI encoding
-: A UI text box accepting keyboard input; silently percent-encoding
-  (or not) as appropriate, etc.
-: Input: keypress events/characters
-: Output: URI
+<!--
+The canonical encoding for a file URI is as a sequence of characters
+from the Universal Character Set (UCS) {{ISO10646}} encoded as UTF-8
+{{STD63}} and then percent-encoded in valid ASCII {{RFC20}}.
 
-File path to URI encoding
-: `UrlCreateFromPath()`
-: Input: file path
-: Output: URI
+When translating from a file path to a file URI, if the file system
+uses a known non-Unicode character encoding, the path SHOULD be
+converted to a sequence of Unicode characters normalized according to
+Normalization Form C (NFC, {{UTR15}}).
 
-Parsing
-: E.g. a browser following a clicked hyperlink. Probably just doing
-  enough to detect that it’s a file URI, then relying on #6 to do
-  the real work.
-: Input: URI
-: Output: ?
+Before applying any percent-encoding, an application MUST ensure the
+following about the string that is used as input to the URI
+construction process:
 
-URI to file path decoding
-: `PathCreateFromUrl()`, `CreateURLMonikerEx()`
-: Input: URI
-: Output: file path
+* The host, if any, consists only of Unicode code points that
+  conform to the rules specified in {{RFC5892}}.
 
+* Internationalized domain name (IDN) labels are encoded as A-labels
+  {{RFC5890}}.
+-->
+
+<!--
 Anything that outputs a URI should use percent-encoded UTF-8, except
 in Windows, when it should be \[an IRI?\]
+-->
 
 
 # Security Considerations {#security}
@@ -495,27 +561,27 @@ In accordance with the guidelines and registration procedures for new
 URI schemes {{RFC4395}}, this section provides the information needed
 to update the registration of the file URI scheme.
 
-## URI Scheme Name {#iana.name}
+## URI Scheme Name {#iana-name}
 
 file
 
-## Status {#iana.status}
+## Status {#iana-status}
 
 permanent
 
-## URI Scheme Syntax {#iana.syntax}
+## URI Scheme Syntax {#iana-syntax}
 
 See {{syntax}}.
 
-## URI Scheme Semantics {#iana.semantics}
+## URI Scheme Semantics {#iana-semantics}
 
-See {{semantics}}.
+(This whole document).
 
-## Encoding Considerations #{iana.encoding}
+## Encoding Considerations {#iana-encoding}
 
 See {{encoding}}.
 
-## Applications/Protocols That Use This URI Scheme Name {#iana.implementations}
+## Applications/Protocols That Use This URI Scheme Name {#iana-implementations}
 
 Web browsers:
 
@@ -538,7 +604,7 @@ Other applications/protocols:
 
 These lists are non-exhaustive.
 
-## Interoperability Considerations {#iana.interop}
+## Interoperability Considerations {#iana-interop}
 
 Due to the convoluted history of the file URI scheme there are many,
 varied implementations in existence.  Many have converged over time,
@@ -548,20 +614,20 @@ always be exceptions, and this fact is recognised.
 
 <!-- <eref target="http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx">IE Blog</eref> -->
 
-## Security Considerations {#iana.security}
+## Security Considerations {#iana-security}
 
 See {{security}}.
 
-## Contact {#iana.contact}
+## Contact {#iana-contact}
 
 Matthew Kerwin, matthew.kerwin@qut.edu.au
 
-## Author/Change Controller {#iana.author}
+## Author/Change Controller {#iana-author}
 
 This scheme is registered under the IETF tree.  As such, the IETF
 maintains change control.
 
-## References {#iana.references}
+## References {#iana-references}
 
 None.
 
@@ -575,7 +641,7 @@ those documents still apply.
 
 # UNC Syntax
 
-The syntax of a UNC path, as defined by {{MS-DTYP}}:
+The syntax of a UNC filespace selector string, as defined by {{MS-DTYP}}:
 
 ~~~~~~~~~~
   UNC = "\\" hostname "\" sharename \*( "\" objectname )
@@ -591,4 +657,6 @@ The syntax of a UNC path, as defined by {{MS-DTYP}}:
 The precise format of `sharename` depends on the protocol;
 see {{MS-SMB}}, {{RFC3530}}, NCP ({{NOVELL}}).
 
+The UNC filespace selector string is a null-terminated Unicode
+character string.
 
