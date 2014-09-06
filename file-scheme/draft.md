@@ -115,11 +115,12 @@ informative:
     - organization: IEEE
     date: 2013
   GITHUB:
-    title: file-uri-scheme GitHub repository
+    title: internet-drafts GitHub repository
     author:
     - ins: M. Kerwin
       name: Matthew Kerwin
     date: n.d.
+    target: https://github.com/phluid61/internet-drafts/
 
 
 --- abstract
