@@ -31,8 +31,6 @@ normative:
   RFC3987:
   RFC4291:
   RFC5234:
-  #RFC5890:
-  #RFC5892:
   RFC6874:
   MS-DTYP:
     title: Windows Data Types, 2.2.56 UNC
