@@ -551,7 +551,7 @@ Section 3.2.1), security considerations ({{security}}) notwithstanding.
 <!-- ## Translating file URI to ... -->
 
 
-## Incompatible File Paths #{incompat}
+## Incompatible File Paths {#incompat}
 
 Some conventional file path formats are known to be incompatible with
 the file URI scheme.
