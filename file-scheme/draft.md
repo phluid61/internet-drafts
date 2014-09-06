@@ -31,8 +31,8 @@ normative:
   RFC3987:
   RFC4921:
   RFC5234:
-  RFC5890:
-  RFC5892:
+  #RFC5890:
+  #RFC5892:
   RFC6874:
   MS-DTYP:
     title: Windows Data Types, 2.2.56 UNC
@@ -114,6 +114,11 @@ informative:
     author:
     - organization: IEEE
     date: 2013
+  Win32-Namespaces:
+    title: Naming Files, Paths, and Namespaces
+    author:
+    - organization: Microsoft Developer Network
+    date: 2013-06
   GITHUB:
     title: internet-drafts GitHub repository
     author:
@@ -149,8 +154,8 @@ URIs, nor a media type associated with them.
 The file URI scheme was first defined in {{RFC1630}}, which, being an
 informational RFC, does not specify an Internet standard.  The
 definition was standardised in {{RFC1738}}, and the scheme was
-registered with the Internet Assigned Numbers Authority (IANA,
-{{IANA-URI-Schemes}});  however that definition omitted certain
+registered with the Internet Assigned Numbers Authority (IANA)
+{{IANA-URI-Schemes}}; however that definition omitted certain
 language included by former that clarified aspects such as:
 
 * the use of slashes to denote boundaries between directory
@@ -164,7 +169,7 @@ was made obsolete, but that draft expired in 2005.  It enumerated
 concerns arising from the various, often conflicting implementations
 of the scheme.  It serves as the spiritual predecessor of this document.
 
-Additionally the WHATWG defines a living URL standard ({{WHATWG-URL}}),
+Additionally the WHATWG defines a living URL standard {{WHATWG-URL}},
 which includes algorithms for interpreting file URIs (as URLs).
 
 
@@ -199,8 +204,8 @@ describe the difference between this and any previous specifications.
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 {{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `host`, `path-absolute`, and `query`
-rules from {{RFC3986}} (as updated by {{RFC6874}}.)
+specification, and importing the `userinfo`, `host`, `path-absolute`,
+and `query` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
 ~~~~~~~~~~
 file-URI       = f-scheme ":" f-hier-part [ "?" query ]
@@ -210,12 +215,14 @@ f-scheme       = "file"
 f-hier-part    = "//" auth-path
                / local-path
 
-auth-path      = [ host ] path-absolute
-               / unc-path       ; file:////host/share/...
-               / windows-path   ; file://c:/...
+auth-path      = [ f-auth ] path-absolute
+               / unc-path
+               / windows-path
 
-local-path     = path-absolute  ; file:/...
-               / windows-path   ; file:c:/...
+f-auth         = [ userinfo "@" ] host
+
+local-path     = path-absolute
+               / windows-path
 
 unc-path       = 2\*3"/" authority path-absolute
 
@@ -224,23 +231,33 @@ drive-letter   = ALPHA [ drive-marker ]
 drive-marker   = ":" / "|"
 ~~~~~~~~~~
 
-The query component contains non-hierarchical data that, along with
+Note well: the `drive-marker` rule intentionally includes a bar
+character "|" even though that character is not part of either the
+unreserved or reserved character sets in {{RFC3986}}, and thus would
+normally have to be percent-encoded to be included in a URI. This
+specification explicitly supports parsing of otherwise invalid URIs --
+with an unencoded bar character forming part of a DOS or Windows drive
+letter identifier -- for parsing extant historical URIs, but new URIs of
+this form MUST NOT be generated.
+
+The query field contains non-hierarchical data that, along with
 data in the path components (path-absolute, unc-path, or windows-path)
 serves to identify a resource. This is not commonly used in practice,
 but could be used to refer to a specific version of a file in a
 versioning file system, for example.
 
-Systems exhibit different levels of case-sensitivity. Implementations
-SHOULD maintain the case of file and directory names when translating
-file URIs to and from the local system's representation of file paths,
-and any systems or devices that transport file URIs SHOULD NOT alter
-the case of file URIs they transport.
-<!-- TODO: drive letter case-insensitivity -->
+Systems exhibit different levels of case-sensitivity. Unless the file
+system is known to be case-insensitive, implementations MUST maintain
+the case of file and directory names when translating file URIs to and
+from the local system's representation of file paths, and any systems or
+devices that transport file URIs MUST NOT alter the case of file URIs
+they transport.
 
-This definition is necessarily different from that given in {{RFC1630}}
-or {{RFC1738}} because it depends on the generic syntax from {{RFC3986}}
-that post-dates all previous specifications. It is intended to support
-file URIs that take the following forms:
+The syntax definition above is necessarily different from those given in
+{{RFC1630}} and {{RFC1738}} because it depends on the generic syntax
+from {{RFC3986}} that post-dates all previous specifications.
+
+It is intended to support file URIs that take the following forms:
 
 Local files:
 
@@ -258,33 +275,30 @@ Local files:
 * `file:/path/to/file`
 
    > The ideal representation of a local file in a UNIX-like
-     environment, with no authority component and an absolute path
+     environment, with no authority field and an absolute path
      that begins with a slash "/".
 
 * `file:c:/path/to/file`
 
    > The ideal representation of a local file in a DOS- or
-     Windows-based environment, with no authority component and an
+     Windows-based environment, with no authority field and an
      absolute path that begins with a drive letter.
 
-* `file:/c:/path/to/file`
-
-   > A representation of a local file in a DOS- or Windows-based
-     environment, with no authority component and a slash preceding
-     the drive letter. This representation is less common than those
-     above, and is deprecated by this specification.
-
-* `file:///c|/path/to/file`
 * `file:///c/path/to/file`
-* `file:/c|/path/to/file`
 * `file:/c/path/to/file`
-* `file:c|/path/to/file`
 * `file:c/path/to/file`
 
    > Representations of a local file in a DOS- or Windows-based
      environment, using alternative representations of drive letters.
      These are supported for compatibility with historical
      implementationsm, but deprecated by this specification.
+
+* `file:/c:/path/to/file`
+
+   > A representation of a local file in a DOS- or Windows-based
+     environment, with no authority field and a slash preceding
+     the drive letter. This representation is less common than those
+     above, and is deprecated by this specification.
 
 Non-local files:
 
@@ -296,9 +310,9 @@ Non-local files:
 * `file:////host.example.com/path/to/file`
 
    > The "traditional" representation of a non-local file, with an
-     empty authority and a complete (transformed) UNC string. This
-     encoding is commonly implemented, but the ideal representation
-     above is preferred by this specification.
+     empty authority and a complete (transformed) UNC string in the
+     path. This encoding is commonly implemented, but the ideal
+     representation above is preferred by this specification.
 
 * `file://///host.example.com/path/to/file`
 
@@ -310,13 +324,21 @@ Non-local files:
 Dubious encodings:
 
 * `file://c:/path/to/file`
-* `file://c|/path/to/file`
 * `file://c/path/to/file`
 
    > A dubious encoding that includes a Windows drive letter as the
-     authority component. This encoding exists in some extant
+     authority field. This encoding exists in some extant
      implementations, and is supported by the grammar for historical
      reasons.
+
+* `file:///c|/path/to/file`
+* `file://c|/path/to/file`
+* `file:/c|/path/to/file`
+* `file:c|/path/to/file`
+
+   > Various otherwise-invalid URIs that include a disallowed bar
+     character "|" in the drive letter. These encodings are supported
+     by the grammar for historical reasons.
 
 It also intentionally excludes URIs of the form:
 
@@ -336,7 +358,7 @@ are performed on the resulting file path, and depend entirely on the
 file system's APIs.
 
 For example, consider the POSIX `open()`, `read()`, and `close()`
-methods ({{POSIX}}) for reading a file's contents into memory.
+methods {{POSIX}} for reading a file's contents into memory.
 
 The local file system API can only be used if the file URI has a blank
 (or absent) authority and the path, when transformed to the local
@@ -353,15 +375,15 @@ stored on non-local file systems.
 ## Translating Local File Path to file URI
 
 Below is an algorithmic description of the process used to convert a
-file path to an Internationalized Resource Identifier (IRI, 
-{{RFC3987}}), which can then be translated to a URI as per Section 3.1
-of {{RFC3987}} (see {{encoding}}).
+file path to an Internationalized Resource Identifier (IRI) 
+{{RFC3987}}, which can then be translated to a URI as per Section 3.1
+of {{RFC3987}} (see: {{encoding}}).
 
 1.  Resolve the file path to its fully qualified absolute form.
 
 2.  Initialise the URI with the "file:" scheme identifier.
 
-3.  If including an empty authority component, append the "//" sigil to
+3.  If including an empty authority field, append the "//" sigil to
     the URI.
 
 4.  Append the root directory:
@@ -375,7 +397,7 @@ of {{RFC3987}} (see {{encoding}}).
             distinguish it from the authority.
 
     *   On an OpenVMS Files-11 system, append a slash "/" to the URI,
-        and encode the disk name as the first segment as per step 5,
+        and encode the device name as the first segment as per step 5,
         below, except that the dollars sign character "$" is not
         treated as a reserved character.
 
@@ -401,10 +423,10 @@ of {{RFC3987}} (see {{encoding}}).
 
     1.   Append a question mark character "?" to the URI.
 
-    2.   Transform the non-hierarchical data to a query component
+    2.   Transform the non-hierarchical data to a query field
          ({{RFC3986}}, Section 3.4) as per Section 2 of {{RFC3986}}.
 
-    3.  Append the transformed query component to the URI.
+    3.  Append the transformed query field to the URI.
 
 
 Examples:
@@ -449,18 +471,21 @@ However that construct was never used in practice.
 
 __Exceptions__
 
-DOS/Windows: Some implementations leave the leading slash off before
-the drive letter when authority is blank, e.g. `file://c:/...`
+DOS/Windows:
+: Some implementations leave the leading slash off before
+  the drive letter when authority is blank, e.g. `file://c:/...`
 
-DOS/Windows: Some implementations replace ":" with "|", and others
-leave it off completely. e.g. `file:///c|/...` or `file:///c/...`
+DOS/Windows:
+: Some implementations replace ":" with "|", and others
+  leave it off completely. e.g. `file:///c|/...` or `file:///c/...`
+{: vspace="0"}
 
 
 ## Translating UNC String to file URI
 
 A UNC filespace selector string can be directly translated to an
-Internationalized Resource Identifier (IRI, {{RFC3987}}), which can
-then be translated to a URI as per Section 3.1 of {{RFC3987}}  (see
+Internationalized Resource Identifier (IRI) {{RFC3987}}, which can
+then be translated to a URI as per Section 3.1 of {{RFC3987}} (see:
 {{encoding}}).
 
 1.  Initialise the URI with the "file:" scheme identifier.
@@ -469,7 +494,7 @@ then be translated to a URI as per Section 3.1 of {{RFC3987}}  (see
 
     1.  Append the "//" authority sigil to the URI.
 
-    2.  Append the hostname component of the UNC string to the URI.
+    2.  Append the hostname field of the UNC string to the URI.
 
 3.  For each objectname:
 
@@ -489,7 +514,7 @@ URI:          file://host.example.com/Share/path/to/file.txt
 __Exceptions__
 
 Many implementations accept the full UNC string in the URI path (with
-all backslashes converted to slashes).  Additionally, because
+all backslashes "\" converted to slashes "/").  Additionally, because
 {{RFC1738}} said that the first "/" after "file://\[authority\]" wasn't
 part of the path, Firefox requires an additional slash before the
 UNC string.
@@ -510,13 +535,48 @@ Firefox:
 ~~~~~~~~~~
 
 
+## Translating Non-local File Path to file URI
+
+Translating a non-local file path other than a UNC string to a file URI
+follows the same basic algorithm as for local files, above, except that
+the authority MUST refer to the network-accesible node that hosts the
+file.
+
+For example, in a clustered OpenVMS Files-11 system the authority
+would contain the node name. Where the original node reference includes
+a username and password in an access control string, they MAY be
+transcribed into the userinfo field of the authority ({{RFC3986}},
+Section 3.2.1), security considerations {{security}} notwithstanding.
+
+
+<!-- ## Translating file URI to ... -->
+
+
+## Incompatible File Paths #{incompat}
+
+Some conventional file path formats are known to be incompatible with
+the file URI scheme.
+
+### Namespaces {#namespaces}
+
+The Microsoft Windows API defines Win32 Namespaces {{Win32-Namespaces}}
+for interacting with files and devices using Windows API functions.
+These namespaced paths are prefixed by "\\?\" for Win32 File
+Namespaces and "\\.\" for Win32 Device Namespaces. There is also a
+special case for UNC file paths {{MS-DTYP}} in Win32 File Namespaces,
+referred to as "Long UNC", using the prefix "\\?\UNC\".
+
+This specification does not define a mechanism for translating
+namespaced paths to or from file URIs.
+
+
 # Encoding {#encoding}
 
 The encoding of a file URI depends on the file system. If the file
-system uses a known non-Unicode character encoding, a path SHOULD be
+system uses a known non-Unicode character encoding, the path SHOULD be
 converted to a sequence of characters from the Universal Character Set
-(UCS, {{ISO10646}}) normalized according to Normalization Form C (NFC,
-{{UTR15}}) before being translated to a file URI, and conversely a file
+{{ISO10646}} normalized according to Normalization Form C (NFC) 
+{{UTR15}}, before being translated to a file URI, and conversely a file
 URI should be converted back to the file system's native encoding when
 translating to a file path.
 
@@ -526,8 +586,8 @@ translating to a file path.
 > settings, or defaults to UTF-8 {{STD63}}.
 
 When the file system's encoding is not known the file URI should be
-transported as an Internationalized Resource Identifier (IRI,
-{{RFC3987}}).
+transported as an Internationalized Resource Identifier (IRI)
+{{RFC3987}}.
 
 ~~~~~~~~~~
 Bytes of file IRI in a UTF-8 document:
@@ -574,21 +634,26 @@ etc.
 {: title="Counter-example: ambiguous file URI"}
 
 
-
-<!--
-Before applying any percent-encoding, an application MUST ensure the
-following about the string that is used as input to the URI
-construction process:
-
-* The host, if any, consists only of Unicode code points that
-  conform to the rules specified in {{RFC5892}}.
-
-* Internationalized domain name (IDN) labels are encoded as A-labels
-  {{RFC5890}}.
--->
-
-
 # Security Considerations {#security}
+
+There are many security considerations for URI schemes discussed in
+{{RFC3986}}.
+
+File access and the granting of privileges for specific operations
+are complex topics, and the use of file URIs can complicate the
+security model in effect for file privileges.  Software using file
+URIs MUST NOT grant greater access than would be available for other
+file access methods.
+
+Additionally, as discussed in the [HP OpenVMS Systems Documentation][1]
+"access control strings include sufficient information to allow someone
+to break in to the remote account, \[therefore\] they create serious
+security exposure." In a similar vein, the presence of a password
+in a "user:password" userinfo field is deprecated by {{RFC3986}}.
+The userinfo field of a file URI, if present, MUST NOT contain a
+password.
+
+[1]: http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html
 
 
 # IANA Considerations {#iana-considerations}
@@ -623,22 +688,29 @@ Web browsers:
 
 * Firefox
   * Note: Firefox has an interpretation of RFC 1738 which affects UNC paths.
-    See: <!-- xref target="unc-rfc1738"/ -->, <eref target="https://bugzilla.mozilla.org/show_bug.cgi?id=107540">Bugzilla#107540</eref>
-  * <!-- <eref target="https://hg.mozilla.org/mozilla-central/file/5976b9c673f8/netwerk/protocol/file">source code repository</eref> -->
+    See: [Bugzilla#107540][2]
+  * [source code repository][src-ff]
 * Chromium
-  * <!-- <eref target="http://src.chromium.org/viewvc/chrome/trunk/src/url/url_file.h">source code repository</eref> -->
-* Internet Explorer <!-- since 4 -->
+  * [source code repository][src-cr]
+* Internet Explorer (since version 4)
 * Opera
 
 Other applications/protocols:
 
 * Windows API
-  * <eref target="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773581(v=vs.85).aspx">PathCreateFromUrl function</eref>, MSDN
-  * <eref target="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx">UrlCreateFromPath function</eref>, MSDN
+  * [PathCreateFromUrl function][3], MSDN
+  * [UrlCreateFromPath function][4], MSDN
 * Perl LWP
-  * <!-- <eref target="http://cpansearch.perl.org/src/GAAS/libwww-perl-6.05/lib/LWP/Protocol/file.pm">source code repository</eref> -->
+  * [source code repository][src-pl]
 
 These lists are non-exhaustive.
+
+[2]: https://bugzilla.mozilla.org/show_bug.cgi?id=107540
+[3]: http://msdn.microsoft.com/en-us/library/windows/desktop/bb773581(v=vs.85).aspx
+[4]: http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx
+[src-ff]: https://hg.mozilla.org/mozilla-central/file/5976b9c673f8/netwerk/protocol/file
+[src-cr]: http://src.chromium.org/viewvc/chrome/trunk/src/url/url_file.h
+[src-pl]: http://cpansearch.perl.org/src/GAAS/libwww-perl-6.05/lib/LWP/Protocol/file.pm
 
 ## Interoperability Considerations {#iana-interop}
 
@@ -647,8 +719,6 @@ varied implementations in existence.  Many have converged over time,
 forming a few kernels of closely-related functionality, and RFCXXXX
 attempts to accommodate such common functionality. However there will
 always be exceptions, and this fact is recognised.
-
-<!-- <eref target="http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx">IE Blog</eref> -->
 
 ## Security Considerations {#iana-security}
 
@@ -673,26 +743,33 @@ This specification is derived from {{RFC1738}}, {{RFC3986}}, and
 {{I-D.draft-hoffman-file-uri}} (expired); the acknowledgements in
 those documents still apply.
 
+Additional thanks to Dave Risney, author of an informative
+[IE Blog][5] article, and Dave Thaler for their comments and
+suggestions.
+
+[5]: http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx
+
+
 --- back
 
 # UNC Syntax
 
-The syntax of a UNC filespace selector string, as defined by {{MS-DTYP}}:
+The syntax of a UNC filespace selector string, as defined by
+{{MS-DTYP}}, is given here in ABNF {{RFC5234}} for convenience:
 
 ~~~~~~~~~~
-  UNC = "\\" hostname "\" sharename \*( "\" objectname )
-  hostname   = netbios-name / fqdn / ip-address
-  sharename  = <name of share or resource to be accessed>
-  objectname = <depends on resource being accessed>
+UNC = "\\" hostname "\" sharename \*( "\" objectname )
+hostname   = netbios-name / fqdn / ip-address
+sharename  = <name of share or resource to be accessed>
+objectname = <depends on resource being accessed>
 ~~~~~~~~~~
 
-* netbios-name from {{MS-NBTE}}, <eref target="http://msdn.microsoft.com/en-us/library/dd891456.aspx">Section 2.2.1</eref>.
-* fqdn from {{RFC1035}} or {{RFC1123}}
-* ip-address from {{RFC1123}}, Section 2.1, or {{RFC4921}}, Section 2.2.
+* `netbios-name` from {{MS-NBTE}}, [Section 2.2.1](http://msdn.microsoft.com/en-us/library/dd891456.aspx).
+* `fqdn` from {{RFC1035}} or {{RFC1123}}
+* `ip-address` from Section 2.1 of {{RFC1123}}, or Section 2.2 of {{RFC4921}}.
 
 The precise format of `sharename` depends on the protocol;
 see {{MS-SMB}}, {{RFC3530}}, NCP ({{NOVELL}}).
 
-The UNC filespace selector string is a null-terminated Unicode
-character string.
-
+The UNC filespace selector string is a null-terminated sequence of
+characters from the Universal Character Set {{ISO10646}}.
