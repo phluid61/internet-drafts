@@ -602,7 +602,7 @@ Example: file IRI:
 | Codepoint sequences of file paths, for various file system
 | encodings:
 |
-|  o UTF-16LE (e.g. NTFS):
+|  o UTF-16 (e.g. NTFS):
 |       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
 |
 |  o Codepage 437 (e.g. MS-DOS):
