@@ -576,7 +576,7 @@ system uses a known non-Unicode character encoding, the path SHOULD be
 converted to a sequence of characters from the Universal Character Set
 {{ISO10646}} normalized according to Normalization Form C (NFC) 
 {{UTR15}}, before being translated to a file URI, and conversely a file
-URI should be converted back to the file system's native encoding when
+URI SHOULD be converted back to the file system's native encoding when
 translating to a file path.
 
 > Note that many modern file systems encode directory and file names
@@ -584,7 +584,7 @@ translating to a file path.
 > as an encoded string often depends on the user's localization
 > settings, or defaults to UTF-8 {{STD63}}.
 
-When the file system's encoding is not known the file URI should be
+When the file system's encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
 {{RFC3987}}.
 
