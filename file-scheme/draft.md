@@ -452,7 +452,7 @@ Examples:
                                   |
 ~~~~~~~~~~
 
-__Differences from RFC1738__
+__Differences from RFC 1738__
 
 In {{RFC1738}} a file URL always started with the token "file://",
 followed by an authority and a "/". That "/" was not considered part
@@ -545,7 +545,7 @@ For example, in a clustered OpenVMS Files-11 system the authority
 would contain the node name. Where the original node reference includes
 a username and password in an access control string, they MAY be
 transcribed into the userinfo field of the authority ({{RFC3986}},
-Section 3.2.1), security considerations {{security}} notwithstanding.
+Section 3.2.1), security considerations ({{security}}) notwithstanding.
 
 
 <!-- ## Translating file URI to ... -->
