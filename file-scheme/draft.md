@@ -514,7 +514,7 @@ URI:          file://host.example.com/Share/path/to/file.txt
 __Exceptions__
 
 Many implementations accept the full UNC string in the URI path (with
-all backslashes "\" converted to slashes "/").  Additionally, because
+all backslashes "\\" converted to slashes "/").  Additionally, because
 {{RFC1738}} said that the first "/" after "file://\[authority\]" wasn't
 part of the path, Firefox requires an additional slash before the
 UNC string.
@@ -561,10 +561,10 @@ the file URI scheme.
 
 The Microsoft Windows API defines Win32 Namespaces {{Win32-Namespaces}}
 for interacting with files and devices using Windows API functions.
-These namespaced paths are prefixed by "\\?\" for Win32 File
-Namespaces and "\\.\" for Win32 Device Namespaces. There is also a
+These namespaced paths are prefixed by "\\\\?\\" for Win32 File
+Namespaces and "\\\\.\\" for Win32 Device Namespaces. There is also a
 special case for UNC file paths {{MS-DTYP}} in Win32 File Namespaces,
-referred to as "Long UNC", using the prefix "\\?\UNC\".
+referred to as "Long UNC", using the prefix "\\\\?\\UNC\\".
 
 This specification does not define a mechanism for translating
 namespaced paths to or from file URIs.
