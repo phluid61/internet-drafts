@@ -29,7 +29,7 @@ normative:
   RFC2119:
   RFC3986:
   RFC3987:
-  RFC4921:
+  RFC4291:
   RFC5234:
   #RFC5890:
   #RFC5892:
@@ -766,7 +766,7 @@ objectname = <depends on resource being accessed>
 
 * `netbios-name` from {{MS-NBTE}}, [Section 2.2.1](http://msdn.microsoft.com/en-us/library/dd891456.aspx).
 * `fqdn` from {{RFC1035}} or {{RFC1123}}
-* `ip-address` from Section 2.1 of {{RFC1123}}, or Section 2.2 of {{RFC4921}}.
+* `ip-address` from Section 2.1 of {{RFC1123}}, or Section 2.2 of {{RFC4291}}.
 
 The precise format of `sharename` depends on the protocol;
 see {{MS-SMB}}, {{RFC3530}}, NCP ({{NOVELL}}).
