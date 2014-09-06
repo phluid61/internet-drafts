@@ -1,7 +1,7 @@
 ---
 title: The file URI Scheme
 abbrev: file-scheme
-docname: draft-kerwin-file-scheme-11
+docname: draft-kerwin-file-scheme-12
 date: 2014
 category: std
 
@@ -208,27 +208,27 @@ specification, and importing the `userinfo`, `host`, `path-absolute`,
 and `query` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
 ~~~~~~~~~~
-file-URI       = f-scheme ":" f-hier-part [ "?" query ]
+   file-URI       = f-scheme ":" f-hier-part [ "?" query ]
 
-f-scheme       = "file"
+   f-scheme       = "file"
 
-f-hier-part    = "//" auth-path
-               / local-path
+   f-hier-part    = "//" auth-path
+                  / local-path
 
-auth-path      = [ f-auth ] path-absolute
-               / unc-path
-               / windows-path
+   auth-path      = [ f-auth ] path-absolute
+                  / unc-path
+                  / windows-path
 
-f-auth         = [ userinfo "@" ] host
+   f-auth         = [ userinfo "@" ] host
 
-local-path     = path-absolute
-               / windows-path
+   local-path     = path-absolute
+                  / windows-path
 
-unc-path       = 2\*3"/" authority path-absolute
+   unc-path       = 2\*3"/" authority path-absolute
 
-windows-path   = drive-letter path-absolute
-drive-letter   = ALPHA [ drive-marker ]
-drive-marker   = ":" / "|"
+   windows-path   = drive-letter path-absolute
+   drive-letter   = ALPHA [ drive-marker ]
+   drive-marker   = ":" / "|"
 ~~~~~~~~~~
 
 Note well: the `drive-marker` rule intentionally includes a bar
@@ -432,25 +432,25 @@ of {{RFC3987}} (see: {{encoding}}).
 Examples:
 
 ~~~~~~~~~~
-File Path                      | URIs (ideal, traditional)
--------------------------------+--------------------------------
-UNIX-Like:                     |
-  /path/to/file                | file:/path/to/file
-                               | file:///path/to/file
-                               |
-  /path/to/dir/                | file:/path/to/dir/
-                               | file:///path/to/dir/
-                               |
-DOS- or Windows-based:         |
-  c:\path\to\file.txt          | file:c:/path/to/file.txt
-                               | file:///c:/path/to/file.txt
-                               |
-  c:\path\to\dir\              | file:c:/path/to/dir/
-                               | file:///c:/path/to/dir/
-VMS Files-11:                  |
-  ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
-                               | file:///DISK1/PATH/TO/FILE.TXT?2
-                               |
+   File Path                      | URIs (ideal, traditional)
+   -------------------------------+--------------------------------
+   UNIX-Like:                     |
+     /path/to/file                | file:/path/to/file
+                                  | file:///path/to/file
+                                  |
+     /path/to/dir/                | file:/path/to/dir/
+                                  | file:///path/to/dir/
+                                  |
+   DOS- or Windows-based:         |
+     c:\path\to\file.txt          | file:c:/path/to/file.txt
+                                  | file:///c:/path/to/file.txt
+                                  |
+     c:\path\to\dir\              | file:c:/path/to/dir/
+                                  | file:///c:/path/to/dir/
+   VMS Files-11:                  |
+     ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
+                                  | file:///DISK1/PATH/TO/FILE.TXT?2
+                                  |
 ~~~~~~~~~~
 
 __Differences from RFC1738__
@@ -507,8 +507,8 @@ then be translated to a URI as per Section 3.1 of {{RFC3987}} (see:
 Example:
 
 ~~~~~~~~~~
-UNC String:   \\host.example.com\Share\path\to\file.txt
-URI:          file://host.example.com/Share/path/to/file.txt
+   UNC String:   \\host.example.com\Share\path\to\file.txt
+   URI:          file://host.example.com/Share/path/to/file.txt
 ~~~~~~~~~~
 
 __Exceptions__
@@ -522,16 +522,16 @@ UNC string.
 For example:
 
 ~~~~~~~~~~
-Traditional:
-    file:////hostname/share/object/names
-    \_____/\__________________________ /
-    Scheme     Transformed UNC string
+   Traditional:
+       file:////hostname/share/object/names
+       \_____/\__________________________ /
+       Scheme     Transformed UNC string
 
-Firefox:
-    file://///hostname/share/object/names
-    \_____/|\__________________________ /
-    Scheme |    Transformed UNC string
-           Extra slash
+   Firefox:
+       file://///hostname/share/object/names
+       \_____/|\__________________________ /
+       Scheme |    Transformed UNC string
+              Extra slash
 ~~~~~~~~~~
 
 
@@ -589,49 +589,51 @@ When the file system's encoding is not known the file URI should be
 transported as an Internationalized Resource Identifier (IRI)
 {{RFC3987}}.
 
-~~~~~~~~~~
-Bytes of file IRI in a UTF-8 document:
-   66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
-
-Interpretation:
-   A file named "recu.txt" with a cedilla on the "c", in the
-   directory "C:\" of a DOS or Windows file system.
-
-Codepoint sequences of file paths, for various file system
-encodings:
-
- o UTF-16LE (e.g. NTFS):
-      0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
-
- o Codepage 437 (e.g. MS-DOS):
-      43 3a 5c 72 65 87 75 2e 74 78 74
-~~~~~~~~~~
-{: title="Example: file IRI"}
+Example: file IRI:
 
 ~~~~~~~~~~
-File URI, in any ASCII-compatible document:
-   "file:///%E3%81%A1"
-
-Possible interpretations of the file name, depending on the
-(unknown) encoding of the file system:
-
- o UTF-8:
-      <HIRAGANA LETTER TI (U+3061)>
-
- o Codepage 437:
-      <GREEK SMALL LETTER PI (U+03C0)>
-      <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)>
-      <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
-
- o EBCDIC:
-      "Ta~"
-
- o US-ASCII:
-      "%E3%81%A1"
-
-etc.
+| Bytes of file IRI in a UTF-8 document:
+|    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
+|
+| Interpretation:
+|    A file named "recu.txt" with a cedilla on the "c", in the
+|    directory "C:\" of a DOS or Windows file system.
+|
+| Codepoint sequences of file paths, for various file system
+| encodings:
+|
+|  o UTF-16LE (e.g. NTFS):
+|       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
+|
+|  o Codepage 437 (e.g. MS-DOS):
+|       43 3a 5c 72 65 87 75 2e 74 78 74
 ~~~~~~~~~~
-{: title="Counter-example: ambiguous file URI"}
+
+Counter-example: ambiguous file URI:
+
+~~~~~~~~~~
+| File URI, in any ASCII-compatible document:
+|    "file:///%E3%81%A1"
+|
+| Possible interpretations of the file name, depending on the
+| (unknown) encoding of the file system:
+|
+|  o UTF-8:
+|       <HIRAGANA LETTER TI (U+3061)>
+|
+|  o Codepage 437:
+|       <GREEK SMALL LETTER PI (U+03C0)>
+|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)>
+|       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
+|
+|  o EBCDIC:
+|       "Ta~"
+|
+|  o US-ASCII:
+|       "%E3%81%A1"
+|
+| etc.
+~~~~~~~~~~
 
 
 # Security Considerations {#security}
@@ -758,10 +760,10 @@ The syntax of a UNC filespace selector string, as defined by
 {{MS-DTYP}}, is given here in ABNF {{RFC5234}} for convenience:
 
 ~~~~~~~~~~
-UNC = "\\" hostname "\" sharename \*( "\" objectname )
-hostname   = netbios-name / fqdn / ip-address
-sharename  = <name of share or resource to be accessed>
-objectname = <depends on resource being accessed>
+   UNC = "\\" hostname "\" sharename \*( "\" objectname )
+   hostname   = netbios-name / fqdn / ip-address
+   sharename  = <name of share or resource to be accessed>
+   objectname = <depends on resource being accessed>
 ~~~~~~~~~~
 
 * `netbios-name` from {{MS-NBTE}}, [Section 2.2.1](http://msdn.microsoft.com/en-us/library/dd891456.aspx).
