@@ -1,7 +1,7 @@
 ---
 title: The file URI Scheme
 abbrev: file-scheme
-docname: draft-kerwin-file-scheme-00
+docname: draft-kerwin-file-scheme-11
 date: 2014
 category: std
 
@@ -10,8 +10,8 @@ area: General
 workgroup: Independent Submission
 keyword: Internet-Draft
 
-updates: RFC3986
-obsoletes: RFC1738
+updates: 3986
+obsoletes: 1738
 
 stand_alone: yes #_
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
