@@ -4,7 +4,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 ]>
 
-<rfc ipr="trust200902" docName="draft-kerwin-file-scheme-00" category="std" obsoletes="RFC1738" updates="RFC3986">
+<rfc ipr="trust200902" docName="draft-kerwin-file-scheme-11" category="std" obsoletes="1738" updates="3986">
 
 <?rfc toc="yes"?>
 <?rfc tocindent="yes"?>
