@@ -10,7 +10,7 @@ area: General
 workgroup: Independent Submission
 keyword: Internet-Draft
 
-updates: 3986
+#updates: 3986
 obsoletes: 1738
 
 stand_alone: yes #_
@@ -130,7 +130,8 @@ informative:
 
 --- abstract
 
-This document specifies the file Uniform Resource Identifier (URI) scheme.
+This document specifies the file Uniform Resource Identifier (URI)
+scheme, replacing the definition in RFC 1738.
 
 **Note to Readers (To be removed by the RFC Editor)**
 
@@ -599,7 +600,7 @@ Example: file IRI:
 |    A file named "recu.txt" with a cedilla on the "c", in the
 |    directory "C:\" of a DOS or Windows file system.
 |
-| Codepoint sequences of file paths, for various file system
+| Character value sequences of file paths, for various file system
 | encodings:
 |
 |  o UTF-16 (e.g. NTFS):
