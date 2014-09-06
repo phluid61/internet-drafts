@@ -756,7 +756,8 @@ suggestions.
 # UNC Syntax
 
 The syntax of a UNC filespace selector string, as defined by
-{{MS-DTYP}}, is given here in ABNF {{RFC5234}} for convenience:
+{{MS-DTYP}}, is given here in Augmented Backus-Naur Form (ABNF)
+{{RFC5234}} for convenience:
 
 ~~~~~~~~~~
    UNC = "\\" hostname "\" sharename \*( "\" objectname )
@@ -770,7 +771,7 @@ The syntax of a UNC filespace selector string, as defined by
 * `ip-address` from Section 2.1 of {{RFC1123}}, or Section 2.2 of {{RFC4291}}.
 
 The precise format of `sharename` depends on the protocol;
-see {{MS-SMB}}, {{RFC3530}}, NCP ({{NOVELL}}).
+see SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP {{NOVELL}}.
 
 The UNC filespace selector string is a null-terminated sequence of
 characters from the Universal Character Set {{ISO10646}}.
