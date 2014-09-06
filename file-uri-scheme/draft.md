@@ -24,7 +24,6 @@ author:
     email: matthew.kerwin@qut.edu.au
 
 normative:
-  RFC20:
   RFC1035:
   RFC1123:
   RFC2119:
@@ -35,15 +34,6 @@ normative:
   RFC5890:
   RFC5892:
   RFC6874:
-  STD63:
-    title: UTF-8, a transformation format of ISO 10646
-    author:
-    - ins: F. Yergeau
-      name: F. Yergeau
-    date: 2003-11
-    seriesinfo:
-      STD: 63
-      RFC: 3629
   MS-DTYP:
     title: Windows Data Types, 2.2.56 UNC
     author:
@@ -77,6 +67,15 @@ normative:
     date: 2012-08-31
 
 informative:
+  STD63:
+    title: UTF-8, a transformation format of ISO 10646
+    author:
+    - ins: F. Yergeau
+      name: F. Yergeau
+    date: 2003-11
+    seriesinfo:
+      STD: 63
+      RFC: 3629
   RFC1630:
   RFC1738:
   RFC3530:
@@ -353,9 +352,9 @@ stored on non-local file systems.
 ## Translating Local File Path to file URI
 
 Below is an algorithmic description of the process used to convert a
-file path to an Internationalized Resource Identifier (IRI)
+file path to an Internationalized Resource Identifier (IRI, 
 {{RFC3987}}), which can then be translated to a URI as per Section 3.1
-of {{RFC3987}}.
+of {{RFC3987}} (see {{encoding}}).
 
 1.  Resolve the file path to its fully qualified absolute form.
 
@@ -459,8 +458,9 @@ leave it off completely. e.g. `file:///c|/...` or `file:///c/...`
 ## Translating UNC String to file URI
 
 A UNC filespace selector string can be directly translated to an
-Internationalized Resource Identifier (IRI) {{RFC3987}}), which can
-then be translated to a URI as per Section 3.1 of {{RFC3987}}.
+Internationalized Resource Identifier (IRI, {{RFC3987}}), which can
+then be translated to a URI as per Section 3.1 of {{RFC3987}}  (see
+{{encoding}}).
 
 1.  Initialise the URI with the "file:" scheme identifier.
 
@@ -511,30 +511,70 @@ Firefox:
 
 # Encoding {#encoding}
 
-* not all URIs contains %-HH UTF-8
+The encoding of a file URI depends on the file system. If the file
+system uses a known non-Unicode character encoding, a path SHOULD be
+converted to a sequence of characters from the Universal Character Set
+(UCS, {{ISO10646}}) normalized according to Normalization Form C (NFC,
+{{UTR15}}) before being translated to a file URI, and conversely a file
+URI should be converted back to the file system's native encoding when
+translating to a file path.
 
-* LATIN SMALL LETTER C WITH CEDILLA (U+00E7) could be:
-    * %C3%A7 -- UTF-8
-    * %87    -- CP 850
-    * %E7%00 -- UTF-16LE
-    * etc.
+> Note that many modern file systems encode directory and file names
+> as arbitrary sequences of octets. In those cases, the representation
+> as an encoded string often depends on the user's localization
+> settings, or defaults to UTF-8 {{STD63}}.
 
-* %C3%97 could be:
-    * MULTIPLICATION SIGN (U+00D7) -- UTF-8
-    * "Cp"                         -- EBCDIC
-    * "├ù"                         -- CP 850
-    * etc.
+When the file system's encoding is not known the file URI should be
+transported as an Internationalized Resource Identifier (IRI,
+{{RFC3987}}).
+
+~~~~~~~~~~
+Bytes of file IRI in a UTF-8 document:
+   66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
+
+Interpretation:
+   A file named "recu.txt" with a cedilla on the "c", in the
+   directory "C:\" of a DOS or Windows file system.
+
+Codepoint sequences of file paths, for various file system
+encodings:
+
+ o UTF-16LE (e.g. NTFS):
+      0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
+
+ o Codepage 437 (e.g. MS-DOS):
+      43 3a 5c 72 65 87 75 2e 74 78 74
+~~~~~~~~~~
+{: title="Example: file IRI"}
+
+~~~~~~~~~~
+File URI, in any ASCII-compatible document:
+   "file:///%E3%81%A1"
+
+Possible interpretations of the file name, depending on the
+(unknown) encoding of the file system:
+
+ o UTF-8:
+      <HIRAGANA LETTER TI (U+3061)>
+
+ o Codepage 437:
+      <GREEK SMALL LETTER PI (U+03C0)>
+      <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)>
+      <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
+
+ o EBCDIC:
+      "Ta~"
+
+ o US-ASCII:
+      "%E3%81%A1"
+
+etc.
+~~~~~~~~~~
+{: title="Counter-example: ambiguous file URI"}
+
+
 
 <!--
-The canonical encoding for a file URI is as a sequence of characters
-from the Universal Character Set (UCS) {{ISO10646}} encoded as UTF-8
-{{STD63}} and then percent-encoded in valid ASCII {{RFC20}}.
-
-When translating from a file path to a file URI, if the file system
-uses a known non-Unicode character encoding, the path SHOULD be
-converted to a sequence of Unicode characters normalized according to
-Normalization Form C (NFC, {{UTR15}}).
-
 Before applying any percent-encoding, an application MUST ensure the
 following about the string that is used as input to the URI
 construction process:
@@ -544,11 +584,6 @@ construction process:
 
 * Internationalized domain name (IDN) labels are encoded as A-labels
   {{RFC5890}}.
--->
-
-<!--
-Anything that outputs a URI should use percent-encoded UTF-8, except
-in Windows, when it should be \[an IRI?\]
 -->
 
 
