@@ -710,7 +710,7 @@ These lists are non-exhaustive.
 [4]: http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx
 [src-ff]: https://hg.mozilla.org/mozilla-central/file/5976b9c673f8/netwerk/protocol/file
 [src-cr]: http://src.chromium.org/viewvc/chrome/trunk/src/url/url_file.h
-[src-pl]: http://cpansearch.perl.org/src/GAAS/libwww-perl-6.05/lib/LWP/Protocol/file.pm
+[src-pl]: http://cpansearch.perl.org/src/MSCHILLI/libwww-perl-6.08/lib/LWP/Protocol/file.pm
 
 ## Interoperability Considerations {#iana-interop}
 
