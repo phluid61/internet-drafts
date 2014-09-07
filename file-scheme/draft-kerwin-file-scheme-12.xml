@@ -39,7 +39,8 @@ scheme, replacing the definition in RFC 1738.</t>
 
 <t><spanx style="strong">Note to Readers (To be removed by the RFC Editor)</spanx></t>
 
-<t>This draft should be discussed on its github project page (<xref target="GITHUB"/>).</t>
+<t>This draft should be discussed on its github project page
+<eref target="https://github.com/phluid61/internet-drafts/">https://github.com/phluid61/internet-drafts/</eref>.</t>
 
 
 
@@ -1177,15 +1178,6 @@ specifications of each URI scheme.
       <organization>Microsoft Developer Network</organization>
     </author>
     <date year="2013" month="June"/>
-  </front>
-</reference>
-<reference anchor="GITHUB" target="https://github.com/phluid61/internet-drafts/">
-  <front>
-    <title>internet-drafts GitHub repository</title>
-    <author initials="M." surname="Kerwin" fullname="Matthew Kerwin">
-      <organization></organization>
-    </author>
-    <date year="2014" month="September"/>
   </front>
 </reference>
 

@@ -117,13 +117,6 @@ informative:
     author:
     - organization: Microsoft Developer Network
     date: 2013-06
-  GITHUB:
-    title: internet-drafts GitHub repository
-    author:
-    - ins: M. Kerwin
-      name: Matthew Kerwin
-    date: n.d.
-    target: https://github.com/phluid61/internet-drafts/
 
 
 --- abstract
@@ -133,7 +126,8 @@ scheme, replacing the definition in RFC 1738.
 
 **Note to Readers (To be removed by the RFC Editor)**
 
-This draft should be discussed on its github project page ({{GITHUB}}).
+This draft should be discussed on its github project page
+<https://github.com/phluid61/internet-drafts/>.
 
 --- middle
 
