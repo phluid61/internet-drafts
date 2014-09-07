@@ -4,7 +4,7 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 ]>
 
-<rfc ipr="trust200902" docName="draft-kerwin-file-scheme-11" category="std" obsoletes="1738" updates="3986">
+<rfc ipr="trust200902" docName="draft-kerwin-file-scheme-12" category="std" obsoletes="1738">
 
 <?rfc toc="yes"?>
 <?rfc tocindent="yes"?>
@@ -34,7 +34,8 @@
     <abstract>
 
 
-<t>This document specifies the file Uniform Resource Identifier (URI) scheme.</t>
+<t>This document specifies the file Uniform Resource Identifier (URI)
+scheme, replacing the definition in RFC 1738.</t>
 
 <t><spanx style="strong">Note to Readers (To be removed by the RFC Editor)</spanx></t>
 
@@ -122,27 +123,27 @@ specification, and importing the <spanx style="verb">userinfo</spanx>, <spanx st
 and <spanx style="verb">query</spanx> rules from <xref target="RFC3986"/> (as updated by <xref target="RFC6874"/>.)</t>
 
 <figure><artwork><![CDATA[
-file-URI       = f-scheme ":" f-hier-part [ "?" query ]
+   file-URI       = f-scheme ":" f-hier-part [ "?" query ]
 
-f-scheme       = "file"
+   f-scheme       = "file"
 
-f-hier-part    = "//" auth-path
-               / local-path
+   f-hier-part    = "//" auth-path
+                  / local-path
 
-auth-path      = [ f-auth ] path-absolute
-               / unc-path
-               / windows-path
+   auth-path      = [ f-auth ] path-absolute
+                  / unc-path
+                  / windows-path
 
-f-auth         = [ userinfo "@" ] host
+   f-auth         = [ userinfo "@" ] host
 
-local-path     = path-absolute
-               / windows-path
+   local-path     = path-absolute
+                  / windows-path
 
-unc-path       = 2\*3"/" authority path-absolute
+   unc-path       = 2\*3"/" authority path-absolute
 
-windows-path   = drive-letter path-absolute
-drive-letter   = ALPHA [ drive-marker ]
-drive-marker   = ":" / "|"
+   windows-path   = drive-letter path-absolute
+   drive-letter   = ALPHA [ drive-marker ]
+   drive-marker   = ":" / "|"
 ]]></artwork></figure>
 
 <t>Note well: the <spanx style="verb">drive-marker</spanx> rule intentionally includes a bar
@@ -334,28 +335,28 @@ example a version number in a versioning file system):  <list style="numbers">
 <t>Examples:</t>
 
 <figure><artwork><![CDATA[
-File Path                      | URIs (ideal, traditional)
--------------------------------+--------------------------------
-UNIX-Like:                     |
-  /path/to/file                | file:/path/to/file
-                               | file:///path/to/file
-                               |
-  /path/to/dir/                | file:/path/to/dir/
-                               | file:///path/to/dir/
-                               |
-DOS- or Windows-based:         |
-  c:\path\to\file.txt          | file:c:/path/to/file.txt
-                               | file:///c:/path/to/file.txt
-                               |
-  c:\path\to\dir\              | file:c:/path/to/dir/
-                               | file:///c:/path/to/dir/
-VMS Files-11:                  |
-  ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
-                               | file:///DISK1/PATH/TO/FILE.TXT?2
-                               |
+   File Path                      | URIs (ideal, traditional)
+   -------------------------------+--------------------------------
+   UNIX-Like:                     |
+     /path/to/file                | file:/path/to/file
+                                  | file:///path/to/file
+                                  |
+     /path/to/dir/                | file:/path/to/dir/
+                                  | file:///path/to/dir/
+                                  |
+   DOS- or Windows-based:         |
+     c:\path\to\file.txt          | file:c:/path/to/file.txt
+                                  | file:///c:/path/to/file.txt
+                                  |
+     c:\path\to\dir\              | file:c:/path/to/dir/
+                                  | file:///c:/path/to/dir/
+   VMS Files-11:                  |
+     ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
+                                  | file:///DISK1/PATH/TO/FILE.TXT?2
+                                  |
 ]]></artwork></figure>
 
-<t><spanx style="strong">Differences from RFC1738</spanx></t>
+<t><spanx style="strong">Differences from RFC 1738</spanx></t>
 
 <t>In <xref target="RFC1738"/> a file URL always started with the token “file://”,
 followed by an authority and a “/”. That “/” was not considered part
@@ -406,8 +407,8 @@ segment to the URI.</t>
 <t>Example:</t>
 
 <figure><artwork><![CDATA[
-UNC String:   \\host.example.com\Share\path\to\file.txt
-URI:          file://host.example.com/Share/path/to/file.txt
+   UNC String:   \\host.example.com\Share\path\to\file.txt
+   URI:          file://host.example.com/Share/path/to/file.txt
 ]]></artwork></figure>
 
 <t><spanx style="strong">Exceptions</spanx></t>
@@ -421,16 +422,16 @@ UNC string.</t>
 <t>For example:</t>
 
 <figure><artwork><![CDATA[
-Traditional:
-    file:////hostname/share/object/names
-    \_____/\__________________________ /
-    Scheme     Transformed UNC string
+   Traditional:
+       file:////hostname/share/object/names
+       \_____/\__________________________ /
+       Scheme     Transformed UNC string
 
-Firefox:
-    file://///hostname/share/object/names
-    \_____/|\__________________________ /
-    Scheme |    Transformed UNC string
-           Extra slash
+   Firefox:
+       file://///hostname/share/object/names
+       \_____/|\__________________________ /
+       Scheme |    Transformed UNC string
+              Extra slash
 ]]></artwork></figure>
 
 </section>
@@ -445,12 +446,12 @@ file.</t>
 would contain the node name. Where the original node reference includes
 a username and password in an access control string, they MAY be
 transcribed into the userinfo field of the authority (<xref target="RFC3986"/>,
-Section 3.2.1), security considerations <xref target="security"/> notwithstanding.</t>
+Section 3.2.1), security considerations (<xref target="security"/>) notwithstanding.</t>
 
 <!-- ## Translating file URI to ... -->
 
 </section>
-<section anchor="incompatible-file-paths-incompat" title="Incompatible File Paths #{incompat}">
+<section anchor="incompat" title="Incompatible File Paths">
 
 <t>Some conventional file path formats are known to be incompatible with
 the file URI scheme.</t>
@@ -477,7 +478,7 @@ system uses a known non-Unicode character encoding, the path SHOULD be
 converted to a sequence of characters from the Universal Character Set
 <xref target="ISO10646"/> normalized according to Normalization Form C (NFC) 
 <xref target="UTR15"/>, before being translated to a file URI, and conversely a file
-URI should be converted back to the file system’s native encoding when
+URI SHOULD be converted back to the file system’s native encoding when
 translating to a file path.</t>
 
 <t><list style='empty'>
@@ -487,50 +488,54 @@ as an encoded string often depends on the user’s localization
 settings, or defaults to UTF-8 <xref target="STD63"/>.</t>
 </list></t>
 
-<t>When the file system’s encoding is not known the file URI should be
+<t>When the file system’s encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
 <xref target="RFC3987"/>.</t>
 
-<figure title="Example: file IRI"><artwork><![CDATA[
-Bytes of file IRI in a UTF-8 document:
-   66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
+<t>Example: file IRI:</t>
 
-Interpretation:
-   A file named "recu.txt" with a cedilla on the "c", in the
-   directory "C:\" of a DOS or Windows file system.
-
-Codepoint sequences of file paths, for various file system
-encodings:
-
- o UTF-16LE (e.g. NTFS):
-      0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
-
- o Codepage 437 (e.g. MS-DOS):
-      43 3a 5c 72 65 87 75 2e 74 78 74
+<figure><artwork><![CDATA[
+| Bytes of file IRI in a UTF-8 document:
+|    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
+|
+| Interpretation:
+|    A file named "recu.txt" with a cedilla on the "c", in the
+|    directory "C:\" of a DOS or Windows file system.
+|
+| Character value sequences of file paths, for various file system
+| encodings:
+|
+|  o UTF-16 (e.g. NTFS):
+|       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
+|
+|  o Codepage 437 (e.g. MS-DOS):
+|       43 3a 5c 72 65 87 75 2e 74 78 74
 ]]></artwork></figure>
 
-<figure title="Counter-example: ambiguous file URI"><artwork><![CDATA[
-File URI, in any ASCII-compatible document:
-   "file:///%E3%81%A1"
+<t>Counter-example: ambiguous file URI:</t>
 
-Possible interpretations of the file name, depending on the
-(unknown) encoding of the file system:
-
- o UTF-8:
-      <HIRAGANA LETTER TI (U+3061)>
-
- o Codepage 437:
-      <GREEK SMALL LETTER PI (U+03C0)>
-      <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)>
-      <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
-
- o EBCDIC:
-      "Ta~"
-
- o US-ASCII:
-      "%E3%81%A1"
-
-etc.
+<figure><artwork><![CDATA[
+| File URI, in any ASCII-compatible document:
+|    "file:///%E3%81%A1"
+|
+| Possible interpretations of the file name, depending on the
+| (unknown) encoding of the file system:
+|
+|  o UTF-8:
+|       <HIRAGANA LETTER TI (U+3061)>
+|
+|  o Codepage 437:
+|       <GREEK SMALL LETTER PI (U+03C0)>
+|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)>
+|       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
+|
+|  o EBCDIC:
+|       "Ta~"
+|
+|  o US-ASCII:
+|       "%E3%81%A1"
+|
+| etc.
 ]]></artwork></figure>
 
 </section>
@@ -1191,13 +1196,14 @@ specifications of each URI scheme.
 <section anchor="unc-syntax" title="UNC Syntax">
 
 <t>The syntax of a UNC filespace selector string, as defined by
-<xref target="MS-DTYP"/>, is given here in ABNF <xref target="RFC5234"/> for convenience:</t>
+<xref target="MS-DTYP"/>, is given here in Augmented Backus-Naur Form (ABNF)
+<xref target="RFC5234"/> for convenience:</t>
 
 <figure><artwork><![CDATA[
-UNC = "\\" hostname "\" sharename \*( "\" objectname )
-hostname   = netbios-name / fqdn / ip-address
-sharename  = <name of share or resource to be accessed>
-objectname = <depends on resource being accessed>
+   UNC = "\\" hostname "\" sharename \*( "\" objectname )
+   hostname   = netbios-name / fqdn / ip-address
+   sharename  = <name of share or resource to be accessed>
+   objectname = <depends on resource being accessed>
 ]]></artwork></figure>
 
 <t><list style="symbols">
@@ -1207,7 +1213,7 @@ objectname = <depends on resource being accessed>
 </list></t>
 
 <t>The precise format of <spanx style="verb">sharename</spanx> depends on the protocol;
-see <xref target="MS-SMB"/>, <xref target="RFC3530"/>, NCP (<xref target="NOVELL"/>).</t>
+see SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP <xref target="NOVELL"/>.</t>
 
 <t>The UNC filespace selector string is a null-terminated sequence of
 characters from the Universal Character Set <xref target="ISO10646"/>.</t>
