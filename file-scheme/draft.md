@@ -24,6 +24,19 @@ author:
     email: matthew.kerwin@qut.edu.au
 
 normative:
+  BCP115:
+    title: Guidelines and Registration Procedures for New URI Schemes
+    author:
+    - ins: T. Hansen
+      name: T.Hansen
+    - ins: T. Hardie
+      name: T.Hardie
+    - ins: L. Masinter
+      name: L. Masinter
+    date: 2006-02
+    seriesinfo:
+      BCP: 35
+      RFC: 4395
   RFC1035:
   RFC1123:
   RFC2119:
@@ -77,14 +90,15 @@ informative:
   RFC1630:
   RFC1738:
   RFC3530:
-  RFC4395:
   I-D.draft-hoffman-file-uri:
-  IANA-URI-Schemes:
-    title: Uniform Resource Identifier (URI) Schemes registry
+    title: The file URI Scheme
     author:
-    - organization: Internet Assigned Numbers Authority
-    date: 2013-06
-    target: http://www.iana.org/assignments/uri-schemes/uri-schemes.xml
+    - ins: P. Hoffman
+      name: Paul Hoffman
+      organization: VPN Consortium
+    date: 2005-01
+    seriesinfo:
+      Internet-Draft: draft-hoffman-file-uri-03
   WHATWG-URL:
     title: URL Living Standard
     author:
@@ -121,7 +135,7 @@ informative:
 
 --- abstract
 
-This document specifies the file Uniform Resource Identifier (URI)
+This document specifies the "file" Uniform Resource Identifier (URI)
 scheme, replacing the definition in RFC 1738.
 
 **Note to Readers (To be removed by the RFC Editor)**
@@ -147,9 +161,9 @@ URIs, nor a media type associated with them.
 The file URI scheme was first defined in {{RFC1630}}, which, being an
 informational RFC, does not specify an Internet standard.  The
 definition was standardised in {{RFC1738}}, and the scheme was
-registered with the Internet Assigned Numbers Authority (IANA)
-{{IANA-URI-Schemes}}; however that definition omitted certain
-language included by former that clarified aspects such as:
+registered with the Internet Assigned Numbers Authority (IANA);
+however that definition omitted certain language included by former
+that clarified aspects such as:
 
 * the use of slashes to denote boundaries between directory
   levels of a hierarchical file system; and
@@ -217,7 +231,7 @@ and `query` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
    local-path     = path-absolute
                   / windows-path
 
-   unc-path       = 2\*3"/" authority path-absolute
+   unc-path       = 2*3"/" authority path-absolute
 
    windows-path   = drive-letter path-absolute
    drive-letter   = ALPHA [ drive-marker ]
@@ -319,10 +333,10 @@ Dubious encodings:
 * `file://c:/path/to/file`
 * `file://c/path/to/file`
 
-   > A dubious encoding that includes a Windows drive letter as the
-     authority field. This encoding exists in some extant
-     implementations, and is supported by the grammar for historical
-     reasons.
+   > An encoding that includes a Windows drive letter as the authority
+     field. This encoding exists in some extant implementations, and is
+     supported by the grammar for historical reasons. New URIs of this
+     form SHOULD NOT be generated.
 
 * `file:///c|/path/to/file`
 * `file://c|/path/to/file`
@@ -331,14 +345,15 @@ Dubious encodings:
 
    > Various otherwise-invalid URIs that include a disallowed bar
      character "|" in the drive letter. These encodings are supported
-     by the grammar for historical reasons.
+     by the grammar for historical reasons. As noted above, new URIs of
+     this form MUST NOT be generated.
 
 It also intentionally excludes URIs of the form:
 
 * `file://auth.example.com//host.example.com/path/to/file`
 
    > An encoding that includes both a non-local authority, and a UNC
-     string. The traditional implication is that the shared object
+     string. The traditional implication was that the shared object
      described by the UNC string may only be accessed from the machine
      `auth.example.com`.
 
@@ -640,97 +655,32 @@ security model in effect for file privileges.  Software using file
 URIs MUST NOT grant greater access than would be available for other
 file access methods.
 
-Additionally, as discussed in the [HP OpenVMS Systems Documentation][1]
+Additionally, as discussed in the HP OpenVMS Systems Documentation
+<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
 "access control strings include sufficient information to allow someone
 to break in to the remote account, \[therefore\] they create serious
-security exposure." In a similar vein, the presence of a password
-in a "user:password" userinfo field is deprecated by {{RFC3986}}.
-The userinfo field of a file URI, if present, MUST NOT contain a
+security exposure." In a similar vein, the presence of a password in a
+"user:password" userinfo field is deprecated by {{RFC3986}}. As such,
+the userinfo field of a file URI, if present, MUST NOT contain a
 password.
-
-[1]: http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html
 
 
 # IANA Considerations {#iana-considerations}
 
-In accordance with the guidelines and registration procedures for new
-URI schemes {{RFC4395}}, this section provides the information needed
-to update the registration of the file URI scheme.
+IANA maintains the registry of URI Schemes {{BCP115}} at
+<http://www.iana.org/assignments/uri-schemes/>.
 
-## URI Scheme Name {#iana-name}
+This document defines the following URI scheme, so the "Permanent
+URI Schemes" registry has been updated accordingly.
 
-file
+ |------------|--------------------------|-----------|
+ | URI Scheme | Description              | Reference |
+ |------------|--------------------------|-----------|
+ | file       | Host-specific file names | RFC XXXX  |
+ |------------|--------------------------|-----------|
 
-## Status {#iana-status}
+**RFC Editor Note:** Replace XXXX with this RFC's reference.
 
-permanent
-
-## URI Scheme Syntax {#iana-syntax}
-
-See {{syntax}}.
-
-## URI Scheme Semantics {#iana-semantics}
-
-(This whole document).
-
-## Encoding Considerations {#iana-encoding}
-
-See {{encoding}}.
-
-## Applications/Protocols That Use This URI Scheme Name {#iana-implementations}
-
-Web browsers:
-
-* Firefox
-  * Note: Firefox has an interpretation of RFC 1738 which affects UNC paths.
-    See: [Bugzilla#107540][2]
-  * [source code repository][src-ff]
-* Chromium
-  * [source code repository][src-cr]
-* Internet Explorer (since version 4)
-* Opera
-
-Other applications/protocols:
-
-* Windows API
-  * [PathCreateFromUrl function][3], MSDN
-  * [UrlCreateFromPath function][4], MSDN
-* Perl LWP
-  * [source code repository][src-pl]
-
-These lists are non-exhaustive.
-
-[2]: https://bugzilla.mozilla.org/show_bug.cgi?id=107540
-[3]: http://msdn.microsoft.com/en-us/library/windows/desktop/bb773581(v=vs.85).aspx
-[4]: http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx
-[src-ff]: https://hg.mozilla.org/mozilla-central/file/5976b9c673f8/netwerk/protocol/file
-[src-cr]: http://src.chromium.org/viewvc/chrome/trunk/src/url/url_file.h
-[src-pl]: http://cpansearch.perl.org/src/MSCHILLI/libwww-perl-6.08/lib/LWP/Protocol/file.pm
-
-## Interoperability Considerations {#iana-interop}
-
-Due to the convoluted history of the file URI scheme there are many,
-varied implementations in existence.  Many have converged over time,
-forming a few kernels of closely-related functionality, and RFCXXXX
-attempts to accommodate such common functionality. However there will
-always be exceptions, and this fact is recognised.
-
-## Security Considerations {#iana-security}
-
-See {{security}}.
-
-## Contact {#iana-contact}
-
-Matthew Kerwin, matthew.kerwin@qut.edu.au
-
-## Author/Change Controller {#iana-author}
-
-This scheme is registered under the IETF tree.  As such, the IETF
-maintains change control.
-
-## References {#iana-references}
-
-None.
 
 # Acknowledgements
 
@@ -738,11 +688,9 @@ This specification is derived from {{RFC1738}}, {{RFC3986}}, and
 {{I-D.draft-hoffman-file-uri}} (expired); the acknowledgements in
 those documents still apply.
 
-Additional thanks to Dave Risney, author of an informative
-[IE Blog][5] article, and Dave Thaler for their comments and
-suggestions.
-
-[5]: http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx
+Additional thanks to Dave Risney, author of the informative
+IE Blog article <http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx>,
+and Dave Thaler for their comments and suggestions.
 
 
 --- back
@@ -754,13 +702,13 @@ The syntax of a UNC filespace selector string, as defined by
 {{RFC5234}} for convenience:
 
 ~~~~~~~~~~
-   UNC = "\\" hostname "\" sharename \*( "\" objectname )
+   UNC = "\\" hostname "\" sharename *( "\" objectname )
    hostname   = netbios-name / fqdn / ip-address
    sharename  = <name of share or resource to be accessed>
    objectname = <depends on resource being accessed>
 ~~~~~~~~~~
 
-* `netbios-name` from {{MS-NBTE}}, [Section 2.2.1](http://msdn.microsoft.com/en-us/library/dd891456.aspx).
+* `netbios-name` from {{MS-NBTE}}, Section 2.2.1<!--http://msdn.microsoft.com/en-us/library/dd891456.aspx-->.
 * `fqdn` from {{RFC1035}} or {{RFC1123}}
 * `ip-address` from Section 2.1 of {{RFC1123}}, or Section 2.2 of {{RFC4291}}.
 
