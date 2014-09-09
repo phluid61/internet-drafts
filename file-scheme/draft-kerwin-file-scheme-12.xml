@@ -34,7 +34,7 @@
     <abstract>
 
 
-<t>This document specifies the file Uniform Resource Identifier (URI)
+<t>This document specifies the “file” Uniform Resource Identifier (URI)
 scheme, replacing the definition in RFC 1738.</t>
 
 <t><spanx style="strong">Note to Readers (To be removed by the RFC Editor)</spanx></t>
@@ -67,9 +67,9 @@ URIs, nor a media type associated with them.</t>
 <t>The file URI scheme was first defined in <xref target="RFC1630"/>, which, being an
 informational RFC, does not specify an Internet standard.  The
 definition was standardised in <xref target="RFC1738"/>, and the scheme was
-registered with the Internet Assigned Numbers Authority (IANA)
-<xref target="IANA-URI-Schemes"/>; however that definition omitted certain
-language included by former that clarified aspects such as:</t>
+registered with the Internet Assigned Numbers Authority (IANA);
+however that definition omitted certain language included by former
+that clarified aspects such as:</t>
 
 <t><list style="symbols">
   <t>the use of slashes to denote boundaries between directory
@@ -239,10 +239,10 @@ from <xref target="RFC3986"/> that post-dates all previous specifications.</t>
 <t><list style="symbols">
   <t><spanx style="verb">file://c:/path/to/file</spanx></t>
   <t><spanx style="verb">file://c/path/to/file</spanx>  <list style='empty'>
-      <t>A dubious encoding that includes a Windows drive letter as the
-   authority field. This encoding exists in some extant
-   implementations, and is supported by the grammar for historical
-   reasons.</t>
+      <t>An encoding that includes a Windows drive letter as the authority
+   field. This encoding exists in some extant implementations, and is
+   supported by the grammar for historical reasons. New URIs of this
+   form SHOULD NOT be generated.</t>
     </list></t>
   <t><spanx style="verb">file:///c|/path/to/file</spanx></t>
   <t><spanx style="verb">file://c|/path/to/file</spanx></t>
@@ -250,7 +250,8 @@ from <xref target="RFC3986"/> that post-dates all previous specifications.</t>
   <t><spanx style="verb">file:c|/path/to/file</spanx>  <list style='empty'>
       <t>Various otherwise-invalid URIs that include a disallowed bar
    character “|” in the drive letter. These encodings are supported
-   by the grammar for historical reasons.</t>
+   by the grammar for historical reasons. As noted above, new URIs of
+   this form MUST NOT be generated.</t>
     </list></t>
 </list></t>
 
@@ -259,7 +260,7 @@ from <xref target="RFC3986"/> that post-dates all previous specifications.</t>
 <t><list style="symbols">
   <t><spanx style="verb">file://auth.example.com//host.example.com/path/to/file</spanx>  <list style='empty'>
       <t>An encoding that includes both a non-local authority, and a UNC
-   string. The traditional implication is that the shared object
+   string. The traditional implication was that the shared object
    described by the UNC string may only be accessed from the machine
    <spanx style="verb">auth.example.com</spanx>.</t>
     </list></t>
@@ -551,112 +552,35 @@ security model in effect for file privileges.  Software using file
 URIs MUST NOT grant greater access than would be available for other
 file access methods.</t>
 
-<t>Additionally, as discussed in the <eref target="http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html">HP OpenVMS Systems Documentation</eref>
+<t>Additionally, as discussed in the HP OpenVMS Systems Documentation
+<eref target="http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html">http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html</eref>
 “access control strings include sufficient information to allow someone
 to break in to the remote account, [therefore] they create serious
-security exposure.” In a similar vein, the presence of a password
-in a “user:password” userinfo field is deprecated by <xref target="RFC3986"/>.
-The userinfo field of a file URI, if present, MUST NOT contain a
+security exposure.” In a similar vein, the presence of a password in a
+“user:password” userinfo field is deprecated by <xref target="RFC3986"/>. As such,
+the userinfo field of a file URI, if present, MUST NOT contain a
 password.</t>
 
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
 
-<t>In accordance with the guidelines and registration procedures for new
-URI schemes <xref target="RFC4395"/>, this section provides the information needed
-to update the registration of the file URI scheme.</t>
+<t>IANA maintains the registry of URI Schemes <xref target="BCP115"/> at
+<eref target="http://www.iana.org/assignments/uri-schemes/">http://www.iana.org/assignments/uri-schemes/</eref>.</t>
 
-<section anchor="iana-name" title="URI Scheme Name">
+<t>This document defines the following URI scheme, so the “Permanent
+URI Schemes” registry has been updated accordingly.</t>
 
-<t>file</t>
+<texttable>
+      <ttcol align='left'>URI Scheme</ttcol>
+      <ttcol align='left'>Description</ttcol>
+      <ttcol align='left'>Reference</ttcol>
+      <c>file</c>
+      <c>Host-specific file names</c>
+      <c>RFC XXXX</c>
+</texttable>
 
-</section>
-<section anchor="iana-status" title="Status">
+<t><spanx style="strong">RFC Editor Note:</spanx> Replace XXXX with this RFC’s reference.</t>
 
-<t>permanent</t>
-
-</section>
-<section anchor="iana-syntax" title="URI Scheme Syntax">
-
-<t>See <xref target="syntax"/>.</t>
-
-</section>
-<section anchor="iana-semantics" title="URI Scheme Semantics">
-
-<t>(This whole document).</t>
-
-</section>
-<section anchor="iana-encoding" title="Encoding Considerations">
-
-<t>See <xref target="encoding"/>.</t>
-
-</section>
-<section anchor="iana-implementations" title="Applications/Protocols That Use This URI Scheme Name">
-
-<t>Web browsers:</t>
-
-<t><list style="symbols">
-  <t>Firefox
-  <list style="symbols">
-      <t>Note: Firefox has an interpretation of RFC 1738 which affects UNC paths.
-See: <eref target="https://bugzilla.mozilla.org/show_bug.cgi?id=107540">Bugzilla#107540</eref></t>
-      <t><eref target="https://hg.mozilla.org/mozilla-central/file/5976b9c673f8/netwerk/protocol/file">source code repository</eref></t>
-    </list></t>
-  <t>Chromium
-  <list style="symbols">
-      <t><eref target="http://src.chromium.org/viewvc/chrome/trunk/src/url/url_file.h">source code repository</eref></t>
-    </list></t>
-  <t>Internet Explorer (since version 4)</t>
-  <t>Opera</t>
-</list></t>
-
-<t>Other applications/protocols:</t>
-
-<t><list style="symbols">
-  <t>Windows API
-  <list style="symbols">
-      <t><eref target="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773581(v=vs.85).aspx">PathCreateFromUrl function</eref>, MSDN</t>
-      <t><eref target="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx">UrlCreateFromPath function</eref>, MSDN</t>
-    </list></t>
-  <t>Perl LWP
-  <list style="symbols">
-      <t><eref target="http://cpansearch.perl.org/src/MSCHILLI/libwww-perl-6.08/lib/LWP/Protocol/file.pm">source code repository</eref></t>
-    </list></t>
-</list></t>
-
-<t>These lists are non-exhaustive.</t>
-
-</section>
-<section anchor="iana-interop" title="Interoperability Considerations">
-
-<t>Due to the convoluted history of the file URI scheme there are many,
-varied implementations in existence.  Many have converged over time,
-forming a few kernels of closely-related functionality, and RFCXXXX
-attempts to accommodate such common functionality. However there will
-always be exceptions, and this fact is recognised.</t>
-
-</section>
-<section anchor="iana-security" title="Security Considerations">
-
-<t>See <xref target="security"/>.</t>
-
-</section>
-<section anchor="iana-contact" title="Contact">
-
-<t>Matthew Kerwin, matthew.kerwin@qut.edu.au</t>
-
-</section>
-<section anchor="iana-author" title="Author/Change Controller">
-
-<t>This scheme is registered under the IETF tree.  As such, the IETF
-maintains change control.</t>
-
-</section>
-<section anchor="iana-references" title="References">
-
-<t>None.</t>
-
-</section>
 </section>
 <section anchor="acknowledgements" title="Acknowledgements">
 
@@ -664,9 +588,9 @@ maintains change control.</t>
 <xref target="I-D.draft-hoffman-file-uri"/> (expired); the acknowledgements in
 those documents still apply.</t>
 
-<t>Additional thanks to Dave Risney, author of an informative
-<eref target="http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx">IE Blog</eref> article, and Dave Thaler for their comments and
-suggestions.</t>
+<t>Additional thanks to Dave Risney, author of the informative
+IE Blog article <eref target="http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx">http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx</eref>,
+and Dave Thaler for their comments and suggestions.</t>
 
 </section>
 
@@ -677,6 +601,23 @@ suggestions.</t>
 
     <references title='Normative References'>
 
+<reference anchor="BCP115" >
+  <front>
+    <title>Guidelines and Registration Procedures for New URI Schemes</title>
+    <author initials="T." surname="Hansen" fullname="T.Hansen">
+      <organization></organization>
+    </author>
+    <author initials="T." surname="Hardie" fullname="T.Hardie">
+      <organization></organization>
+    </author>
+    <author initials="L." surname="Masinter" fullname="L. Masinter">
+      <organization></organization>
+    </author>
+    <date year="2006" month="February"/>
+  </front>
+  <seriesInfo name="BCP" value="35"/>
+  <seriesInfo name="RFC" value="4395"/>
+</reference>
 
 
 
@@ -1084,27 +1025,6 @@ specifications of each URI scheme.
 </reference>
 
 
-
-<reference anchor='RFC4395'>
-
-<front>
-<title>Guidelines and Registration Procedures for New URI Schemes</title>
-<author initials='T.' surname='Hansen' fullname='T. Hansen'>
-<organization /></author>
-<author initials='T.' surname='Hardie' fullname='T. Hardie'>
-<organization /></author>
-<author initials='L.' surname='Masinter' fullname='L. Masinter'>
-<organization /></author>
-<date year='2006' month='February' />
-<abstract>
-<t>This document provides guidelines and recommendations for the definition of Uniform Resource Identifier (URI) schemes.  It also updates the process and IANA registry for URI schemes.  It obsoletes both RFC 2717 and RFC 2718.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract></front>
-
-<seriesInfo name='BCP' value='35' />
-<seriesInfo name='RFC' value='4395' />
-<format type='TXT' octets='31933' target='http://www.rfc-editor.org/rfc/rfc4395.txt' />
-</reference>
-
-
 <reference anchor='I-D.draft-hoffman-file-uri'>
   <front>
     <title>The file URI Scheme</title>
@@ -1126,15 +1046,6 @@ specifications of each URI scheme.
 </reference>
 
 
-<reference anchor="IANA-URI-Schemes" target="http://www.iana.org/assignments/uri-schemes/uri-schemes.xml">
-  <front>
-    <title>Uniform Resource Identifier (URI) Schemes registry</title>
-    <author >
-      <organization>Internet Assigned Numbers Authority</organization>
-    </author>
-    <date year="2013" month="June"/>
-  </front>
-</reference>
 <reference anchor="WHATWG-URL" target="http://url.spec.whatwg.org/">
   <front>
     <title>URL Living Standard</title>
@@ -1199,7 +1110,7 @@ specifications of each URI scheme.
 ]]></artwork></figure>
 
 <t><list style="symbols">
-  <t><spanx style="verb">netbios-name</spanx> from <xref target="MS-NBTE"/>, <eref target="http://msdn.microsoft.com/en-us/library/dd891456.aspx">Section 2.2.1</eref>.</t>
+  <t><spanx style="verb">netbios-name</spanx> from <xref target="MS-NBTE"/>, Section 2.2.1<!--http://msdn.microsoft.com/en-us/library/dd891456.aspx-->.</t>
   <t><spanx style="verb">fqdn</spanx> from <xref target="RFC1035"/> or <xref target="RFC1123"/></t>
   <t><spanx style="verb">ip-address</spanx> from Section 2.1 of <xref target="RFC1123"/>, or Section 2.2 of <xref target="RFC4291"/>.</t>
 </list></t>

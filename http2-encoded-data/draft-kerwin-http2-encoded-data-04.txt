@@ -102,7 +102,7 @@ Table of Contents
    Note that while encoding some or all data in a stream might affect
    the total length of the corresponding HTTP message body, the
    "content-length" header, if present, should continue to reflect the
-   total length of the _unencoded_ data.  This is particularly relevant
+   total length of the unencoded data.  This is particularly relevant
    when detecting malformed messages ([I-D.ietf-httpbis-http2],
    Section 8.1.2.5).
 
