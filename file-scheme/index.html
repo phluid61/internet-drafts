@@ -389,17 +389,6 @@
 <link href="#rfc.section.4" rel="Chapter" title="4 Encoding"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations"/>
-<link href="#rfc.section.6.1" rel="Chapter" title="6.1 URI Scheme Name"/>
-<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Status"/>
-<link href="#rfc.section.6.3" rel="Chapter" title="6.3 URI Scheme Syntax"/>
-<link href="#rfc.section.6.4" rel="Chapter" title="6.4 URI Scheme Semantics"/>
-<link href="#rfc.section.6.5" rel="Chapter" title="6.5 Encoding Considerations"/>
-<link href="#rfc.section.6.6" rel="Chapter" title="6.6 Applications/Protocols That Use This URI Scheme Name"/>
-<link href="#rfc.section.6.7" rel="Chapter" title="6.7 Interoperability Considerations"/>
-<link href="#rfc.section.6.8" rel="Chapter" title="6.8 Security Considerations"/>
-<link href="#rfc.section.6.9" rel="Chapter" title="6.9 Contact"/>
-<link href="#rfc.section.6.10" rel="Chapter" title="6.10 Author/Change Controller"/>
-<link href="#rfc.section.6.11" rel="Chapter" title="6.11 References"/>
 <link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgements"/>
 <link href="#rfc.references" rel="Chapter" title="8 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References"/>
@@ -413,9 +402,9 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-file-scheme-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-9-7" />
-  <meta name="dct.abstract" content="This document specifies the file Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
-  <meta name="description" content="This document specifies the file Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-9-9" />
+  <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
+  <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
 
 </head>
 
@@ -434,14 +423,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">September 7, 2014</td>
+  <td class="right">September 9, 2014</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: March 11, 2015</td>
+  <td class="left">Expires: March 13, 2015</td>
   <td class="right"></td>
 </tr>
 
@@ -455,7 +444,7 @@
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This document specifies the file Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738.</p>
+<p>This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738.</p>
 <p>
   <strong>Note to Readers (To be removed by the RFC Editor)</strong>
 </p>
@@ -466,7 +455,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on March 11, 2015.</p>
+<p>This Internet-Draft will expire on March 13, 2015.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -493,17 +482,6 @@
 <li>4.   <a href="#rfc.section.4">Encoding</a></li>
 <li>5.   <a href="#rfc.section.5">Security Considerations</a></li>
 <li>6.   <a href="#rfc.section.6">IANA Considerations</a></li>
-<li>6.1.   <a href="#rfc.section.6.1">URI Scheme Name</a></li>
-<li>6.2.   <a href="#rfc.section.6.2">Status</a></li>
-<li>6.3.   <a href="#rfc.section.6.3">URI Scheme Syntax</a></li>
-<li>6.4.   <a href="#rfc.section.6.4">URI Scheme Semantics</a></li>
-<li>6.5.   <a href="#rfc.section.6.5">Encoding Considerations</a></li>
-<li>6.6.   <a href="#rfc.section.6.6">Applications/Protocols That Use This URI Scheme Name</a></li>
-<li>6.7.   <a href="#rfc.section.6.7">Interoperability Considerations</a></li>
-<li>6.8.   <a href="#rfc.section.6.8">Security Considerations</a></li>
-<li>6.9.   <a href="#rfc.section.6.9">Contact</a></li>
-<li>6.10.   <a href="#rfc.section.6.10">Author/Change Controller</a></li>
-<li>6.11.   <a href="#rfc.section.6.11">References</a></li>
 <li>7.   <a href="#rfc.section.7">Acknowledgements</a></li>
 <li>8.   <a href="#rfc.references">References</a></li>
 <li>8.1.   <a href="#rfc.references.1">Normative References</a></li>
@@ -518,7 +496,7 @@
 <p id="rfc.section.1.p.1">A file URI identifies a file on a particular file system.  It can be used in discussions about the file, and if other conditions are met it can be dereferenced to directly access the file.</p>
 <p id="rfc.section.1.p.2">The file URI scheme is not coupled with a specific protocol. As such, there is no well-defined set of methods that can be performed on file URIs, nor a media type associated with them.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#history" id="history">History</a></h1>
-<p id="rfc.section.1.1.p.1">The file URI scheme was first defined in <a href="#RFC1630">[RFC1630]</a>, which, being an informational RFC, does not specify an Internet standard.  The definition was standardised in <a href="#RFC1738">[RFC1738]</a>, and the scheme was registered with the Internet Assigned Numbers Authority (IANA) <a href="#IANA-URI-Schemes">[IANA-URI-Schemes]</a>; however that definition omitted certain language included by former that clarified aspects such as:</p>
+<p id="rfc.section.1.1.p.1">The file URI scheme was first defined in <a href="#RFC1630">[RFC1630]</a>, which, being an informational RFC, does not specify an Internet standard.  The definition was standardised in <a href="#RFC1738">[RFC1738]</a>, and the scheme was registered with the Internet Assigned Numbers Authority (IANA); however that definition omitted certain language included by former that clarified aspects such as:</p>
 <p/>
 
 <ul>
@@ -595,7 +573,7 @@
   <li>
     <samp>file://c:/path/to/file</samp>
   </li>
-  <li><samp>file://c/path/to/file</samp>  <ul class="empty"><li>A dubious encoding that includes a Windows drive letter as the authority field. This encoding exists in some extant implementations, and is supported by the grammar for historical reasons.</li></ul></li>
+  <li><samp>file://c/path/to/file</samp>  <ul class="empty"><li>An encoding that includes a Windows drive letter as the authority field. This encoding exists in some extant implementations, and is supported by the grammar for historical reasons. New URIs of this form SHOULD NOT be generated.</li></ul></li>
   <li>
     <samp>file:///c|/path/to/file</samp>
   </li>
@@ -605,13 +583,13 @@
   <li>
     <samp>file:/c|/path/to/file</samp>
   </li>
-  <li><samp>file:c|/path/to/file</samp>  <ul class="empty"><li>Various otherwise-invalid URIs that include a disallowed bar character &#8220;|&#8221; in the drive letter. These encodings are supported by the grammar for historical reasons.</li></ul></li>
+  <li><samp>file:c|/path/to/file</samp>  <ul class="empty"><li>Various otherwise-invalid URIs that include a disallowed bar character &#8220;|&#8221; in the drive letter. These encodings are supported by the grammar for historical reasons. As noted above, new URIs of this form MUST NOT be generated.</li></ul></li>
 </ul>
 <p id="rfc.section.2.p.13">It also intentionally excludes URIs of the form:</p>
 <p/>
 
 <ul>
-  <li><samp>file://auth.example.com//host.example.com/path/to/file</samp>  <ul class="empty"><li>An encoding that includes both a non-local authority, and a UNC string. The traditional implication is that the shared object described by the UNC string may only be accessed from the machine <samp>auth.example.com</samp>.</li></ul></li>
+  <li><samp>file://auth.example.com//host.example.com/path/to/file</samp>  <ul class="empty"><li>An encoding that includes both a non-local authority, and a UNC string. The traditional implication was that the shared object described by the UNC string may only be accessed from the machine <samp>auth.example.com</samp>.</li></ul></li>
 </ul>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#methods-on-file-uris" id="methods-on-file-uris">Methods on file URIs</a></h1>
 <p id="rfc.section.3.p.1">In the strictest terms, the only operations that can be performed on a file URI are translating it to and from a file path; subsequent methods are performed on the resulting file path, and depend entirely on the file system&#8217;s APIs.</p>
@@ -766,54 +744,40 @@
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security" id="security">Security Considerations</a></h1>
 <p id="rfc.section.5.p.1">There are many security considerations for URI schemes discussed in <a href="#RFC3986">[RFC3986]</a>.</p>
 <p id="rfc.section.5.p.2">File access and the granting of privileges for specific operations are complex topics, and the use of file URIs can complicate the security model in effect for file privileges.  Software using file URIs MUST NOT grant greater access than would be available for other file access methods.</p>
-<p id="rfc.section.5.p.3">Additionally, as discussed in the <a href="http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html">HP OpenVMS Systems Documentation</a> &#8220;access control strings include sufficient information to allow someone to break in to the remote account, [therefore] they create serious security exposure.&#8221; In a similar vein, the presence of a password in a &#8220;user:password&#8221; userinfo field is deprecated by <a href="#RFC3986">[RFC3986]</a>.  The userinfo field of a file URI, if present, MUST NOT contain a password.</p>
+<p id="rfc.section.5.p.3">Additionally, as discussed in the HP OpenVMS Systems Documentation <a href="http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html">http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html</a> &#8220;access control strings include sufficient information to allow someone to break in to the remote account, [therefore] they create serious security exposure.&#8221; In a similar vein, the presence of a password in a &#8220;user:password&#8221; userinfo field is deprecated by <a href="#RFC3986">[RFC3986]</a>. As such, the userinfo field of a file URI, if present, MUST NOT contain a password.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
-<p id="rfc.section.6.p.1">In accordance with the guidelines and registration procedures for new URI schemes <a href="#RFC4395">[RFC4395]</a>, this section provides the information needed to update the registration of the file URI scheme.</p>
-<h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#iana-name" id="iana-name">URI Scheme Name</a></h1>
-<p id="rfc.section.6.1.p.1">file</p>
-<h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#iana-status" id="iana-status">Status</a></h1>
-<p id="rfc.section.6.2.p.1">permanent</p>
-<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#iana-syntax" id="iana-syntax">URI Scheme Syntax</a></h1>
-<p id="rfc.section.6.3.p.1">See <a href="#syntax">Section 2</a>.</p>
-<h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> <a href="#iana-semantics" id="iana-semantics">URI Scheme Semantics</a></h1>
-<p id="rfc.section.6.4.p.1">(This whole document).</p>
-<h1 id="rfc.section.6.5"><a href="#rfc.section.6.5">6.5.</a> <a href="#iana-encoding" id="iana-encoding">Encoding Considerations</a></h1>
-<p id="rfc.section.6.5.p.1">See <a href="#encoding">Section 4</a>.</p>
-<h1 id="rfc.section.6.6"><a href="#rfc.section.6.6">6.6.</a> <a href="#iana-implementations" id="iana-implementations">Applications/Protocols That Use This URI Scheme Name</a></h1>
-<p id="rfc.section.6.6.p.1">Web browsers:</p>
-<p/>
-
-<ul>
-  <li>Firefox <ul><li>Note: Firefox has an interpretation of RFC 1738 which affects UNC paths.  See: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=107540">Bugzilla#107540</a></li><li><a href="https://hg.mozilla.org/mozilla-central/file/5976b9c673f8/netwerk/protocol/file">source code repository</a></li></ul></li>
-  <li>Chromium <ul><li><a href="http://src.chromium.org/viewvc/chrome/trunk/src/url/url_file.h">source code repository</a></li></ul></li>
-  <li>Internet Explorer (since version 4)</li>
-  <li>Opera</li>
-</ul>
-<p id="rfc.section.6.6.p.3">Other applications/protocols:</p>
-<p/>
-
-<ul>
-  <li>Windows API <ul><li><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773581(v=vs.85).aspx">PathCreateFromUrl function</a>, MSDN</li><li><a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb773773(v=vs.85).aspx">UrlCreateFromPath function</a>, MSDN</li></ul></li>
-  <li>Perl LWP <ul><li><a href="http://cpansearch.perl.org/src/MSCHILLI/libwww-perl-6.08/lib/LWP/Protocol/file.pm">source code repository</a></li></ul></li>
-</ul>
-<p id="rfc.section.6.6.p.5">These lists are non-exhaustive.</p>
-<h1 id="rfc.section.6.7"><a href="#rfc.section.6.7">6.7.</a> <a href="#iana-interop" id="iana-interop">Interoperability Considerations</a></h1>
-<p id="rfc.section.6.7.p.1">Due to the convoluted history of the file URI scheme there are many, varied implementations in existence.  Many have converged over time, forming a few kernels of closely-related functionality, and RFCXXXX attempts to accommodate such common functionality. However there will always be exceptions, and this fact is recognised.</p>
-<h1 id="rfc.section.6.8"><a href="#rfc.section.6.8">6.8.</a> <a href="#iana-security" id="iana-security">Security Considerations</a></h1>
-<p id="rfc.section.6.8.p.1">See <a href="#security">Section 5</a>.</p>
-<h1 id="rfc.section.6.9"><a href="#rfc.section.6.9">6.9.</a> <a href="#iana-contact" id="iana-contact">Contact</a></h1>
-<p id="rfc.section.6.9.p.1">Matthew Kerwin, matthew.kerwin@qut.edu.au</p>
-<h1 id="rfc.section.6.10"><a href="#rfc.section.6.10">6.10.</a> <a href="#iana-author" id="iana-author">Author/Change Controller</a></h1>
-<p id="rfc.section.6.10.p.1">This scheme is registered under the IETF tree.  As such, the IETF maintains change control.</p>
-<h1 id="rfc.section.6.11"><a href="#rfc.section.6.11">6.11.</a> <a href="#iana-references" id="iana-references">References</a></h1>
-<p id="rfc.section.6.11.p.1">None.</p>
+<p id="rfc.section.6.p.1">IANA maintains the registry of URI Schemes <a href="#BCP115">[BCP115]</a> at <a href="http://www.iana.org/assignments/uri-schemes/">http://www.iana.org/assignments/uri-schemes/</a>.</p>
+<p id="rfc.section.6.p.2">This document defines the following URI scheme, so the &#8220;Permanent URI Schemes&#8221; registry has been updated accordingly.</p>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <thead>
+    <tr>
+      <th class="left">URI Scheme</th>
+      <th class="left">Description</th>
+      <th class="left">Reference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="left">file</td>
+      <td class="left">Host-specific file names</td>
+      <td class="left">RFC XXXX</td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>RFC Editor Note:</strong> Replace XXXX with this RFC&#8217;s reference.</p>
 <h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
 <p id="rfc.section.7.p.1">This specification is derived from <a href="#RFC1738">[RFC1738]</a>, <a href="#RFC3986">[RFC3986]</a>, and <a href="#I-D.draft-hoffman-file-uri">[I-D.draft-hoffman-file-uri]</a> (expired); the acknowledgements in those documents still apply.</p>
-<p id="rfc.section.7.p.2">Additional thanks to Dave Risney, author of an informative <a href="http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx">IE Blog</a> article, and Dave Thaler for their comments and suggestions.</p>
+<p id="rfc.section.7.p.2">Additional thanks to Dave Risney, author of the informative IE Blog article <a href="http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx">http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx</a>, and Dave Thaler for their comments and suggestions.</p>
 <h1 id="rfc.references"><a href="#rfc.references">8.</a> References</h1>
 <h1 id="rfc.references.1"><a href="#rfc.references.1">8.1.</a> Normative References</h1>
 <table>
   <tbody>
+    <tr>
+      <td class="reference">
+        <b id="BCP115">[BCP115]</b>
+      </td>
+      <td class="top"><a>Hansen, T.</a>, <a>Hardie, T.</a> and <a>L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc4395">Guidelines and Registration Procedures for New URI Schemes</a>", BCP 35, RFC 4395, February 2006.</td>
+    </tr>
     <tr>
       <td class="reference">
         <b id="ISO10646">[ISO10646]</b>
@@ -899,12 +863,6 @@
     </tr>
     <tr>
       <td class="reference">
-        <b id="IANA-URI-Schemes">[IANA-URI-Schemes]</b>
-      </td>
-      <td class="top"><a>Internet Assigned Numbers Authority</a>, "<a href="http://www.iana.org/assignments/uri-schemes/uri-schemes.xml">Uniform Resource Identifier (URI) Schemes registry</a>", June 2013.</td>
-    </tr>
-    <tr>
-      <td class="reference">
         <b id="MS-SMB">[MS-SMB]</b>
       </td>
       <td class="top"><a>Microsoft Open Specifications</a>, "<a href="http://msdn.microsoft.com/en-us/library/cc246231.aspx">Server Message Block (SMB) Protocol</a>", January 2013.</td>
@@ -941,12 +899,6 @@
     </tr>
     <tr>
       <td class="reference">
-        <b id="RFC4395">[RFC4395]</b>
-      </td>
-      <td class="top"><a>Hansen, T.</a>, <a>Hardie, T.</a> and <a>L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc4395">Guidelines and Registration Procedures for New URI Schemes</a>", BCP 35, RFC 4395, February 2006.</td>
-    </tr>
-    <tr>
-      <td class="reference">
         <b id="STD63">[STD63]</b>
       </td>
       <td class="top"><a>Yergeau, F.</a>, "<a href="http://tools.ietf.org/html/rfc3629">UTF-8, a transformation format of ISO 10646</a>", STD 63, RFC 3629, November 2003.</td>
@@ -976,7 +928,7 @@
 <p/>
 
 <ul>
-  <li><samp>netbios-name</samp> from <a href="#MS-NBTE">[MS-NBTE]</a>, <a href="http://msdn.microsoft.com/en-us/library/dd891456.aspx">Section 2.2.1</a>.</li>
+  <li><samp>netbios-name</samp> from <a href="#MS-NBTE">[MS-NBTE]</a>, Section 2.2.1.</li>
   <li><samp>fqdn</samp> from <a href="#RFC1035">[RFC1035]</a> or <a href="#RFC1123">[RFC1123]</a></li>
   <li><samp>ip-address</samp> from Section 2.1 of <a href="#RFC1123">[RFC1123]</a>, or Section 2.2 of <a href="#RFC4291">[RFC4291]</a>.</li>
 </ul>
