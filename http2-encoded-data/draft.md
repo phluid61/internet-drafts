@@ -3,7 +3,7 @@ title: HTTP/2 Encoded Data
 abbrev: http2-encoded-data
 docname: draft-kerwin-http2-encoded-data-04
 date: 2014
-category: std
+category: exp
 
 ipr: trust200902
 area: General
