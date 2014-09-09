@@ -530,7 +530,7 @@
    local-path     = path-absolute
                   / windows-path
 
-   unc-path       = 2\*3"/" authority path-absolute
+   unc-path       = 2*3"/" authority path-absolute
 
    windows-path   = drive-letter path-absolute
    drive-letter   = ALPHA [ drive-marker ]
@@ -920,7 +920,7 @@
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#unc-syntax" id="unc-syntax">UNC Syntax</a></h1>
 <p id="rfc.section.A.p.1">The syntax of a UNC filespace selector string, as defined by <a href="#MS-DTYP">[MS-DTYP]</a>, is given here in Augmented Backus-Naur Form (ABNF) <a href="#RFC5234">[RFC5234]</a> for convenience:</p>
 <pre>
-   UNC = "\\" hostname "\" sharename \*( "\" objectname )
+   UNC = "\\" hostname "\" sharename *( "\" objectname )
    hostname   = netbios-name / fqdn / ip-address
    sharename  = &lt;name of share or resource to be accessed&gt;
    objectname = &lt;depends on resource being accessed&gt;
