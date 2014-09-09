@@ -3,7 +3,7 @@ title: HTTP/2 Segments
 abbrev: http2-segments
 docname: draft-kerwin-http2-segments-02
 date: 2014
-category: std
+category: exp
 
 ipr: trust200902
 area: General
