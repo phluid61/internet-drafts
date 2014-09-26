@@ -37,10 +37,14 @@
 <t>This document specifies the “file” Uniform Resource Identifier (URI)
 scheme, replacing the definition in RFC 1738.</t>
 
+<t>It attempts to document current practices, while at the same time
+defining a common core which is intended to interoperate across the
+broad spectrum of existing implementations.</t>
+
 <t><spanx style="strong">Note to Readers (To be removed by the RFC Editor)</spanx></t>
 
-<t>This draft should be discussed on its github project page
-<eref target="https://github.com/phluid61/internet-drafts/">https://github.com/phluid61/internet-drafts/</eref>.</t>
+<t>This draft should be discussed on the IETF Applications Area Working
+Group discussion list <eref target="mailto:apps-discuss@ietf.org">apps-discuss@ietf.org</eref>.</t>
 
 
 
@@ -61,6 +65,11 @@ can be dereferenced to directly access the file.</t>
 <t>The file URI scheme is not coupled with a specific protocol. As such,
 there is no well-defined set of methods that can be performed on file
 URIs, nor a media type associated with them.</t>
+
+<t>This document defines a syntax that is compatible with most extant
+implementations, while attempting to push towards a stricter subset of
+“ideal” constructs. In many cases it simultaneously acknowledges and
+deprecates some less common or outdated constructs.</t>
 
 <section anchor="history" title="History">
 
@@ -88,13 +97,14 @@ of the scheme.  It serves as the spiritual predecessor of this document.</t>
 which includes algorithms for interpreting file URIs (as URLs).</t>
 
 </section>
-<section anchor="unc" title="UNC">
+<section anchor="similar-technologies" title="Similar Technologies">
 
 <t>The Universal Naming Convention (UNC) <xref target="MS-DTYP"/> defines a string
-format that can perform a similar role in describing the location of
-files. This UNC filespace selector string has three parts: host,
-share, and path. This document describes a means of translating
-between UNC filespace selector strings and file URIs.</t>
+format that can perform a similar role to the file URI scheme in
+describing the location of files. A UNC filespace selector string has
+three parts: host, share, and path; see: <xref target="unc-syntax"/>. This document
+describes a means of translating between UNC filespace selector strings
+and file URIs.</t>
 
 </section>
 <section anchor="notational-conventions" title="Notational Conventions">
@@ -102,17 +112,6 @@ between UNC filespace selector strings and file URIs.</t>
 <t>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”,
 “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this
 document are to be interpreted as described in <xref target="RFC2119"/>.</t>
-
-</section>
-<section anchor="idealism-vs-pragmatism-vs-history" title="Idealism vs Pragmatism vs History">
-
-<t>Because the file URI scheme has a long history of loosely-defined
-standardisation and divergent implementations, this document will
-inevitably make some assertions that go against some implementers’
-expectations. We will attempt to label all assertions as either
-“ideal” preferred behaviour or practical behaviour to support
-compatibility and interoperability, and in all cases we will attempt to
-describe the difference between this and any previous specifications.</t>
 
 </section>
 </section>
@@ -151,10 +150,10 @@ and <spanx style="verb">query</spanx> rules from <xref target="RFC3986"/> (as up
 character “|” even though that character is not part of either the
 unreserved or reserved character sets in <xref target="RFC3986"/>, and thus would
 normally have to be percent-encoded to be included in a URI. This
-specification explicitly supports parsing of otherwise invalid URIs –
-with an unencoded bar character forming part of a DOS or Windows drive
-letter identifier – for parsing extant historical URIs, but new URIs of
-this form MUST NOT be generated.</t>
+specification explicitly supports the parsing of otherwise invalid URIs
+– those with an unencoded bar character forming part of a DOS or
+Windows drive letter identifier – to facilitate parsing extant
+historical URIs, but new URIs of this form MUST NOT be generated.</t>
 
 <t>The query field contains non-hierarchical data that, along with
 data in the path components (path-absolute, unc-path, or windows-path)
@@ -188,12 +187,12 @@ from <xref target="RFC3986"/> that post-dates all previous specifications.</t>
    Windows-based environment.</t>
     </list></t>
   <t><spanx style="verb">file:/path/to/file</spanx>  <list style='empty'>
-      <t>The ideal representation of a local file in a UNIX-like
+      <t>A “modern” minimal representation of a local file in a UNIX-like
    environment, with no authority field and an absolute path
    that begins with a slash “/”.</t>
     </list></t>
   <t><spanx style="verb">file:c:/path/to/file</spanx>  <list style='empty'>
-      <t>The ideal representation of a local file in a DOS- or
+      <t>The minimal representation of a local file in a DOS- or
    Windows-based environment, with no authority field and an
    absolute path that begins with a drive letter.</t>
     </list></t>
@@ -223,14 +222,14 @@ from <xref target="RFC3986"/> that post-dates all previous specifications.</t>
   <t><spanx style="verb">file:////host.example.com/path/to/file</spanx>  <list style='empty'>
       <t>The “traditional” representation of a non-local file, with an
    empty authority and a complete (transformed) UNC string in the
-   path. This encoding is commonly implemented, but the ideal
-   representation above is preferred by this specification.</t>
+   path.</t>
     </list></t>
   <t><spanx style="verb">file://///host.example.com/path/to/file</spanx>  <list style='empty'>
       <t>As above, with an extra slash between the empty authority and the
    transformed UNC string, conformant with the definition from
-   <xref target="RFC1738"/>. This representation is deprecated by this
-   specification. It is notably used by the Firefox web browser.</t>
+   <xref target="RFC1738"/>; see: exceptions in <xref target="unc-to-uri"/>. This representation
+   is deprecated by this specification. It is notably used by the
+   Firefox web browser.</t>
     </list></t>
 </list></t>
 
@@ -248,10 +247,10 @@ from <xref target="RFC3986"/> that post-dates all previous specifications.</t>
   <t><spanx style="verb">file://c|/path/to/file</spanx></t>
   <t><spanx style="verb">file:/c|/path/to/file</spanx></t>
   <t><spanx style="verb">file:c|/path/to/file</spanx>  <list style='empty'>
-      <t>Various otherwise-invalid URIs that include a disallowed bar
-   character “|” in the drive letter. These encodings are supported
-   by the grammar for historical reasons. As noted above, new URIs of
-   this form MUST NOT be generated.</t>
+      <t>Various generally invalid URIs that include a disallowed bar
+   character “|” in the drive letter identifier. These encodings are
+   supported by the grammar for historical reasons. As noted above,
+   new URIs of this form MUST NOT be generated.</t>
     </list></t>
 </list></t>
 
@@ -267,7 +266,7 @@ from <xref target="RFC3986"/> that post-dates all previous specifications.</t>
 </list></t>
 
 </section>
-<section anchor="methods-on-file-uris" title="Methods on file URIs">
+<section anchor="methods" title="Methods on file URIs">
 
 <t>In the strictest terms, the only operations that can be performed on a
 file URI are translating it to and from a file path; subsequent methods
@@ -276,6 +275,10 @@ file system’s APIs.</t>
 
 <t>For example, consider the POSIX <spanx style="verb">open()</spanx>, <spanx style="verb">read()</spanx>, and <spanx style="verb">close()</spanx>
 methods <xref target="POSIX"/> for reading a file’s contents into memory.</t>
+
+<t>Some APIs allow file system methods to be invoked directly on file URIs,
+while others provide mappings to other similar methods, such as GET and
+PUT from the Hyptertext Transfer Protocol (HTTP) <xref target="RFC7231"/>.</t>
 
 <t>The local file system API can only be used if the file URI has a blank
 (or absent) authority and the path, when transformed to the local
@@ -288,12 +291,12 @@ this specification it translates to a UNC string referring to the host
 <t>This specification does not define a mechanism for accessing files
 stored on non-local file systems.</t>
 
-<section anchor="translating-local-file-path-to-file-uri" title="Translating Local File Path to file URI">
+<section anchor="file-to-uri" title="Translating Local File Path to file URI">
 
 <t>Below is an algorithmic description of the process used to convert a
 file path to an Internationalized Resource Identifier (IRI) 
 <xref target="RFC3987"/>, which can then be translated to a URI as per Section 3.1
-of <xref target="RFC3987"/> (see: <xref target="encoding"/>).</t>
+of <xref target="RFC3987"/>; see: <xref target="encoding"/>.</t>
 
 <t><list style="numbers">
   <t>Resolve the file path to its fully qualified absolute form.</t>
@@ -311,7 +314,7 @@ distinguish it from the authority.</t>
       <t>On an OpenVMS Files-11 system, append a slash “/” to the URI,
 and encode the device name as the first segment as per step 5,
 below, except that the dollars sign character “$” is not
-treated as a reserved character.</t>
+treated as a reserved character in this segment.</t>
       <t>On a UNIX-like system, append a slash “/” to the URI, to
 denote the root directory.</t>
     </list></t>
@@ -337,9 +340,9 @@ example a version number in a versioning file system):  <list style="numbers">
 <t>Examples:</t>
 
 <figure><artwork><![CDATA[
-   File Path                      | URIs (ideal, traditional)
+   File Path                      | URIs (minimal, traditional)
    -------------------------------+--------------------------------
-   UNIX-Like:                     |
+   UNIX-like:                     |
      /path/to/file                | file:/path/to/file
                                   | file:///path/to/file
                                   |
@@ -371,7 +374,8 @@ example file path in a UNIX-like environment would have been:</t>
    = "file:////path/to/file.txt"
 ]]></artwork></figure>
 
-<t>However that construct was never used in practice.</t>
+<t>However that construct was never used in practice, and in fact would
+have collided with the eventual encoding of UNC strings in URIs.</t>
 
 <t><spanx style="strong">Exceptions</spanx></t>
 
@@ -385,18 +389,24 @@ leave it off completely. e.g. <spanx style="verb">file:///c|/...</spanx> or <spa
 </list></t>
 
 </section>
-<section anchor="translating-unc-string-to-file-uri" title="Translating UNC String to file URI">
+<section anchor="unc-to-uri" title="Translating UNC String to file URI">
 
 <t>A UNC filespace selector string can be directly translated to an
 Internationalized Resource Identifier (IRI) <xref target="RFC3987"/>, which can
-then be translated to a URI as per Section 3.1 of <xref target="RFC3987"/> (see:
-<xref target="encoding"/>).</t>
+then be translated to a URI as per Section 3.1 of <xref target="RFC3987"/>; see:
+<xref target="encoding"/>.</t>
 
 <t><list style="numbers">
   <t>Initialise the URI with the “file:” scheme identifier.</t>
   <t>Append the authority:  <list style="numbers">
       <t>Append the “//” authority sigil to the URI.</t>
       <t>Append the hostname field of the UNC string to the URI.</t>
+    </list></t>
+  <t>Append the sharename:  <list style="numbers">
+      <t>Transform the sharename to a path segment (<xref target="RFC3986"/>,
+Section 3.3) as per Section 2 of <xref target="RFC3986"/>.</t>
+      <t>Append a delimiting slash character “/” and the transformed
+segment to the URI.</t>
     </list></t>
   <t>For each objectname:  <list style="numbers">
       <t>Transform the objectname to a path segment (<xref target="RFC3986"/>,
@@ -418,8 +428,8 @@ segment to the URI.</t>
 <t>Many implementations accept the full UNC string in the URI path (with
 all backslashes “\” converted to slashes “/”).  Additionally, because
 <xref target="RFC1738"/> said that the first “/” after “file://[authority]” wasn’t
-part of the path, Firefox requires an additional slash before the
-UNC string.</t>
+part of the path, some implementations (including Firefox) require an
+additional slash before the UNC string.</t>
 
 <t>For example:</t>
 
@@ -437,7 +447,7 @@ UNC string.</t>
 ]]></artwork></figure>
 
 </section>
-<section anchor="translating-non-local-file-path-to-file-uri" title="Translating Non-local File Path to file URI">
+<section anchor="remote-to-uri" title="Translating Non-local File Path to file URI">
 
 <t>Translating a non-local file path other than a UNC string to a file URI
 follows the same basic algorithm as for local files, above, except that
@@ -450,7 +460,7 @@ a username and password in an access control string, they MAY be
 transcribed into the userinfo field of the authority (<xref target="RFC3986"/>,
 Section 3.2.1), security considerations (<xref target="security"/>) notwithstanding.</t>
 
-<!-- ## Translating file URI to ... -->
+<!-- TODO: ## Translating file URI to ... -->
 
 </section>
 <section anchor="incompat" title="Incompatible File Paths">
@@ -464,8 +474,8 @@ the file URI scheme.</t>
 for interacting with files and devices using Windows API functions.
 These namespaced paths are prefixed by “\\?\” for Win32 File
 Namespaces and “\\.\” for Win32 Device Namespaces. There is also a
-special case for UNC file paths <xref target="MS-DTYP"/> in Win32 File Namespaces,
-referred to as “Long UNC”, using the prefix “\\?\UNC\”.</t>
+special case for UNC file paths in Win32 File Namespaces, referred to as
+“Long UNC”, using the prefix “\\?\UNC\”.</t>
 
 <t>This specification does not define a mechanism for translating
 namespaced paths to or from file URIs.</t>
@@ -499,6 +509,7 @@ transported as an Internationalized Resource Identifier (IRI)
 <figure><artwork><![CDATA[
 | Bytes of file IRI in a UTF-8 document:
 |    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
+|    f  i  l  e  :  c  :  /  r  e  ( c ) u  .  t  x  t
 |
 | Interpretation:
 |    A file named "recu.txt" with a cedilla on the "c", in the
@@ -511,7 +522,7 @@ transported as an Internationalized Resource Identifier (IRI)
 |       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
 |
 |  o Codepage 437 (e.g. MS-DOS):
-|       43 3a 5c 72 65 87 75 2e 74 78 74
+|       43   3a   5c   72   65   87   75   2e   74   78   74
 ]]></artwork></figure>
 
 <t>Counter-example: ambiguous file URI:</t>
@@ -527,8 +538,8 @@ transported as an Internationalized Resource Identifier (IRI)
 |       <HIRAGANA LETTER TI (U+3061)>
 |
 |  o Codepage 437:
-|       <GREEK SMALL LETTER PI (U+03C0)>
-|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)>
+|       <GREEK SMALL LETTER PI (U+03C0)> +
+|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)> +
 |       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
 |
 |  o EBCDIC:
@@ -1025,6 +1036,24 @@ specifications of each URI scheme.
 </reference>
 
 
+
+<reference anchor='RFC7231'>
+
+<front>
+<title>Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</title>
+<author initials='R.' surname='Fielding' fullname='R. Fielding'>
+<organization /></author>
+<author initials='J.' surname='Reschke' fullname='J. Reschke'>
+<organization /></author>
+<date year='2014' month='June' />
+<abstract>
+<t>The Hypertext Transfer Protocol (HTTP) is a stateless \%application- level protocol for distributed, collaborative, hypertext information systems.  This document defines the semantics of HTTP/1.1 messages, as expressed by request methods, request header fields, response status codes, and response header fields, along with the payload of messages (metadata and body content) and mechanisms for content negotiation.</t></abstract></front>
+
+<seriesInfo name='RFC' value='7231' />
+<format type='TXT' octets='235053' target='http://www.rfc-editor.org/rfc/rfc7231.txt' />
+</reference>
+
+
 <reference anchor='I-D.draft-hoffman-file-uri'>
   <front>
     <title>The file URI Scheme</title>
@@ -1098,6 +1127,9 @@ specifications of each URI scheme.
 
 <section anchor="unc-syntax" title="UNC Syntax">
 
+<t>The UNC filespace selector string is a null-terminated sequence of
+characters from the Universal Character Set <xref target="ISO10646"/>.</t>
+
 <t>The syntax of a UNC filespace selector string, as defined by
 <xref target="MS-DTYP"/>, is given here in Augmented Backus-Naur Form (ABNF)
 <xref target="RFC5234"/> for convenience:</t>
@@ -1116,10 +1148,7 @@ specifications of each URI scheme.
 </list></t>
 
 <t>The precise format of <spanx style="verb">sharename</spanx> depends on the protocol;
-see SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP <xref target="NOVELL"/>.</t>
-
-<t>The UNC filespace selector string is a null-terminated sequence of
-characters from the Universal Character Set <xref target="ISO10646"/>.</t>
+see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP <xref target="NOVELL"/>.</t>
 
 </section>
 

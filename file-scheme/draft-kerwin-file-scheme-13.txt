@@ -4,9 +4,9 @@
 
 Independent Submission                                         M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 1738 (if approved)                          September 9, 2014
+Obsoletes: 1738 (if approved)                         September 26, 2014
 Intended status: Standards Track
-Expires: March 13, 2015
+Expires: March 30, 2015
 
 
                           The file URI Scheme
@@ -17,10 +17,14 @@ Abstract
    This document specifies the "file" Uniform Resource Identifier (URI)
    scheme, replacing the definition in RFC 1738.
 
-   *Note to Readers (To be removed by the RFC Editor)*
+   It attempts to document current practices, while at the same time
+   defining a common core which is intended to interoperate across the
+   broad spectrum of existing implementations.
 
-   This draft should be discussed on its github project page
-   https://github.com/phluid61/internet-drafts/ .
+Note to Readers (To be removed by the RFC Editor)
+
+   This draft should be discussed on the IETF Applications Area Working
+   Group discussion list <apps-discuss@ietf.org>.
 
 Status of This Memo
 
@@ -37,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 13, 2015.
+   This Internet-Draft will expire on March 30, 2015.
 
 Copyright Notice
 
@@ -46,18 +50,18 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
 
 
 
-Kerwin                   Expires March 13, 2015                 [Page 1]
+Kerwin                   Expires March 30, 2015                 [Page 1]
 
 Internet-Draft                 file-scheme                September 2014
 
 
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
@@ -65,25 +69,24 @@ Internet-Draft                 file-scheme                September 2014
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-     1.1.  History . . . . . . . . . . . . . . . . . . . . . . . . .   2
-     1.2.  UNC . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  History . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.2.  Similar Technologies  . . . . . . . . . . . . . . . . . .   3
      1.3.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
-     1.4.  Idealism vs Pragmatism vs History . . . . . . . . . . . .   3
    2.  Syntax  . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Methods on file URIs  . . . . . . . . . . . . . . . . . . . .   7
      3.1.  Translating Local File Path to file URI . . . . . . . . .   7
-     3.2.  Translating UNC String to file URI  . . . . . . . . . . .   9
+     3.2.  Translating UNC String to file URI  . . . . . . . . . . .  10
      3.3.  Translating Non-local File Path to file URI . . . . . . .  11
      3.4.  Incompatible File Paths . . . . . . . . . . . . . . . . .  11
        3.4.1.  Namespaces  . . . . . . . . . . . . . . . . . . . . .  11
    4.  Encoding  . . . . . . . . . . . . . . . . . . . . . . . . . .  11
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  15
-   Appendix A.  UNC Syntax . . . . . . . . . . . . . . . . . . . . .  15
+   Appendix A.  UNC Syntax . . . . . . . . . . . . . . . . . . . . .  16
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  16
 
 1.  Introduction
@@ -96,6 +99,21 @@ Table of Contents
    such, there is no well-defined set of methods that can be performed
    on file URIs, nor a media type associated with them.
 
+   This document defines a syntax that is compatible with most extant
+   implementations, while attempting to push towards a stricter subset
+   of "ideal" constructs.  In many cases it simultaneously acknowledges
+   and deprecates some less common or outdated constructs.
+
+
+
+
+
+
+Kerwin                   Expires March 30, 2015                 [Page 2]
+
+Internet-Draft                 file-scheme                September 2014
+
+
 1.1.  History
 
    The file URI scheme was first defined in [RFC1630], which, being an
@@ -104,15 +122,6 @@ Table of Contents
    registered with the Internet Assigned Numbers Authority (IANA);
    however that definition omitted certain language included by former
    that clarified aspects such as:
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                 [Page 2]
-
-Internet-Draft                 file-scheme                September 2014
-
 
    o  the use of slashes to denote boundaries between directory levels
       of a hierarchical file system; and
@@ -130,30 +139,20 @@ Internet-Draft                 file-scheme                September 2014
    Additionally the WHATWG defines a living URL standard [WHATWG-URL],
    which includes algorithms for interpreting file URIs (as URLs).
 
-1.2.  UNC
+1.2.  Similar Technologies
 
    The Universal Naming Convention (UNC) [MS-DTYP] defines a string
-   format that can perform a similar role in describing the location of
-   files.  This UNC filespace selector string has three parts: host,
-   share, and path.  This document describes a means of translating
-   between UNC filespace selector strings and file URIs.
+   format that can perform a similar role to the file URI scheme in
+   describing the location of files.  A UNC filespace selector string
+   has three parts: host, share, and path; see: Appendix A.  This
+   document describes a means of translating between UNC filespace
+   selector strings and file URIs.
 
 1.3.  Notational Conventions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [RFC2119].
-
-1.4.  Idealism vs Pragmatism vs History
-
-   Because the file URI scheme has a long history of loosely-defined
-   standardisation and divergent implementations, this document will
-   inevitably make some assertions that go against some implementers'
-   expectations.  We will attempt to label all assertions as either
-   "ideal" preferred behaviour or practical behaviour to support
-   compatibility and interoperability, and in all cases we will attempt
-   to describe the difference between this and any previous
-   specifications.
 
 2.  Syntax
 
@@ -165,7 +164,8 @@ Internet-Draft                 file-scheme                September 2014
 
 
 
-Kerwin                   Expires March 13, 2015                 [Page 3]
+
+Kerwin                   Expires March 30, 2015                 [Page 3]
 
 Internet-Draft                 file-scheme                September 2014
 
@@ -196,10 +196,10 @@ Internet-Draft                 file-scheme                September 2014
    character "|" even though that character is not part of either the
    unreserved or reserved character sets in [RFC3986], and thus would
    normally have to be percent-encoded to be included in a URI.  This
-   specification explicitly supports parsing of otherwise invalid URIs -
-   with an unencoded bar character forming part of a DOS or Windows
-   drive letter identifier - for parsing extant historical URIs, but new
-   URIs of this form MUST NOT be generated.
+   specification explicitly supports the parsing of otherwise invalid
+   URIs - those with an unencoded bar character forming part of a DOS or
+   Windows drive letter identifier - to facilitate parsing extant
+   historical URIs, but new URIs of this form MUST NOT be generated.
 
    The query field contains non-hierarchical data that, along with data
    in the path components (path-absolute, unc-path, or windows-path)
@@ -221,7 +221,7 @@ Internet-Draft                 file-scheme                September 2014
 
 
 
-Kerwin                   Expires March 13, 2015                 [Page 4]
+Kerwin                   Expires March 30, 2015                 [Page 4]
 
 Internet-Draft                 file-scheme                September 2014
 
@@ -244,15 +244,15 @@ Internet-Draft                 file-scheme                September 2014
 
    o  "file:/path/to/file"
 
-         The ideal representation of a local file in a UNIX-like
-         environment, with no authority field and an absolute path that
-         begins with a slash "/".
+         A "modern" minimal representation of a local file in a UNIX-
+         like environment, with no authority field and an absolute path
+         that begins with a slash "/".
 
    o  "file:c:/path/to/file"
 
-         The ideal representation of a local file in a DOS- or Windows-
-         based environment, with no authority field and an absolute path
-         that begins with a drive letter.
+         The minimal representation of a local file in a DOS- or
+         Windows-based environment, with no authority field and an
+         absolute path that begins with a drive letter.
 
    o  "file:///c/path/to/file"
 
@@ -272,15 +272,15 @@ Internet-Draft                 file-scheme                September 2014
          drive letter.  This representation is less common than those
          above, and is deprecated by this specification.
 
-   Non-local files:
 
 
 
-
-Kerwin                   Expires March 13, 2015                 [Page 5]
+Kerwin                   Expires March 30, 2015                 [Page 5]
 
 Internet-Draft                 file-scheme                September 2014
 
+
+   Non-local files:
 
    o  "file://host.example.com/path/to/file"
 
@@ -291,15 +291,15 @@ Internet-Draft                 file-scheme                September 2014
 
          The "traditional" representation of a non-local file, with an
          empty authority and a complete (transformed) UNC string in the
-         path.  This encoding is commonly implemented, but the ideal
-         representation above is preferred by this specification.
+         path.
 
    o  "file://///host.example.com/path/to/file"
 
          As above, with an extra slash between the empty authority and
          the transformed UNC string, conformant with the definition from
-         [RFC1738].  This representation is deprecated by this
-         specification.  It is notably used by the Firefox web browser.
+         [RFC1738]; see: exceptions in Section 3.2.  This representation
+         is deprecated by this specification.  It is notably used by the
+         Firefox web browser.
 
    Dubious encodings:
 
@@ -320,9 +320,9 @@ Internet-Draft                 file-scheme                September 2014
 
    o  "file:c|/path/to/file"
 
-         Various otherwise-invalid URIs that include a disallowed bar
-         character "|" in the drive letter.  These encodings are
-         supported by the grammar for historical reasons.  As noted
+         Various generally invalid URIs that include a disallowed bar
+         character "|" in the drive letter identifier.  These encodings
+         are supported by the grammar for historical reasons.  As noted
          above, new URIs of this form MUST NOT be generated.
 
    It also intentionally excludes URIs of the form:
@@ -331,9 +331,7 @@ Internet-Draft                 file-scheme                September 2014
 
 
 
-
-
-Kerwin                   Expires March 13, 2015                 [Page 6]
+Kerwin                   Expires March 30, 2015                 [Page 6]
 
 Internet-Draft                 file-scheme                September 2014
 
@@ -353,6 +351,10 @@ Internet-Draft                 file-scheme                September 2014
    For example, consider the POSIX "open()", "read()", and "close()"
    methods [POSIX] for reading a file's contents into memory.
 
+   Some APIs allow file system methods to be invoked directly on file
+   URIs, while others provide mappings to other similar methods, such as
+   GET and PUT from the Hyptertext Transfer Protocol (HTTP) [RFC7231].
+
    The local file system API can only be used if the file URI has a
    blank (or absent) authority and the path, when transformed to the
    local system's conventions, is not a UNC string.  Note that this
@@ -369,7 +371,7 @@ Internet-Draft                 file-scheme                September 2014
    Below is an algorithmic description of the process used to convert a
    file path to an Internationalized Resource Identifier (IRI)
    [RFC3987], which can then be translated to a URI as per Section 3.1
-   of [RFC3987] (see: Section 4).
+   of [RFC3987]; see: Section 4.
 
    1.  Resolve the file path to its fully qualified absolute form.
 
@@ -378,21 +380,23 @@ Internet-Draft                 file-scheme                September 2014
    3.  If including an empty authority field, append the "//" sigil to
        the URI.
 
+
+
+
+
+
+
+
+Kerwin                   Expires March 30, 2015                 [Page 7]
+
+Internet-Draft                 file-scheme                September 2014
+
+
    4.  Append the root directory:
 
        *  On a DOS- or Windows-based system, assign the drive letter
           (e.g. "c:") as the first path segment, and append it to the
           URI, followed by a slash character "/".
-
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                 [Page 7]
-
-Internet-Draft                 file-scheme                September 2014
-
 
           +  If an empty authority was included at step 3, a slash "/"
              is prepended to the drive letter (e.g. "/c:") to
@@ -401,7 +405,7 @@ Internet-Draft                 file-scheme                September 2014
        *  On an OpenVMS Files-11 system, append a slash "/" to the URI,
           and encode the device name as the first segment as per step 5,
           below, except that the dollars sign character "$" is not
-          treated as a reserved character.
+          treated as a reserved character in this segment.
 
        *  On a UNIX-like system, append a slash "/" to the URI, to
           denote the root directory.
@@ -430,7 +434,6 @@ Internet-Draft                 file-scheme                September 2014
 
        3.  Append the transformed query field to the URI.
 
-   Examples:
 
 
 
@@ -440,19 +443,16 @@ Internet-Draft                 file-scheme                September 2014
 
 
 
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                 [Page 8]
+Kerwin                   Expires March 30, 2015                 [Page 8]
 
 Internet-Draft                 file-scheme                September 2014
 
 
-      File Path                      | URIs (ideal, traditional)
+   Examples:
+
+      File Path                      | URIs (minimal, traditional)
       -------------------------------+--------------------------------
-      UNIX-Like:                     |
+      UNIX-like:                     |
         /path/to/file                | file:/path/to/file
                                      | file:///path/to/file
                                      |
@@ -470,7 +470,7 @@ Internet-Draft                 file-scheme                September 2014
                                      | file:///DISK1/PATH/TO/FILE.TXT?2
                                      |
 
-   *Differences from RFC 1738*
+Differences from RFC 1738
 
    In [RFC1738] a file URL always started with the token "file://",
    followed by an authority and a "/".  That "/" was not considered part
@@ -481,9 +481,10 @@ Internet-Draft                 file-scheme                September 2014
       = "file://" + ""        + "/"   + "/path/to/file.txt"
       = "file:////path/to/file.txt"
 
-   However that construct was never used in practice.
+   However that construct was never used in practice, and in fact would
+   have collided with the eventual encoding of UNC strings in URIs.
 
-   *Exceptions*
+Exceptions
 
    DOS/Windows:
       Some implementations leave the leading slash off before the drive
@@ -493,21 +494,22 @@ Internet-Draft                 file-scheme                September 2014
       Some implementations replace ":" with "|", and others leave it off
       completely. e.g. "file:///c|/..." or "file:///c/..."
 
-3.2.  Translating UNC String to file URI
-
-   A UNC filespace selector string can be directly translated to an
-   Internationalized Resource Identifier (IRI) [RFC3987], which can then
 
 
 
 
-Kerwin                   Expires March 13, 2015                 [Page 9]
+
+Kerwin                   Expires March 30, 2015                 [Page 9]
 
 Internet-Draft                 file-scheme                September 2014
 
 
-   be translated to a URI as per Section 3.1 of [RFC3987] (see:
-   Section 4).
+3.2.  Translating UNC String to file URI
+
+   A UNC filespace selector string can be directly translated to an
+   Internationalized Resource Identifier (IRI) [RFC3987], which can then
+   be translated to a URI as per Section 3.1 of [RFC3987]; see:
+   Section 4.
 
    1.  Initialise the URI with the "file:" scheme identifier.
 
@@ -517,7 +519,15 @@ Internet-Draft                 file-scheme                September 2014
 
        2.  Append the hostname field of the UNC string to the URI.
 
-   3.  For each objectname:
+   3.  Append the sharename:
+
+       1.  Transform the sharename to a path segment ([RFC3986],
+           Section 3.3) as per Section 2 of [RFC3986].
+
+       2.  Append a delimiting slash character "/" and the transformed
+           segment to the URI.
+
+   4.  For each objectname:
 
        1.  Transform the objectname to a path segment ([RFC3986],
            Section 3.3) as per Section 2 of [RFC3986].
@@ -530,13 +540,25 @@ Internet-Draft                 file-scheme                September 2014
       UNC String:   \\host.example.com\Share\path\to\file.txt
       URI:          file://host.example.com/Share/path/to/file.txt
 
-   *Exceptions*
+Exceptions
 
    Many implementations accept the full UNC string in the URI path (with
    all backslashes "\" converted to slashes "/").  Additionally, because
    [RFC1738] said that the first "/" after "file://[authority]" wasn't
-   part of the path, Firefox requires an additional slash before the UNC
-   string.
+   part of the path, some implementations (including Firefox) require an
+   additional slash before the UNC string.
+
+
+
+
+
+
+
+
+Kerwin                   Expires March 30, 2015                [Page 10]
+
+Internet-Draft                 file-scheme                September 2014
+
 
    For example:
 
@@ -550,17 +572,6 @@ Internet-Draft                 file-scheme                September 2014
           \_____/|\__________________________ /
           Scheme |    Transformed UNC string
                  Extra slash
-
-
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                [Page 10]
-
-Internet-Draft                 file-scheme                September 2014
-
 
 3.3.  Translating Non-local File Path to file URI
 
@@ -587,8 +598,8 @@ Internet-Draft                 file-scheme                September 2014
    for interacting with files and devices using Windows API functions.
    These namespaced paths are prefixed by "\\?\" for Win32 File
    Namespaces and "\\.\" for Win32 Device Namespaces.  There is also a
-   special case for UNC file paths [MS-DTYP] in Win32 File Namespaces,
-   referred to as "Long UNC", using the prefix "\\?\UNC\".
+   special case for UNC file paths in Win32 File Namespaces, referred to
+   as "Long UNC", using the prefix "\\?\UNC\".
 
    This specification does not define a mechanism for translating
    namespaced paths to or from file URIs.
@@ -597,6 +608,14 @@ Internet-Draft                 file-scheme                September 2014
 
    The encoding of a file URI depends on the file system.  If the file
    system uses a known non-Unicode character encoding, the path SHOULD
+
+
+
+Kerwin                   Expires March 30, 2015                [Page 11]
+
+Internet-Draft                 file-scheme                September 2014
+
+
    be converted to a sequence of characters from the Universal Character
    Set [ISO10646] normalized according to Normalization Form C (NFC)
    [UTR15], before being translated to a file URI, and conversely a file
@@ -608,16 +627,6 @@ Internet-Draft                 file-scheme                September 2014
       representation as an encoded string often depends on the user's
       localization settings, or defaults to UTF-8 [STD63].
 
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                [Page 11]
-
-Internet-Draft                 file-scheme                September 2014
-
-
    When the file system's encoding is not known the file URI SHOULD be
    transported as an Internationalized Resource Identifier (IRI)
    [RFC3987].
@@ -626,6 +635,7 @@ Internet-Draft                 file-scheme                September 2014
 
    | Bytes of file IRI in a UTF-8 document:
    |    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
+   |    f  i  l  e  :  c  :  /  r  e  ( c ) u  .  t  x  t
    |
    | Interpretation:
    |    A file named "recu.txt" with a cedilla on the "c", in the
@@ -638,7 +648,7 @@ Internet-Draft                 file-scheme                September 2014
    |       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
    |
    |  o Codepage 437 (e.g. MS-DOS):
-   |       43 3a 5c 72 65 87 75 2e 74 78 74
+   |       43   3a   5c   72   65   87   75   2e   74   78   74
 
    Counter-example: ambiguous file URI:
 
@@ -651,9 +661,21 @@ Internet-Draft                 file-scheme                September 2014
    |  o UTF-8:
    |       <HIRAGANA LETTER TI (U+3061)>
    |
+
+
+
+
+
+
+Kerwin                   Expires March 30, 2015                [Page 12]
+
+Internet-Draft                 file-scheme                September 2014
+
+
+   |
    |  o Codepage 437:
-   |       <GREEK SMALL LETTER PI (U+03C0)>
-   |       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)>
+   |       <GREEK SMALL LETTER PI (U+03C0)> +
+   |       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)> +
    |       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
    |
    |  o EBCDIC:
@@ -663,16 +685,6 @@ Internet-Draft                 file-scheme                September 2014
    |       "%E3%81%A1"
    |
    | etc.
-
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                [Page 12]
-
-Internet-Draft                 file-scheme                September 2014
-
 
 5.  Security Considerations
 
@@ -708,7 +720,13 @@ Internet-Draft                 file-scheme                September 2014
            | file       | Host-specific file names | RFC XXXX  |
            +------------+--------------------------+-----------+
 
-   *RFC Editor Note:* Replace XXXX with this RFC's reference.
+   RFC Editor Note: Replace XXXX with this RFC's reference.
+
+
+Kerwin                   Expires March 30, 2015                [Page 13]
+
+Internet-Draft                 file-scheme                September 2014
+
 
 7.  Acknowledgements
 
@@ -719,16 +737,6 @@ Internet-Draft                 file-scheme                September 2014
    Additional thanks to Dave Risney, author of the informative IE Blog
    article http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-
    windows.aspx , and Dave Thaler for their comments and suggestions.
-
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                [Page 13]
-
-Internet-Draft                 file-scheme                September 2014
-
 
 8.  References
 
@@ -767,6 +775,15 @@ Internet-Draft                 file-scheme                September 2014
    [RFC3987]  Duerst, M. and M. Suignard, "Internationalized Resource
               Identifiers (IRIs)", RFC 3987, January 2005.
 
+
+
+
+
+Kerwin                   Expires March 30, 2015                [Page 14]
+
+Internet-Draft                 file-scheme                September 2014
+
+
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
               Architecture", RFC 4291, February 2006.
 
@@ -776,15 +793,6 @@ Internet-Draft                 file-scheme                September 2014
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
               IPv6 Zone Identifiers in Address Literals and Uniform
               Resource Identifiers", RFC 6874, February 2013.
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                [Page 14]
-
-Internet-Draft                 file-scheme                September 2014
-
 
    [UTR15]    Davis, M. and K. Whistler, "Unicode Normalization Forms",
               August 2012.
@@ -817,8 +825,20 @@ Internet-Draft                 file-scheme                September 2014
               Beame, C., Eisler, M., and D. Noveck, "Network File System
               (NFS) version 4 Protocol", RFC 3530, April 2003.
 
+   [RFC7231]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
+              (HTTP/1.1): Semantics and Content", RFC 7231, June 2014.
+
    [STD63]    Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, November 2003.
+
+
+
+
+
+Kerwin                   Expires March 30, 2015                [Page 15]
+
+Internet-Draft                 file-scheme                September 2014
+
 
    [WHATWG-URL]
               WHATWG, "URL Living Standard", May 2013,
@@ -830,17 +850,12 @@ Internet-Draft                 file-scheme                September 2014
 
 Appendix A.  UNC Syntax
 
+   The UNC filespace selector string is a null-terminated sequence of
+   characters from the Universal Character Set [ISO10646].
+
    The syntax of a UNC filespace selector string, as defined by
    [MS-DTYP], is given here in Augmented Backus-Naur Form (ABNF)
    [RFC5234] for convenience:
-
-
-
-
-Kerwin                   Expires March 13, 2015                [Page 15]
-
-Internet-Draft                 file-scheme                September 2014
-
 
       UNC = "\\" hostname "\" sharename *( "\" objectname )
       hostname   = netbios-name / fqdn / ip-address
@@ -854,11 +869,8 @@ Internet-Draft                 file-scheme                September 2014
    o  "ip-address" from Section 2.1 of [RFC1123], or Section 2.2 of
       [RFC4291].
 
-   The precise format of "sharename" depends on the protocol; see SMB
+   The precise format of "sharename" depends on the protocol; see: SMB
    [MS-SMB], NFS [RFC3530], NCP [NOVELL].
-
-   The UNC filespace selector string is a null-terminated sequence of
-   characters from the Universal Character Set [ISO10646].
 
 Author's Address
 
@@ -879,18 +891,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kerwin                   Expires March 13, 2015                [Page 16]
+Kerwin                   Expires March 30, 2015                [Page 16]
