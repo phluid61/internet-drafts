@@ -717,7 +717,8 @@ characters from the Universal Character Set {{ISO10646}}.
 
 The syntax of a UNC filespace selector string, as defined by
 {{MS-DTYP}}, is given here in Augmented Backus-Naur Form (ABNF)
-{{RFC5234}} for convenience:
+{{RFC5234}} for convenience. Note that this definition is informative
+only; the normative description is in {{MS-DTYP}}.
 
 ~~~~~~~~~~
    UNC = "\\" hostname "\" sharename *( "\" objectname )
