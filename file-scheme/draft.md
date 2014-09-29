@@ -28,9 +28,9 @@ normative:
     title: Guidelines and Registration Procedures for New URI Schemes
     author:
     - ins: T. Hansen
-      name: T.Hansen
+      name: T. Hansen
     - ins: T. Hardie
-      name: T.Hardie
+      name: T. Hardie
     - ins: L. Masinter
       name: L. Masinter
     date: 2006-02
