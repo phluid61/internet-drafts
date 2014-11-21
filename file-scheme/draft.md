@@ -211,13 +211,13 @@ document are to be interpreted as described in {{RFC2119}}.
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 {{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `userinfo`, `host`, `path-absolute`,
-and `query` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
+specification, and importing the `userinfo`, `host`, and `path-absolute`
+rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
 Please note the appendix that lists other commonly seen variations.
 
 ~~~~~~~~~~
-   file-URI       = file-scheme ":" file-hier-part [ "?" query ]
+   file-URI       = file-scheme ":" file-hier-part
 
    file-scheme    = "file"
 
@@ -238,12 +238,6 @@ Please note the appendix that lists other commonly seen variations.
    drive-letter   = ALPHA ":"
                   / ALPHA     # deprecated
 ~~~~~~~~~~
-
-The query field contains non-hierarchical data that, along with
-data in the path components (path-absolute, unc-path, or dos-path)
-serves to identify a resource. This is not commonly used in practice,
-but could be used to refer to a specific version of a file in a
-versioning file system, for example.
 
 Systems exhibit different levels of case-sensitivity. Unless the file
 system is known to be case-insensitive, implementations MUST maintain
@@ -376,16 +370,6 @@ of {{RFC3987}}; see: {{encoding}}.
     1.  Transform the file name to a path segment as above.
 
     2.  Append the transformed segment to the URI.
-
-7.  If any non-hierarchical data is required to identify the file (for
-    example a version number in a versioning file system):
-
-    1.   Append a question mark character "?" to the URI.
-
-    2.   Transform the non-hierarchical data to a query field
-         ({{RFC3986}}, Section 3.4) as per Section 2 of {{RFC3986}}.
-
-    3.  Append the transformed query field to the URI.
 
 
 Examples:
