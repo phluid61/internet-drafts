@@ -157,7 +157,7 @@ used in discussions about the file, and if other conditions are met it
 can be dereferenced to directly access the file.
 
 The file URI scheme is not coupled with a specific protocol. As such,
-there is no well-defined set of methods that can be performed on file
+there is no well-defined set of operations that can be performed on file
 URIs, nor a media type associated with them.
 
 This document defines a syntax that is compatible with most extant
@@ -299,17 +299,17 @@ Non-local files:
      Firefox web browser.
 
 
-# Methods on file URIs  {#methods}
+# Operations on file URIs  {#operations}
 
 In the strictest terms, the only operations that can be performed on a
-file URI are translating it to and from a file path; subsequent methods
+file URI are translating it to and from a file path; subsequent operations
 are performed on the resulting file path, and depend entirely on the
 file system's APIs. For example, consider the POSIX `open()`, `read()`,
-and `close()` methods {{POSIX}} for reading a file's contents into
+and `close()` operations {{POSIX}} for reading a file's contents into
 memory.
 
-Some APIs allow file system methods to be invoked directly on file URIs,
-while others provide mappings to other similar methods, such as GET and
+Some APIs allow file system operations to be invoked directly on file URIs,
+while others provide mappings to other similar operations, such as GET and
 PUT from the Hyptertext Transfer Protocol (HTTP) {{RFC7231}}.
 
 The local file system API can only be used if the file URI has a blank
