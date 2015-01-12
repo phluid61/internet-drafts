@@ -1,13 +1,13 @@
 ---
 title: The file URI Scheme
 abbrev: file-scheme
-docname: draft-kerwin-file-scheme-14
-date: 2014
+docname: draft-ietf-appsawg-file-scheme-00
+date: 2015
 category: std
 
 ipr: trust200902
 area: General
-workgroup: Independent Submission
+workgroup: Applications Area Working Group
 keyword: Internet-Draft
 
 #updates: 3986
