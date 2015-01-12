@@ -14,4 +14,7 @@ arisen during the scheme's long history of vague standardisation.
 
 Reviewers:
 
+* Julian Reschke <julian.reschke@gmx.de>
+* Nico Williams <nico@cryptonector.com>
 * Sean Leonard <dev+ietf@seantek.com>
+
