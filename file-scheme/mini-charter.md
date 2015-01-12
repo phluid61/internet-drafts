@@ -12,3 +12,6 @@ interoperability by being compatible with the generic syntax of
 RFC 3986, while enumerating commonly-encountered variations that have
 arisen during the scheme's long history of vague standardisation.
 
+Reviewers:
+
+* Sean Leonard <dev+ietf@seantek.com>
