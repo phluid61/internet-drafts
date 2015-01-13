@@ -16,5 +16,5 @@ Reviewers:
 
 * Julian Reschke <julian.reschke@gmx.de>
 * Nico Williams <nico@cryptonector.com>
-* Sean Leonard <dev+ietf@seantek.com>
+* Sean Leonard <[dev+ietf@seantek.com](mailto:dev+ietf@seantek.com)>
 
