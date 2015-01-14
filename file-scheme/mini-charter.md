@@ -20,10 +20,12 @@ Specifically:
     URI strings, and sufficient to cover common "file" URI usage in the
     wild where it does not conflict with [RFC 3986][RFC3986].
 
-2.  An informative aspect that describes some common "file" URI usages
-    and how they map onto underlying file systems, including those that
-    are incompatible with [RFC 3986][RFC3986], and those that are
-    compatible but aren't required to be implemented by all parsers.
+2.  An informative section describing common syntaxes that are not
+    compatible with [RFC 3986][RFC3986], possibly with advice for
+    translating to a compatible syntax.
+
+3.  An informative section that describes some common "file" URI usages
+    and how they map onto underlying file systems.
 
 Reviewers:
 
