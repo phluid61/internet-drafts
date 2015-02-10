@@ -269,25 +269,12 @@ The following encoding schemes are defined:
   The identity encoding identifier is used to indicate that no encoding is
   applied.
 
-* `ENCODING_COMPRESS` (1):
-  The compress coding is an adaptive Lempel-Ziv-Welch (LZW) coding
-  {{Welch}} that is commonly produced by the UNIX file compression program
-  "compress".
-
-* `ENCODING_ZLIB` (2):
-  The zlib coding is a "zlib" data format {{RFC1950}} containing
-  a "deflate" compressed data stream {{RFC1951}} that uses a
-  combination of the Lempel-Ziv (LZ77) compression algorithm and
-  Huffman coding.
-
-* `ENCODING_GZIP` (3):
+* `ENCODING_GZIP` (1):
   The gzip coding is an LZ77 coding with a 32 bit CRC that is
   commonly produced by the gzip file compression program {{RFC1952}}.
 
 <!--
-- compress
 + LZ4 (Yann Collet, http://fastcompression.blogspot.fr/2013/04/lz4-streaming-format-final.html)
-+ xz (7z=Pavlov, xz=???)
 -->
 
 
