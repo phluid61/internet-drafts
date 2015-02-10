@@ -2,7 +2,7 @@
 title: HTTP/2 Encoded Data
 abbrev: http2-encoded-data
 docname: draft-kerwin-http2-encoded-data-04
-date: 2014
+date: 2015
 category: exp
 
 ipr: trust200902
@@ -212,7 +212,8 @@ the downstream peer does not support (as advertised in an ACCEPT\_ENCODED\_DATA 
 intermediary MUST decode the data before forwarding it. The intermediary MAY re-encode the data
 with a scheme supported by the downstream peer and forward it in one or more ENCODED\_DATA frames.
 
-If an endpoint detects that the payload of an ENCODED\_DATA frame is incorrectly encoded it MUST
+If an endpoint detects that the payload of an ENCODED\_DATA frame is not encoded correctly
+according to its declared Encoding, for example with a mismatched checksum, the endpoint MUST
 treat this as a stream error (see {{I-D.ietf-httpbis-http2}}, Section 5.4.2) of type
 DATA\_ENCODING\_ERROR ({{error}}).
 
@@ -235,8 +236,7 @@ PROTOCOL\_ERROR.
 Note: A frame can be increased in size by one octet by including a Pad Length field
   with a value of zero.
 
-Use of padding is a security feature; as such, its use demands some care, see
-Section 10.7 of {{I-D.ietf-httpbis-http2}}.
+Padding is a security feature; see Section 10.7 of {{I-D.ietf-httpbis-http2}}.
 
 
 ### Fragmentation and Segments {#frag-segments}
