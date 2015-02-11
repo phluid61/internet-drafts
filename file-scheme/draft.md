@@ -157,7 +157,7 @@ used in discussions about the file, and if other conditions are met it
 can be dereferenced to directly access the file.
 
 The file URI scheme is not coupled with a specific protocol. As such,
-there is no well-defined set of methods that can be performed on file
+there is no well-defined set of operations that can be performed on file
 URIs, nor a media type associated with them.
 
 This document defines a syntax that is compatible with most extant
@@ -211,47 +211,33 @@ document are to be interpreted as described in {{RFC2119}}.
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 {{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `userinfo`, `host`, `path-absolute`,
-and `query` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
+specification, and importing the `userinfo`, `host`, and `path-absolute`
+rules from {{RFC3986}} (as updated by {{RFC6874}}.)
+
+Please note the appendix that lists other commonly seen variations.
 
 ~~~~~~~~~~
-   file-URI       = f-scheme ":" f-hier-part [ "?" query ]
+   file-URI       = file-scheme ":" file-hier-part
 
-   f-scheme       = "file"
+   file-scheme    = "file"
 
-   f-hier-part    = "//" auth-path
+   file-hier-part = "//" auth-path
                   / local-path
 
-   auth-path      = [ f-auth ] path-absolute
+   auth-path      = [ file-auth ] path-absolute
                   / unc-path
-                  / windows-path
 
-   f-auth         = [ userinfo "@" ] host
+   file-auth      = [ userinfo "@" ] host
 
    local-path     = path-absolute
-                  / windows-path
+                  / dos-path
 
    unc-path       = 2*3"/" authority path-absolute
 
-   windows-path   = drive-letter path-absolute
-   drive-letter   = ALPHA [ drive-marker ]
-   drive-marker   = ":" / "|"
+   dos-path       = drive-letter path-absolute
+   drive-letter   = ALPHA ":"
+                  / ALPHA     # deprecated
 ~~~~~~~~~~
-
-Note well: the `drive-marker` rule intentionally includes a bar
-character "|" even though that character is not part of either the
-unreserved or reserved character sets in {{RFC3986}}, and thus would
-normally have to be percent-encoded to be included in a URI. This
-specification explicitly supports the parsing of otherwise invalid URIs
--- those with an unencoded bar character forming part of a DOS or
-Windows drive letter identifier -- to facilitate parsing extant
-historical URIs, but new URIs of this form MUST NOT be generated.
-
-The query field contains non-hierarchical data that, along with
-data in the path components (path-absolute, unc-path, or windows-path)
-serves to identify a resource. This is not commonly used in practice,
-but could be used to refer to a specific version of a file in a
-versioning file system, for example.
 
 Systems exhibit different levels of case-sensitivity. Unless the file
 system is known to be case-insensitive, implementations MUST maintain
@@ -271,19 +257,12 @@ Local files:
 * `file:///path/to/file`
 
    > A "traditional" file URI for a local file, with an empty
-     authority. This is the most common format in use today, despite
-     being technically incompatible with the definition in {{RFC1738}}.
-
-* `file:///c:/path/to/file`
-
-   > The traditional representation of a local file in a DOS- or
-     Windows-based environment.
+     authority. This is the most common format in use today.
 
 * `file:/path/to/file`
 
-   > A "modern" minimal representation of a local file in a UNIX-like
-     environment, with no authority field and an absolute path
-     that begins with a slash "/".
+   > A "modern" minimal representation of a local file, with no
+     authority field and an absolute path that begins with a slash "/".
 
 * `file:c:/path/to/file`
 
@@ -291,21 +270,12 @@ Local files:
      Windows-based environment, with no authority field and an
      absolute path that begins with a drive letter.
 
-* `file:///c/path/to/file`
-* `file:/c/path/to/file`
 * `file:c/path/to/file`
 
    > Representations of a local file in a DOS- or Windows-based
      environment, using alternative representations of drive letters.
-     These are supported for compatibility with historical
-     implementationsm, but deprecated by this specification.
-
-* `file:/c:/path/to/file`
-
-   > A representation of a local file in a DOS- or Windows-based
-     environment, with no authority field and a slash preceding
-     the drive letter. This representation is less common than those
-     above, and is deprecated by this specification.
+     This construct is supported for compatibility with historical
+     implementations, but deprecated by this specification.
 
 Non-local files:
 
@@ -328,60 +298,31 @@ Non-local files:
      is deprecated by this specification. It is notably used by the
      Firefox web browser.
 
-Dubious encodings:
 
-* `file://c:/path/to/file`
-* `file://c/path/to/file`
-
-   > An encoding that includes a Windows drive letter as the authority
-     field. This encoding exists in some extant implementations, and is
-     supported by the grammar for historical reasons. New URIs of this
-     form SHOULD NOT be generated.
-
-* `file:///c|/path/to/file`
-* `file://c|/path/to/file`
-* `file:/c|/path/to/file`
-* `file:c|/path/to/file`
-
-   > Various generally invalid URIs that include a disallowed bar
-     character "|" in the drive letter identifier. These encodings are
-     supported by the grammar for historical reasons. As noted above,
-     new URIs of this form MUST NOT be generated.
-
-It also intentionally excludes URIs of the form:
-
-* `file://auth.example.com//host.example.com/path/to/file`
-
-   > An encoding that includes both a non-local authority, and a UNC
-     string. The traditional implication was that the shared object
-     described by the UNC string may only be accessed from the machine
-     `auth.example.com`.
-
-
-# Methods on file URIs  {#methods}
+# Operations on file URIs  {#operations}
 
 In the strictest terms, the only operations that can be performed on a
-file URI are translating it to and from a file path; subsequent methods
+file URI are translating it to and from a file path; subsequent operations
 are performed on the resulting file path, and depend entirely on the
-file system's APIs.
+file system's APIs. For example, consider the POSIX `open()`, `read()`,
+and `close()` operations {{POSIX}} for reading a file's contents into
+memory.
 
-For example, consider the POSIX `open()`, `read()`, and `close()`
-methods {{POSIX}} for reading a file's contents into memory.
-
-Some APIs allow file system methods to be invoked directly on file URIs,
-while others provide mappings to other similar methods, such as GET and
+Some APIs allow file system operations to be invoked directly on file URIs,
+while others provide mappings to other similar operations, such as GET and
 PUT from the Hyptertext Transfer Protocol (HTTP) {{RFC7231}}.
 
 The local file system API can only be used if the file URI has a blank
 (or absent) authority and the path, when transformed to the local
-system's conventions, is not a UNC string. Note that this differs from
-the definition in {{RFC1738}} in that previously an authority containing
-the text "localhost" was used to refer to the local file system, but in
-this specification it translates to a UNC string referring to the host
+system's conventions, is not a UNC string, unless the file system API
+supports UNC strings. Note that this differs from the definition in
+{{RFC1738}} in that previously an authority containing the text
+"localhost" was used to refer to the local file system, but in this
+specification it translates to a UNC string referring to the host
 "localhost".
 
-This specification does not define a mechanism for accessing files
-stored on non-local file systems.
+This specification neither defines nor forbids a mechanism for
+accessing files stored on non-local file systems.
 
 
 ## Translating Local File Path to file URI  {#file-to-uri}
@@ -398,7 +339,7 @@ of {{RFC3987}}; see: {{encoding}}.
 3.  If including an empty authority field, append the "//" sigil to
     the URI.
 
-4.  Append the root directory:
+4.  Append the file system root:
 
     *   On a DOS- or Windows-based system, assign the drive letter
         (e.g. "c:") as the first path segment, and append it to the
@@ -429,16 +370,6 @@ of {{RFC3987}}; see: {{encoding}}.
     1.  Transform the file name to a path segment as above.
 
     2.  Append the transformed segment to the URI.
-
-7.  If any non-hierarchical data is required to identify the file (for
-    example a version number in a versioning file system):
-
-    1.   Append a question mark character "?" to the URI.
-
-    2.   Transform the non-hierarchical data to a query field
-         ({{RFC3986}}, Section 3.4) as per Section 2 of {{RFC3986}}.
-
-    3.  Append the transformed query field to the URI.
 
 
 Examples:
@@ -570,7 +501,13 @@ transcribed into the userinfo field of the authority ({{RFC3986}},
 Section 3.2.1), security considerations ({{security}}) notwithstanding.
 
 
-<!-- TODO: ## Translating file URI to ... -->
+## Translating file URI to ...
+
+TODO:
+
+* non-empty auth MAY be converted to UNC, or be accessed using magic, or be ignored/err
+* UNC path MAY be ignored/err
+* a path like /c:/.. or ///c:/.. MAY be interpreted as a DOS drive letter
 
 
 ## Incompatible File Paths {#incompat}
