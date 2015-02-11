@@ -210,7 +210,12 @@ with a scheme supported by the downstream peer and forward it in one or more ENC
 <t>If an endpoint detects that the payload of an ENCODED_DATA frame is not encoded correctly
 according to its declared Encoding, for example with a mismatched checksum, the endpoint MUST
 treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type
-DATA_ENCODING_ERROR (<xref target="error"/>).</t>
+DATA_ENCODING_ERROR (<xref target="error"/>). The endpoint MAY then choose to immediately send an
+ACCEPT_ENCODED_DATA frame that excludes the encoding in question.</t>
+
+<t>If an intermediary propagates an ENCODED_DATA frame from the source peer to the destination peer
+without modifying the payload or its encoding, and receives a DATA_ENCODING_ERROR from the
+receiving peer, it SHOULD pass the error on to the source peer.</t>
 
 <t>ENCODED_DATA frames MUST be associated with a stream. If an ENCODED_DATA frame is received whose
 stream identifier field is 0x0, the recipient MUST respond with a connection error
