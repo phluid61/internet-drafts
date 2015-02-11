@@ -289,7 +289,7 @@ Internet-Draft             http2-encoded-data              February 2015
    ENCODED_DATA frames.
 
    If an endpoint detects that the payload of an ENCODED_DATA frame is
-   not encoded correctly according to its declared Encoding, for example
+   not encoded correctly according to its declared encoding, for example
    with a mismatched checksum, the endpoint MUST treat this as a stream
    error (see [I-D.ietf-httpbis-http2], Section 5.4.2) of type
    DATA_ENCODING_ERROR (Section 2.3).  The endpoint MAY then choose to
