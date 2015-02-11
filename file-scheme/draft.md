@@ -239,16 +239,16 @@ Please note the appendix that lists other commonly seen variations.
                   / ALPHA     # deprecated
 ~~~~~~~~~~
 
+The syntax definition above is necessarily different from those given in
+{{RFC1630}} and {{RFC1738}} because it depends on the generic syntax
+from {{RFC3986}} that post-dates all previous specifications.
+
 Systems exhibit different levels of case-sensitivity. Unless the file
 system is known to be case-insensitive, implementations MUST maintain
 the case of file and directory names when translating file URIs to and
 from the local system's representation of file paths, and any systems or
 devices that transport file URIs MUST NOT alter the case of file URIs
 they transport.
-
-The syntax definition above is necessarily different from those given in
-{{RFC1630}} and {{RFC1738}} because it depends on the generic syntax
-from {{RFC3986}} that post-dates all previous specifications.
 
 It is intended to support file URIs that take the following forms:
 
