@@ -4,8 +4,8 @@
 
 Network Working Group                                          M. Kerwin
 Internet-Draft
-Intended status: Standards Track                         August 21, 2014
-Expires: February 22, 2015
+Intended status: Experimental                          February 11, 2015
+Expires: August 15, 2015
 
 
                             HTTP/2 Segments
@@ -37,11 +37,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on February 22, 2015.
+   This Internet-Draft will expire on August 15, 2015.
 
 Copyright Notice
 
-   Copyright (c) 2014 IETF Trust and the persons identified as the
+   Copyright (c) 2015 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                  Expires February 22, 2015               [Page 1]
+Kerwin                   Expires August 15, 2015                [Page 1]
 
-Internet-Draft               http2-segments                  August 2014
+Internet-Draft               http2-segments                February 2015
 
 
    include Simplified BSD License text as described in Section 4.e of
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                  Expires February 22, 2015               [Page 2]
+Kerwin                   Expires August 15, 2015                [Page 2]
 
-Internet-Draft               http2-segments                  August 2014
+Internet-Draft               http2-segments                February 2015
 
 
 3.  SETTINGS_USE_SEGMENTS Setting
@@ -165,17 +165,17 @@ Internet-Draft               http2-segments                  August 2014
 
 
 
-Kerwin                  Expires February 22, 2015               [Page 3]
+Kerwin                   Expires August 15, 2015                [Page 3]
 
-Internet-Draft               http2-segments                  August 2014
+Internet-Draft               http2-segments                February 2015
 
 
 7.  Normative References
 
    [I-D.ietf-httpbis-http2]
               Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
-              Protocol version 2", draft-ietf-httpbis-http2-14 (work in
-              progress), July 2014.
+              Protocol version 2", draft-ietf-httpbis-http2-16 (work in
+              progress), November 2014.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -221,4 +221,4 @@ Author's Address
 
 
 
-Kerwin                  Expires February 22, 2015               [Page 4]
+Kerwin                   Expires August 15, 2015                [Page 4]
