@@ -65,18 +65,18 @@ Table of Contents
    2.  Additions to HTTP/2 . . . . . . . . . . . . . . . . . . . . .   2
      2.1.  ACCEPT_ENCODED_DATA . . . . . . . . . . . . . . . . . . .   3
      2.2.  ENCODED_DATA  . . . . . . . . . . . . . . . . . . . . . .   4
-       2.2.1.  Fragmentation and Segments  . . . . . . . . . . . . .   6
+       2.2.1.  Fragmentation and Segments  . . . . . . . . . . . . .   7
      2.3.  DATA_ENCODING_ERROR . . . . . . . . . . . . . . . . . . .   7
    3.  Encoding Schemes  . . . . . . . . . . . . . . . . . . . . . .   7
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
      5.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   8
      5.2.  HTTP/2 Error Code Registry Update . . . . . . . . . . . .   8
      5.3.  HTTP/2 Encoding Schemes Registry  . . . . . . . . . . . .   8
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .  10
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
@@ -292,7 +292,14 @@ Internet-Draft             http2-encoded-data              February 2015
    not encoded correctly according to its declared Encoding, for example
    with a mismatched checksum, the endpoint MUST treat this as a stream
    error (see [I-D.ietf-httpbis-http2], Section 5.4.2) of type
-   DATA_ENCODING_ERROR (Section 2.3).
+   DATA_ENCODING_ERROR (Section 2.3).  The endpoint MAY then choose to
+   immediately send an ACCEPT_ENCODED_DATA frame that excludes the
+   encoding in question.
+
+   If an intermediary propagates an ENCODED_DATA frame from the source
+   peer to the destination peer without modifying the payload or its
+   encoding, and receives a DATA_ENCODING_ERROR from the receiving peer,
+   it SHOULD pass the error on to the source peer.
 
    ENCODED_DATA frames MUST be associated with a stream.  If an
    ENCODED_DATA frame is received whose stream identifier field is 0x0,
@@ -320,6 +327,17 @@ Internet-Draft             http2-encoded-data              February 2015
    Padding is a security feature; see Section 10.7 of
    [I-D.ietf-httpbis-http2].
 
+
+
+
+
+
+
+Kerwin                   Expires August 15, 2015                [Page 6]
+
+Internet-Draft             http2-encoded-data              February 2015
+
+
 2.2.1.  Fragmentation and Segments
 
    Traversing a network segment with small frame size limits introduces
@@ -330,14 +348,6 @@ Internet-Draft             http2-encoded-data              February 2015
    all of them, with the optional exception of the final frame in the
    sequence, have the SEGMENT_CONTINUES flag set.  The coalesced payload
    MAY be subsequently emitted in any combination of ENCODED_DATA and
-
-
-
-Kerwin                   Expires August 15, 2015                [Page 6]
-
-Internet-Draft             http2-encoded-data              February 2015
-
-
    DATA frames.  The payloads of any resulting ENCODED_DATA frames MUST
    be correctly encoded according to those frames' encodings; note that
    for some encoding schemes this could require that the payloads of the
@@ -374,16 +384,6 @@ Internet-Draft             http2-encoded-data              February 2015
    merged into a single compressed frame if they occupy the same
    segment.
 
-5.  IANA Considerations
-
-   This document updates the registries for frame types and error codes
-   in the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.
-   This document also establishes a new registry for HTTP/2 encoding
-   scheme codes.  This new registry is entered into the "Hypertext
-   Transfer Protocol (HTTP) 2 Parameters" section.
-
-
-
 
 
 
@@ -393,6 +393,14 @@ Kerwin                   Expires August 15, 2015                [Page 7]
 
 Internet-Draft             http2-encoded-data              February 2015
 
+
+5.  IANA Considerations
+
+   This document updates the registries for frame types and error codes
+   in the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.
+   This document also establishes a new registry for HTTP/2 encoding
+   scheme codes.  This new registry is entered into the "Hypertext
+   Transfer Protocol (HTTP) 2 Parameters" section.
 
 5.1.  HTTP/2 Frame Type Registry Update
 
@@ -435,20 +443,18 @@ Internet-Draft             http2-encoded-data              February 2015
 
    o  Code: The 8-bit code assigned to the encoding scheme.
 
-   o  Specification: A reference to a specification that includes a
-      description of the encoding scheme.
-
-   An initial set of encoding scheme code registrations can be found in
-   Section 3.
-
-
-
 
 
 Kerwin                   Expires August 15, 2015                [Page 8]
 
 Internet-Draft             http2-encoded-data              February 2015
 
+
+   o  Specification: A reference to a specification that includes a
+      description of the encoding scheme.
+
+   An initial set of encoding scheme code registrations can be found in
+   Section 3.
 
 6.  Acknowledgements
 
@@ -488,12 +494,6 @@ Internet-Draft             http2-encoded-data              February 2015
    [Welch]    Welch, T., "A Technique for High-Performance Data
               Compression", IEEE Computer 17(6), June 1984.
 
-7.2.  Informative References
-
-   [RFC7230]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
-              (HTTP/1.1): Message Syntax and Routing", RFC 7230, June
-              2014.
-
 
 
 
@@ -506,18 +506,18 @@ Kerwin                   Expires August 15, 2015                [Page 9]
 Internet-Draft             http2-encoded-data              February 2015
 
 
+7.2.  Informative References
+
+   [RFC7230]  Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
+              (HTTP/1.1): Message Syntax and Routing", RFC 7230, June
+              2014.
+
 Author's Address
 
    Matthew Kerwin
 
    Email: matthew@kerwin.net.au
    URI:   http://matthew.kerwin.net.au/
-
-
-
-
-
-
 
 
 
