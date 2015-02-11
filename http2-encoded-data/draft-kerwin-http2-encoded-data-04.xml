@@ -208,7 +208,7 @@ intermediary MUST decode the data before forwarding it. The intermediary MAY re-
 with a scheme supported by the downstream peer and forward it in one or more ENCODED_DATA frames.</t>
 
 <t>If an endpoint detects that the payload of an ENCODED_DATA frame is not encoded correctly
-according to its declared Encoding, for example with a mismatched checksum, the endpoint MUST
+according to its declared encoding, for example with a mismatched checksum, the endpoint MUST
 treat this as a stream error (see <xref target="I-D.ietf-httpbis-http2"/>, Section 5.4.2) of type
 DATA_ENCODING_ERROR (<xref target="error"/>). The endpoint MAY then choose to immediately send an
 ACCEPT_ENCODED_DATA frame that excludes the encoding in question.</t>
