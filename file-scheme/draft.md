@@ -91,15 +91,7 @@ informative:
   RFC1738:
   RFC3530:
   RFC7231:
-  I-D.draft-hoffman-file-uri:
-    title: The file URI Scheme
-    author:
-    - ins: P. Hoffman
-      name: Paul Hoffman
-      organization: VPN Consortium
-    date: 2005-01
-    seriesinfo:
-      Internet-Draft: draft-hoffman-file-uri-03
+  I-D.hoffman-file-uri:
   WHATWG-URL:
     title: URL Living Standard
     author:
@@ -180,7 +172,7 @@ that clarified aspects such as:
 * the requirement that client software convert the file URI
   into a file name in the local file name conventions.
 
-The Internet draft {{I-D.draft-hoffman-file-uri}} was written in an
+The Internet draft {{I-D.hoffman-file-uri}} was written in an
 effort to keep the file URI scheme on standards track when {{RFC1738}}
 was made obsolete, but that draft expired in 2005.  It enumerated
 concerns arising from the various, often conflicting implementations
@@ -637,7 +629,7 @@ URI Schemes" registry has been updated accordingly.
 # Acknowledgements
 
 This specification is derived from {{RFC1738}}, {{RFC3986}}, and
-{{I-D.draft-hoffman-file-uri}} (expired); the acknowledgements in
+{{I-D.hoffman-file-uri}} (expired); the acknowledgements in
 those documents still apply.
 
 Additional thanks to Dave Risney, author of the informative
