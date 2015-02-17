@@ -84,22 +84,34 @@ Section 6.5.2) is defined:
   PROTOCOL\_ERROR.
 
 
-# SEGMENT\_CONTINUES Flag  {#flag}
+# SEGMENT and SEGMENT\_CONTINUES Flag  {#flag}
 
-The following new flag is defined for the DATA frame
+The following new flags are defined for the DATA frame
 ({{I-D.ietf-httpbis-http2}}, Section 6.1):
 
-* `SEGMENT_CONTINUES` (0x10):
-  Bit 5 being set indicates that the current segment continues after
-  the current frame (see {{segments}}). Intermediaries MUST NOT
-  coalesce frames across a segment boundary and MUST preserve
-  segment boundaries when forwarding frames.
+* `SEGMENT` (0x10):
+  Bit 5 being set indicates that the current segment begins and ends
+  with the current frame.
 
-  The SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
-  remote endpoint has indicated support by sending a 
-  SETTINGS\_USE\_SEGMENTS setting ({{setting}}) with a value of 1.
+* `SEGMENT_CONTINUES` (0x20):
+  Bit 6 being set indicates that the current segment continues after
+  the current frame (see {{segments}}). If the preceding frame did not
+  have the SEGMENT\_CONTINUES flag, the current segment begins at the
+  start of the current frame. Intermediaries MUST NOT coalesce frames
+  across a segment boundary and MUST preserve segment boundaries when
+  forwarding frames.
+
+The SEGMENT and SEGMENT\_CONTINUES flag MUST NOT be set on any frames
+unless the remote endpoint has indicated support by sending a
+SETTINGS\_USE\_SEGMENTS setting ({{setting}}) with a value of 1.
+
 
 # Security Considerations  {#security}
+
+In and of itself, segmentation does not introduce any security
+concerns. However when used in combination with other features, such
+as compression, known vulnerabilities may be introduced. See the Use of
+Compression in HTTP/2 ({{I-D.ietf-httpbis-http2}}, Section 10.6).
 
 
 # IANA Considerations  {#iana}
