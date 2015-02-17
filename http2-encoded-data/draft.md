@@ -189,16 +189,22 @@ The ENCODED\_DATA frame defines the following flags:
 * `PADDED` (0x8):
   Bit 4 being set indicates that the Pad Length field is present.
 
-* `SEGMENT_CONTINUES` (0x10):
-  Bit 5 being set indicates that the current segment continues after
+* `SEGMENT` (0x10):
+  Bit 5 being set indicates that the current segment begins and ends
+  with the current frame.
+
+* `SEGMENT_CONTINUES` (0x20):
+  Bit 6 being set indicates that the current segment continues after
   the current frame ({{I-D.kerwin-http2-segments}}, Section 2).
+  If the preceding frame did not have the SEGMENT\_CONTINUES flag,
+  the current segment begins at the start of the current frame.
   Intermediaries MUST NOT coalesce frames across a segment boundary and
   MUST preserve segment boundaries when forwarding frames.
 
-  The SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
-  remote endpoint has indicated support by sending a SETTINGS\_USE\_SEGMENTS
-  setting ({{I-D.kerwin-http2-segments}}, Section 3) with a value of 1.
 
+The SEGMENT and SEGMENT\_CONTINUES flag MUST NOT be set on any frames unless the
+remote endpoint has indicated support by sending a SETTINGS\_USE\_SEGMENTS
+setting ({{I-D.kerwin-http2-segments}}, Section 3) with a value of 1.
 
 An ENCODED\_DATA frame MUST NOT be sent on a connection before receiving an ACCEPT\_ENCODED\_DATA
 frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an
