@@ -399,7 +399,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-encoded-data-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-8-21" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-2-17" />
   <meta name="dct.abstract" content="This document introduces new frame types for transporting encoded data between peers in the Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
   <meta name="description" content="This document introduces new frame types for transporting encoded data between peers in the Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
 
@@ -419,11 +419,11 @@
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Intended status: Standards Track</td>
-  <td class="right">August 21, 2014</td>
+  <td class="left">Intended status: Experimental</td>
+  <td class="right">February 17, 2015</td>
 </tr>
 <tr>
-  <td class="left">Expires: February 22, 2015</td>
+  <td class="left">Expires: August 21, 2015</td>
   <td class="right"></td>
 </tr>
 
@@ -444,11 +444,11 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on February 22, 2015.</p>
+<p>This Internet-Draft will expire on August 21, 2015.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
-<p>Copyright (c) 2014 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>Copyright (c) 2015 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
 
   
@@ -542,16 +542,19 @@
 <ul>
   <li><samp>END_STREAM</samp> (0x1): Bit 1 being set indicates that this frame is the last that the endpoint will send for the identified stream. Setting this flag causes the stream to enter one of the &#8220;half closed&#8221; states or the &#8220;closed&#8221; state (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.1).</li>
   <li><samp>PADDED</samp> (0x8): Bit 4 being set indicates that the Pad Length field is present.</li>
-  <li><samp>SEGMENT_CONTINUES</samp> (0x10): Bit 5 being set indicates that the current segment continues after the current frame (<a href="#I-D.kerwin-http2-segments">[I-D.kerwin-http2-segments]</a>, Section 2).  Intermediaries MUST NOT coalesce frames across a segment boundary and MUST preserve segment boundaries when forwarding frames.  <br/><br/> The SEGMENT_CONTINUES flag MUST NOT be set on any frames unless the remote endpoint has indicated support by sending a SETTINGS_USE_SEGMENTS setting (<a href="#I-D.kerwin-http2-segments">[I-D.kerwin-http2-segments]</a>, Section 3) with a value of 1.</li>
+  <li><samp>SEGMENT</samp> (0x10): Bit 5 being set indicates that the current segment begins and ends with the current frame.</li>
+  <li><samp>SEGMENT_CONTINUES</samp> (0x20): Bit 6 being set indicates that the current segment continues after the current frame (<a href="#I-D.kerwin-http2-segments">[I-D.kerwin-http2-segments]</a>, Section 2).  If the preceding frame did not have the SEGMENT_CONTINUES flag, the current segment begins at the start of the current frame.  Intermediaries MUST NOT coalesce frames across a segment boundary and MUST preserve segment boundaries when forwarding frames.</li>
 </ul>
-<p id="rfc.section.2.2.p.7">An ENCODED_DATA frame MUST NOT be sent on a connection before receiving an ACCEPT_ENCODED_DATA frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an ACCEPT_ENCODED_DATA frame, or was advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not recognise or support MUST treat this as a connection error of type PROTOCOL_ERROR.</p>
-<p id="rfc.section.2.2.p.8">An intermediary, on receiving an ENCODED_DATA frame, MAY decode the data and forward it to its downstream peer in one or more DATA frames. If the received ENCODED_DATA frame has an encoding the downstream peer does not support (as advertised in an ACCEPT_ENCODED_DATA frame) the intermediary MUST decode the data before forwarding it. The intermediary MAY re-encode the data with a scheme supported by the downstream peer and forward it in one or more ENCODED_DATA frames.</p>
-<p id="rfc.section.2.2.p.9">If an endpoint detects that the payload of an ENCODED_DATA frame is incorrectly encoded it MUST treat this as a stream error (see <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.2) of type DATA_ENCODING_ERROR (<a href="#error">Section 2.3</a>).</p>
-<p id="rfc.section.2.2.p.10">ENCODED_DATA frames MUST be associated with a stream. If an ENCODED_DATA frame is received whose stream identifier field is 0x0, the recipient MUST respond with a connection error (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
-<p id="rfc.section.2.2.p.11">ENCODED_DATA frames are subject to flow control and can only be sent when a stream is in the &#8220;open&#8221; or &#8220;half closed (remote)&#8221; states. The entire ENCODED_DATA frame payload is included in flow control, including the encoding identifier, and Pad Length and Padding fields if present. If an ENCODED_DATA frame is received whose stream is not in &#8220;open&#8221; or &#8220;half closed (local)&#8221; state, the recipient MUST respond with a stream error (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.2) of type STREAM_CLOSED.</p>
-<p id="rfc.section.2.2.p.12">The total number of padding octets is determined by the value of the Pad Length field. If the length of the padding is greater than the length of the remainder of the frame payload, the recipient MUST treat this as a connection error (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
-<p id="rfc.section.2.2.p.13">Note: A frame can be increased in size by one octet by including a Pad Length field with a value of zero.</p>
-<p id="rfc.section.2.2.p.14">Use of padding is a security feature; as such, its use demands some care, see Section 10.7 of <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>.</p>
+<p id="rfc.section.2.2.p.7">The SEGMENT and SEGMENT_CONTINUES flag MUST NOT be set on any frames unless the remote endpoint has indicated support by sending a SETTINGS_USE_SEGMENTS setting (<a href="#I-D.kerwin-http2-segments">[I-D.kerwin-http2-segments]</a>, Section 3) with a value of 1.</p>
+<p id="rfc.section.2.2.p.8">An ENCODED_DATA frame MUST NOT be sent on a connection before receiving an ACCEPT_ENCODED_DATA frame. A sender MUST NOT apply an encoding that has not first been advertised by the peer in an ACCEPT_ENCODED_DATA frame, or was advertised with a rank of 0. Endpoints that receive a frame with an encoding they do not recognise or support MUST treat this as a connection error of type PROTOCOL_ERROR.</p>
+<p id="rfc.section.2.2.p.9">An intermediary, on receiving an ENCODED_DATA frame, MAY decode the data and forward it to its downstream peer in one or more DATA frames. If the received ENCODED_DATA frame has an encoding the downstream peer does not support (as advertised in an ACCEPT_ENCODED_DATA frame) the intermediary MUST decode the data before forwarding it. The intermediary MAY re-encode the data with a scheme supported by the downstream peer and forward it in one or more ENCODED_DATA frames.</p>
+<p id="rfc.section.2.2.p.10">If an endpoint detects that the payload of an ENCODED_DATA frame is not encoded correctly according to its declared encoding, for example with a mismatched checksum, the endpoint MUST treat this as a stream error (see <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.2) of type DATA_ENCODING_ERROR (<a href="#error">Section 2.3</a>). The endpoint MAY then choose to immediately send an ACCEPT_ENCODED_DATA frame that excludes the encoding in question.</p>
+<p id="rfc.section.2.2.p.11">If an intermediary propagates an ENCODED_DATA frame from the source peer to the destination peer without modifying the payload or its encoding, and receives a DATA_ENCODING_ERROR from the receiving peer, it SHOULD pass the error on to the source peer.</p>
+<p id="rfc.section.2.2.p.12">ENCODED_DATA frames MUST be associated with a stream. If an ENCODED_DATA frame is received whose stream identifier field is 0x0, the recipient MUST respond with a connection error (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
+<p id="rfc.section.2.2.p.13">ENCODED_DATA frames are subject to flow control and can only be sent when a stream is in the &#8220;open&#8221; or &#8220;half closed (remote)&#8221; states. The entire ENCODED_DATA frame payload is included in flow control, including the encoding identifier, and Pad Length and Padding fields if present. If an ENCODED_DATA frame is received whose stream is not in &#8220;open&#8221; or &#8220;half closed (local)&#8221; state, the recipient MUST respond with a stream error (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.2) of type STREAM_CLOSED.</p>
+<p id="rfc.section.2.2.p.14">The total number of padding octets is determined by the value of the Pad Length field. If the length of the padding is greater than the length of the remainder of the frame payload, the recipient MUST treat this as a connection error (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
+<p id="rfc.section.2.2.p.15">Note: A frame can be increased in size by one octet by including a Pad Length field with a value of zero.</p>
+<p id="rfc.section.2.2.p.16">Padding is a security feature; see Section 10.7 of <a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>.</p>
 <h1 id="rfc.section.2.2.1"><a href="#rfc.section.2.2.1">2.2.1.</a> <a href="#frag-segments" id="frag-segments">Fragmentation and Segments</a></h1>
 <p id="rfc.section.2.2.1.p.1">Traversing a network segment with small frame size limits introduces the risk of fragmenting an encoded stream. This can be avoided using segments, as defined in <a href="#I-D.kerwin-http2-segments">[I-D.kerwin-http2-segments]</a>.</p>
 <p id="rfc.section.2.2.1.p.2">An intermediary MAY coalesce multiple adjacent ENCODED_DATA frames if all of them, with the optional exception of the final frame in the sequence, have the SEGMENT_CONTINUES flag set. The coalesced payload MAY be subsequently emitted in any combination of ENCODED_DATA and DATA frames.  The payloads of any resulting ENCODED_DATA frames MUST be correctly encoded according to those frames&#8217; encodings; note that for some encoding schemes this could require that the payloads of the original frames be decoded and subsequently re-encoded into the new frames, rather than simply concatenated.</p>
@@ -568,9 +571,7 @@
 
 <ul>
   <li><samp>ENCODING_IDENTITY</samp> (0): The identity encoding identifier is used to indicate that no encoding is applied.</li>
-  <li><samp>ENCODING_COMPRESS</samp> (1): The compress coding is an adaptive Lempel-Ziv-Welch (LZW) coding <a href="#Welch">[Welch]</a> that is commonly produced by the UNIX file compression program &#8220;compress&#8221;.</li>
-  <li><samp>ENCODING_ZLIB</samp> (2): The zlib coding is a &#8220;zlib&#8221; data format <a href="#RFC1950">[RFC1950]</a> containing a &#8220;deflate&#8221; compressed data stream <a href="#RFC1951">[RFC1951]</a> that uses a combination of the Lempel-Ziv (LZ77) compression algorithm and Huffman coding.</li>
-  <li><samp>ENCODING_GZIP</samp> (3): The gzip coding is an LZ77 coding with a 32 bit CRC that is commonly produced by the gzip file compression program <a href="#RFC1952">[RFC1952]</a>.</li>
+  <li><samp>ENCODING_GZIP</samp> (1): The gzip coding is an LZ77 coding with a 32 bit CRC that is commonly produced by the gzip file compression program <a href="#RFC1952">[RFC1952]</a>.</li>
 </ul>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security" id="security">Security Considerations</a></h1>
 <p id="rfc.section.4.p.1">Further to the Use of Compression in HTTP/2 (<a href="#I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</a>, Section 10.6), intermediaries MUST NOT apply compression to DATA frames, or alter the compression of ENCODED_DATA frames other than decompressing, unless additional information is available that allows the intermediary to identify the source of data. In particular, frames that are not compressed cannot be compressed, and frames that are separately compressed can only be merged into a single compressed frame if they occupy the same segment.</p>
@@ -646,25 +647,13 @@
       <td class="reference">
         <b id="I-D.ietf-httpbis-http2">[I-D.ietf-httpbis-http2]</b>
       </td>
-      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-http2-14">Hypertext Transfer Protocol version 2</a>", Internet-Draft draft-ietf-httpbis-http2-14, July 2014.</td>
+      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-http2-17">Hypertext Transfer Protocol version 2</a>", Internet-Draft draft-ietf-httpbis-http2-17, February 2015.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="I-D.kerwin-http2-segments">[I-D.kerwin-http2-segments]</b>
       </td>
-      <td class="top"><a>Kerwin, M.</a>, "<a href="http://tools.ietf.org/html/draft-kerwin-http2-segments-01">HTTP/2 Segments</a>", Internet-Draft draft-kerwin-http2-segments-01, August 2014.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="RFC1950">[RFC1950]</b>
-      </td>
-      <td class="top"><a href="mailto:ghost@aladdin.com" title="Aladdin Enterprises">Deutsch, L.</a> and <a>J-L. Gailly</a>, "<a href="http://tools.ietf.org/html/rfc1950">ZLIB Compressed Data Format Specification version 3.3</a>", RFC 1950, May 1996.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="RFC1951">[RFC1951]</b>
-      </td>
-      <td class="top"><a href="mailto:ghost@aladdin.com" title="Aladdin Enterprises">Deutsch, P.</a>, "<a href="http://tools.ietf.org/html/rfc1951">DEFLATE Compressed Data Format Specification version 1.3</a>", RFC 1951, May 1996.</td>
+      <td class="top"><a>Kerwin, M.</a>, "<a href="http://tools.ietf.org/html/draft-kerwin-http2-segments-02">HTTP/2 Segments</a>", Internet-Draft draft-kerwin-http2-segments-02, February 2015.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -683,12 +672,6 @@
         <b id="RFC5226">[RFC5226]</b>
       </td>
       <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, May 2008.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="Welch">[Welch]</b>
-      </td>
-      <td class="top"><a>Welch, T.</a>, "<a>A Technique for High-Performance Data Compression</a>", IEEE Computer 17(6), June 1984.</td>
     </tr>
   </tbody>
 </table>
