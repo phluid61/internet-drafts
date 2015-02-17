@@ -4,8 +4,8 @@
 
 Network Working Group                                          M. Kerwin
 Internet-Draft
-Intended status: Experimental                          February 11, 2015
-Expires: August 15, 2015
+Intended status: Standards Track                         August 21, 2014
+Expires: February 22, 2015
 
 
                           HTTP/2 Encoded Data
@@ -32,11 +32,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 15, 2015.
+   This Internet-Draft will expire on February 22, 2015.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 1]
+Kerwin                  Expires February 22, 2015               [Page 1]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
 Table of Contents
@@ -65,7 +65,7 @@ Table of Contents
    2.  Additions to HTTP/2 . . . . . . . . . . . . . . . . . . . . .   2
      2.1.  ACCEPT_ENCODED_DATA . . . . . . . . . . . . . . . . . . .   3
      2.2.  ENCODED_DATA  . . . . . . . . . . . . . . . . . . . . . .   4
-       2.2.1.  Fragmentation and Segments  . . . . . . . . . . . . .   7
+       2.2.1.  Fragmentation and Segments  . . . . . . . . . . . . .   6
      2.3.  DATA_ENCODING_ERROR . . . . . . . . . . . . . . . . . . .   7
    3.  Encoding Schemes  . . . . . . . . . . . . . . . . . . . . . .   7
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
@@ -102,16 +102,16 @@ Table of Contents
    Note that while encoding some or all data in a stream might affect
    the total length of the corresponding HTTP message body, the
    "content-length" header, if present, should continue to reflect the
-   total length of the _unencoded_ data.  This is particularly relevant
+   total length of the unencoded data.  This is particularly relevant
    when detecting malformed messages ([I-D.ietf-httpbis-http2],
    Section 8.1.2.5).
 
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 2]
+Kerwin                  Expires February 22, 2015               [Page 2]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
 2.1.  ACCEPT_ENCODED_DATA
@@ -165,9 +165,9 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 3]
+Kerwin                  Expires February 22, 2015               [Page 3]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
    An endpoint that receives an ACCEPT_ENCODED_DATA frame containing an
@@ -221,9 +221,9 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 4]
+Kerwin                  Expires February 22, 2015               [Page 4]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
    o  Pad Length: An 8-bit field containing the length of the frame
@@ -277,9 +277,9 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 5]
+Kerwin                  Expires February 22, 2015               [Page 5]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
    downstream peer does not support (as advertised in an
@@ -289,17 +289,9 @@ Internet-Draft             http2-encoded-data              February 2015
    ENCODED_DATA frames.
 
    If an endpoint detects that the payload of an ENCODED_DATA frame is
-   not encoded correctly according to its declared encoding, for example
-   with a mismatched checksum, the endpoint MUST treat this as a stream
-   error (see [I-D.ietf-httpbis-http2], Section 5.4.2) of type
-   DATA_ENCODING_ERROR (Section 2.3).  The endpoint MAY then choose to
-   immediately send an ACCEPT_ENCODED_DATA frame that excludes the
-   encoding in question.
-
-   If an intermediary propagates an ENCODED_DATA frame from the source
-   peer to the destination peer without modifying the payload or its
-   encoding, and receives a DATA_ENCODING_ERROR from the receiving peer,
-   it SHOULD pass the error on to the source peer.
+   incorrectly encoded it MUST treat this as a stream error (see
+   [I-D.ietf-httpbis-http2], Section 5.4.2) of type DATA_ENCODING_ERROR
+   (Section 2.3).
 
    ENCODED_DATA frames MUST be associated with a stream.  If an
    ENCODED_DATA frame is received whose stream identifier field is 0x0,
@@ -324,19 +316,8 @@ Internet-Draft             http2-encoded-data              February 2015
    Note: A frame can be increased in size by one octet by including a
    Pad Length field with a value of zero.
 
-   Padding is a security feature; see Section 10.7 of
-   [I-D.ietf-httpbis-http2].
-
-
-
-
-
-
-
-Kerwin                   Expires August 15, 2015                [Page 6]
-
-Internet-Draft             http2-encoded-data              February 2015
-
+   Use of padding is a security feature; as such, its use demands some
+   care, see Section 10.7 of [I-D.ietf-httpbis-http2].
 
 2.2.1.  Fragmentation and Segments
 
@@ -349,6 +330,14 @@ Internet-Draft             http2-encoded-data              February 2015
    sequence, have the SEGMENT_CONTINUES flag set.  The coalesced payload
    MAY be subsequently emitted in any combination of ENCODED_DATA and
    DATA frames.  The payloads of any resulting ENCODED_DATA frames MUST
+
+
+
+Kerwin                  Expires February 22, 2015               [Page 6]
+
+Internet-Draft             http2-encoded-data                August 2014
+
+
    be correctly encoded according to those frames' encodings; note that
    for some encoding schemes this could require that the payloads of the
    original frames be decoded and subsequently re-encoded into the new
@@ -368,7 +357,16 @@ Internet-Draft             http2-encoded-data              February 2015
    o  "ENCODING_IDENTITY" (0): The identity encoding identifier is used
       to indicate that no encoding is applied.
 
-   o  "ENCODING_GZIP" (1): The gzip coding is an LZ77 coding with a 32
+   o  "ENCODING_COMPRESS" (1): The compress coding is an adaptive
+      Lempel-Ziv-Welch (LZW) coding [Welch] that is commonly produced by
+      the UNIX file compression program "compress".
+
+   o  "ENCODING_ZLIB" (2): The zlib coding is a "zlib" data format
+      [RFC1950] containing a "deflate" compressed data stream [RFC1951]
+      that uses a combination of the Lempel-Ziv (LZ77) compression
+      algorithm and Huffman coding.
+
+   o  "ENCODING_GZIP" (3): The gzip coding is an LZ77 coding with a 32
       bit CRC that is commonly produced by the gzip file compression
       program [RFC1952].
 
@@ -389,9 +387,11 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 7]
+
+
+Kerwin                  Expires February 22, 2015               [Page 7]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
 5.  IANA Considerations
@@ -445,9 +445,9 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 8]
+Kerwin                  Expires February 22, 2015               [Page 8]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
    o  Specification: A reference to a specification that includes a
@@ -467,8 +467,8 @@ Internet-Draft             http2-encoded-data              February 2015
 
    [I-D.ietf-httpbis-http2]
               Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
-              Protocol version 2", draft-ietf-httpbis-http2-16 (work in
-              progress), November 2014.
+              Protocol version 2", draft-ietf-httpbis-http2-14 (work in
+              progress), July 2014.
 
    [I-D.kerwin-http2-segments]
               Kerwin, M., "HTTP/2 Segments", draft-kerwin-
@@ -501,9 +501,9 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 15, 2015                [Page 9]
+Kerwin                  Expires February 22, 2015               [Page 9]
 
-Internet-Draft             http2-encoded-data              February 2015
+Internet-Draft             http2-encoded-data                August 2014
 
 
 7.2.  Informative References
@@ -557,4 +557,4 @@ Author's Address
 
 
 
-Kerwin                   Expires August 15, 2015               [Page 10]
+Kerwin                  Expires February 22, 2015              [Page 10]
