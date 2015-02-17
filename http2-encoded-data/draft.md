@@ -24,16 +24,6 @@ normative:
   RFC2119:
   I-D.ietf-httpbis-http2:
   I-D.kerwin-http2-segments:
-  Welch:
-    title: A Technique for High-Performance Data Compression
-    author:
-    - ins: T. A. Welch
-      name: Terry A. Welch
-    date: 1984-06
-    seriesinfo:
-      IEEE: Computer 17(6)
-  RFC1950:
-  RFC1951:
   RFC1952:
   RFC5226:
 
