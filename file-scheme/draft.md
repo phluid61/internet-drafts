@@ -228,7 +228,7 @@ Please note the appendix that lists other commonly seen variations.
 
    dos-path       = drive-letter path-absolute
    drive-letter   = ALPHA ":"
-                  / ALPHA     # deprecated
+                  / ALPHA     ; deprecated
 ~~~~~~~~~~
 
 The syntax definition above is necessarily different from those given in
