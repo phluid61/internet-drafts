@@ -4,8 +4,8 @@
 
 Network Working Group                                          M. Kerwin
 Internet-Draft
-Intended status: Experimental                          February 17, 2015
-Expires: August 21, 2015
+Intended status: Experimental                          February 11, 2015
+Expires: August 15, 2015
 
 
                             HTTP/2 Segments
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 21, 2015.
+   This Internet-Draft will expire on August 15, 2015.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 1]
+Kerwin                   Expires August 15, 2015                [Page 1]
 
 Internet-Draft               http2-segments                February 2015
 
@@ -68,7 +68,7 @@ Table of Contents
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
    2.  Segments  . . . . . . . . . . . . . . . . . . . . . . . . . .   2
    3.  SETTINGS_USE_SEGMENTS Setting . . . . . . . . . . . . . . . .   3
-   4.  SEGMENT and SEGMENT_CONTINUES Flag  . . . . . . . . . . . . .   3
+   4.  SEGMENT_CONTINUES Flag  . . . . . . . . . . . . . . . . . . .   3
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
      6.1.  HTTP/2 Settings Registry Update . . . . . . . . . . . . .   3
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 2]
+Kerwin                   Expires August 15, 2015                [Page 2]
 
 Internet-Draft               http2-segments                February 2015
 
@@ -125,31 +125,21 @@ Internet-Draft               http2-segments                February 2015
       flag.  Any other value MUST be treated as a connection error
       ([I-D.ietf-httpbis-http2], Section 5.4.1) of type PROTOCOL_ERROR.
 
-4.  SEGMENT and SEGMENT_CONTINUES Flag
+4.  SEGMENT_CONTINUES Flag
 
-   The following new flags are defined for the DATA frame
+   The following new flag is defined for the DATA frame
    ([I-D.ietf-httpbis-http2], Section 6.1):
 
-   o  "SEGMENT" (0x10): Bit 5 being set indicates that the current
-      segment begins and ends with the current frame.
-
-   o  "SEGMENT_CONTINUES" (0x20): Bit 6 being set indicates that the
+   o  "SEGMENT_CONTINUES" (0x10): Bit 5 being set indicates that the
       current segment continues after the current frame (see Section 2).
-      If the preceding frame did not have the SEGMENT_CONTINUES flag,
-      the current segment begins at the start of the current frame.
       Intermediaries MUST NOT coalesce frames across a segment boundary
       and MUST preserve segment boundaries when forwarding frames.
 
-   The SEGMENT and SEGMENT_CONTINUES flag MUST NOT be set on any frames
-   unless the remote endpoint has indicated support by sending a
-   SETTINGS_USE_SEGMENTS setting (Section 3) with a value of 1.
+      The SEGMENT_CONTINUES flag MUST NOT be set on any frames unless
+      the remote endpoint has indicated support by sending a
+      SETTINGS_USE_SEGMENTS setting (Section 3) with a value of 1.
 
 5.  Security Considerations
-
-   In and of itself, segmentation does not introduce any security
-   concerns.  However when used in combination with other features, such
-   as compression, known vulnerabilities may be introduced.  See the Use
-   of Compression in HTTP/2 ([I-D.ietf-httpbis-http2], Section 10.6).
 
 6.  IANA Considerations
 
@@ -162,26 +152,30 @@ Internet-Draft               http2-segments                February 2015
    ([I-D.ietf-httpbis-http2], Section 11.3).  The entries in the
    following table are registered by this document.
 
-
-
-
-Kerwin                   Expires August 21, 2015                [Page 3]
-
-Internet-Draft               http2-segments                February 2015
-
-
      +-----------------------+------+---------------+---------------+
      | Name                  | Code | Initial Value | Specification |
      +-----------------------+------+---------------+---------------+
      | SETTINGS_USE_SEGMENTS | TBD  | N/A           | Section 3     |
      +-----------------------+------+---------------+---------------+
 
+
+
+
+
+
+
+
+Kerwin                   Expires August 15, 2015                [Page 3]
+
+Internet-Draft               http2-segments                February 2015
+
+
 7.  Normative References
 
    [I-D.ietf-httpbis-http2]
               Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
-              Protocol version 2", draft-ietf-httpbis-http2-17 (work in
-              progress), February 2015.
+              Protocol version 2", draft-ietf-httpbis-http2-16 (work in
+              progress), November 2014.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -221,4 +215,10 @@ Author's Address
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 4]
+
+
+
+
+
+
+Kerwin                   Expires August 15, 2015                [Page 4]
