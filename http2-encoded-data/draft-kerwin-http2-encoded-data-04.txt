@@ -4,8 +4,8 @@
 
 Network Working Group                                          M. Kerwin
 Internet-Draft
-Intended status: Experimental                          February 17, 2015
-Expires: August 21, 2015
+Intended status: Experimental                          February 11, 2015
+Expires: August 15, 2015
 
 
                           HTTP/2 Encoded Data
@@ -32,7 +32,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 21, 2015.
+   This Internet-Draft will expire on August 15, 2015.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 1]
+Kerwin                   Expires August 15, 2015                [Page 1]
 
 Internet-Draft             http2-encoded-data              February 2015
 
@@ -76,8 +76,8 @@ Table of Contents
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   9
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 2]
+Kerwin                   Expires August 15, 2015                [Page 2]
 
 Internet-Draft             http2-encoded-data              February 2015
 
@@ -165,7 +165,7 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 3]
+Kerwin                   Expires August 15, 2015                [Page 3]
 
 Internet-Draft             http2-encoded-data              February 2015
 
@@ -221,7 +221,7 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 4]
+Kerwin                   Expires August 15, 2015                [Page 4]
 
 Internet-Draft             http2-encoded-data              February 2015
 
@@ -252,42 +252,36 @@ Internet-Draft             http2-encoded-data              February 2015
    o  "PADDED" (0x8): Bit 4 being set indicates that the Pad Length
       field is present.
 
-   o  "SEGMENT" (0x10): Bit 5 being set indicates that the current
-      segment begins and ends with the current frame.
-
-   o  "SEGMENT_CONTINUES" (0x20): Bit 6 being set indicates that the
+   o  "SEGMENT_CONTINUES" (0x10): Bit 5 being set indicates that the
       current segment continues after the current frame
-      ([I-D.kerwin-http2-segments], Section 2).  If the preceding frame
-      did not have the SEGMENT_CONTINUES flag, the current segment
-      begins at the start of the current frame.  Intermediaries MUST NOT
+      ([I-D.kerwin-http2-segments], Section 2).  Intermediaries MUST NOT
       coalesce frames across a segment boundary and MUST preserve
       segment boundaries when forwarding frames.
 
-   The SEGMENT and SEGMENT_CONTINUES flag MUST NOT be set on any frames
-   unless the remote endpoint has indicated support by sending a
-   SETTINGS_USE_SEGMENTS setting ([I-D.kerwin-http2-segments],
-   Section 3) with a value of 1.
+      The SEGMENT_CONTINUES flag MUST NOT be set on any frames unless
+      the remote endpoint has indicated support by sending a
+      SETTINGS_USE_SEGMENTS setting ([I-D.kerwin-http2-segments],
+      Section 3) with a value of 1.
 
    An ENCODED_DATA frame MUST NOT be sent on a connection before
    receiving an ACCEPT_ENCODED_DATA frame.  A sender MUST NOT apply an
    encoding that has not first been advertised by the peer in an
    ACCEPT_ENCODED_DATA frame, or was advertised with a rank of 0.
    Endpoints that receive a frame with an encoding they do not recognise
-
-
-
-
-Kerwin                   Expires August 21, 2015                [Page 5]
-
-Internet-Draft             http2-encoded-data              February 2015
-
-
    or support MUST treat this as a connection error of type
    PROTOCOL_ERROR.
 
    An intermediary, on receiving an ENCODED_DATA frame, MAY decode the
    data and forward it to its downstream peer in one or more DATA
    frames.  If the received ENCODED_DATA frame has an encoding the
+
+
+
+Kerwin                   Expires August 15, 2015                [Page 5]
+
+Internet-Draft             http2-encoded-data              February 2015
+
+
    downstream peer does not support (as advertised in an
    ACCEPT_ENCODED_DATA frame) the intermediary MUST decode the data
    before forwarding it.  The intermediary MAY re-encode the data with a
@@ -330,16 +324,19 @@ Internet-Draft             http2-encoded-data              February 2015
    Note: A frame can be increased in size by one octet by including a
    Pad Length field with a value of zero.
 
+   Padding is a security feature; see Section 10.7 of
+   [I-D.ietf-httpbis-http2].
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 6]
+
+
+
+
+Kerwin                   Expires August 15, 2015                [Page 6]
 
 Internet-Draft             http2-encoded-data              February 2015
 
-
-   Padding is a security feature; see Section 10.7 of
-   [I-D.ietf-httpbis-http2].
 
 2.2.1.  Fragmentation and Segments
 
@@ -389,7 +386,10 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 7]
+
+
+
+Kerwin                   Expires August 15, 2015                [Page 7]
 
 Internet-Draft             http2-encoded-data              February 2015
 
@@ -445,7 +445,7 @@ Internet-Draft             http2-encoded-data              February 2015
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 8]
+Kerwin                   Expires August 15, 2015                [Page 8]
 
 Internet-Draft             http2-encoded-data              February 2015
 
@@ -467,12 +467,18 @@ Internet-Draft             http2-encoded-data              February 2015
 
    [I-D.ietf-httpbis-http2]
               Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
-              Protocol version 2", draft-ietf-httpbis-http2-17 (work in
-              progress), February 2015.
+              Protocol version 2", draft-ietf-httpbis-http2-16 (work in
+              progress), November 2014.
 
    [I-D.kerwin-http2-segments]
               Kerwin, M., "HTTP/2 Segments", draft-kerwin-
-              http2-segments-02 (work in progress), February 2015.
+              http2-segments-01 (work in progress), August 2014.
+
+   [RFC1950]  Deutsch, L. and J-L. Gailly, "ZLIB Compressed Data Format
+              Specification version 3.3", RFC 1950, May 1996.
+
+   [RFC1951]  Deutsch, P., "DEFLATE Compressed Data Format Specification
+              version 1.3", RFC 1951, May 1996.
 
    [RFC1952]  Deutsch, P., Gailly, J-L., Adler, M., Deutsch, L., and G.
               Randers-Pehrson, "GZIP file format specification version
@@ -484,6 +490,21 @@ Internet-Draft             http2-encoded-data              February 2015
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", BCP 26, RFC 5226,
               May 2008.
+
+   [Welch]    Welch, T., "A Technique for High-Performance Data
+              Compression", IEEE Computer 17(6), June 1984.
+
+
+
+
+
+
+
+
+Kerwin                   Expires August 15, 2015                [Page 9]
+
+Internet-Draft             http2-encoded-data              February 2015
+
 
 7.2.  Informative References
 
@@ -501,4 +522,39 @@ Author's Address
 
 
 
-Kerwin                   Expires August 21, 2015                [Page 9]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kerwin                   Expires August 15, 2015               [Page 10]
