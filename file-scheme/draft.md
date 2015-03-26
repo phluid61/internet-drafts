@@ -301,7 +301,7 @@ and `close()` operations {{POSIX}} for reading a file's contents into
 memory.
 
 Some APIs allow file system operations to be invoked directly on file URIs,
-while others provide mappings to other similar operations, such as GET and
+while others provide mappings to other similar operations such as GET and
 PUT from the Hyptertext Transfer Protocol (HTTP) {{RFC7231}}.
 
 The local file system API can only be used if the file URI has a blank
