@@ -198,15 +198,21 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in {{RFC2119}}.
 
+Throughout this document the term "local" is used to describe files
+that can be accessed directly through the local file system.  It is
+important to note that a local file may not be physically located on
+the local machine, for example if a networked file system is
+transparently mounted into the local file system.
+
 
 # Syntax {#syntax}
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 {{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `userinfo`, `host`, and `path-absolute`
-rules from {{RFC3986}} (as updated by {{RFC6874}}.)
+specification, and importing the `userinfo`, `host`, `authority` and
+`path-absolute` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
-Please note the appendix that lists other commonly seen variations.
+Please note the appendix that lists some other commonly seen variations.
 
 ~~~~~~~~~~
    file-URI       = file-scheme ":" file-hier-part
@@ -217,23 +223,21 @@ Please note the appendix that lists other commonly seen variations.
                   / local-path
 
    auth-path      = [ file-auth ] path-absolute
-                  / unc-path
+                  / unc-authority path-absolute
+
+   local-path     = [ drive-letter ] path-absolute
 
    file-auth      = [ userinfo "@" ] host
 
-   local-path     = path-absolute
-                  / dos-path
+   unc-authority  = 2*3"/" authority
 
-   unc-path       = 2*3"/" authority path-absolute
-
-   dos-path       = drive-letter path-absolute
    drive-letter   = ALPHA ":"
                   / ALPHA     ; deprecated
 ~~~~~~~~~~
 
-The syntax definition above is necessarily different from those given in
-{{RFC1630}} and {{RFC1738}} because it depends on the generic syntax
-from {{RFC3986}} that post-dates all previous specifications.
+The syntax definition above is different from those given in
+{{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
+of {{RFC3986}}, which post-dates all previous specifications.
 
 Systems exhibit different levels of case-sensitivity. Unless the file
 system is known to be case-insensitive, implementations MUST maintain
@@ -241,54 +245,6 @@ the case of file and directory names when translating file URIs to and
 from the local system's representation of file paths, and any systems or
 devices that transport file URIs MUST NOT alter the case of file URIs
 they transport.
-
-It is intended to support file URIs that take the following forms:
-
-Local files:
-
-* `file:///path/to/file`
-
-   > A "traditional" file URI for a local file, with an empty
-     authority. This is the most common format in use today.
-
-* `file:/path/to/file`
-
-   > A "modern" minimal representation of a local file, with no
-     authority field and an absolute path that begins with a slash "/".
-
-* `file:c:/path/to/file`
-
-   > The minimal representation of a local file in a DOS- or
-     Windows-based environment, with no authority field and an
-     absolute path that begins with a drive letter.
-
-* `file:c/path/to/file`
-
-   > Representations of a local file in a DOS- or Windows-based
-     environment, using alternative representations of drive letters.
-     This construct is supported for compatibility with historical
-     implementations, but deprecated by this specification.
-
-Non-local files:
-
-* `file://host.example.com/path/to/file`
-
-   > The ideal representation of a non-local file, with an explicit
-     authority.
-
-* `file:////host.example.com/path/to/file`
-
-   > The "traditional" representation of a non-local file, with an
-     empty authority and a complete (transformed) UNC string in the
-     path.
-
-* `file://///host.example.com/path/to/file`
-
-   > As above, with an extra slash between the empty authority and the
-     transformed UNC string, conformant with the definition from
-     {{RFC1738}}; see: exceptions in {{unc-to-uri}}. This representation
-     is deprecated by this specification. It is notably used by the
-     Firefox web browser.
 
 
 # Operations on file URIs  {#operations}
@@ -540,52 +496,6 @@ When the file system's encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
 {{RFC3987}}.
 
-Example: file IRI:
-
-~~~~~~~~~~
-| Bytes of file IRI in a UTF-8 document:
-|    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
-|    f  i  l  e  :  c  :  /  r  e  ( c ) u  .  t  x  t
-|
-| Interpretation:
-|    A file named "recu.txt" with a cedilla on the "c", in the
-|    directory "C:\" of a DOS or Windows file system.
-|
-| Character value sequences of file paths, for various file system
-| encodings:
-|
-|  o UTF-16 (e.g. NTFS):
-|       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
-|
-|  o Codepage 437 (e.g. MS-DOS):
-|       43   3a   5c   72   65   87   75   2e   74   78   74
-~~~~~~~~~~
-
-Counter-example: ambiguous file URI:
-
-~~~~~~~~~~
-| File URI, in any ASCII-compatible document:
-|    "file:///%E3%81%A1"
-|
-| Possible interpretations of the file name, depending on the
-| (unknown) encoding of the file system:
-|
-|  o UTF-8:
-|       <HIRAGANA LETTER TI (U+3061)>
-|
-|  o Codepage 437:
-|       <GREEK SMALL LETTER PI (U+03C0)> +
-|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)> +
-|       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
-|
-|  o EBCDIC:
-|       "Ta~"
-|
-|  o US-ASCII:
-|       "%E3%81%A1"
-|
-| etc.
-~~~~~~~~~~
 
 
 # Security Considerations {#security}
@@ -638,6 +548,113 @@ and Dave Thaler for their comments and suggestions.
 
 
 --- back
+
+# Example URIs  {#examples}
+
+The syntax in {{syntax}} is intended to support file URIs that take the
+following forms:
+
+Local files:
+
+* `file:///path/to/file`
+
+   > A "traditional" file URI for a local file, with an empty
+     authority. This is the most common format in use today.
+
+* `file:/path/to/file`
+
+   > A "modern" minimal representation of a local file, with no
+     authority field and an absolute path that begins with a slash "/".
+
+* `file:c:/path/to/file`
+
+   > The minimal representation of a local file in a DOS- or
+     Windows-based environment, with no authority field and an
+     absolute path that begins with a drive letter.
+
+* `file:c/path/to/file`
+
+   > Representations of a local file in a DOS- or Windows-based
+     environment, using alternative representations of drive letters.
+     This construct is supported for compatibility with historical
+     implementations, but deprecated by this specification.
+
+> Note that the "path" element of the first two examples above could
+  encode a DOS or Windows drive letter.
+
+Non-local files:
+
+* `file://host.example.com/path/to/file`
+
+   > The ideal representation of a non-local file, with an explicit
+     authority.
+
+* `file:////host.example.com/path/to/file`
+
+   > The "traditional" representation of a non-local file, with an
+     empty authority and a complete (transformed) UNC string in the
+     path.
+
+* `file://///host.example.com/path/to/file`
+
+   > As above, with an extra slash between the empty authority and the
+     transformed UNC string, conformant with the definition from
+     {{RFC1738}}; see: exceptions in {{unc-to-uri}}. This representation
+     is deprecated by this specification. It is notably used by the
+     Firefox web browser.
+
+# Encoding of IRI vs URI  {#iri-vs-uri}
+
+The following examples demonstrate the advantage of encoding file
+URIs as IRIs (see {{encoding}}).
+
+Example: file IRI:
+
+~~~~~~~~~~
+| Bytes of file IRI in a UTF-8 document:
+|    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
+|    f  i  l  e  :  c  :  /  r  e  ( c ) u  .  t  x  t
+|
+| Interpretation:
+|    A file named "recu.txt" with a cedilla on the "c", in the
+|    directory "C:\" of a DOS or Windows file system.
+|
+| Character value sequences of file paths, for various file system
+| encodings:
+|
+|  o UTF-16 (e.g. NTFS):
+|       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
+|
+|  o Codepage 437 (e.g. MS-DOS):
+|       43   3a   5c   72   65   87   75   2e   74   78   74
+~~~~~~~~~~
+
+Counter-example: ambiguous file URI:
+
+~~~~~~~~~~
+| File URI, in any ASCII-compatible document:
+|    "file:///%E3%81%A1"
+|
+| Possible interpretations of the file name, depending on the
+| (unknown) encoding of the file system:
+|
+|  o UTF-8:
+|       <HIRAGANA LETTER TI (U+3061)>
+|
+|  o Codepage 437:
+|       <GREEK SMALL LETTER PI (U+03C0)> +
+|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)> +
+|       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
+|
+|  o EBCDIC:
+|       "Ta~"
+|
+|  o US-ASCII:
+|       "%E3%81%A1"
+|
+| etc.
+~~~~~~~~~~
+
 
 # UNC Syntax  {#unc-syntax}
 
