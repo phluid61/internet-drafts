@@ -90,7 +90,7 @@ informative:
   RFC1630:
   RFC1738:
   RFC3530:
-  RFC7231:
+  #RFC7231:
   I-D.hoffman-file-uri:
   WHATWG-URL:
     title: URL Living Standard
@@ -249,16 +249,14 @@ they transport.
 
 # Operations on file URIs  {#operations}
 
-In the strictest terms, the only operations that can be performed on a
-file URI are translating it to and from a file path; subsequent operations
-are performed on the resulting file path, and depend entirely on the
-file system's APIs. For example, consider the POSIX `open()`, `read()`,
-and `close()` operations {{POSIX}} for reading a file's contents into
-memory.
+Implementations SHOULD, at a minimum, provide a read-like operation to
+return the contents of a file located by a file URI.  Additional
+operations MAY be provided, such as writing, creation, and deletion of
+files.  See the POSIX file and directory operations {{POSIX}} for
+examples of interoperable operations on files.
 
-Some APIs allow file system operations to be invoked directly on file URIs,
-while others provide mappings to other similar operations such as GET and
-PUT from the Hyptertext Transfer Protocol (HTTP) {{RFC7231}}.
+File URIs can also be translated to and from local file paths or UNC
+strings.
 
 The local file system API can only be used if the file URI has a blank
 (or absent) authority and the path, when transformed to the local
