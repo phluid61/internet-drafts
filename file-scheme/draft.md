@@ -148,13 +148,13 @@ A file URI identifies a file on a particular file system.  It can be
 used in discussions about the file, and if other conditions are met it
 can be dereferenced to directly access the file.
 
-The file URI scheme is not coupled with a specific protocol. As such,
+The file URI scheme is not coupled with a specific protocol.  As such,
 there is no well-defined set of operations that can be performed on file
 URIs, nor a specific media type associated with them.
 
 This document defines a syntax that is compatible with most extant
 implementations, while attempting to push towards a stricter subset of
-"ideal" constructs. In many cases it simultaneously acknowledges and
+"ideal" constructs.  In many cases it simultaneously acknowledges and
 deprecates some less common or outdated constructs.
 
 
@@ -186,8 +186,8 @@ which includes algorithms for interpreting file URIs (as URLs).
 
 The Universal Naming Convention (UNC) {{MS-DTYP}} defines a string
 format that can perform a similar role to the file URI scheme in
-describing the location of files. A UNC filespace selector string has
-three parts: host, share, and path; see: {{unc-syntax}}. This document
+describing the location of files.  A UNC filespace selector string has
+three parts: host, share, and path; see: {{unc-syntax}}.  This document
 describes a means of translating between UNC filespace selector strings
 and file URIs.
 
@@ -212,7 +212,8 @@ The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 specification, and importing the `userinfo`, `host`, `authority` and
 `path-absolute` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
-Please note the appendix that lists some other commonly seen variations.
+Please note {{nonstandard-syntax}} that lists some other commonly seen
+but nonstandard variations.
 
 ~~~~~~~~~~
    file-URI       = file-scheme ":" file-hier-part
@@ -235,15 +236,15 @@ Please note the appendix that lists some other commonly seen variations.
                   / ALPHA     ; deprecated
 ~~~~~~~~~~
 
-> *Fixme* `authority` allows '[' and ']' in IPv6 literals, but
-  RFC 3986 forbids them in the path, so the `unc-authority` rule
-  is not entirely valid.
+> **Fixme** `authority` allows '[' and ']' in IPv6 literals, but
+> RFC 3986 forbids them in the path, so the `unc-authority` rule
+> is not entirely valid.
 
 The syntax definition above is different from those given in
 {{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
 of {{RFC3986}}, which post-dates all previous specifications.
 
-Systems exhibit different levels of case-sensitivity. Unless the file
+Systems exhibit different levels of case-sensitivity.  Unless the file
 system is known to be case-insensitive, implementations MUST maintain
 the case of file and directory names when translating file URIs to and
 from the local system's representation of file paths, and any systems or
@@ -265,7 +266,7 @@ strings.
 The local file system API can only be used if the file URI has a blank
 (or absent) authority and the path, when transformed to the local
 system's conventions, is not a UNC string, unless the file system API
-supports UNC strings. Note that this differs from the definition in
+supports UNC strings.  Note that this differs from the definition in
 {{RFC1738}} in that previously an authority containing the text
 "localhost" was used to refer to the local file system, but in this
 specification it translates to a UNC string referring to the host
@@ -350,7 +351,7 @@ __Differences from RFC 1738__
 
 In {{RFC1738}} a file URL always started with the token "file://",
 followed by an authority and a "/". That "/" was not considered part
-of the path. This implies that the correct encoding for the above
+of the path.  This implies that the correct encoding for the above
 example file path in a UNIX-like environment would have been:
 
 ~~~~~~~~~~
@@ -445,9 +446,9 @@ the authority MUST refer to the network-accesible node that hosts the
 file.
 
 For example, in a clustered OpenVMS Files-11 system the authority
-would contain the node name. Where the original node reference includes
-a username and password in an access control string, they MAY be
-transcribed into the userinfo field of the authority ({{RFC3986}},
+would contain the node name.  Where the original node reference
+includes a username and password in an access control string, they MAY
+be transcribed into the userinfo field of the authority ({{RFC3986}},
 Section 3.2.1), security considerations ({{security}}) notwithstanding.
 
 
@@ -466,12 +467,12 @@ Some conventional file path formats are known to be incompatible with
 the file URI scheme.
 
 
-### Namespaces {#namespaces}
+### Win32 Namespaces {#namespaces}
 
 The Microsoft Windows API defines Win32 Namespaces {{Win32-Namespaces}}
 for interacting with files and devices using Windows API functions.
 These namespaced paths are prefixed by "\\\\?\\" for Win32 File
-Namespaces and "\\\\.\\" for Win32 Device Namespaces. There is also a
+Namespaces and "\\\\.\\" for Win32 Device Namespaces.  There is also a
 special case for UNC file paths in Win32 File Namespaces, referred to as
 "Long UNC", using the prefix "\\\\?\\UNC\\".
 
@@ -481,7 +482,7 @@ namespaced paths to or from file URIs.
 
 # Encoding {#encoding}
 
-The encoding of a file URI depends on the file system. If the file
+The encoding of a file URI depends on the file system.  If the file
 system uses a known non-Unicode character encoding, the path SHOULD be
 converted to a sequence of characters from the Universal Character Set
 {{ISO10646}} normalized according to Normalization Form C (NFC) 
@@ -490,7 +491,7 @@ URI SHOULD be converted back to the file system's native encoding when
 translating to a file path.
 
 > Note that many modern file systems encode directory and file names
-> as arbitrary sequences of octets. In those cases, the representation
+> as arbitrary sequences of octets.  In those cases, the representation
 > as an encoded string often depends on the user's localization
 > settings, or defaults to UTF-8 {{STD63}}.
 
@@ -516,7 +517,7 @@ Additionally, as discussed in the HP OpenVMS Systems Documentation
 "access control strings include sufficient information to allow someone
 to break in to the remote account, \[therefore\] they create serious
 security exposure." In a similar vein, the presence of a password in a
-"user:password" userinfo field is deprecated by {{RFC3986}}. As such,
+"user:password" userinfo field is deprecated by {{RFC3986}}.  As such,
 the userinfo field of a file URI, if present, MUST NOT contain a
 password.
 
@@ -551,6 +552,33 @@ and Dave Thaler for their comments and suggestions.
 
 --- back
 
+# Nonstandard Syntax Variations  {#nonstandard-syntax}
+
+These variations may be encountered for historical reasons, but are
+not supported by the normative syntax of {{syntax}}.
+
+This section is not normative.
+
+
+## DOS and Windows Drive Letters
+
+Historically some implementations have used a vertical line character
+"|" instead of a colon ":" in the drive letter construct.  {{RFC3986}}
+forbids the use of the vertical line, however it may be necessary to
+interpret or update old URIs.
+
+For interpreting such URIs, the `drive-letter` construct in {{syntax}}
+is replaced with the following:
+
+~~~~~~~~~~
+   drive-letter   = ALPHA ":"
+                  / ALPHA "|"
+                  / ALPHA
+~~~~~~~~~~
+
+To update an old URI, replace the vertical line "|" with a colon ":".
+
+
 # Example URIs  {#examples}
 
 The syntax in {{syntax}} is intended to support file URIs that take the
@@ -561,7 +589,7 @@ Local files:
 * `file:///path/to/file`
 
    > A "traditional" file URI for a local file, with an empty
-     authority. This is the most common format in use today.
+     authority.  This is the most common format in use today.
 
 * `file:/path/to/file`
 
@@ -601,11 +629,11 @@ Non-local files:
 
    > As above, with an extra slash between the empty authority and the
      transformed UNC string, conformant with the definition from
-     {{RFC1738}}; see: exceptions in {{unc-to-uri}}. This representation
-     is deprecated by this specification. It is notably used by the
-     Firefox web browser.
+     {{RFC1738}}; see: exceptions in {{unc-to-uri}}.  This
+     representation is deprecated by this specification.  It is
+     notably used by the Firefox web browser.
 
-# Encoding of IRI vs URI  {#iri-vs-uri}
+# Example Encoding of IRI vs URI  {#iri-vs-uri}
 
 The following examples demonstrate the advantage of encoding file
 URIs as IRIs (see {{encoding}}).
@@ -665,7 +693,7 @@ characters from the Universal Character Set {{ISO10646}}.
 
 The syntax of a UNC filespace selector string, as defined by
 {{MS-DTYP}}, is given here in Augmented Backus-Naur Form (ABNF)
-{{RFC5234}} for convenience. Note that this definition is informative
+{{RFC5234}} for convenience.  Note that this definition is informative
 only; the normative description is in {{MS-DTYP}}.
 
 ~~~~~~~~~~
