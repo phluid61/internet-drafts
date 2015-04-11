@@ -36,11 +36,11 @@
 
 
 <t>This document specifies the “file” Uniform Resource Identifier (URI)
-scheme, replacing the definition in RFC 1738.</t>
+scheme, obsoleting the definition in RFC 1738.</t>
 
-<t>It attempts to document current practices, while at the same time
-defining a common core which is intended to interoperate across the
-broad spectrum of existing implementations.</t>
+<t>It attemps to define a common core which is intended to interoperate
+across the broad spectrum of existing implementations, while at the
+same time documenting other current practices.</t>
 
 <t><spanx style="strong">Note to Readers (To be removed by the RFC Editor)</spanx></t>
 
@@ -65,7 +65,7 @@ can be dereferenced to directly access the file.</t>
 
 <t>The file URI scheme is not coupled with a specific protocol. As such,
 there is no well-defined set of operations that can be performed on file
-URIs, nor a media type associated with them.</t>
+URIs, nor a specific media type associated with them.</t>
 
 <t>This document defines a syntax that is compatible with most extant
 implementations, while attempting to push towards a stricter subset of
@@ -151,6 +151,12 @@ specification, and importing the <spanx style="verb">userinfo</spanx>, <spanx st
    drive-letter   = ALPHA ":"
                   / ALPHA     ; deprecated
 ]]></artwork></figure>
+
+<t><list style='empty'>
+  <t><spanx style="emph">Fixme</spanx> <spanx style="verb">authority</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
+  RFC 3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule
+  is not entirely valid.</t>
+</list></t>
 
 <t>The syntax definition above is different from those given in
 <xref target="RFC1630"/> and <xref target="RFC1738"/> as it is derived from the generic syntax
