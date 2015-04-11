@@ -563,7 +563,7 @@ This section is not normative.
 ## DOS and Windows Drive Letters
 
 Historically some implementations have used a vertical line character
-"|" instead of a colon ":" in the drive letter construct.  {{RFC3986}}
+"\|" instead of a colon ":" in the drive letter construct.  {{RFC3986}}
 forbids the use of the vertical line, however it may be necessary to
 interpret or update old URIs.
 
@@ -576,7 +576,7 @@ is replaced with the following:
                   / ALPHA
 ~~~~~~~~~~
 
-To update an old URI, replace the vertical line "|" with a colon ":".
+To update an old URI, replace the vertical line "\|" with a colon ":".
 
 
 # Example URIs  {#examples}

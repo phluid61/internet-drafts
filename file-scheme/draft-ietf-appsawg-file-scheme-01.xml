@@ -988,10 +988,7 @@ is replaced with the following:</t>
                   / ALPHA
 ]]></artwork></figure>
 
-<texttable>
-      <ttcol align='left'>To update an old URI, replace the vertical line “</ttcol>
-      <ttcol align='left'>” with a colon “:”.</ttcol>
-</texttable>
+<t>To update an old URI, replace the vertical line “|” with a colon “:”.</t>
 
 </section>
 </section>
