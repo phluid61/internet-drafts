@@ -129,11 +129,11 @@ informative:
 --- abstract
 
 This document specifies the "file" Uniform Resource Identifier (URI)
-scheme, replacing the definition in RFC 1738.
+scheme, obsoleting the definition in RFC 1738.
 
-It attempts to document current practices, while at the same time
-defining a common core which is intended to interoperate across the
-broad spectrum of existing implementations.
+It attemps to define a common core which is intended to interoperate
+across the broad spectrum of existing implementations, while at the
+same time documenting other current practices.
 
 **Note to Readers (To be removed by the RFC Editor)**
 
@@ -150,7 +150,7 @@ can be dereferenced to directly access the file.
 
 The file URI scheme is not coupled with a specific protocol. As such,
 there is no well-defined set of operations that can be performed on file
-URIs, nor a media type associated with them.
+URIs, nor a specific media type associated with them.
 
 This document defines a syntax that is compatible with most extant
 implementations, while attempting to push towards a stricter subset of
@@ -234,6 +234,10 @@ Please note the appendix that lists some other commonly seen variations.
    drive-letter   = ALPHA ":"
                   / ALPHA     ; deprecated
 ~~~~~~~~~~
+
+> *Fixme* `authority` allows '[' and ']' in IPv6 literals, but
+  RFC 3986 forbids them in the path, so the `unc-authority` rule
+  is not entirely valid.
 
 The syntax definition above is different from those given in
 {{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
