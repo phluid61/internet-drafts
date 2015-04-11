@@ -404,9 +404,9 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-01" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-4-5" />
-  <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
-  <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-4-11" />
+  <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
+  <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
 
 </head>
 
@@ -425,14 +425,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">April 5, 2015</td>
+  <td class="right">April 11, 2015</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: October 7, 2015</td>
+  <td class="left">Expires: October 13, 2015</td>
   <td class="right"></td>
 </tr>
 
@@ -446,8 +446,8 @@
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738.</p>
-<p>It attempts to document current practices, while at the same time defining a common core which is intended to interoperate across the broad spectrum of existing implementations.</p>
+<p>This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738.</p>
+<p>It attemps to define a common core which is intended to interoperate across the broad spectrum of existing implementations, while at the same time documenting other current practices.</p>
 <p>
   <strong>Note to Readers (To be removed by the RFC Editor)</strong>
 </p>
@@ -458,7 +458,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on October 7, 2015.</p>
+<p>This Internet-Draft will expire on October 13, 2015.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -499,7 +499,7 @@
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
 <p id="rfc.section.1.p.1">A file URI identifies a file on a particular file system.  It can be used in discussions about the file, and if other conditions are met it can be dereferenced to directly access the file.</p>
-<p id="rfc.section.1.p.2">The file URI scheme is not coupled with a specific protocol. As such, there is no well-defined set of operations that can be performed on file URIs, nor a media type associated with them.</p>
+<p id="rfc.section.1.p.2">The file URI scheme is not coupled with a specific protocol. As such, there is no well-defined set of operations that can be performed on file URIs, nor a specific media type associated with them.</p>
 <p id="rfc.section.1.p.3">This document defines a syntax that is compatible with most extant implementations, while attempting to push towards a stricter subset of &#8220;ideal&#8221; constructs. In many cases it simultaneously acknowledges and deprecates some less common or outdated constructs.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#history" id="history">History</a></h1>
 <p id="rfc.section.1.1.p.1">The file URI scheme was first defined in <a href="#RFC1630">[RFC1630]</a>, which, being an informational RFC, does not specify an Internet standard.  The definition was standardised in <a href="#RFC1738">[RFC1738]</a>, and the scheme was registered with the Internet Assigned Numbers Authority (IANA); however that definition omitted certain language included by former that clarified aspects such as:</p>
@@ -539,8 +539,13 @@
    drive-letter   = ALPHA ":"
                   / ALPHA     ; deprecated
 </pre>
-<p id="rfc.section.2.p.3">The syntax definition above is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates all previous specifications.</p>
-<p id="rfc.section.2.p.4">Systems exhibit different levels of case-sensitivity. Unless the file system is known to be case-insensitive, implementations MUST maintain the case of file and directory names when translating file URIs to and from the local system&#8217;s representation of file paths, and any systems or devices that transport file URIs MUST NOT alter the case of file URIs they transport.</p>
+<p/>
+
+<ul class="empty">
+  <li><em>Fixme</em> <samp>authority</samp> allows &#8216;[&#8217; and &#8216;]&#8217; in IPv6 literals, but RFC 3986 forbids them in the path, so the <samp>unc-authority</samp> rule is not entirely valid.</li>
+</ul>
+<p id="rfc.section.2.p.4">The syntax definition above is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates all previous specifications.</p>
+<p id="rfc.section.2.p.5">Systems exhibit different levels of case-sensitivity. Unless the file system is known to be case-insensitive, implementations MUST maintain the case of file and directory names when translating file URIs to and from the local system&#8217;s representation of file paths, and any systems or devices that transport file URIs MUST NOT alter the case of file URIs they transport.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#operations" id="operations">Operations on file URIs</a></h1>
 <p id="rfc.section.3.p.1">Implementations SHOULD, at a minimum, provide a read-like operation to return the contents of a file located by a file URI.  Additional operations MAY be provided, such as writing, creation, and deletion of files.  See the POSIX file and directory operations <a href="#POSIX">[POSIX]</a> for examples of interoperable operations on files.</p>
 <p id="rfc.section.3.p.2">File URIs can also be translated to and from local file paths or UNC strings.</p>
