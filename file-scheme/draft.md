@@ -639,7 +639,7 @@ For example:
 ~~~~~~~~~~
 
 This extended syntax is intended to support URIs that take the
-following forms, in addition to those in {{examples}}
+following forms, in addition to those in {{examples}}:
 
 Non-local files:
 
