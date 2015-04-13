@@ -715,8 +715,8 @@ B.2.  UNC Paths
    the path, usually with backslash "\" characters replaced with slashes
    "/".
 
-   To interpret such URIs, the "auth-path" construct in Section 2 is
-   replaced with the following:
+   To interpret such URIs, the "auth-path" rule in Section 2 is replaced
+   with the following:
 
       auth-path      = [ file-auth ] path-absolute
                      / unc-authority path-absolute

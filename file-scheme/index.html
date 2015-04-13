@@ -852,7 +852,7 @@
 <p id="rfc.section.B.1.p.3">To update such an old URI, replace the vertical line &#8220;|&#8221; with a colon &#8220;:&#8221;.</p>
 <h1 id="rfc.appendix.B.2"><a href="#rfc.appendix.B.2">B.2.</a> <a href="#ext-unc" id="ext-unc">UNC Paths</a></h1>
 <p id="rfc.section.B.2.p.1">It is common to encounter file URIs that encode entire UNC strings in the path, usually with backslash &#8220;\&#8221; characters replaced with slashes &#8220;/&#8221;.</p>
-<p id="rfc.section.B.2.p.2">To interpret such URIs, the <samp>auth-path</samp> construct in <a href="#syntax">Section 2</a> is replaced with the following:</p>
+<p id="rfc.section.B.2.p.2">To interpret such URIs, the <samp>auth-path</samp> rule in <a href="#syntax">Section 2</a> is replaced with the following:</p>
 <pre>
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
