@@ -1020,8 +1020,8 @@ replaced with the following:</t>
 the path, usually with backslash “\” characters replaced with slashes
 “/”.</t>
 
-<t>To interpret such URIs, the <spanx style="verb">auth-path</spanx> construct in <xref target="syntax"/> is
-replaced with the following:</t>
+<t>To interpret such URIs, the <spanx style="verb">auth-path</spanx> rule in <xref target="syntax"/> is replaced
+with the following:</t>
 
 <figure><artwork><![CDATA[
    auth-path      = [ file-auth ] path-absolute
