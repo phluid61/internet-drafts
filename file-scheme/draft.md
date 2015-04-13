@@ -609,8 +609,8 @@ It is common to encounter file URIs that encode entire UNC strings in
 the path, usually with backslash "\\" characters replaced with slashes
 "/".
 
-To interpret such URIs, the `auth-path` construct in {{syntax}} is
-replaced with the following:
+To interpret such URIs, the `auth-path` rule in {{syntax}} is replaced
+with the following:
 
 ~~~~~~~~~~
    auth-path      = [ file-auth ] path-absolute
