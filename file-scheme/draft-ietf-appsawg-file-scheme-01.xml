@@ -272,7 +272,8 @@ described in <xref target="ext-unc"/>.</t>
 the drive letter when authority is blank, e.g. <spanx style="verb">file://c:/...</spanx></t>
   <t hangText='DOS/Windows:'><vspace blankLines='0'/>
   Some implementations replace “:” with “|”, and others
-leave it off completely. e.g. <spanx style="verb">file:///c|/...</spanx> or <spanx style="verb">file:///c/...</spanx></t>
+leave it off completely. e.g. <spanx style="verb">file:///c|/...</spanx> or <spanx style="verb">file:///c/...</spanx>
+See <xref target="ext-pipe"/>.</t>
 </list></t>
 
 </section>

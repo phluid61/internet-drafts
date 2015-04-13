@@ -366,6 +366,7 @@ DOS/Windows:
 DOS/Windows:
 : Some implementations replace ":" with "|", and others
   leave it off completely. e.g. `file:///c|/...` or `file:///c/...`
+  See {{ext-pipe}}.
 {: vspace="0"}
 
 
