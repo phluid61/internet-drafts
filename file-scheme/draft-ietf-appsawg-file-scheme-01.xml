@@ -1052,7 +1052,7 @@ is not entirely valid.</t>
 ]]></artwork></figure>
 
 <t>This extended syntax is intended to support URIs that take the
-following forms, in addition to those in <xref target="examples"/></t>
+following forms, in addition to those in <xref target="examples"/>:</t>
 
 <t>Non-local files:</t>
 
