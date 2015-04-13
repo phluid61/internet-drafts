@@ -699,14 +699,15 @@ B.1.  DOS and Windows Drive Letters
    forbids the use of the vertical line, however it may be necessary to
    interpret or update old URIs.
 
-   For interpreting such URIs, the "drive-letter" construct in Section 2
-   is replaced with the following:
+   For interpreting such URIs, the "drive-letter" rule in Section 2 is
+   replaced with the following:
 
       drive-letter   = ALPHA ":"
                      / ALPHA "|"
                      / ALPHA
 
-   To update an old URI, replace the vertical line "|" with a colon ":".
+   To update such an old URI, replace the vertical line "|" with a colon
+   ":".
 
 B.2.  UNC Paths
 
@@ -721,7 +722,6 @@ B.2.  UNC Paths
                      / unc-authority path-absolute
 
       unc-authority  = 2*3"/" authority
-
 
 
 

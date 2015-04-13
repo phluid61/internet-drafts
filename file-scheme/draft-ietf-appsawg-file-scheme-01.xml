@@ -1002,8 +1002,8 @@ not supported by the normative syntax of <xref target="syntax"/>.</t>
 forbids the use of the vertical line, however it may be necessary to
 interpret or update old URIs.</t>
 
-<t>For interpreting such URIs, the <spanx style="verb">drive-letter</spanx> construct in <xref target="syntax"/>
-is replaced with the following:</t>
+<t>For interpreting such URIs, the <spanx style="verb">drive-letter</spanx> rule in <xref target="syntax"/> is
+replaced with the following:</t>
 
 <figure><artwork><![CDATA[
    drive-letter   = ALPHA ":"
@@ -1011,7 +1011,7 @@ is replaced with the following:</t>
                   / ALPHA
 ]]></artwork></figure>
 
-<t>To update an old URI, replace the vertical line “|” with a colon “:”.</t>
+<t>To update such an old URI, replace the vertical line “|” with a colon “:”.</t>
 
 </section>
 <section anchor="ext-unc" title="UNC Paths">
