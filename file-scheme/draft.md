@@ -224,21 +224,14 @@ but nonstandard variations.
                   / local-path
 
    auth-path      = [ file-auth ] path-absolute
-                  / unc-authority path-absolute
 
    local-path     = [ drive-letter ] path-absolute
 
    file-auth      = [ userinfo "@" ] host
 
-   unc-authority  = 2*3"/" authority
-
    drive-letter   = ALPHA ":"
                   / ALPHA     ; deprecated
 ~~~~~~~~~~
-
-> **Fixme** `authority` allows '[' and ']' in IPv6 literals, but
-> RFC 3986 forbids them in the path, so the `unc-authority` rule
-> is not entirely valid.
 
 The syntax definition above is different from those given in
 {{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
@@ -256,24 +249,23 @@ they transport.
 
 Implementations SHOULD, at a minimum, provide a read-like operation to
 return the contents of a file located by a file URI.  Additional
-operations MAY be provided, such as writing, creation, and deletion of
+operations MAY be provided, such as writing, creating, and deleting
 files.  See the POSIX file and directory operations {{POSIX}} for
-examples of interoperable operations on files.
+examples of standardized operations that can be performed on files.
 
 File URIs can also be translated to and from local file paths or UNC
 strings.
 
-The local file system API can only be used if the file URI has a blank
-(or absent) authority and the path, when transformed to the local
-system's conventions, is not a UNC string, unless the file system API
-supports UNC strings.  Note that this differs from the definition in
-{{RFC1738}} in that previously an authority containing the text
+A file URI can only be translated to a local file path if it has a
+blank or no authority.  Note that this differs from the previous
+specification in {{RFC1738}}, in that previously an authority of
 "localhost" was used to refer to the local file system, but in this
-specification it translates to a UNC string referring to the host
-"localhost".
+specification it translates to a UNC string with the host "localhost".
 
 This specification neither defines nor forbids a mechanism for
-accessing files stored on non-local file systems.
+accessing files stored on non-local file systems.  See SMB {{MS-SMB}},
+NFS {{RFC3530}}, NCP {{NOVELL}} for examples of protocols that can be
+used to access files over a network.
 
 
 ## Translating Local File Path to file URI  {#file-to-uri}
@@ -361,7 +353,8 @@ example file path in a UNIX-like environment would have been:
 ~~~~~~~~~~
 
 However that construct was never used in practice, and in fact would
-have collided with the eventual encoding of UNC strings in URIs.
+have collided with the eventual encoding of UNC strings in URIs
+described in {{ext-unc}}.
 
 
 __Exceptions__
@@ -420,22 +413,7 @@ Many implementations accept the full UNC string in the URI path (with
 all backslashes "\\" converted to slashes "/").  Additionally, because
 {{RFC1738}} said that the first "/" after "file://\[authority\]" wasn't
 part of the path, some implementations (including Firefox) require an
-additional slash before the UNC string.
-
-For example:
-
-~~~~~~~~~~
-   Traditional:
-       file:////hostname/share/object/names
-       \_____/\__________________________ /
-       Scheme     Transformed UNC string
-
-   Firefox:
-       file://///hostname/share/object/names
-       \_____/|\__________________________ /
-       Scheme |    Transformed UNC string
-              Extra slash
-~~~~~~~~~~
+additional slash before the UNC string.  See {{ext-unc}}.
 
 
 ## Translating Non-local File Path to file URI  {#remote-to-uri}
@@ -450,15 +428,6 @@ would contain the node name.  Where the original node reference
 includes a username and password in an access control string, they MAY
 be transcribed into the userinfo field of the authority ({{RFC3986}},
 Section 3.2.1), security considerations ({{security}}) notwithstanding.
-
-
-## Translating file URI to ...
-
-TODO:
-
-* non-empty auth MAY be converted to UNC, or be accessed using magic, or be ignored/err
-* UNC path MAY be ignored/err
-* a path like /c:/.. or ///c:/.. MAY be interpreted as a DOS drive letter
 
 
 ## Incompatible File Paths {#incompat}
@@ -497,7 +466,7 @@ translating to a file path.
 
 When the file system's encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
-{{RFC3987}}.
+{{RFC3987}} to avoid ambiguity.  See {{iri-vs-uri}} for examples.
 
 
 
@@ -511,6 +480,18 @@ are complex topics, and the use of file URIs can complicate the
 security model in effect for file privileges.  Software using file
 URIs MUST NOT grant greater access than would be available for other
 file access methods.
+
+File systems typically assign an operational meaning to special
+characters, such as the "/", "\\", ":", "[", and "]" characters, and
+to special device names like ".", "..", "...", "aux", "lpt", etc.
+In some cases, merely testing for the existence of such a name will
+cause the operating system to pause or invoke unrelated system calls,
+leading to significant securt concerns regarding denial of service and
+unintended data transfer.  It would be impossible for this
+specification to list all such significant characters and device names.
+Implementers MUST research the reserved names and characters for the
+types of storage device that may be attached to their application and
+restrict the use of data obtained from URI components accordingly.
 
 Additionally, as discussed in the HP OpenVMS Systems Documentation
 <http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
@@ -552,33 +533,6 @@ and Dave Thaler for their comments and suggestions.
 
 --- back
 
-# Nonstandard Syntax Variations  {#nonstandard-syntax}
-
-These variations may be encountered for historical reasons, but are
-not supported by the normative syntax of {{syntax}}.
-
-This section is not normative.
-
-
-## DOS and Windows Drive Letters
-
-Historically some implementations have used a vertical line character
-"\|" instead of a colon ":" in the drive letter construct.  {{RFC3986}}
-forbids the use of the vertical line, however it may be necessary to
-interpret or update old URIs.
-
-For interpreting such URIs, the `drive-letter` construct in {{syntax}}
-is replaced with the following:
-
-~~~~~~~~~~
-   drive-letter   = ALPHA ":"
-                  / ALPHA "|"
-                  / ALPHA
-~~~~~~~~~~
-
-To update an old URI, replace the vertical line "\|" with a colon ":".
-
-
 # Example URIs  {#examples}
 
 The syntax in {{syntax}} is intended to support file URIs that take the
@@ -616,8 +570,77 @@ Non-local files:
 
 * `file://host.example.com/path/to/file`
 
-   > The ideal representation of a non-local file, with an explicit
-     authority.
+   > The representation of a non-local file, with an explicit
+     authority.  Note that, unlike in {{RFC1738}}, the string
+     "localhost" in the authority signifies a non-local file.
+
+
+# Nonstandard Syntax Variations  {#nonstandard-syntax}
+
+These variations may be encountered for historical reasons, but are
+not supported by the normative syntax of {{syntax}}.
+
+This section is not normative.
+
+
+## DOS and Windows Drive Letters  {#ext-pipe}
+
+Historically some implementations have used a vertical line character
+"\|" instead of a colon ":" in the drive letter construct.  {{RFC3986}}
+forbids the use of the vertical line, however it may be necessary to
+interpret or update old URIs.
+
+For interpreting such URIs, the `drive-letter` construct in {{syntax}}
+is replaced with the following:
+
+~~~~~~~~~~
+   drive-letter   = ALPHA ":"
+                  / ALPHA "|"
+                  / ALPHA
+~~~~~~~~~~
+
+To update an old URI, replace the vertical line "\|" with a colon ":".
+
+
+## UNC Paths  {#ext-unc}
+
+It is common to encounter file URIs that encode entire UNC strings in
+the path, usually with backslash "\\" characters replaced with slashes
+"/".
+
+To interpret such URIs, the `auth-path` construct in {{syntax}} is
+replaced with the following:
+
+~~~~~~~~~~
+   auth-path      = [ file-auth ] path-absolute
+                  / unc-authority path-absolute
+
+   unc-authority  = 2*3"/" authority
+~~~~~~~~~~
+
+> **Fixme** `authority` allows '[' and ']' in IPv6 literals, but
+> RFC3986 forbids them in the path, so the `unc-authority` rule
+> is not entirely valid.
+
+For example:
+
+~~~~~~~~~~
+   Traditional:
+       file:////hostname/share/object/names
+       \_____/\__________________________ /
+       Scheme     Transformed UNC string
+
+   Firefox:
+       file://///hostname/share/object/names
+       \_____/|\__________________________ /
+       Scheme |    Transformed UNC string
+              Extra slash
+~~~~~~~~~~
+
+This extended syntax is intended to support URIs that take the
+following forms, in addition to those in {{examples}}
+
+Non-local files:
 
 * `file:////host.example.com/path/to/file`
 
@@ -630,13 +653,31 @@ Non-local files:
    > As above, with an extra slash between the empty authority and the
      transformed UNC string, conformant with the definition from
      {{RFC1738}}; see: exceptions in {{unc-to-uri}}.  This
-     representation is deprecated by this specification.  It is
-     notably used by the Firefox web browser.
+     representation is notably used by the Firefox web browser.
 
-# Example Encoding of IRI vs URI  {#iri-vs-uri}
+
+It also further limits the set of file URIs that can be translated to
+a local file path to those whose path does not encode a UNC string.
+
+
+
+## Backslash as Separator  {#ext-backslash}
+
+Historically some implementations have copied entire file paths into
+the path segments of file URIs.  Where DOS or Windows file paths were
+copied thus, resulting URI strings contained unencoded backslash "\\"
+characters, which are forbidden by both {{RFC1738}} and {{RFC3986}}.
+
+It may be possible to translate or update such an invalid file URI by
+replacing all backslashes "\\" with slashes "/", if it can be
+determined with reasonable certainty that the backslashes are intended
+as path separators.
+
+
+# Example of IRI vs Percent-Encoded URI  {#iri-vs-uri}
 
 The following examples demonstrate the advantage of encoding file
-URIs as IRIs (see {{encoding}}).
+URIs as IRIs to avoid ambiguity (see {{encoding}}).
 
 Example: file IRI:
 
@@ -662,7 +703,7 @@ Example: file IRI:
 Counter-example: ambiguous file URI:
 
 ~~~~~~~~~~
-| File URI, in any ASCII-compatible document:
+| Percent-encoded file URI, in any ASCII-compatible document:
 |    "file:///%E3%81%A1"
 |
 | Possible interpretations of the file name, depending on the
@@ -678,9 +719,6 @@ Counter-example: ambiguous file URI:
 |
 |  o EBCDIC:
 |       "Ta~"
-|
-|  o US-ASCII:
-|       "%E3%81%A1"
 |
 | etc.
 ~~~~~~~~~~
