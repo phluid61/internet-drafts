@@ -665,7 +665,7 @@ a local file path to those whose path does not encode a UNC string.
 ## Backslash as Separator  {#ext-backslash}
 
 Historically some implementations have copied entire file paths into
-the path segments of file URIs.  Where DOS or Windows file paths were
+the path components of file URIs.  Where DOS or Windows file paths were
 copied thus, resulting URI strings contained unencoded backslash "\\"
 characters, which are forbidden by both {{RFC1738}} and {{RFC3986}}.
 
