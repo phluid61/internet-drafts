@@ -225,12 +225,9 @@ but nonstandard variations.
 
    auth-path      = [ file-auth ] path-absolute
 
-   local-path     = [ drive-letter ] path-absolute
+   local-path     = path-absolute
 
    file-auth      = [ userinfo "@" ] host
-
-   drive-letter   = ALPHA ":"
-                  / ALPHA     ; deprecated
 ~~~~~~~~~~
 
 The syntax definition above is different from those given in
@@ -284,21 +281,17 @@ of {{RFC3987}}; see: {{encoding}}.
 
 4.  Append the file system root:
 
-    *   On a DOS- or Windows-based system, assign the drive letter
-        (e.g. "c:") as the first path segment, and append it to the
-        URI, followed by a slash character "/".
+    *   On a UNIX-like system, append a slash "/" to the URI, to
+        denote the root directory.
 
-        *   If an empty authority was included at step 3, a slash "/"
-            is prepended to the drive letter (e.g. "/c:") to
-            distinguish it from the authority.
+    *   On a DOS- or Windows-based system, append a slash "/" to the
+        URI, and encode the drive letter (e.g. "c:") as the first path
+        segment as per step 5, below.
 
     *   On an OpenVMS Files-11 system, append a slash "/" to the URI,
         and encode the device name as the first segment as per step 5,
         below, except that the dollars sign character "$" is not
         treated as a reserved character in this segment.
-
-    *   On a UNIX-like system, append a slash "/" to the URI, to
-        denote the root directory.
 
 5.  For each directory in the path after the root:
 
@@ -328,10 +321,10 @@ Examples:
                                   | file:///path/to/dir/
                                   |
    DOS- or Windows-based:         |
-     c:\path\to\file.txt          | file:c:/path/to/file.txt
+     c:\path\to\file.txt          | file:/c:/path/to/file.txt
                                   | file:///c:/path/to/file.txt
                                   |
-     c:\path\to\dir\              | file:c:/path/to/dir/
+     c:\path\to\dir\              | file:/c:/path/to/dir/
                                   | file:///c:/path/to/dir/
    VMS Files-11:                  |
      ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
@@ -361,7 +354,7 @@ __Exceptions__
 
 DOS/Windows:
 : Some implementations leave the leading slash off before
-  the drive letter when authority is blank, e.g. `file://c:/...`
+  the drive letter.  See {{ext-drives}}.
 
 DOS/Windows:
 : Some implementations replace ":" with "|", and others
@@ -548,24 +541,8 @@ Local files:
 
 * `file:/path/to/file`
 
-   > A "modern" minimal representation of a local file, with no
-     authority field and an absolute path that begins with a slash "/".
-
-* `file:c:/path/to/file`
-
-   > The minimal representation of a local file in a DOS- or
-     Windows-based environment, with no authority field and an
-     absolute path that begins with a drive letter.
-
-* `file:c/path/to/file`
-
-   > Representations of a local file in a DOS- or Windows-based
-     environment, using alternative representations of drive letters.
-     This construct is supported for compatibility with historical
-     implementations, but deprecated by this specification.
-
-> Note that the "path" element of the first two examples above could
-  encode a DOS or Windows drive letter.
+   > The minimal representation of a local file, with no authority
+     field and an absolute path that begins with a slash "/".
 
 Non-local files:
 
@@ -584,21 +561,59 @@ not supported by the normative syntax of {{syntax}}.
 This section is not normative.
 
 
-## DOS and Windows Drive Letters  {#ext-pipe}
+## DOS and Windows Drive Letters  {#ext-drives}
+
+On Windows- or DOS-based file systems a absolute file path can begin
+with a drive letter.  To facilitate this, the `local-path` rule in
+{{syntax}} can be replaced with the following:
+
+~~~~~~~~~~
+   local-path     = [ drive-letter ] path-absolute
+
+   drive-letter   = ALPHA ":"
+~~~~~~~~~~
+
+This is intended to support URIs of the form:
+
+* `file:c:/path/to/file`
+
+   > The minimal representation of a local file in a DOS- or
+     Windows-based environment, with no authority field and an
+     absolute path that begins with a drive letter.
+
+
+### Vertical Bar Character  {#ext-pipe}
 
 Historically some implementations have used a vertical line character
 "\|" instead of a colon ":" in the drive letter construct.  {{RFC3986}}
 forbids the use of the vertical line, however it may be necessary to
 interpret or update old URIs.
 
-For interpreting such URIs, the `drive-letter` rule in {{syntax}} is
-replaced with the following:
+For interpreting such URIs, the `auth-path` and `local-path` rules in
+{{syntax}} and the `drive-letter` rule above are replaced with the
+following:
 
 ~~~~~~~~~~
+   auth-path      = [ file-auth ] path-absolute
+                  / [ file-auth ] file-absolute
+
+   local-path     = [ drive-letter ] path-absolute
+                  / file-absolute
+
+   file-absolute  = "/" drive-letter path-absolute
+
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
-                  / ALPHA
 ~~~~~~~~~~
+
+This is intended to support URIs of the form:
+
+* `file:///c|/path/to/file`
+* `file:/c|/path/to/file`
+* `file:c|/path/to/file`
+
+   > Regular DOS or Windows file URIs, with vertical line characters
+     in the drive letter construct.
 
 To update such an old URI, replace the vertical line "\|" with a colon ":".
 
@@ -606,8 +621,7 @@ To update such an old URI, replace the vertical line "\|" with a colon ":".
 ## UNC Paths  {#ext-unc}
 
 It is common to encounter file URIs that encode entire UNC strings in
-the path, usually with backslash "\\" characters replaced with slashes
-"/".
+the path, with all backslash "\\" characters replaced with slashes "/".
 
 To interpret such URIs, the `auth-path` rule in {{syntax}} is replaced
 with the following:
@@ -659,7 +673,6 @@ Non-local files:
 
 It also further limits the set of file URIs that can be translated to
 a local file path to those whose path does not encode a UNC string.
-
 
 
 ## Backslash as Separator  {#ext-backslash}
