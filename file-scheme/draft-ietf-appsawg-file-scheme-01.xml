@@ -142,12 +142,9 @@ but nonstandard variations.</t>
 
    auth-path      = [ file-auth ] path-absolute
 
-   local-path     = [ drive-letter ] path-absolute
+   local-path     = path-absolute
 
    file-auth      = [ userinfo "@" ] host
-
-   drive-letter   = ALPHA ":"
-                  / ALPHA     ; deprecated
 ]]></artwork></figure>
 
 <t>The syntax definition above is different from those given in
@@ -197,19 +194,15 @@ of <xref target="RFC3987"/>; see: <xref target="encoding"/>.</t>
   <t>If including an empty authority field, append the “//” sigil to
 the URI.</t>
   <t>Append the file system root:  <list style="symbols">
-      <t>On a DOS- or Windows-based system, assign the drive letter
-(e.g. “c:”) as the first path segment, and append it to the
-URI, followed by a slash character “/”.      <list style="symbols">
-          <t>If an empty authority was included at step 3, a slash “/”
-is prepended to the drive letter (e.g. “/c:”) to
-distinguish it from the authority.</t>
-        </list></t>
+      <t>On a UNIX-like system, append a slash “/” to the URI, to
+denote the root directory.</t>
+      <t>On a DOS- or Windows-based system, append a slash “/” to the
+URI, and encode the drive letter (e.g. “c:”) as the first path
+segment as per step 5, below.</t>
       <t>On an OpenVMS Files-11 system, append a slash “/” to the URI,
 and encode the device name as the first segment as per step 5,
 below, except that the dollars sign character “$” is not
 treated as a reserved character in this segment.</t>
-      <t>On a UNIX-like system, append a slash “/” to the URI, to
-denote the root directory.</t>
     </list></t>
   <t>For each directory in the path after the root:  <list style="numbers">
       <t>Transform the directory name to a path segment (<xref target="RFC3986"/>,
@@ -236,10 +229,10 @@ Section 3.3) as per Section 2 of <xref target="RFC3986"/>.</t>
                                   | file:///path/to/dir/
                                   |
    DOS- or Windows-based:         |
-     c:\path\to\file.txt          | file:c:/path/to/file.txt
+     c:\path\to\file.txt          | file:/c:/path/to/file.txt
                                   | file:///c:/path/to/file.txt
                                   |
-     c:\path\to\dir\              | file:c:/path/to/dir/
+     c:\path\to\dir\              | file:/c:/path/to/dir/
                                   | file:///c:/path/to/dir/
    VMS Files-11:                  |
      ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
@@ -269,7 +262,7 @@ described in <xref target="ext-unc"/>.</t>
 <t><list style="hanging">
   <t hangText='DOS/Windows:'><vspace blankLines='0'/>
   Some implementations leave the leading slash off before
-the drive letter when authority is blank, e.g. <spanx style="verb">file://c:/...</spanx></t>
+the drive letter.  See <xref target="ext-drives"/>.</t>
   <t hangText='DOS/Windows:'><vspace blankLines='0'/>
   Some implementations replace “:” with “|”, and others
 leave it off completely. e.g. <spanx style="verb">file:///c|/...</spanx> or <spanx style="verb">file:///c/...</spanx>
@@ -956,25 +949,9 @@ following forms:</t>
    authority.  This is the most common format in use today.</t>
     </list></t>
   <t><spanx style="verb">file:/path/to/file</spanx>  <list style='empty'>
-      <t>A “modern” minimal representation of a local file, with no
-   authority field and an absolute path that begins with a slash “/”.</t>
+      <t>The minimal representation of a local file, with no authority
+   field and an absolute path that begins with a slash “/”.</t>
     </list></t>
-  <t><spanx style="verb">file:c:/path/to/file</spanx>  <list style='empty'>
-      <t>The minimal representation of a local file in a DOS- or
-   Windows-based environment, with no authority field and an
-   absolute path that begins with a drive letter.</t>
-    </list></t>
-  <t><spanx style="verb">file:c/path/to/file</spanx>  <list style='empty'>
-      <t>Representations of a local file in a DOS- or Windows-based
-   environment, using alternative representations of drive letters.
-   This construct is supported for compatibility with historical
-   implementations, but deprecated by this specification.</t>
-    </list></t>
-</list></t>
-
-<t><list style='empty'>
-  <t>Note that the “path” element of the first two examples above could
-  encode a DOS or Windows drive letter.</t>
 </list></t>
 
 <t>Non-local files:</t>
@@ -995,30 +972,71 @@ not supported by the normative syntax of <xref target="syntax"/>.</t>
 
 <t>This section is not normative.</t>
 
-<section anchor="ext-pipe" title="DOS and Windows Drive Letters">
+<section anchor="ext-drives" title="DOS and Windows Drive Letters">
+
+<t>On Windows- or DOS-based file systems a absolute file path can begin
+with a drive letter.  To facilitate this, the <spanx style="verb">local-path</spanx> rule in
+<xref target="syntax"/> can be replaced with the following:</t>
+
+<figure><artwork><![CDATA[
+   local-path     = [ drive-letter ] path-absolute
+
+   drive-letter   = ALPHA ":"
+]]></artwork></figure>
+
+<t>This is intended to support URIs of the form:</t>
+
+<t><list style="symbols">
+  <t><spanx style="verb">file:c:/path/to/file</spanx>  <list style='empty'>
+      <t>The minimal representation of a local file in a DOS- or
+   Windows-based environment, with no authority field and an
+   absolute path that begins with a drive letter.</t>
+    </list></t>
+</list></t>
+
+<section anchor="ext-pipe" title="Vertical Bar Character">
 
 <t>Historically some implementations have used a vertical line character
 “|” instead of a colon “:” in the drive letter construct.  <xref target="RFC3986"/>
 forbids the use of the vertical line, however it may be necessary to
 interpret or update old URIs.</t>
 
-<t>For interpreting such URIs, the <spanx style="verb">drive-letter</spanx> rule in <xref target="syntax"/> is
-replaced with the following:</t>
+<t>For interpreting such URIs, the <spanx style="verb">auth-path</spanx> and <spanx style="verb">local-path</spanx> rules in
+<xref target="syntax"/> and the <spanx style="verb">drive-letter</spanx> rule above are replaced with the
+following:</t>
 
 <figure><artwork><![CDATA[
+   auth-path      = [ file-auth ] path-absolute
+                  / [ file-auth ] file-absolute
+
+   local-path     = [ drive-letter ] path-absolute
+                  / file-absolute
+
+   file-absolute  = "/" drive-letter path-absolute
+
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
-                  / ALPHA
 ]]></artwork></figure>
+
+<t>This is intended to support URIs of the form:</t>
+
+<t><list style="symbols">
+  <t><spanx style="verb">file:///c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file:/c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file:c|/path/to/file</spanx>  <list style='empty'>
+      <t>Regular DOS or Windows file URIs, with vertical line characters
+   in the drive letter construct.</t>
+    </list></t>
+</list></t>
 
 <t>To update such an old URI, replace the vertical line “|” with a colon “:”.</t>
 
 </section>
+</section>
 <section anchor="ext-unc" title="UNC Paths">
 
 <t>It is common to encounter file URIs that encode entire UNC strings in
-the path, usually with backslash “\” characters replaced with slashes
-“/”.</t>
+the path, with all backslash “\” characters replaced with slashes “/”.</t>
 
 <t>To interpret such URIs, the <spanx style="verb">auth-path</spanx> rule in <xref target="syntax"/> is replaced
 with the following:</t>

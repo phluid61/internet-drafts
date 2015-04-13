@@ -395,6 +395,7 @@
 <link href="#rfc.appendix.A" rel="Chapter" title="A Example URIs"/>
 <link href="#rfc.appendix.B" rel="Chapter" title="B Nonstandard Syntax Variations"/>
 <link href="#rfc.appendix.B.1" rel="Chapter" title="B.1 DOS and Windows Drive Letters"/>
+<link href="#rfc.appendix.B.1.1" rel="Chapter" title="B.1.1 Vertical Bar Character"/>
 <link href="#rfc.appendix.B.2" rel="Chapter" title="B.2 UNC Paths"/>
 <link href="#rfc.appendix.B.3" rel="Chapter" title="B.3 Backslash as Separator"/>
 <link href="#rfc.appendix.C" rel="Chapter" title="C Example of IRI vs Percent-Encoded URI"/>
@@ -407,7 +408,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-01" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-4-13" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-4-14" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
 
@@ -428,14 +429,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">April 13, 2015</td>
+  <td class="right">April 14, 2015</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: October 15, 2015</td>
+  <td class="left">Expires: October 16, 2015</td>
   <td class="right"></td>
 </tr>
 
@@ -461,7 +462,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on October 15, 2015.</p>
+<p>This Internet-Draft will expire on October 16, 2015.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -494,6 +495,7 @@
 <li>Appendix A.   <a href="#rfc.appendix.A">Example URIs</a></li>
 <li>Appendix B.   <a href="#rfc.appendix.B">Nonstandard Syntax Variations</a></li>
 <li>B.1.   <a href="#rfc.appendix.B.1">DOS and Windows Drive Letters</a></li>
+<li>B.1.1.   <a href="#rfc.appendix.B.1.1">Vertical Bar Character</a></li>
 <li>B.2.   <a href="#rfc.appendix.B.2">UNC Paths</a></li>
 <li>B.3.   <a href="#rfc.appendix.B.3">Backslash as Separator</a></li>
 <li>Appendix C.   <a href="#rfc.appendix.C">Example of IRI vs Percent-Encoded URI</a></li>
@@ -535,12 +537,9 @@
 
    auth-path      = [ file-auth ] path-absolute
 
-   local-path     = [ drive-letter ] path-absolute
+   local-path     = path-absolute
 
    file-auth      = [ userinfo "@" ] host
-
-   drive-letter   = ALPHA ":"
-                  / ALPHA     ; deprecated
 </pre>
 <p id="rfc.section.2.p.3">The syntax definition above is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates all previous specifications.</p>
 <p id="rfc.section.2.p.4">Systems exhibit different levels of case-sensitivity.  Unless the file system is known to be case-insensitive, implementations MUST maintain the case of file and directory names when translating file URIs to and from the local system&#8217;s representation of file paths, and any systems or devices that transport file URIs MUST NOT alter the case of file URIs they transport.</p>
@@ -557,7 +556,7 @@
   <li>Resolve the file path to its fully qualified absolute form.</li>
   <li>Initialise the URI with the &#8220;file:&#8221; scheme identifier.</li>
   <li>If including an empty authority field, append the &#8220;//&#8221; sigil to the URI.</li>
-  <li>Append the file system root:  <ul><li>On a DOS- or Windows-based system, assign the drive letter (e.g. &#8220;c:&#8221;) as the first path segment, and append it to the URI, followed by a slash character &#8220;/&#8221;.      <ul><li>If an empty authority was included at step 3, a slash &#8220;/&#8221; is prepended to the drive letter (e.g. &#8220;/c:&#8221;) to distinguish it from the authority.</li></ul></li><li>On an OpenVMS Files-11 system, append a slash &#8220;/&#8221; to the URI, and encode the device name as the first segment as per step 5, below, except that the dollars sign character &#8220;$&#8221; is not treated as a reserved character in this segment.</li><li>On a UNIX-like system, append a slash &#8220;/&#8221; to the URI, to denote the root directory.</li></ul></li>
+  <li>Append the file system root:  <ul><li>On a UNIX-like system, append a slash &#8220;/&#8221; to the URI, to denote the root directory.</li><li>On a DOS- or Windows-based system, append a slash &#8220;/&#8221; to the URI, and encode the drive letter (e.g. &#8220;c:&#8221;) as the first path segment as per step 5, below.</li><li>On an OpenVMS Files-11 system, append a slash &#8220;/&#8221; to the URI, and encode the device name as the first segment as per step 5, below, except that the dollars sign character &#8220;$&#8221; is not treated as a reserved character in this segment.</li></ul></li>
   <li>For each directory in the path after the root:  <ol><li>Transform the directory name to a path segment (<a href="#RFC3986">[RFC3986]</a>, Section 3.3) as per Section 2 of <a href="#RFC3986">[RFC3986]</a>.</li><li>Append the transformed segment and a delimiting slash character &#8220;/&#8221; to the URI.</li></ol></li>
   <li>If the path includes a file name:  <ol><li>Transform the file name to a path segment as above.</li><li>Append the transformed segment to the URI.</li></ol></li>
 </ol>
@@ -573,10 +572,10 @@
                                   | file:///path/to/dir/
                                   |
    DOS- or Windows-based:         |
-     c:\path\to\file.txt          | file:c:/path/to/file.txt
+     c:\path\to\file.txt          | file:/c:/path/to/file.txt
                                   | file:///c:/path/to/file.txt
                                   |
-     c:\path\to\dir\              | file:c:/path/to/dir/
+     c:\path\to\dir\              | file:/c:/path/to/dir/
                                   | file:///c:/path/to/dir/
    VMS Files-11:                  |
      ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
@@ -600,9 +599,9 @@
 
 <dl>
   <dt>DOS/Windows:</dt>
-  <dd style="margin-left: 8"><br/> Some implementations leave the leading slash off before the drive letter when authority is blank, e.g. <samp>file://c:/...</samp></dd>
+  <dd style="margin-left: 8"><br/> Some implementations leave the leading slash off before the drive letter.  See <a href="#ext-drives">Appendix B.1</a>.</dd>
   <dt>DOS/Windows:</dt>
-  <dd style="margin-left: 8"><br/> Some implementations replace &#8220;:&#8221; with &#8220;|&#8221;, and others leave it off completely. e.g. <samp>file:///c|/...</samp> or <samp>file:///c/...</samp> See <a href="#ext-pipe">Appendix B.1</a>.</dd>
+  <dd style="margin-left: 8"><br/> Some implementations replace &#8220;:&#8221; with &#8220;|&#8221;, and others leave it off completely. e.g. <samp>file:///c|/...</samp> or <samp>file:///c/...</samp> See <a href="#ext-pipe">Appendix B.1.1</a>.</dd>
 </dl>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#unc-to-uri" id="unc-to-uri">Translating UNC String to file URI</a></h1>
 <p id="rfc.section.3.2.p.1">A UNC filespace selector string can be directly translated to an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a>, which can then be translated to a URI as per Section 3.1 of <a href="#RFC3987">[RFC3987]</a>; see: <a href="#encoding">Section 4</a>.</p>
@@ -823,16 +822,9 @@
 
 <ul>
   <li><samp>file:///path/to/file</samp>  <ul class="empty"><li>A &#8220;traditional&#8221; file URI for a local file, with an empty authority.  This is the most common format in use today.</li></ul></li>
-  <li><samp>file:/path/to/file</samp>  <ul class="empty"><li>A &#8220;modern&#8221; minimal representation of a local file, with no authority field and an absolute path that begins with a slash &#8220;/&#8221;.</li></ul></li>
-  <li><samp>file:c:/path/to/file</samp>  <ul class="empty"><li>The minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.</li></ul></li>
-  <li><samp>file:c/path/to/file</samp>  <ul class="empty"><li>Representations of a local file in a DOS- or Windows-based environment, using alternative representations of drive letters.  This construct is supported for compatibility with historical implementations, but deprecated by this specification.</li></ul></li>
+  <li><samp>file:/path/to/file</samp>  <ul class="empty"><li>The minimal representation of a local file, with no authority field and an absolute path that begins with a slash &#8220;/&#8221;.</li></ul></li>
 </ul>
-<p/>
-
-<ul class="empty">
-  <li>Note that the &#8220;path&#8221; element of the first two examples above could encode a DOS or Windows drive letter.</li>
-</ul>
-<p id="rfc.section.A.p.5">Non-local files:</p>
+<p id="rfc.section.A.p.4">Non-local files:</p>
 <p/>
 
 <ul>
@@ -841,17 +833,49 @@
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#nonstandard-syntax" id="nonstandard-syntax">Nonstandard Syntax Variations</a></h1>
 <p id="rfc.section.B.p.1">These variations may be encountered for historical reasons, but are not supported by the normative syntax of <a href="#syntax">Section 2</a>.</p>
 <p id="rfc.section.B.p.2">This section is not normative.</p>
-<h1 id="rfc.appendix.B.1"><a href="#rfc.appendix.B.1">B.1.</a> <a href="#ext-pipe" id="ext-pipe">DOS and Windows Drive Letters</a></h1>
-<p id="rfc.section.B.1.p.1">Historically some implementations have used a vertical line character &#8220;|&#8221; instead of a colon &#8220;:&#8221; in the drive letter construct.  <a href="#RFC3986">[RFC3986]</a> forbids the use of the vertical line, however it may be necessary to interpret or update old URIs.</p>
-<p id="rfc.section.B.1.p.2">For interpreting such URIs, the <samp>drive-letter</samp> rule in <a href="#syntax">Section 2</a> is replaced with the following:</p>
+<h1 id="rfc.appendix.B.1"><a href="#rfc.appendix.B.1">B.1.</a> <a href="#ext-drives" id="ext-drives">DOS and Windows Drive Letters</a></h1>
+<p id="rfc.section.B.1.p.1">On Windows- or DOS-based file systems a absolute file path can begin with a drive letter.  To facilitate this, the <samp>local-path</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
 <pre>
+   local-path     = [ drive-letter ] path-absolute
+
+   drive-letter   = ALPHA ":"
+</pre>
+<p id="rfc.section.B.1.p.2">This is intended to support URIs of the form:</p>
+<p/>
+
+<ul>
+  <li><samp>file:c:/path/to/file</samp>  <ul class="empty"><li>The minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.</li></ul></li>
+</ul>
+<h1 id="rfc.appendix.B.1.1"><a href="#rfc.appendix.B.1.1">B.1.1.</a> <a href="#ext-pipe" id="ext-pipe">Vertical Bar Character</a></h1>
+<p id="rfc.section.B.1.1.p.1">Historically some implementations have used a vertical line character &#8220;|&#8221; instead of a colon &#8220;:&#8221; in the drive letter construct.  <a href="#RFC3986">[RFC3986]</a> forbids the use of the vertical line, however it may be necessary to interpret or update old URIs.</p>
+<p id="rfc.section.B.1.1.p.2">For interpreting such URIs, the <samp>auth-path</samp> and <samp>local-path</samp> rules in <a href="#syntax">Section 2</a> and the <samp>drive-letter</samp> rule above are replaced with the following:</p>
+<pre>
+   auth-path      = [ file-auth ] path-absolute
+                  / [ file-auth ] file-absolute
+
+   local-path     = [ drive-letter ] path-absolute
+                  / file-absolute
+
+   file-absolute  = "/" drive-letter path-absolute
+
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
-                  / ALPHA
 </pre>
-<p id="rfc.section.B.1.p.3">To update such an old URI, replace the vertical line &#8220;|&#8221; with a colon &#8220;:&#8221;.</p>
+<p id="rfc.section.B.1.1.p.3">This is intended to support URIs of the form:</p>
+<p/>
+
+<ul>
+  <li>
+    <samp>file:///c|/path/to/file</samp>
+  </li>
+  <li>
+    <samp>file:/c|/path/to/file</samp>
+  </li>
+  <li><samp>file:c|/path/to/file</samp>  <ul class="empty"><li>Regular DOS or Windows file URIs, with vertical line characters in the drive letter construct.</li></ul></li>
+</ul>
+<p id="rfc.section.B.1.1.p.5">To update such an old URI, replace the vertical line &#8220;|&#8221; with a colon &#8220;:&#8221;.</p>
 <h1 id="rfc.appendix.B.2"><a href="#rfc.appendix.B.2">B.2.</a> <a href="#ext-unc" id="ext-unc">UNC Paths</a></h1>
-<p id="rfc.section.B.2.p.1">It is common to encounter file URIs that encode entire UNC strings in the path, usually with backslash &#8220;\&#8221; characters replaced with slashes &#8220;/&#8221;.</p>
+<p id="rfc.section.B.2.p.1">It is common to encounter file URIs that encode entire UNC strings in the path, with all backslash &#8220;\&#8221; characters replaced with slashes &#8220;/&#8221;.</p>
 <p id="rfc.section.B.2.p.2">To interpret such URIs, the <samp>auth-path</samp> rule in <a href="#syntax">Section 2</a> is replaced with the following:</p>
 <pre>
    auth-path      = [ file-auth ] path-absolute
