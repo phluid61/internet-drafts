@@ -346,7 +346,8 @@ Internet-Draft                 file-scheme                    April 2015
 
    DOS/Windows:
       Some implementations replace ":" with "|", and others leave it off
-      completely. e.g. "file:///c|/..." or "file:///c/..."
+      completely. e.g. "file:///c|/..." or "file:///c/..." See
+      Appendix B.1.
 
 3.2.  Translating UNC String to file URI
 
@@ -385,7 +386,6 @@ Internet-Draft                 file-scheme                    April 2015
       URI:          file://host.example.com/Share/path/to/file.txt
 
    *Exceptions*
-
 
 
 
