@@ -771,9 +771,9 @@ Internet-Draft                 file-scheme                    April 2015
 B.3.  Backslash as Separator
 
    Historically some implementations have copied entire file paths into
-   the path segments of file URIs.  Where DOS or Windows file paths were
-   copied thus, resulting URI strings contained unencoded backslash "\"
-   characters, which are forbidden by both [RFC1738] and [RFC3986].
+   the path components of file URIs.  Where DOS or Windows file paths
+   were copied thus, resulting URI strings contained unencoded backslash
+   "\" characters, which are forbidden by both [RFC1738] and [RFC3986].
 
    It may be possible to translate or update such an invalid file URI by
    replacing all backslashes "\" with slashes "/", if it can be

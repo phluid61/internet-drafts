@@ -887,7 +887,7 @@
 </ul>
 <p id="rfc.section.B.2.p.8">It also further limits the set of file URIs that can be translated to a local file path to those whose path does not encode a UNC string.</p>
 <h1 id="rfc.appendix.B.3"><a href="#rfc.appendix.B.3">B.3.</a> <a href="#ext-backslash" id="ext-backslash">Backslash as Separator</a></h1>
-<p id="rfc.section.B.3.p.1">Historically some implementations have copied entire file paths into the path segments of file URIs.  Where DOS or Windows file paths were copied thus, resulting URI strings contained unencoded backslash &#8220;\&#8221; characters, which are forbidden by both <a href="#RFC1738">[RFC1738]</a> and <a href="#RFC3986">[RFC3986]</a>.</p>
+<p id="rfc.section.B.3.p.1">Historically some implementations have copied entire file paths into the path components of file URIs.  Where DOS or Windows file paths were copied thus, resulting URI strings contained unencoded backslash &#8220;\&#8221; characters, which are forbidden by both <a href="#RFC1738">[RFC1738]</a> and <a href="#RFC3986">[RFC3986]</a>.</p>
 <p id="rfc.section.B.3.p.2">It may be possible to translate or update such an invalid file URI by replacing all backslashes &#8220;\&#8221; with slashes &#8220;/&#8221;, if it can be determined with reasonable certainty that the backslashes are intended as path separators.</p>
 <h1 id="rfc.appendix.C"><a href="#rfc.appendix.C">Appendix C.</a> <a href="#iri-vs-uri" id="iri-vs-uri">Example of IRI vs Percent-Encoded URI</a></h1>
 <p id="rfc.section.C.p.1">The following examples demonstrate the advantage of encoding file URIs as IRIs to avoid ambiguity (see <a href="#encoding">Section 4</a>).</p>
