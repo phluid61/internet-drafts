@@ -141,23 +141,14 @@ but nonstandard variations.</t>
                   / local-path
 
    auth-path      = [ file-auth ] path-absolute
-                  / unc-authority path-absolute
 
    local-path     = [ drive-letter ] path-absolute
 
    file-auth      = [ userinfo "@" ] host
 
-   unc-authority  = 2*3"/" authority
-
    drive-letter   = ALPHA ":"
                   / ALPHA     ; deprecated
 ]]></artwork></figure>
-
-<t><list style='empty'>
-  <t><spanx style="strong">Fixme</spanx> <spanx style="verb">authority</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
-RFC 3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule
-is not entirely valid.</t>
-</list></t>
 
 <t>The syntax definition above is different from those given in
 <xref target="RFC1630"/> and <xref target="RFC1738"/> as it is derived from the generic syntax
@@ -175,24 +166,23 @@ they transport.</t>
 
 <t>Implementations SHOULD, at a minimum, provide a read-like operation to
 return the contents of a file located by a file URI.  Additional
-operations MAY be provided, such as writing, creation, and deletion of
+operations MAY be provided, such as writing, creating, and deleting
 files.  See the POSIX file and directory operations <xref target="POSIX"/> for
-examples of interoperable operations on files.</t>
+examples of standardized operations that can be performed on files.</t>
 
 <t>File URIs can also be translated to and from local file paths or UNC
 strings.</t>
 
-<t>The local file system API can only be used if the file URI has a blank
-(or absent) authority and the path, when transformed to the local
-system’s conventions, is not a UNC string, unless the file system API
-supports UNC strings.  Note that this differs from the definition in
-<xref target="RFC1738"/> in that previously an authority containing the text
+<t>A file URI can only be translated to a local file path if it has a
+blank or no authority.  Note that this differs from the previous
+specification in <xref target="RFC1738"/>, in that previously an authority of
 “localhost” was used to refer to the local file system, but in this
-specification it translates to a UNC string referring to the host
-“localhost”.</t>
+specification it translates to a UNC string with the host “localhost”.</t>
 
 <t>This specification neither defines nor forbids a mechanism for
-accessing files stored on non-local file systems.</t>
+accessing files stored on non-local file systems.  See SMB <xref target="MS-SMB"/>,
+NFS <xref target="RFC3530"/>, NCP <xref target="NOVELL"/> for examples of protocols that can be
+used to access files over a network.</t>
 
 <section anchor="file-to-uri" title="Translating Local File Path to file URI">
 
@@ -271,7 +261,8 @@ example file path in a UNIX-like environment would have been:</t>
 ]]></artwork></figure>
 
 <t>However that construct was never used in practice, and in fact would
-have collided with the eventual encoding of UNC strings in URIs.</t>
+have collided with the eventual encoding of UNC strings in URIs
+described in <xref target="ext-unc"/>.</t>
 
 <t><spanx style="strong">Exceptions</spanx></t>
 
@@ -325,22 +316,7 @@ segment to the URI.</t>
 all backslashes “\” converted to slashes “/”).  Additionally, because
 <xref target="RFC1738"/> said that the first “/” after “file://[authority]” wasn’t
 part of the path, some implementations (including Firefox) require an
-additional slash before the UNC string.</t>
-
-<t>For example:</t>
-
-<figure><artwork><![CDATA[
-   Traditional:
-       file:////hostname/share/object/names
-       \_____/\__________________________ /
-       Scheme     Transformed UNC string
-
-   Firefox:
-       file://///hostname/share/object/names
-       \_____/|\__________________________ /
-       Scheme |    Transformed UNC string
-              Extra slash
-]]></artwork></figure>
+additional slash before the UNC string.  See <xref target="ext-unc"/>.</t>
 
 </section>
 <section anchor="remote-to-uri" title="Translating Non-local File Path to file URI">
@@ -355,17 +331,6 @@ would contain the node name.  Where the original node reference
 includes a username and password in an access control string, they MAY
 be transcribed into the userinfo field of the authority (<xref target="RFC3986"/>,
 Section 3.2.1), security considerations (<xref target="security"/>) notwithstanding.</t>
-
-</section>
-<section anchor="translating-file-uri-to-" title="Translating file URI to …">
-
-<t>TODO:</t>
-
-<t><list style="symbols">
-  <t>non-empty auth MAY be converted to UNC, or be accessed using magic, or be ignored/err</t>
-  <t>UNC path MAY be ignored/err</t>
-  <t>a path like /c:/.. or ///c:/.. MAY be interpreted as a DOS drive letter</t>
-</list></t>
 
 </section>
 <section anchor="incompat" title="Incompatible File Paths">
@@ -407,7 +372,7 @@ settings, or defaults to UTF-8 <xref target="STD63"/>.</t>
 
 <t>When the file system’s encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
-<xref target="RFC3987"/>.</t>
+<xref target="RFC3987"/> to avoid ambiguity.  See <xref target="iri-vs-uri"/> for examples.</t>
 
 </section>
 <section anchor="security" title="Security Considerations">
@@ -420,6 +385,18 @@ are complex topics, and the use of file URIs can complicate the
 security model in effect for file privileges.  Software using file
 URIs MUST NOT grant greater access than would be available for other
 file access methods.</t>
+
+<t>File systems typically assign an operational meaning to special
+characters, such as the “/”, “\”, “:”, “[”, and “]” characters, and
+to special device names like “.”, “..”, “…”, “aux”, “lpt”, etc.
+In some cases, merely testing for the existence of such a name will
+cause the operating system to pause or invoke unrelated system calls,
+leading to significant securt concerns regarding denial of service and
+unintended data transfer.  It would be impossible for this
+specification to list all such significant characters and device names.
+Implementers MUST research the reserved names and characters for the
+types of storage device that may be attached to their application and
+restrict the use of data obtained from URI components accordingly.</t>
 
 <t>Additionally, as discussed in the HP OpenVMS Systems Documentation
 <eref target="http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html">http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html</eref>
@@ -965,33 +942,6 @@ specifications of each URI scheme.
     </references>
 
 
-<section anchor="nonstandard-syntax" title="Nonstandard Syntax Variations">
-
-<t>These variations may be encountered for historical reasons, but are
-not supported by the normative syntax of <xref target="syntax"/>.</t>
-
-<t>This section is not normative.</t>
-
-<section anchor="dos-and-windows-drive-letters" title="DOS and Windows Drive Letters">
-
-<t>Historically some implementations have used a vertical line character
-“|” instead of a colon “:” in the drive letter construct.  <xref target="RFC3986"/>
-forbids the use of the vertical line, however it may be necessary to
-interpret or update old URIs.</t>
-
-<t>For interpreting such URIs, the <spanx style="verb">drive-letter</spanx> construct in <xref target="syntax"/>
-is replaced with the following:</t>
-
-<figure><artwork><![CDATA[
-   drive-letter   = ALPHA ":"
-                  / ALPHA "|"
-                  / ALPHA
-]]></artwork></figure>
-
-<t>To update an old URI, replace the vertical line “|” with a colon “:”.</t>
-
-</section>
-</section>
 <section anchor="examples" title="Example URIs">
 
 <t>The syntax in <xref target="syntax"/> is intended to support file URIs that take the
@@ -1030,9 +980,82 @@ following forms:</t>
 
 <t><list style="symbols">
   <t><spanx style="verb">file://host.example.com/path/to/file</spanx>  <list style='empty'>
-      <t>The ideal representation of a non-local file, with an explicit
-   authority.</t>
+      <t>The representation of a non-local file, with an explicit
+   authority.  Note that, unlike in <xref target="RFC1738"/>, the string
+   “localhost” in the authority signifies a non-local file.</t>
     </list></t>
+</list></t>
+
+</section>
+<section anchor="nonstandard-syntax" title="Nonstandard Syntax Variations">
+
+<t>These variations may be encountered for historical reasons, but are
+not supported by the normative syntax of <xref target="syntax"/>.</t>
+
+<t>This section is not normative.</t>
+
+<section anchor="ext-pipe" title="DOS and Windows Drive Letters">
+
+<t>Historically some implementations have used a vertical line character
+“|” instead of a colon “:” in the drive letter construct.  <xref target="RFC3986"/>
+forbids the use of the vertical line, however it may be necessary to
+interpret or update old URIs.</t>
+
+<t>For interpreting such URIs, the <spanx style="verb">drive-letter</spanx> construct in <xref target="syntax"/>
+is replaced with the following:</t>
+
+<figure><artwork><![CDATA[
+   drive-letter   = ALPHA ":"
+                  / ALPHA "|"
+                  / ALPHA
+]]></artwork></figure>
+
+<t>To update an old URI, replace the vertical line “|” with a colon “:”.</t>
+
+</section>
+<section anchor="ext-unc" title="UNC Paths">
+
+<t>It is common to encounter file URIs that encode entire UNC strings in
+the path, usually with backslash “\” characters replaced with slashes
+“/”.</t>
+
+<t>To interpret such URIs, the <spanx style="verb">auth-path</spanx> construct in <xref target="syntax"/> is
+replaced with the following:</t>
+
+<figure><artwork><![CDATA[
+   auth-path      = [ file-auth ] path-absolute
+                  / unc-authority path-absolute
+
+   unc-authority  = 2*3"/" authority
+]]></artwork></figure>
+
+<t><list style='empty'>
+  <t><spanx style="strong">Fixme</spanx> <spanx style="verb">authority</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
+RFC3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule
+is not entirely valid.</t>
+</list></t>
+
+<t>For example:</t>
+
+<figure><artwork><![CDATA[
+   Traditional:
+       file:////hostname/share/object/names
+       \_____/\__________________________ /
+       Scheme     Transformed UNC string
+
+   Firefox:
+       file://///hostname/share/object/names
+       \_____/|\__________________________ /
+       Scheme |    Transformed UNC string
+              Extra slash
+]]></artwork></figure>
+
+<t>This extended syntax is intended to support URIs that take the
+following forms, in addition to those in <xref target="examples"/></t>
+
+<t>Non-local files:</t>
+
+<t><list style="symbols">
   <t><spanx style="verb">file:////host.example.com/path/to/file</spanx>  <list style='empty'>
       <t>The “traditional” representation of a non-local file, with an
    empty authority and a complete (transformed) UNC string in the
@@ -1042,16 +1065,32 @@ following forms:</t>
       <t>As above, with an extra slash between the empty authority and the
    transformed UNC string, conformant with the definition from
    <xref target="RFC1738"/>; see: exceptions in <xref target="unc-to-uri"/>.  This
-   representation is deprecated by this specification.  It is
-   notably used by the Firefox web browser.</t>
+   representation is notably used by the Firefox web browser.</t>
     </list></t>
 </list></t>
 
+<t>It also further limits the set of file URIs that can be translated to
+a local file path to those whose path does not encode a UNC string.</t>
+
 </section>
-<section anchor="iri-vs-uri" title="Example Encoding of IRI vs URI">
+<section anchor="ext-backslash" title="Backslash as Separator">
+
+<t>Historically some implementations have copied entire file paths into
+the path segments of file URIs.  Where DOS or Windows file paths were
+copied thus, resulting URI strings contained unencoded backslash “\”
+characters, which are forbidden by both <xref target="RFC1738"/> and <xref target="RFC3986"/>.</t>
+
+<t>It may be possible to translate or update such an invalid file URI by
+replacing all backslashes “\” with slashes “/”, if it can be
+determined with reasonable certainty that the backslashes are intended
+as path separators.</t>
+
+</section>
+</section>
+<section anchor="iri-vs-uri" title="Example of IRI vs Percent-Encoded URI">
 
 <t>The following examples demonstrate the advantage of encoding file
-URIs as IRIs (see <xref target="encoding"/>).</t>
+URIs as IRIs to avoid ambiguity (see <xref target="encoding"/>).</t>
 
 <t>Example: file IRI:</t>
 
@@ -1077,7 +1116,7 @@ URIs as IRIs (see <xref target="encoding"/>).</t>
 <t>Counter-example: ambiguous file URI:</t>
 
 <figure><artwork><![CDATA[
-| File URI, in any ASCII-compatible document:
+| Percent-encoded file URI, in any ASCII-compatible document:
 |    "file:///%E3%81%A1"
 |
 | Possible interpretations of the file name, depending on the
@@ -1093,9 +1132,6 @@ URIs as IRIs (see <xref target="encoding"/>).</t>
 |
 |  o EBCDIC:
 |       "Ta~"
-|
-|  o US-ASCII:
-|       "%E3%81%A1"
 |
 | etc.
 ]]></artwork></figure>
