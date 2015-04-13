@@ -591,8 +591,8 @@ Historically some implementations have used a vertical line character
 forbids the use of the vertical line, however it may be necessary to
 interpret or update old URIs.
 
-For interpreting such URIs, the `drive-letter` construct in {{syntax}}
-is replaced with the following:
+For interpreting such URIs, the `drive-letter` rule in {{syntax}} is
+replaced with the following:
 
 ~~~~~~~~~~
    drive-letter   = ALPHA ":"
@@ -600,7 +600,7 @@ is replaced with the following:
                   / ALPHA
 ~~~~~~~~~~
 
-To update an old URI, replace the vertical line "\|" with a colon ":".
+To update such an old URI, replace the vertical line "\|" with a colon ":".
 
 
 ## UNC Paths  {#ext-unc}
