@@ -571,6 +571,10 @@ This is intended to support URIs of the form:
      Windows-based environment, with no authority field and an
      absolute path that begins with a drive letter.
 
+Note that comparison of drive letters in DOS or Windows file paths
+is case-insensitive.  Some implementations therefore canonicalize drive
+letters in file URIs by converting them to uppercase.
+
 
 ### Relative Paths  {#ext-relative}
 
