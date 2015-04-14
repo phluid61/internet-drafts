@@ -620,12 +620,12 @@ with the following:
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" authority
+   unc-authority  = 2*3"/" file-auth
 ~~~~~~~~~~
 
-> \[FIXME: `authority` allows '[' and ']' in IPv6 literals, but
-> RFC3986 forbids them in the path, so the `unc-authority` rule
-> is not entirely valid.\]
+> \[FIXME: `host` in `f-auth` allows '[' and ']' in IPv6 literals, but
+> RFC3986 forbids them in the path, so the `unc-authority` rule is not
+> entirely valid.\]
 
 For example:
 
