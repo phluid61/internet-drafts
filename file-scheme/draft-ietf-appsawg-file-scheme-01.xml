@@ -371,7 +371,7 @@ URI Schemes” registry has been updated accordingly.</t>
       <c>RFC XXXX</c>
 </texttable>
 
-<t><spanx style="strong">RFC Editor Note:</spanx> Replace XXXX with this RFC’s reference.</t>
+<t>[<spanx style="strong">RFC Editor Note:</spanx> Replace XXXX with this RFC’s reference.]</t>
 
 </section>
 <section anchor="acknowledgements" title="Acknowledgements">
@@ -655,24 +655,6 @@ specifications of each URI scheme.
 </reference>
 
 
-<reference anchor="MS-DTYP" target="http://msdn.microsoft.com/en-us/library/gg465305.aspx">
-  <front>
-    <title>Windows Data Types, 2.2.56 UNC</title>
-    <author >
-      <organization>Microsoft Open Specifications</organization>
-    </author>
-    <date year="2013" month="January"/>
-  </front>
-</reference>
-<reference anchor="MS-NBTE" target="http://msdn.microsoft.com/en-us/library/dd891412.aspx">
-  <front>
-    <title>NetBIOS over TCP (NBT) Extensions</title>
-    <author >
-      <organization>Microsoft Open Specifications</organization>
-    </author>
-    <date year="2014" month="May"/>
-  </front>
-</reference>
 <reference anchor="ISO10646" >
   <front>
     <title>Information Technology - Universal Multiple-Octet Coded Character Set (UCS)</title>
@@ -845,6 +827,24 @@ specifications of each URI scheme.
       <organization>WHATWG</organization>
     </author>
     <date year="2013" month="May"/>
+  </front>
+</reference>
+<reference anchor="MS-DTYP" target="http://msdn.microsoft.com/en-us/library/gg465305.aspx">
+  <front>
+    <title>Windows Data Types, 2.2.56 UNC</title>
+    <author >
+      <organization>Microsoft Open Specifications</organization>
+    </author>
+    <date year="2013" month="January"/>
+  </front>
+</reference>
+<reference anchor="MS-NBTE" target="http://msdn.microsoft.com/en-us/library/dd891412.aspx">
+  <front>
+    <title>NetBIOS over TCP (NBT) Extensions</title>
+    <author >
+      <organization>Microsoft Open Specifications</organization>
+    </author>
+    <date year="2014" month="May"/>
   </front>
 </reference>
 <reference anchor="MS-SMB" target="http://msdn.microsoft.com/en-us/library/cc246231.aspx">
@@ -1050,9 +1050,9 @@ with the following:</t>
 ]]></artwork></figure>
 
 <t><list style='empty'>
-  <t><spanx style="strong">Fixme</spanx> <spanx style="verb">authority</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
+  <t>[FIXME: <spanx style="verb">authority</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
 RFC3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule
-is not entirely valid.</t>
+is not entirely valid.]</t>
 </list></t>
 
 <t>For example:</t>

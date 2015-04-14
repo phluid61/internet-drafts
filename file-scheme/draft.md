@@ -45,20 +45,6 @@ normative:
   RFC4291:
   RFC5234:
   RFC6874:
-  MS-DTYP:
-    title: Windows Data Types, 2.2.56 UNC
-    author:
-    - organization: Microsoft Open Specifications
-      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
-    date: 2013-01
-    target: http://msdn.microsoft.com/en-us/library/gg465305.aspx
-  MS-NBTE:
-    title: NetBIOS over TCP (NBT) Extensions
-    author:
-    - organization: Microsoft Open Specifications
-      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
-    date: 2014-05
-    target: http://msdn.microsoft.com/en-us/library/dd891412.aspx
   ISO10646:
     title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
     author:
@@ -98,6 +84,20 @@ informative:
       #url: http://www.whatwg.org/
     date: 2013-05
     target: http://url.spec.whatwg.org/
+  MS-DTYP:
+    title: Windows Data Types, 2.2.56 UNC
+    author:
+    - organization: Microsoft Open Specifications
+      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
+    date: 2013-01
+    target: http://msdn.microsoft.com/en-us/library/gg465305.aspx
+  MS-NBTE:
+    title: NetBIOS over TCP (NBT) Extensions
+    author:
+    - organization: Microsoft Open Specifications
+      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
+    date: 2014-05
+    target: http://msdn.microsoft.com/en-us/library/dd891412.aspx
   MS-SMB:
     title: Server Message Block (SMB) Protocol
     author:
@@ -459,7 +459,7 @@ URI Schemes" registry has been updated accordingly.
  | file       | Host-specific file names | RFC XXXX  |
  |------------|--------------------------|-----------|
 
-**RFC Editor Note:** Replace XXXX with this RFC's reference.
+\[**RFC Editor Note:** Replace XXXX with this RFC's reference.\]
 
 
 # Acknowledgements
@@ -623,9 +623,9 @@ with the following:
    unc-authority  = 2*3"/" authority
 ~~~~~~~~~~
 
-> **Fixme** `authority` allows '[' and ']' in IPv6 literals, but
+> \[FIXME: `authority` allows '[' and ']' in IPv6 literals, but
 > RFC3986 forbids them in the path, so the `unc-authority` rule
-> is not entirely valid.
+> is not entirely valid.\]
 
 For example:
 
