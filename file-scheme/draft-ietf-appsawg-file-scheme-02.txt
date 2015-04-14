@@ -10,7 +10,7 @@ Expires: October 16, 2015
 
 
                           The file URI Scheme
-                   draft-ietf-appsawg-file-scheme-01
+                   draft-ietf-appsawg-file-scheme-02
 
 Abstract
 
@@ -21,7 +21,7 @@ Abstract
    across the broad spectrum of existing implementations, while at the
    same time documenting other current practices.
 
-Note to Readers (To be removed by the RFC Editor)
+   *Note to Readers (To be removed by the RFC Editor)*
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list apps-discuss@ietf.org [1].
@@ -271,7 +271,7 @@ Internet-Draft                 file-scheme                    April 2015
 
        2.  Append the transformed segment to the URI.
 
-Differences from RFC 1738
+   *Differences from RFC 1738*
 
 
 
@@ -338,7 +338,7 @@ Kerwin                  Expires October 16, 2015                [Page 6]
 Internet-Draft                 file-scheme                    April 2015
 
 
-Differences from RFC 1738
+   *Differences from RFC 1738*
 
    In [RFC1738] a file URL an authority of "localhost" was used to refer
    to the local file system, but in this specification it equates to a
@@ -459,7 +459,7 @@ Internet-Draft                 file-scheme                    April 2015
            | file       | Host-specific file names | RFC XXXX  |
            +------------+--------------------------+-----------+
 
-   [RFC Editor Note: Replace XXXX with this RFC's reference.]
+   [*RFC Editor Note:* Replace XXXX with this RFC's reference.]
 
 7.  Acknowledgements
 
@@ -637,7 +637,7 @@ B.3.  Mac OS X Systems
 
    o  HFS+ uses non-standard UTF-8 [STD63] form (like NFD)
 
-      -  take care transforming <-> NFC [UTR15]
+      *  take care transforming <-> NFC [UTR15]
 
 B.4.  OpenVMS Files-11 Systems
 
