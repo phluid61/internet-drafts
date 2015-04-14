@@ -995,6 +995,32 @@ with a drive letter.  To facilitate this, the <spanx style="verb">local-path</sp
     </list></t>
 </list></t>
 
+<section anchor="ext-relative" title="Relative Paths">
+
+<t>[FIXME: is this normative or not?]</t>
+
+<t>In DOS- or Windows-based file systems, relative paths beginning with
+a slash “/” should be resolved relative to the drive letter, and
+resolution of “..” dot segments (per Section 5.2.4 of <xref target="RFC3986"/>)
+should not ever overwrite the drive letter.</t>
+
+<t>e.g.:</t>
+
+<figure><artwork><![CDATA[
+   base:       file:///c:/path/to/file.txt
+   rel. URI:   /some/other/thing.bmp
+   resolved:   file:///c:/some/other/thing.bmp
+
+   base:       file:///c:/foo.txt
+   rel. URI:   ../../bar.txt
+   resolved:   file:///c:/bar.txt
+]]></artwork></figure>
+
+<t>Relative paths with a drive letter followed by a character other than
+a slash (e.g. “c:bar/baz.txt” or “c:../foo.txt”) should not be
+accepted as valid URIs in DOS or Windows systems.</t>
+
+</section>
 <section anchor="ext-pipe" title="Vertical Bar Character">
 
 <t>Historically some implementations have used a vertical line character
