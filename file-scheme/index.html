@@ -847,6 +847,7 @@
 <ul>
   <li><samp>file:c:/path/to/file</samp>  <ul class="empty"><li>The minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.</li></ul></li>
 </ul>
+<p id="rfc.section.C.1.p.4">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive.  Some implementations therefore canonicalize drive letters in file URIs by converting them to uppercase.</p>
 <h1 id="rfc.appendix.C.1.1"><a href="#rfc.appendix.C.1.1">C.1.1.</a> <a href="#ext-relative" id="ext-relative">Relative Paths</a></h1>
 <p id="rfc.section.C.1.1.p.1">[FIXME: is this normative or not?]</p>
 <p id="rfc.section.C.1.1.p.2">In DOS- or Windows-based file systems, relative paths beginning with a slash &#8220;/&#8221; should be resolved relative to the drive letter, and resolution of &#8220;..&#8221; dot segments (per Section 5.2.4 of <a href="#RFC3986">[RFC3986]</a>) should not ever overwrite the drive letter.</p>

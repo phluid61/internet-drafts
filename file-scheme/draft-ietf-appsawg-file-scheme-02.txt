@@ -95,12 +95,12 @@ Table of Contents
    Appendix C.  Nonstandard Syntax Variations  . . . . . . . . . . .  12
      C.1.  DOS and Windows Drive Letters . . . . . . . . . . . . . .  13
        C.1.1.  Relative Paths  . . . . . . . . . . . . . . . . . . .  13
-       C.1.2.  Vertical Bar Character  . . . . . . . . . . . . . . .  13
+       C.1.2.  Vertical Bar Character  . . . . . . . . . . . . . . .  14
      C.2.  UNC Paths . . . . . . . . . . . . . . . . . . . . . . . .  14
      C.3.  Backslash as Separator  . . . . . . . . . . . . . . . . .  15
    Appendix D.  Example of IRI vs Percent-Encoded URI  . . . . . . .  16
    Appendix E.  UNC Syntax . . . . . . . . . . . . . . . . . . . . .  17
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  17
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
 
 
 
@@ -692,6 +692,10 @@ C.1.  DOS and Windows Drive Letters
          Windows-based environment, with no authority field and an
          absolute path that begins with a drive letter.
 
+   Note that comparison of drive letters in DOS or Windows file paths is
+   case-insensitive.  Some implementations therefore canonicalize drive
+   letters in file URIs by converting them to uppercase.
+
 C.1.1.  Relative Paths
 
    [FIXME: is this normative or not?]
@@ -715,12 +719,8 @@ C.1.1.  Relative Paths
    a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") should not be
    accepted as valid URIs in DOS or Windows systems.
 
-C.1.2.  Vertical Bar Character
 
-   Historically some implementations have used a vertical line character
-   "|" instead of a colon ":" in the drive letter construct.  [RFC3986]
-   forbids the use of the vertical line, however it may be necessary to
-   interpret or update old URIs.
+
 
 
 
@@ -729,6 +729,13 @@ Kerwin                  Expires October 16, 2015               [Page 13]
 
 Internet-Draft                 file-scheme                    April 2015
 
+
+C.1.2.  Vertical Bar Character
+
+   Historically some implementations have used a vertical line character
+   "|" instead of a colon ":" in the drive letter construct.  [RFC3986]
+   forbids the use of the vertical line, however it may be necessary to
+   interpret or update old URIs.
 
    For interpreting such URIs, the "auth-path" and "local-path" rules in
    Section 2 and the "drive-letter" rule above are replaced with the
@@ -768,6 +775,17 @@ C.2.  UNC Paths
    To interpret such URIs, the "auth-path" rule in Section 2 is replaced
    with the following:
 
+
+
+
+
+
+
+Kerwin                  Expires October 16, 2015               [Page 14]
+
+Internet-Draft                 file-scheme                    April 2015
+
+
       auth-path      = [ file-auth ] path-absolute
                      / unc-authority path-absolute
 
@@ -778,13 +796,6 @@ C.2.  UNC Paths
       is not entirely valid.]
 
    For example:
-
-
-
-Kerwin                  Expires October 16, 2015               [Page 14]
-
-Internet-Draft                 file-scheme                    April 2015
-
 
       Traditional:
           file:////hostname/share/object/names
@@ -822,17 +833,6 @@ C.3.  Backslash as Separator
 
    Historically some implementations have copied entire file paths into
    the path components of file URIs.  Where DOS or Windows file paths
-   were copied thus, resulting URI strings contained unencoded backslash
-   "\" characters, which are forbidden by both [RFC1738] and [RFC3986].
-
-   It may be possible to translate or update such an invalid file URI by
-   replacing all backslashes "\" with slashes "/", if it can be
-   determined with reasonable certainty that the backslashes are
-   intended as path separators.
-
-
-
-
 
 
 
@@ -841,6 +841,14 @@ Kerwin                  Expires October 16, 2015               [Page 15]
 
 Internet-Draft                 file-scheme                    April 2015
 
+
+   were copied thus, resulting URI strings contained unencoded backslash
+   "\" characters, which are forbidden by both [RFC1738] and [RFC3986].
+
+   It may be possible to translate or update such an invalid file URI by
+   replacing all backslashes "\" with slashes "/", if it can be
+   determined with reasonable certainty that the backslashes are
+   intended as path separators.
 
 Appendix D.  Example of IRI vs Percent-Encoded URI
 
@@ -868,6 +876,28 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
 
    Counter-example: ambiguous file URI:
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kerwin                  Expires October 16, 2015               [Page 16]
+
+Internet-Draft                 file-scheme                    April 2015
+
+
    | Percent-encoded file URI, in any ASCII-compatible document:
    |    "file:///%E3%81%A1"
    |
@@ -886,17 +916,6 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
    |       "Ta~"
    |
    | etc.
-
-
-
-
-
-
-
-Kerwin                  Expires October 16, 2015               [Page 16]
-
-Internet-Draft                 file-scheme                    April 2015
-
 
 Appendix E.  UNC Syntax
 
@@ -922,6 +941,18 @@ Appendix E.  UNC Syntax
 
    The precise format of "sharename" depends on the protocol; see: SMB
    [MS-SMB], NFS [RFC3530], NCP [NOVELL].
+
+
+
+
+
+
+
+
+Kerwin                  Expires October 16, 2015               [Page 17]
+
+Internet-Draft                 file-scheme                    April 2015
+
 
 Author's Address
 
@@ -949,4 +980,29 @@ Author's Address
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 17]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kerwin                  Expires October 16, 2015               [Page 18]
