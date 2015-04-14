@@ -90,7 +90,6 @@ informative:
   RFC1630:
   RFC1738:
   RFC3530:
-  #RFC7231:
   I-D.hoffman-file-uri:
   WHATWG-URL:
     title: URL Living Standard
@@ -257,12 +256,12 @@ A file URI can only be translated to a local file path if it has a
 blank or no authority.  Note that this differs from the previous
 specification in {{RFC1738}}, in that previously an authority of
 "localhost" was used to refer to the local file system, but in this
-specification it translates to a UNC string with the host "localhost".
+specification it equates to a UNC string with the host "localhost".
 
 This specification neither defines nor forbids a mechanism for
-accessing files stored on non-local file systems.  See SMB {{MS-SMB}},
-NFS {{RFC3530}}, NCP {{NOVELL}} for examples of protocols that can be
-used to access files over a network.
+accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP
+{{NOVELL}} for examples of protocols that can be used to access files
+over a network.
 
 
 ## Translating Local File Path to file URI  {#file-to-uri}
@@ -279,19 +278,7 @@ of {{RFC3987}}; see: {{encoding}}.
 3.  If including an empty authority field, append the "//" sigil to
     the URI.
 
-4.  Append the file system root:
-
-    *   On a UNIX-like system, append a slash "/" to the URI, to
-        denote the root directory.
-
-    *   On a DOS- or Windows-based system, append a slash "/" to the
-        URI, and encode the drive letter (e.g. "c:") as the first path
-        segment as per step 5, below.
-
-    *   On an OpenVMS Files-11 system, append a slash "/" to the URI,
-        and encode the device name as the first segment as per step 5,
-        below, except that the dollars sign character "$" is not
-        treated as a reserved character in this segment.
+4.  Append a slash character "/" to the URI, to signify the path root.
 
 5.  For each directory in the path after the root:
 
@@ -308,36 +295,12 @@ of {{RFC3987}}; see: {{encoding}}.
     2.  Append the transformed segment to the URI.
 
 
-Examples:
-
-~~~~~~~~~~
-   File Path                      | URIs (minimal, traditional)
-   -------------------------------+--------------------------------
-   UNIX-like:                     |
-     /path/to/file                | file:/path/to/file
-                                  | file:///path/to/file
-                                  |
-     /path/to/dir/                | file:/path/to/dir/
-                                  | file:///path/to/dir/
-                                  |
-   DOS- or Windows-based:         |
-     c:\path\to\file.txt          | file:/c:/path/to/file.txt
-                                  | file:///c:/path/to/file.txt
-                                  |
-     c:\path\to\dir\              | file:/c:/path/to/dir/
-                                  | file:///c:/path/to/dir/
-   VMS Files-11:                  |
-     ::DISK1:[PATH.TO]FILE.TXT;2  | file:/DISK1/PATH/TO/FILE.TXT?2
-                                  | file:///DISK1/PATH/TO/FILE.TXT?2
-                                  |
-~~~~~~~~~~
-
 __Differences from RFC 1738__
 
 In {{RFC1738}} a file URL always started with the token "file://",
 followed by an authority and a "/". That "/" was not considered part
-of the path.  This implies that the correct encoding for the above
-example file path in a UNIX-like environment would have been:
+of the path.  This implies that the correct encoding for a file path
+in a UNIX-like environment would have been:
 
 ~~~~~~~~~~
      token     + authority + slash + path
@@ -348,19 +311,6 @@ example file path in a UNIX-like environment would have been:
 However that construct was never used in practice, and in fact would
 have collided with the eventual encoding of UNC strings in URIs
 described in {{ext-unc}}.
-
-
-__Exceptions__
-
-DOS/Windows:
-: Some implementations leave the leading slash off before
-  the drive letter.  See {{ext-drives}}.
-
-DOS/Windows:
-: Some implementations replace ":" with "|", and others
-  leave it off completely. e.g. `file:///c|/...` or `file:///c/...`
-  See {{ext-pipe}}.
-{: vspace="0"}
 
 
 ## Translating UNC String to file URI  {#unc-to-uri}
@@ -401,13 +351,11 @@ Example:
    URI:          file://host.example.com/Share/path/to/file.txt
 ~~~~~~~~~~
 
-__Exceptions__
+__Differences from RFC 1738__
 
-Many implementations accept the full UNC string in the URI path (with
-all backslashes "\\" converted to slashes "/").  Additionally, because
-{{RFC1738}} said that the first "/" after "file://\[authority\]" wasn't
-part of the path, some implementations (including Firefox) require an
-additional slash before the UNC string.  See {{ext-unc}}.
+In {{RFC1738}} a file URL an authority of "localhost" was used to
+refer to the local file system, but in this specification it
+equates to a UNC string with the host "localhost".
 
 
 ## Translating Non-local File Path to file URI  {#remote-to-uri}
@@ -536,7 +484,7 @@ Local files:
 
 * `file:///path/to/file`
 
-   > A "traditional" file URI for a local file, with an empty
+   > A traditional file URI for a local file, with an empty
      authority.  This is the most common format in use today.
 
 * `file:/path/to/file`
@@ -551,6 +499,48 @@ Non-local files:
    > The representation of a non-local file, with an explicit
      authority.  Note that, unlike in {{RFC1738}}, the string
      "localhost" in the authority signifies a non-local file.
+
+
+# System-specific Operations
+
+This section provides examples of some system-specific thingies.
+
+This section is not normative.  \[FIXME: it's also incomplete\]
+
+## POSIX Systems  {#sys-unix}
+
+* No special considerations (file URIs are based on UNIX paths)
+
+## DOS- and Windows-Like Systems  {#sys-dos}
+
+When mapping a DOS- or Windows-like file path to a URI, use
+the drive letter (e.g. "c:") as the first path segment.
+
+Some implementations leave the leading slash off before the drive
+letter.  See {{ext-drives}})
+
+Some implementations replace ":" with "|", while others leave it off
+completed.  See {{ext-pipe}}
+
+
+## Mac OS X Systems  {#sys-osx}
+
+* HFS+ uses non-standard UTF-8 {{STD63}} form (like NFD)
+
+   * take care transforming <-> NFC {{UTR15}}
+
+## OpenVMS Files-11 Systems  {#sys-vms}
+
+When mapping a VMS file path to a file URI, use the device name
+as the first path segment.  Note that the dollars sign "$" is
+a reserved character ({{RFC3986}}, Section 2.2), so should be
+percent-encoded.
+
+If the VMS file path includes a node reference, use that as the
+authority.  Where the original node reference includes a username and
+password in an access control string, they can be transcribed into the
+userinfo field of the authority ({{RFC3986}}, Section 3.2.1), security
+considerations ({{security}}) notwithstanding.
 
 
 # Nonstandard Syntax Variations  {#nonstandard-syntax}
