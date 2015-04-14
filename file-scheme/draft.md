@@ -428,8 +428,8 @@ characters, such as the "/", "\\", ":", "[", and "]" characters, and
 to special device names like ".", "..", "...", "aux", "lpt", etc.
 In some cases, merely testing for the existence of such a name will
 cause the operating system to pause or invoke unrelated system calls,
-leading to significant securt concerns regarding denial of service and
-unintended data transfer.  It would be impossible for this
+leading to significant security concerns regarding denial of service
+and unintended data transfer.  It would be impossible for this
 specification to list all such significant characters and device names.
 Implementers MUST research the reserved names and characters for the
 types of storage device that may be attached to their application and
