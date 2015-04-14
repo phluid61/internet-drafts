@@ -995,6 +995,10 @@ with a drive letter.  To facilitate this, the <spanx style="verb">local-path</sp
     </list></t>
 </list></t>
 
+<t>Note that comparison of drive letters in DOS or Windows file paths
+is case-insensitive.  Some implementations therefore canonicalize drive
+letters in file URIs by converting them to uppercase.</t>
+
 <section anchor="ext-relative" title="Relative Paths">
 
 <t>[FIXME: is this normative or not?]</t>
