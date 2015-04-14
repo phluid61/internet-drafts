@@ -1046,13 +1046,13 @@ with the following:</t>
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" authority
+   unc-authority  = 2*3"/" file-auth
 ]]></artwork></figure>
 
 <t><list style='empty'>
-  <t>[FIXME: <spanx style="verb">authority</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
-RFC3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule
-is not entirely valid.]</t>
+  <t>[FIXME: <spanx style="verb">host</spanx> in <spanx style="verb">f-auth</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
+RFC3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule is not
+entirely valid.]</t>
 </list></t>
 
 <t>For example:</t>
