@@ -572,6 +572,32 @@ This is intended to support URIs of the form:
      absolute path that begins with a drive letter.
 
 
+### Relative Paths  {#ext-relative}
+
+\[FIXME: is this normative or not?\]
+
+In DOS- or Windows-based file systems, relative paths beginning with
+a slash "/" should be resolved relative to the drive letter, and
+resolution of ".." dot segments (per Section 5.2.4 of {{RFC3986}})
+should not ever overwrite the drive letter.
+
+e.g.:
+
+~~~~~~~~~~
+   base:       file:///c:/path/to/file.txt
+   rel. URI:   /some/other/thing.bmp
+   resolved:   file:///c:/some/other/thing.bmp
+
+   base:       file:///c:/foo.txt
+   rel. URI:   ../../bar.txt
+   resolved:   file:///c:/bar.txt
+~~~~~~~~~~
+
+Relative paths with a drive letter followed by a character other than
+a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") should not be
+accepted as valid URIs in DOS or Windows systems.
+
+
 ### Vertical Bar Character  {#ext-pipe}
 
 Historically some implementations have used a vertical line character
