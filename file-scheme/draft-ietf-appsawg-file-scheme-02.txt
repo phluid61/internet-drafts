@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 1738 (if approved)                             April 14, 2015
+Obsoletes: 1738 (if approved)                             April 24, 2015
 Intended status: Standards Track
-Expires: October 16, 2015
+Expires: October 26, 2015
 
 
                           The file URI Scheme
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 16, 2015.
+   This Internet-Draft will expire on October 26, 2015.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 1]
+Kerwin                  Expires October 26, 2015                [Page 1]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 2]
+Kerwin                  Expires October 26, 2015                [Page 2]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -165,7 +165,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 3]
+Kerwin                  Expires October 26, 2015                [Page 3]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -221,7 +221,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 4]
+Kerwin                  Expires October 26, 2015                [Page 4]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -277,7 +277,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 5]
+Kerwin                  Expires October 26, 2015                [Page 5]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -333,7 +333,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 6]
+Kerwin                  Expires October 26, 2015                [Page 6]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -389,7 +389,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 7]
+Kerwin                  Expires October 26, 2015                [Page 7]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -445,7 +445,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 8]
+Kerwin                  Expires October 26, 2015                [Page 8]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -501,7 +501,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015                [Page 9]
+Kerwin                  Expires October 26, 2015                [Page 9]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -557,7 +557,7 @@ Internet-Draft                 file-scheme                    April 2015
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 10]
+Kerwin                  Expires October 26, 2015               [Page 10]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -613,7 +613,7 @@ Appendix A.  Example URIs
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 11]
+Kerwin                  Expires October 26, 2015               [Page 11]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -669,7 +669,7 @@ Appendix C.  Nonstandard Syntax Variations
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 12]
+Kerwin                  Expires October 26, 2015               [Page 12]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -725,7 +725,7 @@ C.1.1.  Relative Paths
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 13]
+Kerwin                  Expires October 26, 2015               [Page 13]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -781,7 +781,7 @@ C.2.  UNC Paths
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 14]
+Kerwin                  Expires October 26, 2015               [Page 14]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -837,7 +837,7 @@ C.3.  Backslash as Separator
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 15]
+Kerwin                  Expires October 26, 2015               [Page 15]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -893,7 +893,7 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 16]
+Kerwin                  Expires October 26, 2015               [Page 16]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -949,7 +949,7 @@ Appendix E.  UNC Syntax
 
 
 
-Kerwin                  Expires October 16, 2015               [Page 17]
+Kerwin                  Expires October 26, 2015               [Page 17]
 
 Internet-Draft                 file-scheme                    April 2015
 
@@ -957,7 +957,10 @@ Internet-Draft                 file-scheme                    April 2015
 Author's Address
 
    Matthew Kerwin
-   QUT
+   Queensland University of Technology
+   Victoria Park Road
+   Kelvin Grove, QLD  4059
+   Australia
 
    Email: matthew.kerwin@qut.edu.au
 
@@ -1002,7 +1005,4 @@ Author's Address
 
 
 
-
-
-
-Kerwin                  Expires October 16, 2015               [Page 18]
+Kerwin                  Expires October 26, 2015               [Page 18]
