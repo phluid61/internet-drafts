@@ -20,7 +20,13 @@ author:
 -
     ins: M. Kerwin
     name: Matthew Kerwin
-    organization: QUT
+    org: Queensland University of Technology
+    abbrev: QUT
+    street: Victoria Park Road
+    city: Kelvin Grove
+    region: QLD
+    code: 4059
+    country: Australia
     email: matthew.kerwin@qut.edu.au
 
 normative:
