@@ -434,8 +434,8 @@ characters, such as the "/", "\\", ":", "[", and "]" characters, and
 to special device names like ".", "..", "...", "aux", "lpt", etc.
 In some cases, merely testing for the existence of such a name will
 cause the operating system to pause or invoke unrelated system calls,
-leading to significant securt concerns regarding denial of service and
-unintended data transfer.  It would be impossible for this
+leading to significant security concerns regarding denial of service
+and unintended data transfer.  It would be impossible for this
 specification to list all such significant characters and device names.
 Implementers MUST research the reserved names and characters for the
 types of storage device that may be attached to their application and
@@ -577,6 +577,36 @@ This is intended to support URIs of the form:
      Windows-based environment, with no authority field and an
      absolute path that begins with a drive letter.
 
+Note that comparison of drive letters in DOS or Windows file paths
+is case-insensitive.  Some implementations therefore canonicalize drive
+letters in file URIs by converting them to uppercase.
+
+
+### Relative Paths  {#ext-relative}
+
+\[FIXME: is this normative or not?\]
+
+In DOS- or Windows-based file systems, relative paths beginning with
+a slash "/" should be resolved relative to the drive letter, and
+resolution of ".." dot segments (per Section 5.2.4 of {{RFC3986}})
+should not ever overwrite the drive letter.
+
+e.g.:
+
+~~~~~~~~~~
+   base:       file:///c:/path/to/file.txt
+   rel. URI:   /some/other/thing.bmp
+   resolved:   file:///c:/some/other/thing.bmp
+
+   base:       file:///c:/foo.txt
+   rel. URI:   ../../bar.txt
+   resolved:   file:///c:/bar.txt
+~~~~~~~~~~
+
+Relative paths with a drive letter followed by a character other than
+a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") should not be
+accepted as valid URIs in DOS or Windows systems.
+
 
 ### Vertical Bar Character  {#ext-pipe}
 
@@ -626,12 +656,12 @@ with the following:
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" authority
+   unc-authority  = 2*3"/" file-auth
 ~~~~~~~~~~
 
-> \[FIXME: `authority` allows '[' and ']' in IPv6 literals, but
-> RFC3986 forbids them in the path, so the `unc-authority` rule
-> is not entirely valid.\]
+> \[FIXME: `host` in `f-auth` allows '[' and ']' in IPv6 literals, but
+> RFC3986 forbids them in the path, so the `unc-authority` rule is not
+> entirely valid.\]
 
 For example:
 
