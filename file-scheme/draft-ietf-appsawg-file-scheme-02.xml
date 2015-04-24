@@ -20,8 +20,15 @@
     <title abbrev="file-scheme">The file URI Scheme</title>
 
     <author initials="M." surname="Kerwin" fullname="Matthew Kerwin">
-      <organization>QUT</organization>
+      <organization abbrev="QUT">Queensland University of Technology</organization>
       <address>
+        <postal>
+          <street>Victoria Park Road</street>
+          <city>Kelvin Grove</city>
+          <region>QLD</region>
+          <code>4059</code>
+          <country>Australia</country>
+        </postal>
         <email>matthew.kerwin@qut.edu.au</email>
       </address>
     </author>
