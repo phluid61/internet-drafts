@@ -130,6 +130,13 @@ informative:
     - organization: Microsoft Developer Network
     date: 2013-06
 
+  Bug107540:
+    title: Bug 107540
+    author:
+    - organization: Bugzilla@Mozilla
+    date: 2007-10
+    target: https://bugzilla.mozilla.org/show_bug.cgi?id=107540
+
 
 --- abstract
 
@@ -706,8 +713,8 @@ Non-local files:
 
    > As above, with an extra slash between the empty authority and the
      transformed UNC string, conformant with the definition from
-     {{RFC1738}}; see: exceptions in {{unc-to-uri}}.  This
-     representation is notably used by the Firefox web browser.
+     {{RFC1738}}.  This representation is notably used by the Firefox
+     web browser.  See Bugzilla#107540 [Bug107540].
 
 
 It also further limits the set of file URIs that can be translated to
