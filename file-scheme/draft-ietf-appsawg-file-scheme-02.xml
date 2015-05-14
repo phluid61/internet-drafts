@@ -896,6 +896,15 @@ specifications of each URI scheme.
     <date year="2013" month="June"/>
   </front>
 </reference>
+<reference anchor="Bug107540" target="https://bugzilla.mozilla.org/show_bug.cgi?id=107540">
+  <front>
+    <title>Bug 107540</title>
+    <author >
+      <organization>Bugzilla@Mozilla</organization>
+    </author>
+    <date year="2007" month="October"/>
+  </front>
+</reference>
 
 
     </references>
@@ -952,7 +961,7 @@ the drive letter (e.g. “c:”) as the first path segment.</t>
 letter.  See <xref target="ext-drives"/>)</t>
 
 <t>Some implementations replace “:” with “|”, while others leave it off
-completed.  See <xref target="ext-pipe"/></t>
+completely.  See <xref target="ext-pipe"/></t>
 
 </section>
 <section anchor="sys-osx" title="Mac OS X Systems">
@@ -1093,9 +1102,9 @@ with the following:</t>
 ]]></artwork></figure>
 
 <t><list style='empty'>
-  <t>[FIXME: <spanx style="verb">host</spanx> in <spanx style="verb">f-auth</spanx> allows ‘[’ and ‘]’ in IPv6 literals, but
-RFC3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule is not
-entirely valid.]</t>
+  <t>[FIXME: <spanx style="verb">host</spanx> in <spanx style="verb">file-auth</spanx> allows ‘[’ and ‘]’ in IPv6 literals,
+but RFC3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule is
+not entirely valid.]</t>
 </list></t>
 
 <t>For example:</t>
@@ -1127,13 +1136,14 @@ following forms, in addition to those in <xref target="examples"/>:</t>
   <t><spanx style="verb">file://///host.example.com/path/to/file</spanx>  <list style='empty'>
       <t>As above, with an extra slash between the empty authority and the
    transformed UNC string, conformant with the definition from
-   <xref target="RFC1738"/>; see: exceptions in <xref target="unc-to-uri"/>.  This
-   representation is notably used by the Firefox web browser.</t>
+   <xref target="RFC1738"/>.  This representation is notably used by the Firefox
+   web browser.  See Bugzilla#107540 <xref target="Bug107540"></xref>.</t>
     </list></t>
 </list></t>
 
 <t>It also further limits the set of file URIs that can be translated to
-a local file path to those whose path does not encode a UNC string.</t>
+a local file path to those with a path that does not encode a UNC
+string.</t>
 
 </section>
 <section anchor="ext-backslash" title="Backslash as Separator">
