@@ -150,7 +150,7 @@ same time documenting other current practices.
 **Note to Readers (To be removed by the RFC Editor)**
 
 This draft should be discussed on the IETF Applications Area Working
-Group discussion list <apps-discuss@ietf.org>.
+Group discussion list \<apps-discuss@ietf.org>.
 
 --- middle
 
@@ -478,7 +478,7 @@ Applications/protocols that use this scheme name:
 :  Perl LWP.
 
 Contact:
-:  Matthew Kerwin <matthew@kerwin.net.au>
+:  Matthew Kerwin \<matthew.kerwin@qut.edu.au>
 
 Change Controller:
 :  This scheme is registered under the IETF tree.  As such, the IETF
