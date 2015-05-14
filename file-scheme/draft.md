@@ -453,17 +453,30 @@ password.
 
 # IANA Considerations {#iana-considerations}
 
-IANA maintains the registry of URI Schemes {{BCP115}} at
-<http://www.iana.org/assignments/uri-schemes/>.
-
 This document defines the following URI scheme, so the "Permanent
-URI Schemes" registry has been updated accordingly.
+URI Schemes" registry has been updated accordingly.  This registration
+complies with {{BCP115}}.
 
- |------------|--------------------------|-----------|
- | URI Scheme | Description              | Reference |
- |------------|--------------------------|-----------|
- | file       | Host-specific file names | RFC XXXX  |
- |------------|--------------------------|-----------|
+
+Scheme name:
+:  file
+
+Status:
+:  permanent
+
+Applications/protocols that use this scheme name:
+:  Commonly used in hypertext documents to refer to files without
+   depending on network access.  Supported by major browsers.
+:  Windows API (PathCreateFromUrl, UrlCreateFromPath).
+:  Perl LWP.
+
+Contact:
+:  Matthew Kerwin <matthew@kerwin.net.au>
+
+Change Controller:
+:  This scheme is registered under the IETF tree.  As such, the IETF
+   maintains change control.
+{: vspace="0"}
 
 \[**RFC Editor Note:** Replace XXXX with this RFC's reference.\]
 
