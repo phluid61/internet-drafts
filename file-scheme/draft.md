@@ -539,7 +539,7 @@ Some implementations leave the leading slash off before the drive
 letter.  See {{ext-drives}})
 
 Some implementations replace ":" with "|", while others leave it off
-completed.  See {{ext-pipe}}
+completely.  See {{ext-pipe}}
 
 
 ## Mac OS X Systems  {#sys-osx}
@@ -711,7 +711,8 @@ Non-local files:
 
 
 It also further limits the set of file URIs that can be translated to
-a local file path to those whose path does not encode a UNC string.
+a local file path to those with a path that does not encode a UNC
+string.
 
 
 ## Backslash as Separator  {#ext-backslash}
