@@ -21,10 +21,10 @@ Abstract
    across the broad spectrum of existing implementations, while at the
    same time documenting other current practices.
 
-   *Note to Readers (To be removed by the RFC Editor)*
+Note to Readers (To be removed by the RFC Editor)
 
    This draft should be discussed on the IETF Applications Area Working
-   Group discussion list apps-discuss@ietf.org [1].
+   Group discussion list <apps-discuss@ietf.org>.
 
 Status of This Memo
 
@@ -86,7 +86,6 @@ Table of Contents
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  10
-     8.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  12
    Appendix A.  Example URIs . . . . . . . . . . . . . . . . . . . .  12
    Appendix B.  System-specific Operations . . . . . . . . . . . . .  12
      B.1.  POSIX Systems . . . . . . . . . . . . . . . . . . . . . .  12
@@ -102,6 +101,7 @@ Table of Contents
    Appendix D.  Example of IRI vs Percent-Encoded URI  . . . . . . .  16
    Appendix E.  UNC Syntax . . . . . . . . . . . . . . . . . . . . .  17
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
+
 
 
 
@@ -286,7 +286,7 @@ Internet-Draft                 file-scheme                      May 2015
 
        2.  Append the transformed segment to the URI.
 
-   *Differences from RFC 1738*
+Differences from RFC 1738
 
    In [RFC1738] a file URL always started with the token "file://",
    followed by an authority and a "/".  That "/" was not considered part
@@ -346,7 +346,7 @@ Internet-Draft                 file-scheme                      May 2015
       UNC String:   \\host.example.com\Share\path\to\file.txt
       URI:          file://host.example.com/Share/path/to/file.txt
 
-   *Differences from RFC 1738*
+Differences from RFC 1738
 
    In [RFC1738] a file URL an authority of "localhost" was used to refer
    to the local file system, but in this specification it equates to a
@@ -438,7 +438,7 @@ Internet-Draft                 file-scheme                      May 2015
    accordingly.
 
    Additionally, as discussed in the HP OpenVMS Systems Documentation
-   http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html
+   <http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
    "access control strings include sufficient information to allow
    someone to break in to the remote account, [therefore] they create
    serious security exposure."  In a similar vein, the presence of a
@@ -475,13 +475,13 @@ Internet-Draft                 file-scheme                      May 2015
       Perl LWP.
 
    Contact:
-      Matthew Kerwin matthew@kerwin.net.au [3]
+      Matthew Kerwin <matthew.kerwin@qut.edu.au>
 
    Change Controller:
       This scheme is registered under the IETF tree.  As such, the IETF
       maintains change control.
 
-   [*RFC Editor Note:* Replace XXXX with this RFC's reference.]
+   [RFC Editor Note: Replace XXXX with this RFC's reference.]
 
 7.  Acknowledgements
 
@@ -490,8 +490,8 @@ Internet-Draft                 file-scheme                      May 2015
    documents still apply.
 
    Additional thanks to Dave Risney, author of the informative IE Blog
-   article http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-
-   windows.aspx , and Dave Thaler for their comments and suggestions.
+   article <http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-
+   windows.aspx>, and Dave Thaler for their comments and suggestions.
 
 8.  References
 
@@ -618,10 +618,6 @@ Kerwin                  Expires November 15, 2015              [Page 11]
 Internet-Draft                 file-scheme                      May 2015
 
 
-8.3.  URIs
-
-   [2] mailto:matthew@kerwin.net.au
-
 Appendix A.  Example URIs
 
    The syntax in Section 2 is intended to support file URIs that take
@@ -665,6 +661,10 @@ B.2.  DOS- and Windows-Like Systems
    Some implementations leave the leading slash off before the drive
    letter.  See Appendix C.1)
 
+   Some implementations replace ":" with "|", while others leave it off
+   completely.  See Appendix C.1.2
+
+
 
 
 
@@ -673,9 +673,6 @@ Kerwin                  Expires November 15, 2015              [Page 12]
 
 Internet-Draft                 file-scheme                      May 2015
 
-
-   Some implementations replace ":" with "|", while others leave it off
-   completely.  See Appendix C.1.2
 
 B.3.  Mac OS X Systems
 
@@ -720,6 +717,9 @@ C.1.  DOS and Windows Drive Letters
          Windows-based environment, with no authority field and an
          absolute path that begins with a drive letter.
 
+   Note that comparison of drive letters in DOS or Windows file paths is
+   case-insensitive.  Some implementations therefore canonicalize drive
+   letters in file URIs by converting them to uppercase.
 
 
 
@@ -729,10 +729,6 @@ Kerwin                  Expires November 15, 2015              [Page 13]
 
 Internet-Draft                 file-scheme                      May 2015
 
-
-   Note that comparison of drive letters in DOS or Windows file paths is
-   case-insensitive.  Some implementations therefore canonicalize drive
-   letters in file URIs by converting them to uppercase.
 
 C.1.1.  Relative Paths
 
@@ -779,16 +775,16 @@ C.1.2.  Vertical Bar Character
       drive-letter   = ALPHA ":"
                      / ALPHA "|"
 
+   This is intended to support URIs of the form:
+
+   o  "file:///c|/path/to/file"
+
 
 
 Kerwin                  Expires November 15, 2015              [Page 14]
 
 Internet-Draft                 file-scheme                      May 2015
 
-
-   This is intended to support URIs of the form:
-
-   o  "file:///c|/path/to/file"
 
    o  "file:/c|/path/to/file"
 
@@ -834,6 +830,10 @@ C.2.  UNC Paths
    This extended syntax is intended to support URIs that take the
    following forms, in addition to those in Appendix A:
 
+   Non-local files:
+
+   o  "file:////host.example.com/path/to/file"
+
 
 
 
@@ -841,10 +841,6 @@ Kerwin                  Expires November 15, 2015              [Page 15]
 
 Internet-Draft                 file-scheme                      May 2015
 
-
-   Non-local files:
-
-   o  "file:////host.example.com/path/to/file"
 
          The "traditional" representation of a non-local file, with an
          empty authority and a complete (transformed) UNC string in the
@@ -879,6 +875,10 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
    URIs as IRIs to avoid ambiguity (see Section 4).
 
    Example: file IRI:
+
+
+
+
 
 
 
