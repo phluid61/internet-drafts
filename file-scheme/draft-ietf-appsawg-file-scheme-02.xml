@@ -52,7 +52,7 @@ same time documenting other current practices.</t>
 <t><spanx style="strong">Note to Readers (To be removed by the RFC Editor)</spanx></t>
 
 <t>This draft should be discussed on the IETF Applications Area Working
-Group discussion list <eref target="mailto:apps-discuss@ietf.org">apps-discuss@ietf.org</eref>.</t>
+Group discussion list &lt;apps-discuss@ietf.org&gt;.</t>
 
 
 
@@ -378,7 +378,7 @@ depending on network access.  Supported by major browsers.</t>
   <t>Windows API (PathCreateFromUrl, UrlCreateFromPath).</t>
   <t>Perl LWP.</t>
   <t hangText='Contact:'><vspace blankLines='0'/>
-  Matthew Kerwin <eref target="mailto:matthew@kerwin.net.au">matthew@kerwin.net.au</eref></t>
+  Matthew Kerwin &lt;matthew.kerwin@qut.edu.au&gt;</t>
   <t hangText='Change Controller:'><vspace blankLines='0'/>
   This scheme is registered under the IETF tree.  As such, the IETF
 maintains change control.</t>
