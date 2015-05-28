@@ -1098,29 +1098,20 @@ with the following:</t>
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" file-auth
+   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+
+   file-host      = inline-IP / IPv4address / reg-name
+
+   inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
 ]]></artwork></figure>
+
+<t>This syntax uses the <spanx style="verb">userinfo</spanx>, <spanx style="verb">IPv4address, </spanx>IPv6address<spanx style="verb">,
+</spanx>IPvFuture<spanx style="verb">, and </spanx>reg-name` rules from <xref target="RFC3986"/>.</t>
 
 <t><list style='empty'>
-  <t>[FIXME: <spanx style="verb">host</spanx> in <spanx style="verb">file-auth</spanx> allows ‘[’ and ‘]’ in IPv6 literals,
-but RFC3986 forbids them in the path, so the <spanx style="verb">unc-authority</spanx> rule is
-not entirely valid.]</t>
+  <t>Note that the <spanx style="verb">file-host</spanx> rule is the same as <spanx style="verb">host</spanx> but with
+percent-encoding applied to “[” and “]” characters.</t>
 </list></t>
-
-<t>For example:</t>
-
-<figure><artwork><![CDATA[
-   Traditional:
-       file:////hostname/share/object/names
-       \_____/\__________________________ /
-       Scheme     Transformed UNC string
-
-   Firefox:
-       file://///hostname/share/object/names
-       \_____/|\__________________________ /
-       Scheme |    Transformed UNC string
-              Extra slash
-]]></artwork></figure>
 
 <t>This extended syntax is intended to support URIs that take the
 following forms, in addition to those in <xref target="examples"/>:</t>
