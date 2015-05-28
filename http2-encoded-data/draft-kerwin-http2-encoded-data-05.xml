@@ -116,8 +116,6 @@ Section 5.2).</t>
 <t>Any compression or decompression context for a GZIPPED_DATA frame is unique to that frame.</t>
 
 <figure title="GZIPPED_DATA Frame Payload"><artwork><![CDATA[
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |Pad Length? (8)|
   +---------------+-----------------------------------------------+
