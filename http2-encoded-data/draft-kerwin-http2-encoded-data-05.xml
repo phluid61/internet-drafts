@@ -37,7 +37,7 @@
 
 
 <t>This document introduces new frame types for transporting gzip-encoded data between peers in the
-Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling
+Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling
 invalid encoding.</t>
 
 
@@ -194,12 +194,6 @@ PROTOCOL_ERROR.</t>
 
 <t>Padding is a security feature; see Section 10.7 of <xref target="RFC7540"/>.</t>
 
-<section anchor="frag-segments" title="Fragmentation and Segments">
-
-<t>Traversing a network segment with small frame size limits introduces the risk of fragmenting an
-encoded stream.</t>
-
-</section>
 </section>
 <section anchor="error" title="DATA_ENCODING_ERROR">
 
@@ -211,6 +205,12 @@ The endpoint detected that its peer sent a GZIPPED_DATA frame with an invalid en
 </list></t>
 
 </section>
+</section>
+<section anchor="fragmentation" title="Fragmentation">
+
+<t>Traversing a network segment with small frame size limits introduces the risk of fragmenting an
+encoded stream. </t>
+
 </section>
 <section anchor="security" title="Security Considerations">
 
