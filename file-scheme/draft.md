@@ -676,27 +676,18 @@ with the following:
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" file-auth
+   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+
+   file-host      = inline-IP / IPv4address / reg-name
+
+   inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
 ~~~~~~~~~~
 
-> \[FIXME: `host` in `file-auth` allows '[' and ']' in IPv6 literals,
-> but RFC3986 forbids them in the path, so the `unc-authority` rule is
-> not entirely valid.\]
+This syntax uses the `userinfo`, `IPv4address, `IPv6address`,
+`IPvFuture`, and `reg-name` rules from {{RFC3986}}.
 
-For example:
-
-~~~~~~~~~~
-   Traditional:
-       file:////hostname/share/object/names
-       \_____/\__________________________ /
-       Scheme     Transformed UNC string
-
-   Firefox:
-       file://///hostname/share/object/names
-       \_____/|\__________________________ /
-       Scheme |    Transformed UNC string
-              Extra slash
-~~~~~~~~~~
+> Note that the `file-host` rule is the same as `host` but with
+> percent-encoding applied to "[" and "]" characters.
 
 This extended syntax is intended to support URIs that take the
 following forms, in addition to those in {{examples}}:
