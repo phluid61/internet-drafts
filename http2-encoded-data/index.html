@@ -497,7 +497,7 @@
 <p id="rfc.section.2.2.p.1">GZIPPED_DATA frames (type code=0xTBA) are semantically identical to DATA frames (<a href="#RFC7540">[RFC7540]</a>, Section 6.1), but their payload is compressed.  Significantly, GZIPPED_DATA frames are subject to flow control (<a href="#RFC7540">[RFC7540]</a>, Section 5.2).</p>
 <p id="rfc.section.2.2.p.2">Any compression or decompression context for a GZIPPED_DATA frame is unique to that frame.</p>
 <pre>
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  +---------------+
   |Pad Length? (8)|
   +---------------+-----------------------------------------------+
   |                            Data (*)                         ...
