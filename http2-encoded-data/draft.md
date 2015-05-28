@@ -21,6 +21,7 @@ author:
    uri: http://matthew.kerwin.net.au/
 
 normative:
+  RFC1952:
   RFC2119:
   RFC7540:
 
@@ -39,7 +40,7 @@ invalid encoding.
 
 # Introduction {#intro}
 
-This document introduces a mechanism for applying encoding, particularly compression, to data
+This document introduces a mechanism for applying gzip encoding {{RFC1952}} to data
 transported between two endpoints in version 2 of the Hypertext Transfer Protocol (HTTP/2),
 analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
 
@@ -95,7 +96,9 @@ The ACCEPT\_GZIPPED\_DATA frame is not subject to flow control.
 ## GZIPPED\_DATA  {#gzipped-data}
 
 GZIPPED\_DATA frames (type code=0xTBA) are semantically identical to DATA frames
-({{RFC7540}}, Section 6.1), but their payload is compressed.
+({{RFC7540}}, Section 6.1), but their payload is encoded using gzip compression.
+Gzip compression is an LZ77 coding with a 32 bit CRC that is commonly produced
+by the gzip file compression program {{RFC1952}}.
 Significantly, GZIPPED\_DATA frames are subject to flow control ({{RFC7540}},
 Section 5.2).
 
