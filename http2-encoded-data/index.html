@@ -379,16 +379,16 @@
 <link href="#rfc.section.2" rel="Chapter" title="2 Additions to HTTP/2"/>
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 ACCEPT_GZIPPED_DATA"/>
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 GZIPPED_DATA"/>
-<link href="#rfc.section.2.2.1" rel="Chapter" title="2.2.1 Fragmentation and Segments"/>
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 DATA_ENCODING_ERROR"/>
-<link href="#rfc.section.3" rel="Chapter" title="3 Security Considerations"/>
-<link href="#rfc.section.4" rel="Chapter" title="4 IANA Considerations"/>
-<link href="#rfc.section.4.1" rel="Chapter" title="4.1 HTTP/2 Frame Type Registry Update"/>
-<link href="#rfc.section.4.2" rel="Chapter" title="4.2 HTTP/2 Error Code Registry Update"/>
-<link href="#rfc.section.5" rel="Chapter" title="5 Acknowledgements"/>
-<link href="#rfc.references" rel="Chapter" title="6 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="6.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="6.2 Informative References"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Fragmentation"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Security Considerations"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 IANA Considerations"/>
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 HTTP/2 Frame Type Registry Update"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 HTTP/2 Error Code Registry Update"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="7 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="7.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="7.2 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -398,8 +398,8 @@
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-encoded-data-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2015-5-28" />
-  <meta name="dct.abstract" content="This document introduces new frame types for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
-  <meta name="description" content="This document introduces new frame types for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
+  <meta name="dct.abstract" content="This document introduces new frame types for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
+  <meta name="description" content="This document introduces new frame types for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
 
 </head>
 
@@ -435,7 +435,7 @@
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This document introduces new frame types for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling invalid encoding.</p>
+<p>This document introduces new frame types for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
@@ -459,16 +459,16 @@
 </ul><li>2.   <a href="#rfc.section.2">Additions to HTTP/2</a></li>
 <ul><li>2.1.   <a href="#rfc.section.2.1">ACCEPT_GZIPPED_DATA</a></li>
 <li>2.2.   <a href="#rfc.section.2.2">GZIPPED_DATA</a></li>
-<ul><li>2.2.1.   <a href="#rfc.section.2.2.1">Fragmentation and Segments</a></li>
-</ul><li>2.3.   <a href="#rfc.section.2.3">DATA_ENCODING_ERROR</a></li>
-</ul><li>3.   <a href="#rfc.section.3">Security Considerations</a></li>
-<li>4.   <a href="#rfc.section.4">IANA Considerations</a></li>
-<ul><li>4.1.   <a href="#rfc.section.4.1">HTTP/2 Frame Type Registry Update</a></li>
-<li>4.2.   <a href="#rfc.section.4.2">HTTP/2 Error Code Registry Update</a></li>
-</ul><li>5.   <a href="#rfc.section.5">Acknowledgements</a></li>
-<li>6.   <a href="#rfc.references">References</a></li>
-<ul><li>6.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>6.2.   <a href="#rfc.references.2">Informative References</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">DATA_ENCODING_ERROR</a></li>
+</ul><li>3.   <a href="#rfc.section.3">Fragmentation</a></li>
+<li>4.   <a href="#rfc.section.4">Security Considerations</a></li>
+<li>5.   <a href="#rfc.section.5">IANA Considerations</a></li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">HTTP/2 Frame Type Registry Update</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">HTTP/2 Error Code Registry Update</a></li>
+</ul><li>6.   <a href="#rfc.section.6">Acknowledgements</a></li>
+<li>7.   <a href="#rfc.references">References</a></li>
+<ul><li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>7.2.   <a href="#rfc.references.2">Informative References</a></li>
 </ul><li><a href="#rfc.authors">Author's Address</a></li>
 
 
@@ -532,8 +532,6 @@
 <p id="rfc.section.2.2.p.13">The total number of padding octets is determined by the value of the Pad Length field. If the length of the padding is greater than the length of the remainder of the frame payload, the recipient MUST treat this as a connection error (<a href="#RFC7540">[RFC7540]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
 <p id="rfc.section.2.2.p.14">Note: A frame can be increased in size by one octet by including a Pad Length field with a value of zero.</p>
 <p id="rfc.section.2.2.p.15">Padding is a security feature; see Section 10.7 of <a href="#RFC7540">[RFC7540]</a>.</p>
-<h1 id="rfc.section.2.2.1"><a href="#rfc.section.2.2.1">2.2.1.</a> <a href="#frag-segments" id="frag-segments">Fragmentation and Segments</a></h1>
-<p id="rfc.section.2.2.1.p.1">Traversing a network segment with small frame size limits introduces the risk of fragmenting an encoded stream.</p>
 <h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> <a href="#error" id="error">DATA_ENCODING_ERROR</a></h1>
 <p id="rfc.section.2.3.p.1">The following new error code is defined:</p>
 <p/>
@@ -541,12 +539,14 @@
 <ul>
   <li><samp>DATA_ENCODING_ERROR</samp> (0xTBA): The endpoint detected that its peer sent a GZIPPED_DATA frame with an invalid encoding.</li>
 </ul>
-<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#security" id="security">Security Considerations</a></h1>
-<p id="rfc.section.3.p.1">Further to the Use of Compression in HTTP/2 (<a href="#RFC7540">[RFC7540]</a>, Section 10.6), intermediaries MUST NOT apply compression to DATA frames, or alter the compression of GZIPPED_DATA frames other than decompressing, unless additional information is available that allows the intermediary to identify the source of data. In particular, frames that are not compressed cannot be compressed, and frames that are separately compressed cannot be merged into a single compressed frame.</p>
-<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
-<p id="rfc.section.4.p.1">This document updates the registries for frame types and error codes in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.  This document also establishes a new registry for HTTP/2 encoding scheme codes.  This new registry is entered into the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.</p>
-<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#http2-frame-type-registry-update" id="http2-frame-type-registry-update">HTTP/2 Frame Type Registry Update</a></h1>
-<p id="rfc.section.4.1.p.1">This document updates the &#8220;HTTP/2 Frame Type&#8221; registry (<a href="#RFC7540">[RFC7540]</a>, Section 11.2).  The entries in the following table are registered by this document.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#fragmentation" id="fragmentation">Fragmentation</a></h1>
+<p id="rfc.section.3.p.1">Traversing a network segment with small frame size limits introduces the risk of fragmenting an encoded stream. </p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security" id="security">Security Considerations</a></h1>
+<p id="rfc.section.4.p.1">Further to the Use of Compression in HTTP/2 (<a href="#RFC7540">[RFC7540]</a>, Section 10.6), intermediaries MUST NOT apply compression to DATA frames, or alter the compression of GZIPPED_DATA frames other than decompressing, unless additional information is available that allows the intermediary to identify the source of data. In particular, frames that are not compressed cannot be compressed, and frames that are separately compressed cannot be merged into a single compressed frame.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
+<p id="rfc.section.5.p.1">This document updates the registries for frame types and error codes in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.  This document also establishes a new registry for HTTP/2 encoding scheme codes.  This new registry is entered into the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.</p>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#http2-frame-type-registry-update" id="http2-frame-type-registry-update">HTTP/2 Frame Type Registry Update</a></h1>
+<p id="rfc.section.5.1.p.1">This document updates the &#8220;HTTP/2 Frame Type&#8221; registry (<a href="#RFC7540">[RFC7540]</a>, Section 11.2).  The entries in the following table are registered by this document.</p>
 <table cellpadding="3" cellspacing="0" class="tt full center">
   <thead>
     <tr>
@@ -572,8 +572,8 @@
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#http2-error-code-registry-update" id="http2-error-code-registry-update">HTTP/2 Error Code Registry Update</a></h1>
-<p id="rfc.section.4.2.p.1">This document updates the &#8220;HTTP/2 Error Code&#8221; registry (<a href="#RFC7540">[RFC7540]</a>, Section 11.4).  The entries in the following table are registered by this document.</p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#http2-error-code-registry-update" id="http2-error-code-registry-update">HTTP/2 Error Code Registry Update</a></h1>
+<p id="rfc.section.5.2.p.1">This document updates the &#8220;HTTP/2 Error Code&#8221; registry (<a href="#RFC7540">[RFC7540]</a>, Section 11.4).  The entries in the following table are registered by this document.</p>
 <table cellpadding="3" cellspacing="0" class="tt full center">
   <thead>
     <tr>
@@ -594,10 +594,10 @@
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
-<p id="rfc.section.5.p.1">Thanks to Keith Morgan for his advice, input, and editorial contributions.</p>
-<h1 id="rfc.references"><a href="#rfc.references">6.</a> References</h1>
-<h1 id="rfc.references.1"><a href="#rfc.references.1">6.1.</a> Normative References</h1>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.6.p.1">Thanks to Keith Morgan for his advice, input, and editorial contributions.</p>
+<h1 id="rfc.references"><a href="#rfc.references">7.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">7.1.</a> Normative References</h1>
 <table>
   <tbody>
     <tr>
@@ -614,7 +614,7 @@
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.references.2"><a href="#rfc.references.2">6.2.</a> Informative References</h1>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">7.2.</a> Informative References</h1>
 <table>
   <tbody>
     <tr>
