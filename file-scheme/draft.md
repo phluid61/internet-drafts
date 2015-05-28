@@ -800,8 +800,8 @@ see: SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP {{NOVELL}}.
 
 # Collected Rules  {#collected}
 
-Here are the collected syntax rules and examples for all optional
-appendices, presented for convenience.
+Here are the collected syntax rules for all optional appendices,
+presented for convenience.
 
 ~~~~~~~~~~
    file-URI       = file-scheme ":" file-hier-part
@@ -831,6 +831,9 @@ appendices, presented for convenience.
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
 ~~~~~~~~~~
+
+This collected syntax is intended to support file URIs that take the
+following forms:
 
 Local files:
 
