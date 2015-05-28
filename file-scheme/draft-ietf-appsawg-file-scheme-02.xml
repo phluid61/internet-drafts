@@ -1023,8 +1023,6 @@ letters in file URIs by converting them to uppercase.</t>
 
 <section anchor="ext-relative" title="Relative Paths">
 
-<t>[FIXME: is this normative or not?]</t>
-
 <t>In DOS- or Windows-based file systems, relative paths beginning with
 a slash “/” should be resolved relative to the drive letter, and
 resolution of “..” dot segments (per Section 5.2.4 of <xref target="RFC3986"/>)
@@ -1230,8 +1228,8 @@ see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP <xref target
 </section>
 <section anchor="collected" title="Collected Rules">
 
-<t>Here are the collected syntax rules and examples for all optional
-appendices, presented for convenience.</t>
+<t>Here are the collected syntax rules for all optional appendices,
+presented for convenience.</t>
 
 <figure><artwork><![CDATA[
    file-URI       = file-scheme ":" file-hier-part
@@ -1261,6 +1259,9 @@ appendices, presented for convenience.</t>
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
 ]]></artwork></figure>
+
+<t>This collected syntax is intended to support file URIs that take the
+following forms:</t>
 
 <t>Local files:</t>
 

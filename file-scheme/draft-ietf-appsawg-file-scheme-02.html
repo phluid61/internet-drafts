@@ -858,9 +858,8 @@
 </ul>
 <p id="rfc.section.C.1.p.4">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive.  Some implementations therefore canonicalize drive letters in file URIs by converting them to uppercase.</p>
 <h1 id="rfc.appendix.C.1.1"><a href="#rfc.appendix.C.1.1">C.1.1.</a> <a href="#ext-relative" id="ext-relative">Relative Paths</a></h1>
-<p id="rfc.section.C.1.1.p.1">[FIXME: is this normative or not?]</p>
-<p id="rfc.section.C.1.1.p.2">In DOS- or Windows-based file systems, relative paths beginning with a slash &#8220;/&#8221; should be resolved relative to the drive letter, and resolution of &#8220;..&#8221; dot segments (per Section 5.2.4 of <a href="#RFC3986">[RFC3986]</a>) should not ever overwrite the drive letter.</p>
-<p id="rfc.section.C.1.1.p.3">e.g.:</p>
+<p id="rfc.section.C.1.1.p.1">In DOS- or Windows-based file systems, relative paths beginning with a slash &#8220;/&#8221; should be resolved relative to the drive letter, and resolution of &#8220;..&#8221; dot segments (per Section 5.2.4 of <a href="#RFC3986">[RFC3986]</a>) should not ever overwrite the drive letter.</p>
+<p id="rfc.section.C.1.1.p.2">e.g.:</p>
 <pre>
    base:       file:///c:/path/to/file.txt
    rel. URI:   /some/other/thing.bmp
@@ -870,7 +869,7 @@
    rel. URI:   ../../bar.txt
    resolved:   file:///c:/bar.txt
 </pre>
-<p id="rfc.section.C.1.1.p.4">Relative paths with a drive letter followed by a character other than a slash (e.g. &#8220;c:bar/baz.txt&#8221; or &#8220;c:../foo.txt&#8221;) should not be accepted as valid URIs in DOS or Windows systems.</p>
+<p id="rfc.section.C.1.1.p.3">Relative paths with a drive letter followed by a character other than a slash (e.g. &#8220;c:bar/baz.txt&#8221; or &#8220;c:../foo.txt&#8221;) should not be accepted as valid URIs in DOS or Windows systems.</p>
 <h1 id="rfc.appendix.C.1.2"><a href="#rfc.appendix.C.1.2">C.1.2.</a> <a href="#ext-pipe" id="ext-pipe">Vertical Bar Character</a></h1>
 <p id="rfc.section.C.1.2.p.1">Historically some implementations have used a vertical line character &#8220;|&#8221; instead of a colon &#8220;:&#8221; in the drive letter construct.  <a href="#RFC3986">[RFC3986]</a> forbids the use of the vertical line, however it may be necessary to interpret or update old URIs.</p>
 <p id="rfc.section.C.1.2.p.2">For interpreting such URIs, the <samp>auth-path</samp> and <samp>local-path</samp> rules in <a href="#syntax">Section 2</a> and the <samp>drive-letter</samp> rule above are replaced with the following:</p>
@@ -990,7 +989,7 @@
 </ul>
 <p id="rfc.section.E.p.4">The precise format of <samp>sharename</samp> depends on the protocol; see: SMB <a href="#MS-SMB">[MS-SMB]</a>, NFS <a href="#RFC3530">[RFC3530]</a>, NCP <a href="#NOVELL">[NOVELL]</a>.</p>
 <h1 id="rfc.appendix.F"><a href="#rfc.appendix.F">Appendix F.</a> <a href="#collected" id="collected">Collected Rules</a></h1>
-<p id="rfc.section.F.p.1">Here are the collected syntax rules and examples for all optional appendices, presented for convenience.</p>
+<p id="rfc.section.F.p.1">Here are the collected syntax rules for all optional appendices, presented for convenience.</p>
 <pre>
    file-URI       = file-scheme ":" file-hier-part
 
@@ -1019,7 +1018,8 @@
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
 </pre>
-<p id="rfc.section.F.p.2">Local files:</p>
+<p id="rfc.section.F.p.2">This collected syntax is intended to support file URIs that take the following forms:</p>
+<p id="rfc.section.F.p.3">Local files:</p>
 <p/>
 
 <ul>
@@ -1034,7 +1034,7 @@
   </li>
   <li><samp>file:c|/path/to/file</samp>  <ul class="empty"><li>Regular DOS or Windows file URIs, with vertical line characters in the drive letter construct.</li></ul></li>
 </ul>
-<p id="rfc.section.F.p.4">Non-local files:</p>
+<p id="rfc.section.F.p.5">Non-local files:</p>
 <p/>
 
 <ul>
