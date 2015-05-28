@@ -31,7 +31,7 @@ informative:
 --- abstract
 
 This document introduces new frame types for transporting gzip-encoded data between peers in the
-Hypertext Transfer Protocol version 2 (HTTP/2), and an associated error code for handling
+Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling
 invalid encoding.
 
 
