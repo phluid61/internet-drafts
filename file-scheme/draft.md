@@ -799,3 +799,81 @@ only; the normative description is in {{MS-DTYP}}.
 
 The precise format of `sharename` depends on the protocol;
 see: SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP {{NOVELL}}.
+
+# Collected Rules  {#collected}
+
+Here are the collected syntax rules and examples for all optional
+appendices, presented for convenience.
+
+~~~~~~~~~~
+   file-URI       = file-scheme ":" file-hier-part
+
+   file-scheme    = "file"
+
+   file-hier-part = "//" auth-path
+                  / local-path
+
+   auth-path      = [ file-auth ] path-absolute
+                  / [ file-auth ] file-absolute
+                  / unc-authority path-absolute
+
+   local-path     = [ drive-letter ] path-absolute
+                  / file-absolute
+
+   file-auth      = [ userinfo "@" ] host
+
+   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+
+   file-host      = inline-IP / IPv4address / reg-name
+
+   inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
+
+   file-absolute  = "/" drive-letter path-absolute
+
+   drive-letter   = ALPHA ":"
+                  / ALPHA "|"
+~~~~~~~~~~
+
+Local files:
+
+* `file:///path/to/file`
+
+   > A traditional file URI for a local file, with an empty
+     authority.
+
+* `file:/path/to/file`
+
+   > The minimal representation of a local file, with no authority
+     field and an absolute path that begins with a slash "/".
+
+* `file:c:/path/to/file`
+
+   > The minimal representation of a local file in a DOS- or
+     Windows-based environment, with no authority field and an
+     absolute path that begins with a drive letter.
+
+* `file:///c|/path/to/file`
+* `file:/c|/path/to/file`
+* `file:c|/path/to/file`
+
+   > Regular DOS or Windows file URIs, with vertical line characters
+     in the drive letter construct.
+
+Non-local files:
+
+* `file://host.example.com/path/to/file`
+
+   > The representation of a non-local file, with an explicit
+     authority.
+
+* `file:////host.example.com/path/to/file`
+
+   > The "traditional" representation of a non-local file, with an
+     empty authority and a complete (transformed) UNC string in the
+     path.
+
+* `file://///host.example.com/path/to/file`
+
+   > As above, with an extra slash between the empty authority and the
+     transformed UNC string.
+
