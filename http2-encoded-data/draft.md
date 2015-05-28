@@ -182,18 +182,18 @@ Note: A frame can be increased in size by one octet by including a Pad Length fi
 Padding is a security feature; see Section 10.7 of {{RFC7540}}.
 
 
-### Fragmentation and Segments {#frag-segments}
-
-Traversing a network segment with small frame size limits introduces the risk of fragmenting an
-encoded stream.
-
-
 ## DATA\_ENCODING\_ERROR  {#error}
 
 The following new error code is defined:
 
 * `DATA_ENCODING_ERROR` (0xTBA):
   The endpoint detected that its peer sent a GZIPPED\_DATA frame with an invalid encoding.
+
+
+# Fragmentation  {#fragmentation}
+
+Traversing a network segment with small frame size limits introduces the risk of fragmenting an
+encoded stream. {::comment}FIXME: provide some advice?{:/comment}
 
 
 # Security Considerations  {#security}
