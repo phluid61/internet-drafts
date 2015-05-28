@@ -1228,8 +1228,8 @@ see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP <xref target
 </section>
 <section anchor="collected" title="Collected Rules">
 
-<t>Here are the collected syntax rules and examples for all optional
-appendices, presented for convenience.</t>
+<t>Here are the collected syntax rules for all optional appendices,
+presented for convenience.</t>
 
 <figure><artwork><![CDATA[
    file-URI       = file-scheme ":" file-hier-part
@@ -1259,6 +1259,9 @@ appendices, presented for convenience.</t>
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
 ]]></artwork></figure>
+
+<t>This collected syntax is intended to support file URIs that take the
+following forms:</t>
 
 <t>Local files:</t>
 
