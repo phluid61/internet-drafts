@@ -604,8 +604,6 @@ letters in file URIs by converting them to uppercase.
 
 ### Relative Paths  {#ext-relative}
 
-\[FIXME: is this normative or not?\]
-
 In DOS- or Windows-based file systems, relative paths beginning with
 a slash "/" should be resolved relative to the drive letter, and
 resolution of ".." dot segments (per Section 5.2.4 of {{RFC3986}})
