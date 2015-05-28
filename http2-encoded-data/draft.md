@@ -102,8 +102,6 @@ Section 5.2).
 Any compression or decompression context for a GZIPPED\_DATA frame is unique to that frame.
 
 ~~~~~~~~~~
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |Pad Length? (8)|
   +---------------+-----------------------------------------------+
