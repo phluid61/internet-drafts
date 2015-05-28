@@ -21,7 +21,7 @@ Abstract
    across the broad spectrum of existing implementations, while at the
    same time documenting other current practices.
 
-   *Note to Readers (To be removed by the RFC Editor)*
+Note to Readers (To be removed by the RFC Editor)
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list <apps-discuss@ietf.org>.
@@ -286,7 +286,7 @@ Internet-Draft                 file-scheme                      May 2015
 
        2.  Append the transformed segment to the URI.
 
-   *Differences from RFC 1738*
+   Differences from RFC 1738
 
    In [RFC1738] a file URL always started with the token "file://",
    followed by an authority and a "/".  That "/" was not considered part
@@ -346,7 +346,7 @@ Internet-Draft                 file-scheme                      May 2015
       UNC String:   \\host.example.com\Share\path\to\file.txt
       URI:          file://host.example.com/Share/path/to/file.txt
 
-   *Differences from RFC 1738*
+   Differences from RFC 1738
 
    In [RFC1738] a file URL an authority of "localhost" was used to refer
    to the local file system, but in this specification it equates to a
@@ -481,7 +481,7 @@ Internet-Draft                 file-scheme                      May 2015
       This scheme is registered under the IETF tree.  As such, the IETF
       maintains change control.
 
-   [*RFC Editor Note:* Replace XXXX with this RFC's reference.]
+   [RFC Editor Note: Replace XXXX with this RFC's reference.]
 
 7.  Acknowledgements
 
@@ -732,8 +732,6 @@ Internet-Draft                 file-scheme                      May 2015
 
 C.1.1.  Relative Paths
 
-   [FIXME: is this normative or not?]
-
    In DOS- or Windows-based file systems, relative paths beginning with
    a slash "/" should be resolved relative to the drive letter, and
    resolution of ".." dot segments (per Section 5.2.4 of [RFC3986])
@@ -779,14 +777,14 @@ C.1.2.  Vertical Bar Character
 
    o  "file:///c|/path/to/file"
 
+   o  "file:/c|/path/to/file"
+
 
 
 Kerwin                  Expires November 29, 2015              [Page 14]
 
 Internet-Draft                 file-scheme                      May 2015
 
-
-   o  "file:/c|/path/to/file"
 
    o  "file:c|/path/to/file"
 
@@ -833,6 +831,8 @@ C.2.  UNC Paths
 
    o  "file://///host.example.com/path/to/file"
 
+         As above, with an extra slash between the empty authority and
+         the transformed UNC string, conformant with the definition from
 
 
 
@@ -842,8 +842,6 @@ Kerwin                  Expires November 29, 2015              [Page 15]
 Internet-Draft                 file-scheme                      May 2015
 
 
-         As above, with an extra slash between the empty authority and
-         the transformed UNC string, conformant with the definition from
          [RFC1738].  This representation is notably used by the Firefox
          web browser.  See Bugzilla#107540 [Bug107540].
 
@@ -888,6 +886,8 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
    |       43   3a   5c   72   65   87   75   2e   74   78   74
 
    Counter-example: ambiguous file URI:
+
+
 
 
 
@@ -956,8 +956,8 @@ Internet-Draft                 file-scheme                      May 2015
 
 Appendix F.  Collected Rules
 
-   Here are the collected syntax rules and examples for all optional
-   appendices, presented for convenience.
+   Here are the collected syntax rules for all optional appendices,
+   presented for convenience.
 
       file-URI       = file-scheme ":" file-hier-part
 
@@ -986,6 +986,9 @@ Appendix F.  Collected Rules
       drive-letter   = ALPHA ":"
                      / ALPHA "|"
 
+   This collected syntax is intended to support file URIs that take the
+   following forms:
+
    Local files:
 
    o  "file:///path/to/file"
@@ -999,9 +1002,6 @@ Appendix F.  Collected Rules
          field and an absolute path that begins with a slash "/".
 
    o  "file:c:/path/to/file"
-
-
-
 
 
 
