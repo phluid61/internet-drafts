@@ -1228,6 +1228,83 @@ only; the normative description is in <xref target="MS-DTYP"/>.</t>
 see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP <xref target="NOVELL"/>.</t>
 
 </section>
+<section anchor="collected" title="Collected Rules">
+
+<t>Here are the collected syntax rules and examples for all optional
+appendices, presented for convenience.</t>
+
+<figure><artwork><![CDATA[
+   file-URI       = file-scheme ":" file-hier-part
+
+   file-scheme    = "file"
+
+   file-hier-part = "//" auth-path
+                  / local-path
+
+   auth-path      = [ file-auth ] path-absolute
+                  / [ file-auth ] file-absolute
+                  / unc-authority path-absolute
+
+   local-path     = [ drive-letter ] path-absolute
+                  / file-absolute
+
+   file-auth      = [ userinfo "@" ] host
+
+   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+
+   file-host      = inline-IP / IPv4address / reg-name
+
+   inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
+
+   file-absolute  = "/" drive-letter path-absolute
+
+   drive-letter   = ALPHA ":"
+                  / ALPHA "|"
+]]></artwork></figure>
+
+<t>Local files:</t>
+
+<t><list style="symbols">
+  <t><spanx style="verb">file:///path/to/file</spanx>  <list style='empty'>
+      <t>A traditional file URI for a local file, with an empty
+   authority.</t>
+    </list></t>
+  <t><spanx style="verb">file:/path/to/file</spanx>  <list style='empty'>
+      <t>The minimal representation of a local file, with no authority
+   field and an absolute path that begins with a slash “/”.</t>
+    </list></t>
+  <t><spanx style="verb">file:c:/path/to/file</spanx>  <list style='empty'>
+      <t>The minimal representation of a local file in a DOS- or
+   Windows-based environment, with no authority field and an
+   absolute path that begins with a drive letter.</t>
+    </list></t>
+  <t><spanx style="verb">file:///c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file:/c|/path/to/file</spanx></t>
+  <t><spanx style="verb">file:c|/path/to/file</spanx>  <list style='empty'>
+      <t>Regular DOS or Windows file URIs, with vertical line characters
+   in the drive letter construct.</t>
+    </list></t>
+</list></t>
+
+<t>Non-local files:</t>
+
+<t><list style="symbols">
+  <t><spanx style="verb">file://host.example.com/path/to/file</spanx>  <list style='empty'>
+      <t>The representation of a non-local file, with an explicit
+   authority.</t>
+    </list></t>
+  <t><spanx style="verb">file:////host.example.com/path/to/file</spanx>  <list style='empty'>
+      <t>The “traditional” representation of a non-local file, with an
+   empty authority and a complete (transformed) UNC string in the
+   path.</t>
+    </list></t>
+  <t><spanx style="verb">file://///host.example.com/path/to/file</spanx>  <list style='empty'>
+      <t>As above, with an extra slash between the empty authority and the
+   transformed UNC string.</t>
+    </list></t>
+</list></t>
+
+</section>
 
 
   </back>
