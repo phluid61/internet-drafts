@@ -41,7 +41,7 @@ invalid encoding.
 # Introduction {#intro}
 
 This document introduces a mechanism for applying gzip encoding {{RFC1952}} to data
-transported between two endpoints in version 2 of the Hypertext Transfer Protocol (HTTP/2),
+transported between two endpoints in the Hypertext Transfer Protocol Version 2 (HTTP/2) {{RFC7540}},
 analogous to Transfer-Encoding in HTTP/1.1 {{RFC7230}}.
 
 
