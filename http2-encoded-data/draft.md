@@ -79,7 +79,7 @@ The payload length of an ACCEPT\_GZIPPED\_DATA frame MUST be zero. An endpoint t
 ACCEPT\_GZIPPED\_DATA frame a length other than zero MUST treat this as a
 connection error ({{RFC7540}}, Section 5.4.1) of type PROTOCOL\_ERROR.
 
-The ACCEPT\_GZIPPED\_DATA frame defined the following flag:
+The ACCEPT\_GZIPPED\_DATA frame defines the following flag:
 
 * DISABLE (0x1):
   When set, bit 0 indicates that this endpoint is not willing or able to receive GZIPPED\_DATA
