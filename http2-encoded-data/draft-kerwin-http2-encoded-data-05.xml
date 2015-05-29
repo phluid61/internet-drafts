@@ -53,7 +53,7 @@ invalid encoding.</t>
 <section anchor="intro" title="Introduction">
 
 <t>This document introduces a mechanism for applying gzip encoding <xref target="RFC1952"/> to data
-transported between two endpoints in version 2 of the Hypertext Transfer Protocol (HTTP/2),
+transported between two endpoints in the Hypertext Transfer Protocol Version 2 (HTTP/2) <xref target="RFC7540"/>,
 analogous to Transfer-Encoding in HTTP/1.1 <xref target="RFC7230"/>.</t>
 
 <section anchor="notational-conventions" title="Notational Conventions">
@@ -90,7 +90,7 @@ PROTOCOL_ERROR.</t>
 ACCEPT_GZIPPED_DATA frame a length other than zero MUST treat this as a
 connection error (<xref target="RFC7540"/>, Section 5.4.1) of type PROTOCOL_ERROR.</t>
 
-<t>The ACCEPT_GZIPPED_DATA frame defined the following flag:</t>
+<t>The ACCEPT_GZIPPED_DATA frame defines the following flag:</t>
 
 <t><list style="symbols">
   <t>DISABLE (0x1):
