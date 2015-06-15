@@ -201,7 +201,7 @@ This document updates the registries for frame types and error codes in
 the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.  This
 document also establishes a new registry for HTTP/2 encoding scheme
 codes.  This new registry is entered into the "Hypertext Transfer
-Protocol (HTTP) 2 Parameters" section. 
+Protocol (HTTP) 2 Parameters" section.
 
 
 ## HTTP/2 Frame Type Registry Update
