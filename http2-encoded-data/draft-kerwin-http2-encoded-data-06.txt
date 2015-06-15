@@ -3,8 +3,8 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                             June 15, 2015
-Intended status: Experimental
+Internet-Draft
+Intended status: Experimental                              June 15, 2015
 Expires: December 17, 2015
 
 
@@ -76,7 +76,8 @@ Table of Contents
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
      7.2.  Informative References  . . . . . . . . . . . . . . . . .   7
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   7
+   Appendix A.  Changelog  . . . . . . . . . . . . . . . . . . . . .   7
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
 
@@ -104,7 +105,6 @@ Table of Contents
    total length of the _uncompressed_ data.  This is particularly
    relevant when detecting malformed messages ([RFC7540],
    Section 8.1.2.6).
-
 
 
 
@@ -347,6 +347,58 @@ Internet-Draft             http2-encoded-data                  June 2015
               (HTTP/1.1): Message Syntax and Routing", RFC 7230, June
               2014.
 
+Appendix A.  Changelog
+
+   Since -05:
+
+   o  changed ACCEPT_ENCODED_DATA back from a frame to a setting, since
+      it carries a single scalar value now
+
+   Since -04:
+
+   o  reduced encoding options to only gzip (suggested by Martin
+      Thomson)
+
+   o  remove fragmentation and segment stuff, including reference to
+      'http2-segments' I-D
+
+   o  updated HTTP/2 reference from I-D to (freshly published) RFC7230
+
+   Since -03:
+
+   o  added 'identity' encoding; removed 'compress' and 'zlib'
+      (suggested by PHK)
+
+   o  added SEGMENT flag, for segments that don't continue
+
+   o  clarified that ACCEPT is for a connection, and ENCODED_DATA is for
+      a stream
+
+   o  copied "padding" text from HTTP/2 draft
+
+   Since -02:
+
+   o  moved all discussion of fragmentation and segments to its own
+      section
+
+   Since -01:
+
+   o  referenced new draft-kerwin-http2-segments to handle fragmentation
+
+   Since -00:
+
+
+
+Kerwin                  Expires December 17, 2015               [Page 7]
+
+Internet-Draft             http2-encoded-data                  June 2015
+
+
+   o  changed ACCEPT_ENCODED_DATA from a complex setting to a frame
+
+   o  improved IANA Considerations section (with lots of input from
+      Keith Morgan)
+
 Author's Address
 
    Matthew Kerwin
@@ -389,4 +441,8 @@ Author's Address
 
 
 
-Kerwin                  Expires December 17, 2015               [Page 7]
+
+
+
+
+Kerwin                  Expires December 17, 2015               [Page 8]
