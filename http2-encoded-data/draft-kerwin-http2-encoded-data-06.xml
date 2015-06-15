@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-kerwin-http2-encoded-data-05" category="exp">
+<rfc ipr="trust200902" docName="draft-kerwin-http2-encoded-data-06" category="exp">
 
   <front>
     <title abbrev="http2-encoded-data">HTTP/2 Encoded Data</title>
@@ -36,7 +36,7 @@
     <abstract>
 
 
-<t>This document introduces new frame types for transporting gzip-encoded data between peers in the
+<t>This document introduces a new frame type for transporting gzip-encoded data between peers in the
 Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling
 invalid encoding.</t>
 
@@ -66,7 +66,8 @@ document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 </section>
 <section anchor="additions" title="Additions to HTTP/2">
 
-<t>This document introduces two new HTTP/2 frame types (<xref target="RFC7540"/>, Section 11.2)
+<t>This document introduces a new HTTP/2 frame type (<xref target="RFC7540"/>, Section 11.2),
+a new HTTP/2 setting (<xref target="RFC7540"/>, Section 11.3),
 and a new HTTP/2 error code (<xref target="RFC7540"/>, Section 7), to allow the compression
 of data.</t>
 
@@ -75,35 +76,20 @@ corresponding HTTP message body, the <spanx style="verb">content-length</spanx> 
 reflect the total length of the <spanx style="emph">uncompressed</spanx> data. This is particularly relevant when detecting
 malformed messages (<xref target="RFC7540"/>, Section 8.1.2.6).</t>
 
-<section anchor="accept-gzipped-data" title="ACCEPT_GZIPPED_DATA">
+<section anchor="accept-gzipped-data" title="SETTINGS_ACCEPT_GZIPPED_DATA">
 
-<t>An ACCEPT_GZIPPED_DATA frame (type code=0xTBA) is used to indicate the sender’s ability and
-willingness to receive GZIPPED_DATA frames.</t>
+<t>SETTINGS_ACCEPT_GZIPPED_DATA (0xTBA) is used to indicate the sender’s ability and
+willingness to receive GZIPPED_DATA frames. An endpoint MUST NOT send a GZIPPED_DATA
+frame unless it receives this setting with a value of 1. </t>
 
-<t>ACCEPT_GZIPPED_DATA always applies to a connection, never a single stream. The stream identifier
-for an ACCEPT_GZIPPED_DATA frame MUST be zero (0x0). If an endpoint receives an
-ACCEPT_GZIPPED_DATA frame whose stream identifier field is anything other than 0x0, the endpoint
-MUST respond with a connection error ((<xref target="RFC7540"/>, Section 5.4.1) of type
-PROTOCOL_ERROR.</t>
-
-<t>The payload length of an ACCEPT_GZIPPED_DATA frame MUST be zero. An endpoint that receives an
-ACCEPT_GZIPPED_DATA frame a length other than zero MUST treat this as a
-connection error (<xref target="RFC7540"/>, Section 5.4.1) of type PROTOCOL_ERROR.</t>
-
-<t>The ACCEPT_GZIPPED_DATA frame defines the following flag:</t>
-
-<t><list style="symbols">
-  <t>DISABLE (0x1):
-When set, bit 0 indicates that this endpoint is not willing or able to receive GZIPPED_DATA
-frames.</t>
-</list></t>
+<t>The initial value is 0, which indicates that GZIPPED_DATA frames are not supported. Any
+value other than 0 or 1 MUST be treated as a connection error (<xref target="RFC7540"/>, Section 5.4.1)
+of type PROTOCOL_ERROR.</t>
 
 <t>An endpoint may advertise support for GZIPPED_DATA frames and later decide that it no longer
-supports them.  After sending an ACCEPT_GZIPPED_DATA with the DISABLE flag set, the endpoint
+supports them.  After sending an ACCEPT_GZIPPED_DATA setting with the value 0, the endpoint
 SHOULD continue to accept GZIPPED_DATA frames for a reasonable amount of time to account for
-frames that are already in flight.</t>
-
-<t>The ACCEPT_GZIPPED_DATA frame is not subject to flow control.</t>
+frames that may already be in flight.</t>
 
 </section>
 <section anchor="gzipped-data" title="GZIPPED_DATA">
@@ -155,19 +141,19 @@ causes the stream to enter one of the “half closed” states or the
 Bit 4 being set indicates that the Pad Length field is present.</t>
 </list></t>
 
-<t>A GZIPPED_DATA frame MUST NOT be sent on a connection before receiving an
-ACCEPT_GZIPPED_DATA frame.</t>
+<t>A GZIPPED_DATA frame MUST NOT be sent if the ACCEPT_GZIPPED_DATA setting
+of the peer is set to 0. </t>
 
 <t>An intermediary, on receiving a GZIPPED_DATA frame, MAY decode the data and forward it to its
 downstream peer in one or more DATA frames. If the downstream peer has not advertised support
-for GZIPPED_DATA frames (e.g. by sending an ACCEPT_GZIPPED_DATA frame) the
+for GZIPPED_DATA frames (by sending an ACCEPT_GZIPPED_DATA setting with the value 1) the
 intermediary MUST decode the data before forwarding it.</t>
 
 <t>If an endpoint detects that the payload of a GZIPPED_DATA frame is not encoded correctly,
-for example with a mismatched checksum, the endpoint MUST
+for example with an incorrect checksum, the endpoint MUST
 treat this as a stream error (see <xref target="RFC7540"/>, Section 5.4.2) of type
 DATA_ENCODING_ERROR (<xref target="error"/>). The endpoint MAY then choose to immediately send an
-ACCEPT_GZIPPED_DATA frame with the DISABLE flag set.</t>
+ACCEPT_GZIPPED_DATA setting with the value 0.</t>
 
 <t>If an intermediary propagates a GZIPPED_DATA frame from the source peer to the destination peer
 without modifying the payload or its encoding, and receives a DATA_ENCODING_ERROR from the
@@ -240,12 +226,27 @@ following table are registered by this document.</t>
       <ttcol align='left'>Frame Type</ttcol>
       <ttcol align='left'>Code</ttcol>
       <ttcol align='left'>Section</ttcol>
-      <c>ACCEPT_GZIPPED_DATA</c>
-      <c>TBD</c>
-      <c><xref target="accept-gzipped-data"/></c>
       <c>GZIPPED_DATA</c>
       <c>TBD</c>
       <c><xref target="gzipped-data"/></c>
+</texttable>
+
+</section>
+<section anchor="http2-settings-registry-update" title="HTTP/2 Settings Registry Update">
+
+<t>This document updates the “HTTP/2 Settings” registry
+(<xref target="RFC7540"/>, Section 11.3).  The entries in the
+following table are registered by this document.</t>
+
+<texttable>
+      <ttcol align='left'>Frame Type</ttcol>
+      <ttcol align='left'>Code</ttcol>
+      <ttcol align='left'>Initial Value</ttcol>
+      <ttcol align='left'>Specification</ttcol>
+      <c>ACCEPT_GZIPPED_DATA</c>
+      <c>TBD</c>
+      <c>0</c>
+      <c><xref target="accept-gzipped-data"/></c>
 </texttable>
 
 </section>
