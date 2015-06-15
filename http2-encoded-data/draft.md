@@ -31,7 +31,7 @@ informative:
 
 --- abstract
 
-This document introduces new frame types for transporting gzip-encoded data between peers in the
+This document introduces a new frame type for transporting gzip-encoded data between peers in the
 Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling
 invalid encoding.
 
@@ -54,7 +54,8 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Additions to HTTP/2 {#additions}
 
-This document introduces two new HTTP/2 frame types ({{RFC7540}}, Section 11.2)
+This document introduces a new HTTP/2 frame type ({{RFC7540}}, Section 11.2),
+a new HTTP/2 setting ({{RFC7540}}, Section 11.3),
 and a new HTTP/2 error code ({{RFC7540}}, Section 7), to allow the compression
 of data.
 
@@ -64,33 +65,20 @@ reflect the total length of the _uncompressed_ data. This is particularly releva
 malformed messages ({{RFC7540}}, Section 8.1.2.6).
 
 
-## ACCEPT\_GZIPPED\_DATA  {#accept-gzipped-data}
+## SETTINGS\_ACCEPT\_GZIPPED\_DATA  {#accept-gzipped-data}
 
-An ACCEPT\_GZIPPED\_DATA frame (type code=0xTBA) is used to indicate the sender's ability and
-willingness to receive GZIPPED\_DATA frames.
+SETTINGS\_ACCEPT\_GZIPPED\_DATA (0xTBA) is used to indicate the sender's ability and
+willingness to receive GZIPPED\_DATA frames. An endpoint MUST NOT send a GZIPPED\_DATA
+frame unless it receives this setting with a value of 1. {::comment}Or..?{:/comment}
 
-ACCEPT\_GZIPPED\_DATA always applies to a connection, never a single stream. The stream identifier
-for an ACCEPT\_GZIPPED\_DATA frame MUST be zero (0x0). If an endpoint receives an
-ACCEPT\_GZIPPED\_DATA frame whose stream identifier field is anything other than 0x0, the endpoint
-MUST respond with a connection error (({{RFC7540}}, Section 5.4.1) of type
-PROTOCOL\_ERROR.
-
-The payload length of an ACCEPT\_GZIPPED\_DATA frame MUST be zero. An endpoint that receives an
-ACCEPT\_GZIPPED\_DATA frame a length other than zero MUST treat this as a
-connection error ({{RFC7540}}, Section 5.4.1) of type PROTOCOL\_ERROR.
-
-The ACCEPT\_GZIPPED\_DATA frame defines the following flag:
-
-* DISABLE (0x1):
-  When set, bit 0 indicates that this endpoint is not willing or able to receive GZIPPED\_DATA
-  frames.
+The initial value is 0, which indicates that GZIPPED\_DATA frames are not supported. Any
+value other than 0 or 1 MUST be treated as a connection error ({{RFC7540}}, Section 5.4.1)
+of type PROTOCOL\_ERROR.
 
 An endpoint may advertise support for GZIPPED\_DATA frames and later decide that it no longer
-supports them.  After sending an ACCEPT\_GZIPPED\_DATA with the DISABLE flag set, the endpoint
+supports them.  After sending an ACCEPT\_GZIPPED\_DATA setting with the value 0, the endpoint
 SHOULD continue to accept GZIPPED\_DATA frames for a reasonable amount of time to account for
-frames that are already in flight.
-
-The ACCEPT\_GZIPPED\_DATA frame is not subject to flow control.
+frames that may already be in flight.
 
 
 ## GZIPPED\_DATA  {#gzipped-data}
@@ -143,19 +131,19 @@ The GZIPPED\_DATA frame defines the following flags:
   Bit 4 being set indicates that the Pad Length field is present.
 
 
-A GZIPPED\_DATA frame MUST NOT be sent on a connection before receiving an
-ACCEPT\_GZIPPED\_DATA frame.
+A GZIPPED\_DATA frame MUST NOT be sent if the ACCEPT\_GZIPPED\_DATA setting
+of the peer is set to 0. {::comment}MUST ignore? Do we need an ACK?{:/comment}
 
 An intermediary, on receiving a GZIPPED\_DATA frame, MAY decode the data and forward it to its
 downstream peer in one or more DATA frames. If the downstream peer has not advertised support
-for GZIPPED\_DATA frames (e.g. by sending an ACCEPT\_GZIPPED\_DATA frame) the
+for GZIPPED\_DATA frames (by sending an ACCEPT\_GZIPPED\_DATA setting with the value 1) the
 intermediary MUST decode the data before forwarding it.
 
 If an endpoint detects that the payload of a GZIPPED\_DATA frame is not encoded correctly,
-for example with a mismatched checksum, the endpoint MUST
+for example with an incorrect checksum, the endpoint MUST
 treat this as a stream error (see {{RFC7540}}, Section 5.4.2) of type
 DATA\_ENCODING\_ERROR ({{error}}). The endpoint MAY then choose to immediately send an
-ACCEPT\_GZIPPED\_DATA frame with the DISABLE flag set.
+ACCEPT\_GZIPPED\_DATA setting with the value 0.
 
 If an intermediary propagates a GZIPPED\_DATA frame from the source peer to the destination peer
 without modifying the payload or its encoding, and receives a DATA\_ENCODING\_ERROR from the
@@ -225,10 +213,21 @@ following table are registered by this document.
  |-----------------------|------|---------------------------|
  | Frame Type            | Code | Section                   |
  |-----------------------|------|---------------------------|
- | ACCEPT\_GZIPPED\_DATA | TBD  | {{accept-gzipped-data}}   |
- |-----------------------|------|---------------------------|
  | GZIPPED\_DATA         | TBD  | {{gzipped-data}}          |
  |-----------------------|------|---------------------------|
+
+
+## HTTP/2 Settings Registry Update
+
+This document updates the "HTTP/2 Settings" registry
+({{RFC7540}}, Section 11.3).  The entries in the
+following table are registered by this document.
+
+ |-----------------------|------|---------------|---------------------------|
+ | Frame Type            | Code | Initial Value | Specification             |
+ |-----------------------|------|---------------|---------------------------|
+ | ACCEPT\_GZIPPED\_DATA | TBD  | 0             | {{accept-gzipped-data}}   |
+ |-----------------------|------|---------------|---------------------------|
 
 
 ## HTTP/2 Error Code Registry Update
