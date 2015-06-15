@@ -390,10 +390,11 @@
 <link href="#rfc.references" rel="Chapter" title="7 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="7.1 Normative References"/>
 <link href="#rfc.references.2" rel="Chapter" title="7.2 Informative References"/>
+<link href="#rfc.appendix.A" rel="Chapter" title="A Changelog"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.12 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.4.8 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Kerwin, M." />
@@ -415,11 +416,11 @@
 </tr>
 <tr>
   <td class="left">Internet-Draft</td>
-  <td class="right">June 15, 2015</td>
+  <td class="right"></td>
 </tr>
 <tr>
   <td class="left">Intended status: Experimental</td>
-  <td class="right"></td>
+  <td class="right">June 15, 2015</td>
 </tr>
 <tr>
   <td class="left">Expires: December 17, 2015</td>
@@ -456,22 +457,23 @@
   <ul class="toc">
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
-<ul><li>1.1.   <a href="#rfc.section.1.1">Notational Conventions</a></li>
-</ul><li>2.   <a href="#rfc.section.2">Additions to HTTP/2</a></li>
-<ul><li>2.1.   <a href="#rfc.section.2.1">SETTINGS_ACCEPT_GZIPPED_DATA</a></li>
+<li>1.1.   <a href="#rfc.section.1.1">Notational Conventions</a></li>
+<li>2.   <a href="#rfc.section.2">Additions to HTTP/2</a></li>
+<li>2.1.   <a href="#rfc.section.2.1">SETTINGS_ACCEPT_GZIPPED_DATA</a></li>
 <li>2.2.   <a href="#rfc.section.2.2">GZIPPED_DATA</a></li>
 <li>2.3.   <a href="#rfc.section.2.3">DATA_ENCODING_ERROR</a></li>
-</ul><li>3.   <a href="#rfc.section.3">Fragmentation</a></li>
+<li>3.   <a href="#rfc.section.3">Fragmentation</a></li>
 <li>4.   <a href="#rfc.section.4">Security Considerations</a></li>
 <li>5.   <a href="#rfc.section.5">IANA Considerations</a></li>
-<ul><li>5.1.   <a href="#rfc.section.5.1">HTTP/2 Frame Type Registry Update</a></li>
+<li>5.1.   <a href="#rfc.section.5.1">HTTP/2 Frame Type Registry Update</a></li>
 <li>5.2.   <a href="#rfc.section.5.2">HTTP/2 Settings Registry Update</a></li>
 <li>5.3.   <a href="#rfc.section.5.3">HTTP/2 Error Code Registry Update</a></li>
-</ul><li>6.   <a href="#rfc.section.6">Acknowledgements</a></li>
+<li>6.   <a href="#rfc.section.6">Acknowledgements</a></li>
 <li>7.   <a href="#rfc.references">References</a></li>
-<ul><li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
 <li>7.2.   <a href="#rfc.references.2">Informative References</a></li>
-</ul><li><a href="#rfc.authors">Author's Address</a></li>
+<li>Appendix A.   <a href="#rfc.appendix.A">Changelog</a></li>
+<li><a href="#rfc.authors">Author's Address</a></li>
 
 
   </ul>
@@ -638,6 +640,49 @@
     </tr>
   </tbody>
 </table>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#changelog" id="changelog">Changelog</a></h1>
+<p id="rfc.section.A.p.1">Since -05:</p>
+<p/>
+
+<ul>
+  <li>changed ACCEPT_ENCODED_DATA back from a frame to a setting, since it carries a single scalar value now</li>
+</ul>
+<p id="rfc.section.A.p.3">Since -04:</p>
+<p/>
+
+<ul>
+  <li>reduced encoding options to only gzip (suggested by Martin Thomson)</li>
+  <li>remove fragmentation and segment stuff, including reference to &#8216;http2-segments&#8217; I-D</li>
+  <li>updated HTTP/2 reference from I-D to (freshly published) RFC7230</li>
+</ul>
+<p id="rfc.section.A.p.5">Since -03:</p>
+<p/>
+
+<ul>
+  <li>added &#8216;identity&#8217; encoding; removed &#8216;compress&#8217; and &#8216;zlib&#8217; (suggested by PHK)</li>
+  <li>added SEGMENT flag, for segments that don&#8217;t continue</li>
+  <li>clarified that ACCEPT is for a connection, and ENCODED_DATA is for a stream</li>
+  <li>copied &#8220;padding&#8221; text from HTTP/2 draft</li>
+</ul>
+<p id="rfc.section.A.p.7">Since -02:</p>
+<p/>
+
+<ul>
+  <li>moved all discussion of fragmentation and segments to its own section</li>
+</ul>
+<p id="rfc.section.A.p.9">Since -01:</p>
+<p/>
+
+<ul>
+  <li>referenced new draft-kerwin-http2-segments to handle fragmentation</li>
+</ul>
+<p id="rfc.section.A.p.11">Since -00:</p>
+<p/>
+
+<ul>
+  <li>changed ACCEPT_ENCODED_DATA from a complex setting to a frame</li>
+  <li>improved IANA Considerations section (with lots of input from Keith Morgan)</li>
+</ul>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Author's Address</a>
 </h1>
