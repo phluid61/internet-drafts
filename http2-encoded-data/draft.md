@@ -248,3 +248,37 @@ following table are registered by this document.
 Thanks to Keith Morgan for his advice, input, and editorial contributions.
 
 --- back
+
+# Changelog
+
+Since -05:
+
+ * changed ACCEPT\_ENCODED\_DATA back from a frame to a setting, since it
+   carries a single scalar value now
+
+Since -04:
+
+ * reduced encoding options to only gzip (suggested by Martin Thomson)
+ * remove fragmentation and segment stuff, including reference to 'http2-segments' I-D
+ * updated HTTP/2 reference from I-D to (freshly published) RFC7230
+
+Since -03:
+
+ * added 'identity' encoding; removed 'compress' and 'zlib' (suggested by PHK)
+ * added SEGMENT flag, for segments that don't continue
+ * clarified that ACCEPT is for a connection, and ENCODED\_DATA is for a stream
+ * copied "padding" text from HTTP/2 draft
+
+Since -02:
+
+ * moved all discussion of fragmentation and segments to its own section
+
+Since -01:
+
+ * referenced new draft-kerwin-http2-segments to handle fragmentation
+
+Since -00:
+
+ * changed ACCEPT\_ENCODED\_DATA from a complex setting to a frame
+ * improved IANA Considerations section (with lots of input from Keith Morgan)
+
