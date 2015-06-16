@@ -1,7 +1,7 @@
 ---
 title: HTTP/2 Encoded Data
 abbrev: http2-encoded-data
-docname: draft-kerwin-http2-encoded-data-06
+docname: draft-kerwin-http2-encoded-data-07
 date: 2015
 category: exp
 
