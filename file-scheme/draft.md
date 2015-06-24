@@ -160,9 +160,9 @@ A file URI identifies a file on a particular file system.  It can be
 used in discussions about the file, and if other conditions are met it
 can be dereferenced to directly access the file.
 
-The file URI scheme is not coupled with a specific protocol.  As such,
-there is no well-defined set of operations that can be performed on file
-URIs, nor a specific media type associated with them.
+The file URI scheme is not coupled with a specific protocol, nor with a
+specific media type.  See {{operations}} for a discussion of operations
+that can be performed on a file URI.
 
 This document defines a syntax that is compatible with most extant
 implementations, while attempting to push towards a stricter subset of
