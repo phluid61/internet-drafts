@@ -1,11 +1,13 @@
 # Copied from https://github.com/mnot/I-D/
 
+author = kerwin
+
 id_base = ..
 xml2rfc ?= xml2rfc
 kramdown-rfc2629 ?= kramdown-rfc2629
 idnits ?= idnits
 
-title = kerwin-$(shell basename "${CURDIR}")
+title = $(author)-$(shell basename "${CURDIR}")
 latest = $(shell (ls draft-${title}-*.xml || echo "draft-${title}-00.xml") | sort | tail -1)
 version = $(shell basename ${latest} .xml | awk -F- '{print $$NF}')
 
@@ -20,11 +22,11 @@ latest: $(target).html $(target).txt
 clean:
 	rm -f $(target).html $(target).txt
 
-next: 
+next:
 	cp $(target).xml $(next).xml
 	sed -i -e"s/$(target)/$(next)/" draft.md
 
-diff: 
+diff:
 	rfcdiff $(prev).txt $(target).txt
 
 idnits: $(target).txt
