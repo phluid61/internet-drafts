@@ -258,23 +258,26 @@ they transport.
 
 Implementations SHOULD, at a minimum, provide a read-like operation to
 return the contents of a file located by a file URI.  Additional
-operations MAY be provided, such as writing, creating, and deleting
+operations MAY be provided, such as writing to, creating, and deleting
 files.  See the POSIX file and directory operations {{POSIX}} for
 examples of standardized operations that can be performed on files.
 
-File URIs can also be translated to and from local file paths or UNC
-strings.
+File URIs can also be translated to and from other, similar constructs,
+such as local file paths or UNC strings.
 
-A file URI can only be translated to a local file path if it has a
-blank or no authority.  Note that this differs from the previous
+A file URI can only be dereferenced or translated to a local file path
+if it is local.  A file URI is considered "local" if it has a blank or
+no authority.  Note that this differs from the previous
 specification in {{RFC1738}}, in that previously an authority of
-"localhost" was used to refer to the local file system, but in this
-specification it equates to a UNC string with the host "localhost".
+"localhost" also indicated a local file URI, but in this
+specification it instead refers to a non-local file whose authority is
+the "localhost".
 
 This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP
 {{NOVELL}} for examples of protocols that can be used to access files
-over a network.
+over a network.  Also see {{ext-unc}} for a discussion on translating
+non-local file URIs to and from UNC stings.
 
 
 ## Translating Local File Path to file URI  {#file-to-uri}
@@ -321,68 +324,25 @@ in a UNIX-like environment would have been:
    = "file:////path/to/file.txt"
 ~~~~~~~~~~
 
-However that construct was never used in practice, and in fact would
-have collided with the eventual encoding of UNC strings in URIs
-described in {{ext-unc}}.
-
-
-## Translating UNC String to file URI  {#unc-to-uri}
-
-A UNC filespace selector string can be directly translated to an
-Internationalized Resource Identifier (IRI) {{RFC3987}}, which can
-then be translated to a URI as per Section 3.1 of {{RFC3987}}; see:
-{{encoding}}.
-
-1.  Initialise the URI with the "file:" scheme identifier.
-
-2.  Append the authority:
-
-    1.  Append the "//" authority sigil to the URI.
-
-    2.  Append the hostname field of the UNC string to the URI.
-
-3.  Append the sharename:
-
-    1.  Transform the sharename to a path segment ({{RFC3986}},
-        Section 3.3) as per Section 2 of {{RFC3986}}.
-
-    2.  Append a delimiting slash character "/" and the transformed
-        segment to the URI.
-
-4.  For each objectname:
-
-    1.  Transform the objectname to a path segment ({{RFC3986}},
-        Section 3.3) as per Section 2 of {{RFC3986}}.
-
-    2.  Append a delimiting slash character "/" and the transformed
-        segment to the URI.
-
-Example:
-
-~~~~~~~~~~
-   UNC String:   \\host.example.com\Share\path\to\file.txt
-   URI:          file://host.example.com/Share/path/to/file.txt
-~~~~~~~~~~
-
-__Differences from RFC 1738__
-
-In {{RFC1738}} a file URL an authority of "localhost" was used to
-refer to the local file system, but in this specification it
-equates to a UNC string with the host "localhost".
+However that construct was never observed in practice, and in fact
+would have collided with the eventual encoding of UNC strings in URIs
+described in {{ext-unc-path}}.
 
 
 ## Translating Non-local File Path to file URI  {#remote-to-uri}
 
-Translating a non-local file path other than a UNC string to a file URI
-follows the same basic algorithm as for local files, above, except that
-the authority MUST refer to the network-accesible node that hosts the
-file.
+Translating a non-local file path, including a UNC string, to a file
+URI follows the same basic algorithm as for local files, above, except
+that the authority MUST refer to the network-accesible node that hosts
+the file.
 
 For example, in a clustered OpenVMS Files-11 system the authority
 would contain the node name.  Where the original node reference
 includes a username and password in an access control string, they MAY
 be transcribed into the userinfo field of the authority ({{RFC3986}},
 Section 3.2.1), security considerations ({{security}}) notwithstanding.
+
+See {{ext-unc}} for an explicit handling of UNC strings.
 
 
 ## Incompatible File Paths {#incompat}
@@ -406,13 +366,14 @@ namespaced paths to or from file URIs.
 
 # Encoding {#encoding}
 
-The encoding of a file URI depends on the file system.  If the file
-system uses a known non-Unicode character encoding, the path SHOULD be
-converted to a sequence of characters from the Universal Character Set
-{{ISO10646}} normalized according to Normalization Form C (NFC) 
-{{UTR15}}, before being translated to a file URI, and conversely a file
-URI SHOULD be converted back to the file system's native encoding when
-translating to a file path.
+The encoding of a file URI depends on the file system that stores the
+identified file.  If the file system uses a known non-Unicode character
+encoding, the path SHOULD be converted to a sequence of characters from
+the Universal Character Set {{ISO10646}} normalized according to
+Normalization Form C (NFC)  {{UTR15}}, before being translated to a
+file URI, and conversely a file URI SHOULD be converted back to the
+file system's native encoding when dereferencing or translating to a
+file path.
 
 > Note that many modern file systems encode directory and file names
 > as arbitrary sequences of octets.  In those cases, the representation
@@ -422,7 +383,6 @@ translating to a file path.
 When the file system's encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
 {{RFC3987}} to avoid ambiguity.  See {{iri-vs-uri}} for examples.
-
 
 
 # Security Considerations {#security}
@@ -449,7 +409,7 @@ types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.
 
 Additionally, as discussed in the HP OpenVMS Systems Documentation
-<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
+\<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
 "access control strings include sufficient information to allow someone
 to break in to the remote account, \[therefore\] they create serious
 security exposure." In a similar vein, the presence of a password in a
@@ -495,7 +455,7 @@ This specification is derived from {{RFC1738}}, {{RFC3986}}, and
 those documents still apply.
 
 Additional thanks to Dave Risney, author of the informative
-IE Blog article <http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx>,
+IE Blog article \<http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx>,
 and Dave Thaler for their comments and suggestions.
 
 
@@ -662,7 +622,49 @@ This is intended to support URIs of the form:
 To update such an old URI, replace the vertical line "\|" with a colon ":".
 
 
-## UNC Paths  {#ext-unc}
+## UNC Strings  {#ext-unc}
+
+A UNC filespace selector string can be directly translated to an
+Internationalized Resource Identifier (IRI) {{RFC3987}}, which can
+then be translated to a URI as per Section 3.1 of {{RFC3987}}; see:
+{{encoding}}.  The following is an algorithmic description of the
+process of translating a UNC string to a file URI:
+
+
+1.  Initialise the URI with the "file:" scheme identifier.
+
+2.  Append the authority:
+
+    1.  Append the "//" authority sigil to the URI.
+
+    2.  Append the hostname field of the UNC string to the URI.
+
+3.  Append the sharename:
+
+    1.  Transform the sharename to a path segment ({{RFC3986}},
+        Section 3.3) as per Section 2 of {{RFC3986}}.
+
+    2.  Append a delimiting slash character "/" and the transformed
+        segment to the URI.
+
+4.  For each objectname:
+
+    1.  Transform the objectname to a path segment ({{RFC3986}},
+        Section 3.3) as per Section 2 of {{RFC3986}}.
+
+    2.  Append a delimiting slash character "/" and the transformed
+        segment to the URI.
+
+
+Example:
+
+~~~~~~~~~~
+   UNC String:   \\host.example.com\Share\path\to\file.txt
+   URI:          file://host.example.com/Share/path/to/file.txt
+~~~~~~~~~~
+
+
+## UNC Paths  {#ext-unc-path}
 
 It is common to encounter file URIs that encode entire UNC strings in
 the path, with all backslash "\\" characters replaced with slashes "/".
