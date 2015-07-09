@@ -1,5 +1,5 @@
 ---
-title: HTTP/2 Encoded Data
+title: HTTP/2 Gzipped Data
 abbrev: http2-encoded-data
 docname: draft-kerwin-http2-encoded-data-07
 date: 2015
@@ -85,12 +85,13 @@ frames that may already be in flight.
 
 GZIPPED\_DATA frames (type code=0xTBA) are semantically identical to DATA frames
 ({{RFC7540}}, Section 6.1), but their payload is encoded using gzip compression.
+Significantly: the order DATA and GZIPPED\_DATA frames is semantically significant; and
+GZIPPED\_DATA frames are subject to flow control ({{RFC7540}}, Section 5.2).
 Gzip compression is an LZ77 coding with a 32 bit CRC that is commonly produced
 by the gzip file compression program {{RFC1952}}.
-Significantly, GZIPPED\_DATA frames are subject to flow control ({{RFC7540}},
-Section 5.2).
 
 Any compression or decompression context for a GZIPPED\_DATA frame is unique to that frame.
+An endpoint MAY interleave DATA and GZIPPED\_DATA frames on a single stream.
 
 ~~~~~~~~~~
   +---------------+
@@ -111,7 +112,7 @@ The GZIPPED\_DATA frame contains the following fields:
   PADDED flag is set.
 
 * Data:
-  Encoded application data. The amount of compressed data is the remainder of the frame
+  Encoded application data. The amount of encoded data is the remainder of the frame
   payload after subtracting the length of the other fields that are
   present.
 
@@ -160,15 +161,8 @@ GZIPPED\_DATA frame is received whose stream is not in "open" or "half closed (l
 recipient MUST respond with a stream error ({{RFC7540}}, Section 5.4.2) of type
 STREAM\_CLOSED.
 
-The total number of padding octets is determined by the value of the Pad Length field. If the
-length of the padding is greater than the length of the remainder of the frame payload, the
-recipient MUST treat this as a connection error ({{RFC7540}}, Section 5.4.1) of type
-PROTOCOL\_ERROR.
-
-Note: A frame can be increased in size by one octet by including a Pad Length field
-  with a value of zero.
-
-Padding is a security feature; see Section 10.7 of {{RFC7540}}.
+GZIPPED\_DATA frames can include padding.  Padding fields and flags are identical to those defined
+for DATA frames ({{RFC7540}}, Section 6.1).
 
 
 ## DATA\_ENCODING\_ERROR  {#error}
@@ -250,6 +244,11 @@ Thanks to Keith Morgan for his advice, input, and editorial contributions.
 --- back
 
 # Changelog
+
+Since -06:
+ * change document title from "Encoded" to "Gzipped"
+ * improve text under GZIPPED\_DATA ({{gzipped-data}})
+ * clarify that GZIPPED\_DATA and DATA can be interleaved
 
 Since -05:
 
