@@ -422,10 +422,13 @@ following table are registered by this document.</t>
 
 <section anchor="changelog" title="Changelog">
 
-<t>Since -06:
- * change document title from “Encoded” to “Gzipped”
- * improve text under GZIPPED_DATA (<xref target="gzipped-data"/>)
- * clarify that GZIPPED_DATA and DATA can be interleaved</t>
+<t>Since -06:</t>
+
+<t><list style="symbols">
+  <t>change document title from “Encoded” to “Gzipped”</t>
+  <t>improve text under GZIPPED_DATA (<xref target="gzipped-data"/>)</t>
+  <t>clarify that GZIPPED_DATA and DATA can be interleaved</t>
+</list></t>
 
 <t>Since -05:</t>
 
