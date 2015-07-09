@@ -246,6 +246,7 @@ Thanks to Keith Morgan for his advice, input, and editorial contributions.
 # Changelog
 
 Since -06:
+
  * change document title from "Encoded" to "Gzipped"
  * improve text under GZIPPED\_DATA ({{gzipped-data}})
  * clarify that GZIPPED\_DATA and DATA can be interleaved
