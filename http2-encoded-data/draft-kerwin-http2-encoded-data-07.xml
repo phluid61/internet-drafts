@@ -17,7 +17,7 @@
 <rfc ipr="trust200902" docName="draft-kerwin-http2-encoded-data-07" category="exp">
 
   <front>
-    <title abbrev="http2-encoded-data">HTTP/2 Encoded Data</title>
+    <title abbrev="http2-encoded-data">HTTP/2 Gzipped Data</title>
 
     <author initials="M." surname="Kerwin" fullname="Matthew Kerwin">
       <organization></organization>
@@ -96,12 +96,13 @@ frames that may already be in flight.</t>
 
 <t>GZIPPED_DATA frames (type code=0xTBA) are semantically identical to DATA frames
 (<xref target="RFC7540"/>, Section 6.1), but their payload is encoded using gzip compression.
+Significantly: the order DATA and GZIPPED_DATA frames is semantically significant; and
+GZIPPED_DATA frames are subject to flow control (<xref target="RFC7540"/>, Section 5.2).
 Gzip compression is an LZ77 coding with a 32 bit CRC that is commonly produced
-by the gzip file compression program <xref target="RFC1952"/>.
-Significantly, GZIPPED_DATA frames are subject to flow control (<xref target="RFC7540"/>,
-Section 5.2).</t>
+by the gzip file compression program <xref target="RFC1952"/>.</t>
 
-<t>Any compression or decompression context for a GZIPPED_DATA frame is unique to that frame.</t>
+<t>Any compression or decompression context for a GZIPPED_DATA frame is unique to that frame.
+An endpoint MAY interleave DATA and GZIPPED_DATA frames on a single stream.</t>
 
 <figure title="GZIPPED_DATA Frame Payload"><artwork><![CDATA[
   +---------------+
@@ -121,7 +122,7 @@ An 8-bit field containing the length of the frame padding in units
 of octets. This field is optional and is only present if the
 PADDED flag is set.</t>
   <t>Data:
-Encoded application data. The amount of compressed data is the remainder of the frame
+Encoded application data. The amount of encoded data is the remainder of the frame
 payload after subtracting the length of the other fields that are
 present.</t>
   <t>Padding:
@@ -170,15 +171,8 @@ GZIPPED_DATA frame is received whose stream is not in “open” or “half clos
 recipient MUST respond with a stream error (<xref target="RFC7540"/>, Section 5.4.2) of type
 STREAM_CLOSED.</t>
 
-<t>The total number of padding octets is determined by the value of the Pad Length field. If the
-length of the padding is greater than the length of the remainder of the frame payload, the
-recipient MUST treat this as a connection error (<xref target="RFC7540"/>, Section 5.4.1) of type
-PROTOCOL_ERROR.</t>
-
-<t>Note: A frame can be increased in size by one octet by including a Pad Length field
-  with a value of zero.</t>
-
-<t>Padding is a security feature; see Section 10.7 of <xref target="RFC7540"/>.</t>
+<t>GZIPPED_DATA frames can include padding.  Padding fields and flags are identical to those defined
+for DATA frames (<xref target="RFC7540"/>, Section 6.1).</t>
 
 </section>
 <section anchor="error" title="DATA_ENCODING_ERROR">
@@ -427,6 +421,11 @@ following table are registered by this document.</t>
 
 
 <section anchor="changelog" title="Changelog">
+
+<t>Since -06:
+ * change document title from “Encoded” to “Gzipped”
+ * improve text under GZIPPED_DATA (<xref target="gzipped-data"/>)
+ * clarify that GZIPPED_DATA and DATA can be interleaved</t>
 
 <t>Since -05:</t>
 

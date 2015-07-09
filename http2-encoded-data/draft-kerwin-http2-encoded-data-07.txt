@@ -3,12 +3,12 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                             June 16, 2015
+Internet-Draft                                              July 9, 2015
 Intended status: Experimental
-Expires: December 18, 2015
+Expires: January 10, 2016
 
 
-                          HTTP/2 Encoded Data
+                          HTTP/2 Gzipped Data
                    draft-kerwin-http2-encoded-data-07
 
 Abstract
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 18, 2015.
+   This Internet-Draft will expire on January 10, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                  Expires December 18, 2015               [Page 1]
+Kerwin                  Expires January 10, 2016                [Page 1]
 
-Internet-Draft             http2-encoded-data                  June 2015
+Internet-Draft             http2-encoded-data                  July 2015
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                  Expires December 18, 2015               [Page 2]
+Kerwin                  Expires January 10, 2016                [Page 2]
 
-Internet-Draft             http2-encoded-data                  June 2015
+Internet-Draft             http2-encoded-data                  July 2015
 
 
 2.1.  SETTINGS_ACCEPT_GZIPPED_DATA
@@ -135,13 +135,15 @@ Internet-Draft             http2-encoded-data                  June 2015
 
    GZIPPED_DATA frames (type code=0xTBA) are semantically identical to
    DATA frames ([RFC7540], Section 6.1), but their payload is encoded
-   using gzip compression.  Gzip compression is an LZ77 coding with a 32
-   bit CRC that is commonly produced by the gzip file compression
-   program [RFC1952].  Significantly, GZIPPED_DATA frames are subject to
-   flow control ([RFC7540], Section 5.2).
+   using gzip compression.  Significantly: the order DATA and
+   GZIPPED_DATA frames is semantically significant; and GZIPPED_DATA
+   frames are subject to flow control ([RFC7540], Section 5.2).  Gzip
+   compression is an LZ77 coding with a 32 bit CRC that is commonly
+   produced by the gzip file compression program [RFC1952].
 
    Any compression or decompression context for a GZIPPED_DATA frame is
-   unique to that frame.
+   unique to that frame.  An endpoint MAY interleave DATA and
+   GZIPPED_DATA frames on a single stream.
 
      +---------------+
      |Pad Length? (8)|
@@ -159,16 +161,18 @@ Internet-Draft             http2-encoded-data                  June 2015
       padding in units of octets.  This field is optional and is only
       present if the PADDED flag is set.
 
-   o  Data: Encoded application data.  The amount of compressed data is
-      the remainder of the frame payload after subtracting the length of
-      the other fields that are present.
 
 
 
-Kerwin                  Expires December 18, 2015               [Page 3]
+
+Kerwin                  Expires January 10, 2016                [Page 3]
 
-Internet-Draft             http2-encoded-data                  June 2015
+Internet-Draft             http2-encoded-data                  July 2015
 
+
+   o  Data: Encoded application data.  The amount of encoded data is the
+      remainder of the frame payload after subtracting the length of the
+      other fields that are present.
 
    o  Padding: Padding octets that contain no application semantic
       value.  Padding octets MUST be set to zero when sending and
@@ -214,28 +218,22 @@ Internet-Draft             http2-encoded-data                  June 2015
    GZIPPED_DATA frames are subject to flow control and can only be sent
    when a stream is in the "open" or "half closed (remote)" states.  The
    entire GZIPPED_DATA frame payload is included in flow control,
+
+
+
+Kerwin                  Expires January 10, 2016                [Page 4]
+
+Internet-Draft             http2-encoded-data                  July 2015
+
+
    including the Pad Length and Padding fields if present.  If a
    GZIPPED_DATA frame is received whose stream is not in "open" or "half
    closed (local)" state, the recipient MUST respond with a stream error
    ([RFC7540], Section 5.4.2) of type STREAM_CLOSED.
 
-
-
-Kerwin                  Expires December 18, 2015               [Page 4]
-
-Internet-Draft             http2-encoded-data                  June 2015
-
-
-   The total number of padding octets is determined by the value of the
-   Pad Length field.  If the length of the padding is greater than the
-   length of the remainder of the frame payload, the recipient MUST
-   treat this as a connection error ([RFC7540], Section 5.4.1) of type
-   PROTOCOL_ERROR.
-
-   Note: A frame can be increased in size by one octet by including a
-   Pad Length field with a value of zero.
-
-   Padding is a security feature; see Section 10.7 of [RFC7540].
+   GZIPPED_DATA frames can include padding.  Padding fields and flags
+   are identical to those defined for DATA frames ([RFC7540],
+   Section 6.1).
 
 2.3.  DATA_ENCODING_ERROR
 
@@ -277,9 +275,11 @@ Internet-Draft             http2-encoded-data                  June 2015
 
 
 
-Kerwin                  Expires December 18, 2015               [Page 5]
+
+
+Kerwin                  Expires January 10, 2016                [Page 5]
 
-Internet-Draft             http2-encoded-data                  June 2015
+Internet-Draft             http2-encoded-data                  July 2015
 
 
                    +--------------+------+-------------+
@@ -333,9 +333,9 @@ Internet-Draft             http2-encoded-data                  June 2015
 
 
 
-Kerwin                  Expires December 18, 2015               [Page 6]
+Kerwin                  Expires January 10, 2016                [Page 6]
 
-Internet-Draft             http2-encoded-data                  June 2015
+Internet-Draft             http2-encoded-data                  July 2015
 
 
    [RFC7540]  Belshe, M., Peon, R., and M. Thomson, "Hypertext Transfer
@@ -348,6 +348,10 @@ Internet-Draft             http2-encoded-data                  June 2015
               2014.
 
 Appendix A.  Changelog
+
+   Since -06: * change document title from "Encoded" to "Gzipped" *
+   improve text under GZIPPED_DATA (Section 2.2) * clarify that
+   GZIPPED_DATA and DATA can be interleaved
 
    Since -05:
 
@@ -383,16 +387,16 @@ Appendix A.  Changelog
 
    Since -01:
 
+
+
+Kerwin                  Expires January 10, 2016                [Page 7]
+
+Internet-Draft             http2-encoded-data                  July 2015
+
+
    o  referenced new draft-kerwin-http2-segments to handle fragmentation
 
    Since -00:
-
-
-
-Kerwin                  Expires December 18, 2015               [Page 7]
-
-Internet-Draft             http2-encoded-data                  June 2015
-
 
    o  changed ACCEPT_ENCODED_DATA from a complex setting to a frame
 
@@ -441,8 +445,4 @@ Author's Address
 
 
 
-
-
-
-
-Kerwin                  Expires December 18, 2015               [Page 8]
+Kerwin                  Expires January 10, 2016                [Page 8]
