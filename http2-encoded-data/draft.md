@@ -85,7 +85,7 @@ frames that may already be in flight.
 
 GZIPPED\_DATA frames (type code=0xTBA) are semantically identical to DATA frames
 ({{RFC7540}}, Section 6.1), but their payload is encoded using gzip compression.
-Significantly: the order DATA and GZIPPED\_DATA frames is semantically significant; and
+Significantly: the order of DATA and GZIPPED\_DATA frames is semantically significant; and
 GZIPPED\_DATA frames are subject to flow control ({{RFC7540}}, Section 5.2).
 Gzip compression is an LZ77 coding with a 32 bit CRC that is commonly produced
 by the gzip file compression program {{RFC1952}}.
