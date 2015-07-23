@@ -415,7 +415,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-03" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-6-29" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-7-23" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
 
@@ -436,14 +436,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">June 29, 2015</td>
+  <td class="right">July 23, 2015</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: December 31, 2015</td>
+  <td class="left">Expires: January 24, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -469,7 +469,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on December 31, 2015.</p>
+<p>This Internet-Draft will expire on January 24, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -534,7 +534,7 @@
 <p id="rfc.section.1.1.p.3">The Internet draft <a href="#I-D.hoffman-file-uri">[I-D.hoffman-file-uri]</a> was written in an effort to keep the file URI scheme on standards track when <a href="#RFC1738">[RFC1738]</a> was made obsolete, but that draft expired in 2005.  It enumerated concerns arising from the various, often conflicting implementations of the scheme.  It serves as the spiritual predecessor of this document.</p>
 <p id="rfc.section.1.1.p.4">Additionally the WHATWG defines a living URL standard <a href="#WHATWG-URL">[WHATWG-URL]</a>, which includes algorithms for interpreting file URIs (as URLs).</p>
 <h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#similar-technologies" id="similar-technologies">Similar Technologies</a></h1>
-<p id="rfc.section.1.2.p.1">The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files.  A UNC filespace selector string has three parts: host, share, and path; see: <a href="#unc-syntax">Appendix E</a>.  This document describes a means of translating between UNC filespace selector strings and file URIs.</p>
+<p id="rfc.section.1.2.p.1">The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files.  A UNC filespace selector string has three parts: host, share, and path; see: <a href="#unc-syntax">Appendix E</a>.  This document describes but does not specify a means of translating between UNC filespace selector strings and file URIs in <a href="#ext-unc">Appendix C.2</a>.</p>
 <h1 id="rfc.section.1.3"><a href="#rfc.section.1.3">1.3.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
 <p id="rfc.section.1.3.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <p id="rfc.section.1.3.p.2">Throughout this document the term &#8220;local&#8221; is used to describe files that can be accessed directly through the local file system.  It is important to note that a local file may not be physically located on the local machine, for example if a networked file system is transparently mounted into the local file system.</p>
@@ -556,11 +556,12 @@
    file-auth      = [ userinfo "@" ] host
 </pre>
 <p id="rfc.section.2.p.3">The syntax definition above is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates all previous specifications.</p>
-<p id="rfc.section.2.p.4">Systems exhibit different levels of case-sensitivity.  Unless the file system is known to be case-insensitive, implementations MUST maintain the case of file and directory names when translating file URIs to and from the local system&#8217;s representation of file paths, and any systems or devices that transport file URIs MUST NOT alter the case of file URIs they transport.</p>
+<p id="rfc.section.2.p.4">As a special case, the &#8220;auth-path&#8221; rule can match the string &#8220;localhost&#8221; or the empty string in the URI&#8217;s authority component; this is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority was present.</p>
+<p id="rfc.section.2.p.5">Systems exhibit different levels of case-sensitivity.  Unless the file system is known to be case-insensitive, implementations MUST maintain the case of file and directory names when translating file URIs to and from the local system&#8217;s representation of file paths, and any systems or devices that transport file URIs MUST NOT alter the case of file URIs they transport.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#operations" id="operations">Operations on file URIs</a></h1>
 <p id="rfc.section.3.p.1">Implementations SHOULD, at a minimum, provide a read-like operation to return the contents of a file located by a file URI.  Additional operations MAY be provided, such as writing to, creating, and deleting files.  See the POSIX file and directory operations <a href="#POSIX">[POSIX]</a> for examples of standardized operations that can be performed on files.</p>
 <p id="rfc.section.3.p.2">File URIs can also be translated to and from other, similar constructs, such as local file paths or UNC strings.</p>
-<p id="rfc.section.3.p.3">A file URI can only be dereferenced or translated to a local file path if it is local.  A file URI is considered &#8220;local&#8221; if it has a blank or no authority.  Note that this differs from the previous specification in <a href="#RFC1738">[RFC1738]</a>, in that previously an authority of &#8220;localhost&#8221; also indicated a local file URI, but in this specification it instead refers to a non-local file whose authority is the &#8220;localhost&#8221;.</p>
+<p id="rfc.section.3.p.3">A file URI can only be dereferenced or translated to a local file path if it is local.  A file URI is considered &#8220;local&#8221; if it has a blank or no authority, or the authority is the special string &#8220;localhost&#8221;.</p>
 <p id="rfc.section.3.p.4">This specification neither defines nor forbids a mechanism for accessing non-local files.  See SMB <a href="#MS-SMB">[MS-SMB]</a>, NFS <a href="#RFC3530">[RFC3530]</a>, NCP <a href="#NOVELL">[NOVELL]</a> for examples of protocols that can be used to access files over a network.  Also see <a href="#ext-unc">Appendix C.2</a> for a discussion on translating non-local file URIs to and from UNC stings.</p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#file-to-uri" id="file-to-uri">Translating Local File Path to file URI</a></h1>
 <p id="rfc.section.3.1.p.1">Below is an algorithmic description of the process used to convert a file path to an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a>, which can then be translated to a URI as per Section 3.1 of <a href="#RFC3987">[RFC3987]</a>; see: <a href="#encoding">Section 4</a>.</p>
@@ -577,7 +578,7 @@
 <p>
   <strong>Differences from RFC 1738</strong>
 </p>
-<p id="rfc.section.3.1.p.4">In <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an authority and a &#8220;/&#8221;. That &#8220;/&#8221; was not considered part of the path.  This implies that the correct encoding for a file path in a UNIX-like environment would have been:</p>
+<p id="rfc.section.3.1.p.4">In <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) authority and a &#8220;/&#8221;. That &#8220;/&#8221; was not considered part of the path.  This implies that the correct encoding for a file path in a UNIX-like environment would have been:</p>
 <pre>
      token     + authority + slash + path
    = "file://" + ""        + "/"   + "/path/to/file.txt"
@@ -594,13 +595,14 @@
 <p id="rfc.section.3.3.1.p.1">The Microsoft Windows API defines Win32 Namespaces <a href="#Win32-Namespaces">[Win32-Namespaces]</a> for interacting with files and devices using Windows API functions.  These namespaced paths are prefixed by &#8220;\\?\&#8221; for Win32 File Namespaces and &#8220;\\.\&#8221; for Win32 Device Namespaces.  There is also a special case for UNC file paths in Win32 File Namespaces, referred to as &#8220;Long UNC&#8221;, using the prefix &#8220;\\?\UNC\&#8221;.</p>
 <p id="rfc.section.3.3.1.p.2">This specification does not define a mechanism for translating namespaced paths to or from file URIs.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">Encoding</a></h1>
-<p id="rfc.section.4.p.1">The encoding of a file URI depends on the file system that stores the identified file.  If the file system uses a known non-Unicode character encoding, the path SHOULD be converted to a sequence of characters from the Universal Character Set <a href="#ISO10646">[ISO10646]</a> normalized according to Normalization Form C (NFC)  <a href="#UTR15">[UTR15]</a>, before being translated to a file URI, and conversely a file URI SHOULD be converted back to the file system&#8217;s native encoding when dereferencing or translating to a file path.</p>
+<p id="rfc.section.4.p.1">To avoid ambiguity, a file URI SHOULD be transported as an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a>, or as a URI with non-ASCII characters encoded according to the UTF-8 character encoding <a href="#STD63">[STD63]</a> and percent-encoded as needed (<a href="#RFC3986">[RFC3986]</a>, Section 2.5)</p>
+<p id="rfc.section.4.p.2">The encoding of a file URI depends on the file system that stores the identified file.  If the file system uses a known non-Unicode character encoding, the path SHOULD be converted to a sequence of characters from the Universal Character Set <a href="#ISO10646">[ISO10646]</a> normalized according to Normalization Form C (NFC)  <a href="#UTR15">[UTR15]</a>, before being translated to a file URI, and conversely a file URI SHOULD be converted back to the file system&#8217;s native encoding when dereferencing or translating to a file path.</p>
 <p/>
 
 <ul class="empty">
   <li>Note that many modern file systems encode directory and file names as arbitrary sequences of octets.  In those cases, the representation as an encoded string often depends on the user&#8217;s localization settings, or defaults to UTF-8 <a href="#STD63">[STD63]</a>.</li>
 </ul>
-<p id="rfc.section.4.p.3">When the file system&#8217;s encoding is not known the file URI SHOULD be transported as an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a> to avoid ambiguity.  See <a href="#iri-vs-uri">Appendix D</a> for examples.</p>
+<p id="rfc.section.4.p.4">When the file system&#8217;s encoding is not known the file URI SHOULD be transported as an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a> to avoid ambiguity.  See <a href="#iri-vs-uri">Appendix D</a> for examples.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security" id="security">Security Considerations</a></h1>
 <p id="rfc.section.5.p.1">There are many security considerations for URI schemes discussed in <a href="#RFC3986">[RFC3986]</a>.</p>
 <p id="rfc.section.5.p.2">File access and the granting of privileges for specific operations are complex topics, and the use of file URIs can complicate the security model in effect for file privileges.  Software using file URIs MUST NOT grant greater access than would be available for other file access methods.</p>
@@ -798,33 +800,23 @@
 <p/>
 
 <ul>
-  <li><samp>file://host.example.com/path/to/file</samp>  <ul class="empty"><li>The representation of a non-local file, with an explicit authority.  Note that, unlike in <a href="#RFC1738">[RFC1738]</a>, the string &#8220;localhost&#8221; in the authority signifies a non-local file.</li></ul></li>
+  <li><samp>file://host.example.com/path/to/file</samp>  <ul class="empty"><li>The representation of a non-local file, with an explicit authority.</li></ul></li>
 </ul>
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#system-specific-operations" id="system-specific-operations">System-specific Operations</a></h1>
-<p id="rfc.section.B.p.1">This section provides examples of some system-specific thingies.</p>
-<p id="rfc.section.B.p.2">This section is not normative.  [FIXME: it&#8217;s also incomplete]</p>
+<p id="rfc.section.B.p.1">This appendix is not normative; it highlights some observed behaviours and provides system-specific guidance for interacting with file URIs and paths.</p>
 <h1 id="rfc.appendix.B.1"><a href="#rfc.appendix.B.1">B.1.</a> <a href="#sys-unix" id="sys-unix">POSIX Systems</a></h1>
-<p/>
-
-<ul>
-  <li>No special considerations (file URIs are based on UNIX paths)</li>
-</ul>
+<p id="rfc.section.B.1.p.1">There is little to say about POSIX file systems; the file URI structure already closely resembles POSIX file paths.</p>
 <h1 id="rfc.appendix.B.2"><a href="#rfc.appendix.B.2">B.2.</a> <a href="#sys-dos" id="sys-dos">DOS- and Windows-Like Systems</a></h1>
-<p id="rfc.section.B.2.p.1">When mapping a DOS- or Windows-like file path to a URI, use the drive letter (e.g. &#8220;c:&#8221;) as the first path segment.</p>
-<p id="rfc.section.B.2.p.2">Some implementations leave the leading slash off before the drive letter.  See <a href="#ext-drives">Appendix C.1</a>)</p>
-<p id="rfc.section.B.2.p.3">Some implementations replace &#8220;:&#8221; with &#8220;|&#8221;, while others leave it off completely.  See <a href="#ext-pipe">Appendix C.1.2</a></p>
+<p id="rfc.section.B.2.p.1">When mapping a DOS- or Windows-like file path to a file URI, implementations typically map the drive letter (e.g. &#8220;c:&#8221;) into the first path segment.</p>
+<p id="rfc.section.B.2.p.2">See <a href="#ext-drives">Appendix C.1</a> for explicit (but non-normative and strictly optional) rules for interacting with DOS- or Windows-like file paths and URIs.</p>
 <h1 id="rfc.appendix.B.3"><a href="#rfc.appendix.B.3">B.3.</a> <a href="#sys-osx" id="sys-osx">Mac OS X Systems</a></h1>
-<p/>
-
-<ul>
-  <li>HFS+ uses non-standard UTF-8 <a href="#STD63">[STD63]</a> form (like NFD)  <ul><li>take care transforming &lt;-&gt; NFC <a href="#UTR15">[UTR15]</a></li></ul></li>
-</ul>
+<p id="rfc.section.B.3.p.1">The HFS+ file system uses a non-standard normalization form, similar to Normalization Form D.  Take care when transforming HFS+ file paths to and from URIs using Normalization Form C <a href="#encoding">Section 4</a>.</p>
 <h1 id="rfc.appendix.B.4"><a href="#rfc.appendix.B.4">B.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-11 Systems</a></h1>
-<p id="rfc.section.B.4.p.1">When mapping a VMS file path to a file URI, use the device name as the first path segment.  Note that the dollars sign &#8220;$&#8221; is a reserved character (<a href="#RFC3986">[RFC3986]</a>, Section 2.2), so should be percent-encoded.</p>
+<p id="rfc.section.B.4.p.1">When mapping a VMS file path to a file URI, map the device name into the first path segment.  Note that the dollars sign &#8220;$&#8221; is a reserved character per the definition in <a href="#RFC3986">[RFC3986]</a>, Section 2.2, so should be percent-encoded if present in the device name.</p>
 <p id="rfc.section.B.4.p.2">If the VMS file path includes a node reference, use that as the authority.  Where the original node reference includes a username and password in an access control string, they can be transcribed into the userinfo field of the authority (<a href="#RFC3986">[RFC3986]</a>, Section 3.2.1), security considerations (<a href="#security">Section 5</a>) notwithstanding.</p>
 <h1 id="rfc.appendix.C"><a href="#rfc.appendix.C">Appendix C.</a> <a href="#nonstandard-syntax" id="nonstandard-syntax">Nonstandard Syntax Variations</a></h1>
 <p id="rfc.section.C.p.1">These variations may be encountered for historical reasons, but are not supported by the normative syntax of <a href="#syntax">Section 2</a>.</p>
-<p id="rfc.section.C.p.2">This section is not normative.</p>
+<p id="rfc.section.C.p.2">This appendix is not normative.</p>
 <h1 id="rfc.appendix.C.1"><a href="#rfc.appendix.C.1">C.1.</a> <a href="#ext-drives" id="ext-drives">DOS and Windows Drive Letters</a></h1>
 <p id="rfc.section.C.1.p.1">On Windows- or DOS-based file systems a absolute file path can begin with a drive letter.  To facilitate this, the <samp>local-path</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
 <pre>
@@ -838,7 +830,8 @@
 <ul>
   <li><samp>file:c:/path/to/file</samp>  <ul class="empty"><li>The minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.</li></ul></li>
 </ul>
-<p id="rfc.section.C.1.p.4">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive.  Some implementations therefore canonicalize drive letters in file URIs by converting them to uppercase.</p>
+<p id="rfc.section.C.1.p.4">URIs of the form <samp>file:///c:/path/to/file</samp> are already supported by the <samp>path-absolute</samp> rule.</p>
+<p id="rfc.section.C.1.p.5">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive.  Some implementations therefore canonicalize drive letters in file URIs by converting them to uppercase.</p>
 <h1 id="rfc.appendix.C.1.1"><a href="#rfc.appendix.C.1.1">C.1.1.</a> <a href="#ext-relative" id="ext-relative">Relative Paths</a></h1>
 <p id="rfc.section.C.1.1.p.1">In DOS- or Windows-based file systems, relative paths beginning with a slash &#8220;/&#8221; should be resolved relative to the drive letter, and resolution of &#8220;..&#8221; dot segments (per Section 5.2.4 of <a href="#RFC3986">[RFC3986]</a>) should not ever overwrite the drive letter.</p>
 <p id="rfc.section.C.1.1.p.2">e.g.:</p>
@@ -896,7 +889,7 @@
    URI:          file://host.example.com/Share/path/to/file.txt
 </pre>
 <h1 id="rfc.appendix.C.3"><a href="#rfc.appendix.C.3">C.3.</a> <a href="#ext-unc-path" id="ext-unc-path">UNC Paths</a></h1>
-<p id="rfc.section.C.3.p.1">It is common to encounter file URIs that encode entire UNC strings in the path, with all backslash &#8220;\&#8221; characters replaced with slashes &#8220;/&#8221;.</p>
+<p id="rfc.section.C.3.p.1">It is common to encounter file URIs that encode entire UNC strings in the path, usually with all backslash &#8220;\&#8221; characters replaced with slashes &#8220;/&#8221;.</p>
 <p id="rfc.section.C.3.p.2">To interpret such URIs, the <samp>auth-path</samp> rule in <a href="#syntax">Section 2</a> is replaced with the following:</p>
 <pre>
    auth-path      = [ file-auth ] path-absolute
