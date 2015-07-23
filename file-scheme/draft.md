@@ -367,6 +367,12 @@ namespaced paths to or from file URIs.
 
 # Encoding {#encoding}
 
+To avoid ambiguity, a file URI SHOULD be transported as an
+Internationalized Resource Identifier (IRI) {{RFC3987}}, or as a URI
+with non-ASCII characters encoded according to the UTF-8 character
+encoding {{STD63}} and percent-encoded as needed ({{RFC3986}},
+Section 2.5)
+
 The encoding of a file URI depends on the file system that stores the
 identified file.  If the file system uses a known non-Unicode character
 encoding, the path SHOULD be converted to a sequence of characters from
