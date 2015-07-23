@@ -45,6 +45,7 @@ normative:
       BCP: 35
       RFC: 7595
       DOI: 10.17487/RFC7595
+    target: http://www.rfc-editor.org/info/bcp35
   RFC1035:
   RFC1123:
   RFC2119:
@@ -70,6 +71,7 @@ normative:
       name: Ken Whistler
       #email: ken@unicode.org
     date: 2012-08-31
+    target: http://unicode.org/reports/tr15/tr15-18.html
 
 informative:
   STD63:
@@ -81,9 +83,11 @@ informative:
     seriesinfo:
       STD: 63
       RFC: 3629
+      DOI: 10.17487/RFC3629
+    target: http://www.rfc-editor.org/info/std63
   RFC1630:
   RFC1738:
-  RFC3530:
+  RFC7530:
   I-D.hoffman-file-uri:
   WHATWG-URL:
     title: URL Living Standard
@@ -277,7 +281,7 @@ if it is local.  A file URI is considered "local" if it has a blank or
 no authority, or the authority is the special string "localhost".
 
 This specification neither defines nor forbids a mechanism for
-accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP
+accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP
 {{NOVELL}} for examples of protocols that can be used to access files
 over a network.  Also see {{ext-unc}} for a discussion on translating
 non-local file URIs to and from UNC stings.
@@ -810,7 +814,7 @@ only; the normative description is in {{MS-DTYP}}.
 * `ip-address` from Section 2.1 of {{RFC1123}}, or Section 2.2 of {{RFC4291}}.
 
 The precise format of `sharename` depends on the protocol;
-see: SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP {{NOVELL}}.
+see: SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP {{NOVELL}}.
 
 # Collected Rules  {#collected}
 
