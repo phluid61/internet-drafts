@@ -17,7 +17,7 @@ Abstract
    This document specifies the "file" Uniform Resource Identifier (URI)
    scheme, obsoleting the definition in RFC 1738.
 
-   It attemps to define a common core which is intended to interoperate
+   It attempts to define a common core which is intended to interoperate
    across the broad spectrum of existing implementations, while at the
    same time documenting other current practices.
 
@@ -86,22 +86,22 @@ Table of Contents
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
      8.2.  Informative References  . . . . . . . . . . . . . . . . .  10
    Appendix A.  Example URIs . . . . . . . . . . . . . . . . . . . .  11
-   Appendix B.  System-specific Operations . . . . . . . . . . . . .  11
-     B.1.  POSIX Systems . . . . . . . . . . . . . . . . . . . . . .  11
+   Appendix B.  System-specific Operations . . . . . . . . . . . . .  12
+     B.1.  POSIX Systems . . . . . . . . . . . . . . . . . . . . . .  12
      B.2.  DOS- and Windows-Like Systems . . . . . . . . . . . . . .  12
      B.3.  Mac OS X Systems  . . . . . . . . . . . . . . . . . . . .  12
      B.4.  OpenVMS Files-11 Systems  . . . . . . . . . . . . . . . .  12
    Appendix C.  Nonstandard Syntax Variations  . . . . . . . . . . .  12
-     C.1.  DOS and Windows Drive Letters . . . . . . . . . . . . . .  12
+     C.1.  DOS and Windows Drive Letters . . . . . . . . . . . . . .  13
        C.1.1.  Relative Paths  . . . . . . . . . . . . . . . . . . .  13
-       C.1.2.  Vertical Bar Character  . . . . . . . . . . . . . . .  13
+       C.1.2.  Vertical Bar Character  . . . . . . . . . . . . . . .  14
      C.2.  UNC Strings . . . . . . . . . . . . . . . . . . . . . . .  14
      C.3.  UNC Paths . . . . . . . . . . . . . . . . . . . . . . . .  15
      C.4.  Backslash as Separator  . . . . . . . . . . . . . . . . .  16
    Appendix D.  Example of IRI vs Percent-Encoded URI  . . . . . . .  16
    Appendix E.  UNC Syntax . . . . . . . . . . . . . . . . . . . . .  17
    Appendix F.  Collected Rules  . . . . . . . . . . . . . . . . . .  18
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  19
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  20
 
 
 
@@ -158,7 +158,7 @@ Internet-Draft                 file-scheme                     July 2015
    The Universal Naming Convention (UNC) [MS-DTYP] defines a string
    format that can perform a similar role to the file URI scheme in
    describing the location of files.  A UNC filespace selector string
-   has three parts: host, share, and path; see: Appendix E.  This
+   has three parts: host, share, and path; see Appendix E.  This
    document describes but does not specify a means of translating
    between UNC filespace selector strings and file URIs in Appendix C.2.
 
@@ -256,9 +256,7 @@ Internet-Draft                 file-scheme                     July 2015
 3.1.  Translating Local File Path to file URI
 
    Below is an algorithmic description of the process used to convert a
-   file path to an Internationalized Resource Identifier (IRI)
-   [RFC3987], which can then be translated to a URI as per Section 3.1
-   of [RFC3987]; see: Section 4.
+   file path to a URI; see Section 4.
 
    1.  Resolve the file path to its fully qualified absolute form.
 
@@ -274,6 +272,8 @@ Internet-Draft                 file-scheme                     July 2015
 
        1.  Transform the directory name to a path segment ([RFC3986],
            Section 3.3) as per Section 2 of [RFC3986].
+
+
 
 
 
@@ -356,7 +356,7 @@ Internet-Draft                 file-scheme                     July 2015
    Internationalized Resource Identifier (IRI) [RFC3987], or as a URI
    with non-ASCII characters encoded according to the UTF-8 character
    encoding [STD63] and percent-encoded as needed ([RFC3986],
-   Section 2.5)
+   Section 2.5).
 
    The encoding of a file URI depends on the file system that stores the
    identified file.  If the file system uses a known non-Unicode
@@ -476,27 +476,27 @@ Internet-Draft                 file-scheme                     July 2015
               Character Set (UCS)", ISO/IEC 10646:2003, December 2003.
 
    [RFC1035]  Mockapetris, P., "Domain names - implementation and
-              specification", STD 13, RFC 1035, November 1987.
+              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
+              November 1987, <http://www.rfc-editor.org/info/rfc1035>.
 
-   [RFC1123]  Braden, R., "Requirements for Internet Hosts - Application
-              and Support", STD 3, RFC 1123, October 1989.
+   [RFC1123]  Braden, R., Ed., "Requirements for Internet Hosts -
+              Application and Support", STD 3, RFC 1123, DOI 10.17487/
+              RFC1123, October 1989,
+              <http://www.rfc-editor.org/info/rfc1123>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+              Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
+              RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66, RFC
-              3986, January 2005.
+              3986, DOI 10.17487/RFC3986, January 2005,
+              <http://www.rfc-editor.org/info/rfc3986>.
 
    [RFC3987]  Duerst, M. and M. Suignard, "Internationalized Resource
-              Identifiers (IRIs)", RFC 3987, January 2005.
-
-   [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
-              Architecture", RFC 4291, February 2006.
-
-   [RFC5234]  Crocker, D. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234, January 2008.
-
+              Identifiers (IRIs)", RFC 3987, DOI 10.17487/RFC3987,
+              January 2005, <http://www.rfc-editor.org/info/rfc3987>.
 
 
 
@@ -506,9 +506,19 @@ Kerwin                  Expires January 24, 2016                [Page 9]
 Internet-Draft                 file-scheme                     July 2015
 
 
+   [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
+              Architecture", RFC 4291, DOI 10.17487/RFC4291, February
+              2006, <http://www.rfc-editor.org/info/rfc4291>.
+
+   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234, DOI 10.17487/
+              RFC5234, January 2008,
+              <http://www.rfc-editor.org/info/rfc5234>.
+
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
               IPv6 Zone Identifiers in Address Literals and Uniform
-              Resource Identifiers", RFC 6874, February 2013.
+              Resource Identifiers", RFC 6874, DOI 10.17487/RFC6874,
+              February 2013, <http://www.rfc-editor.org/info/rfc6874>.
 
    [UTR15]    Davis, M. and K. Whistler, "Unicode Normalization Forms",
               August 2012.
@@ -541,17 +551,7 @@ Internet-Draft                 file-scheme                     July 2015
 
    [POSIX]    IEEE, "IEEE Std 1003.1, 2013 Edition", 2013.
 
-   [RFC1630]  Berners-Lee, T., "Universal Resource Identifiers in WWW: A
-              Unifying Syntax for the Expression of Names and Addresses
-              of Objects on the Network as used in the World-Wide Web",
-              RFC 1630, June 1994.
 
-   [RFC1738]  Berners-Lee, T., Masinter, L., and M. McCahill, "Uniform
-              Resource Locators (URL)", RFC 1738, December 1994.
-
-   [RFC3530]  Shepler, S., Callaghan, B., Robinson, D., Thurlow, R.,
-              Beame, C., Eisler, M., and D. Noveck, "Network File System
-              (NFS) version 4 Protocol", RFC 3530, April 2003.
 
 
 
@@ -561,6 +561,21 @@ Kerwin                  Expires January 24, 2016               [Page 10]
 
 Internet-Draft                 file-scheme                     July 2015
 
+
+   [RFC1630]  Berners-Lee, T., "Universal Resource Identifiers in WWW: A
+              Unifying Syntax for the Expression of Names and Addresses
+              of Objects on the Network as used in the World-Wide Web",
+              RFC 1630, DOI 10.17487/RFC1630, June 1994,
+              <http://www.rfc-editor.org/info/rfc1630>.
+
+   [RFC1738]  Berners-Lee, T., Masinter, L., and M. McCahill, "Uniform
+              Resource Locators (URL)", RFC 1738, DOI 10.17487/RFC1738,
+              December 1994, <http://www.rfc-editor.org/info/rfc1738>.
+
+   [RFC3530]  Shepler, S., Callaghan, B., Robinson, D., Thurlow, R.,
+              Beame, C., Eisler, M., and D. Noveck, "Network File System
+              (NFS) version 4 Protocol", RFC 3530, DOI 10.17487/RFC3530,
+              April 2003, <http://www.rfc-editor.org/info/rfc3530>.
 
    [STD63]    Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, November 2003.
@@ -594,6 +609,15 @@ Appendix A.  Example URIs
 
    o  "file://host.example.com/path/to/file"
 
+
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 11]
+
+Internet-Draft                 file-scheme                     July 2015
+
+
          The representation of a non-local file, with an explicit
          authority.
 
@@ -607,16 +631,6 @@ B.1.  POSIX Systems
 
    There is little to say about POSIX file systems; the file URI
    structure already closely resembles POSIX file paths.
-
-
-
-
-
-
-Kerwin                  Expires January 24, 2016               [Page 11]
-
-Internet-Draft                 file-scheme                     July 2015
-
 
 B.2.  DOS- and Windows-Like Systems
 
@@ -652,6 +666,14 @@ Appendix C.  Nonstandard Syntax Variations
    These variations may be encountered for historical reasons, but are
    not supported by the normative syntax of Section 2.
 
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 12]
+
+Internet-Draft                 file-scheme                     July 2015
+
+
    This appendix is not normative.
 
 C.1.  DOS and Windows Drive Letters
@@ -665,14 +687,6 @@ C.1.  DOS and Windows Drive Letters
       drive-letter   = ALPHA ":"
 
    This is intended to support URIs of the form:
-
-
-
-
-Kerwin                  Expires January 24, 2016               [Page 12]
-
-Internet-Draft                 file-scheme                     July 2015
-
 
    o  "file:c:/path/to/file"
 
@@ -706,7 +720,15 @@ C.1.1.  Relative Paths
 
    Relative paths with a drive letter followed by a character other than
    a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") should not be
-   accepted as valid URIs in DOS or Windows systems.
+   accepted as dereferenceable URIs in DOS or Windows systems.
+
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 13]
+
+Internet-Draft                 file-scheme                     July 2015
+
 
 C.1.2.  Vertical Bar Character
 
@@ -718,17 +740,6 @@ C.1.2.  Vertical Bar Character
    For interpreting such URIs, the "auth-path" and "local-path" rules in
    Section 2 and the "drive-letter" rule above are replaced with the
    following:
-
-
-
-
-
-
-
-Kerwin                  Expires January 24, 2016               [Page 13]
-
-Internet-Draft                 file-scheme                     July 2015
-
 
       auth-path      = [ file-auth ] path-absolute
                      / [ file-auth ] file-absolute
@@ -757,10 +768,8 @@ Internet-Draft                 file-scheme                     July 2015
 
 C.2.  UNC Strings
 
-   A UNC filespace selector string can be directly translated to an
-   Internationalized Resource Identifier (IRI) [RFC3987], which can then
-   be translated to a URI as per Section 3.1 of [RFC3987]; see:
-   Section 4.  The following is an algorithmic description of the
+   A UNC filespace selector string can be directly translated to a URI;
+   see Section 4.  The following is an algorithmic description of the
    process of translating a UNC string to a file URI:
 
    1.  Initialise the URI with the "file:" scheme identifier.
@@ -768,6 +777,14 @@ C.2.  UNC Strings
    2.  Append the authority:
 
        1.  Append the "//" authority sigil to the URI.
+
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 14]
+
+Internet-Draft                 file-scheme                     July 2015
+
 
        2.  Append the hostname field of the UNC string to the URI.
 
@@ -778,13 +795,6 @@ C.2.  UNC Strings
 
        2.  Append a delimiting slash character "/" and the transformed
            segment to the URI.
-
-
-
-Kerwin                  Expires January 24, 2016               [Page 14]
-
-Internet-Draft                 file-scheme                     July 2015
-
 
    4.  For each objectname:
 
@@ -823,6 +833,15 @@ C.3.  UNC Paths
       Note that the "file-host" rule is the same as "host" but with
       percent-encoding applied to "[" and "]" characters.
 
+
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 15]
+
+Internet-Draft                 file-scheme                     July 2015
+
+
    This extended syntax is intended to support URIs that take the
    following forms, in addition to those in Appendix A:
 
@@ -833,14 +852,6 @@ C.3.  UNC Paths
          The "traditional" representation of a non-local file, with an
          empty authority and a complete (transformed) UNC string in the
          path.
-
-
-
-
-Kerwin                  Expires January 24, 2016               [Page 15]
-
-Internet-Draft                 file-scheme                     July 2015
-
 
    o  "file://///host.example.com/path/to/file"
 
@@ -872,6 +883,21 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
 
    Example: file IRI:
 
+
+
+
+
+
+
+
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 16]
+
+Internet-Draft                 file-scheme                     July 2015
+
+
    | Bytes of file IRI in a UTF-8 document:
    |    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
    |    f  i  l  e  :  c  :  /  r  e  ( c ) u  .  t  x  t
@@ -891,18 +917,11 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
 
    Counter-example: ambiguous file URI:
 
-
-
-Kerwin                  Expires January 24, 2016               [Page 16]
-
-Internet-Draft                 file-scheme                     July 2015
-
-
    | Percent-encoded file URI, in any ASCII-compatible document:
    |    "file:///%E3%81%A1"
    |
    | Possible interpretations of the file name, depending on the
-   | (unknown) encoding of the file system:
+   | encoding of the file system:
    |
    |  o UTF-8:
    |       <HIRAGANA LETTER TI (U+3061)>
@@ -927,6 +946,14 @@ Appendix E.  UNC Syntax
    [RFC5234] for convenience.  Note that this definition is informative
    only; the normative description is in [MS-DTYP].
 
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 17]
+
+Internet-Draft                 file-scheme                     July 2015
+
+
       UNC = "\\" hostname "\" sharename *( "\" objectname )
       hostname   = netbios-name / fqdn / ip-address
       sharename  = <name of share or resource to be accessed>
@@ -941,18 +968,6 @@ Appendix E.  UNC Syntax
 
    The precise format of "sharename" depends on the protocol; see: SMB
    [MS-SMB], NFS [RFC3530], NCP [NOVELL].
-
-
-
-
-
-
-
-
-Kerwin                  Expires January 24, 2016               [Page 17]
-
-Internet-Draft                 file-scheme                     July 2015
-
 
 Appendix F.  Collected Rules
 
@@ -986,6 +1001,15 @@ Appendix F.  Collected Rules
       drive-letter   = ALPHA ":"
                      / ALPHA "|"
 
+
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 18]
+
+Internet-Draft                 file-scheme                     July 2015
+
+
    This collected syntax is intended to support file URIs that take the
    following forms:
 
@@ -1002,13 +1026,6 @@ Appendix F.  Collected Rules
          field and an absolute path that begins with a slash "/".
 
    o  "file:c:/path/to/file"
-
-
-
-Kerwin                  Expires January 24, 2016               [Page 18]
-
-Internet-Draft                 file-scheme                     July 2015
-
 
          The minimal representation of a local file in a DOS- or
          Windows-based environment, with no authority field and an
@@ -1041,6 +1058,14 @@ Internet-Draft                 file-scheme                     July 2015
          As above, with an extra slash between the empty authority and
          the transformed UNC string.
 
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 19]
+
+Internet-Draft                 file-scheme                     July 2015
+
+
 Author's Address
 
    Matthew Kerwin
@@ -1061,4 +1086,35 @@ Author's Address
 
 
 
-Kerwin                  Expires January 24, 2016               [Page 19]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kerwin                  Expires January 24, 2016               [Page 20]

@@ -458,7 +458,7 @@
   <a href="#rfc.abstract">Abstract</a>
 </h1>
 <p>This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738.</p>
-<p>It attemps to define a common core which is intended to interoperate across the broad spectrum of existing implementations, while at the same time documenting other current practices.</p>
+<p>It attempts to define a common core which is intended to interoperate across the broad spectrum of existing implementations, while at the same time documenting other current practices.</p>
 <p>
   <strong>Note to Readers (To be removed by the RFC Editor)</strong>
 </p>
@@ -534,7 +534,7 @@
 <p id="rfc.section.1.1.p.3">The Internet draft <a href="#I-D.hoffman-file-uri">[I-D.hoffman-file-uri]</a> was written in an effort to keep the file URI scheme on standards track when <a href="#RFC1738">[RFC1738]</a> was made obsolete, but that draft expired in 2005.  It enumerated concerns arising from the various, often conflicting implementations of the scheme.  It serves as the spiritual predecessor of this document.</p>
 <p id="rfc.section.1.1.p.4">Additionally the WHATWG defines a living URL standard <a href="#WHATWG-URL">[WHATWG-URL]</a>, which includes algorithms for interpreting file URIs (as URLs).</p>
 <h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#similar-technologies" id="similar-technologies">Similar Technologies</a></h1>
-<p id="rfc.section.1.2.p.1">The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files.  A UNC filespace selector string has three parts: host, share, and path; see: <a href="#unc-syntax">Appendix E</a>.  This document describes but does not specify a means of translating between UNC filespace selector strings and file URIs in <a href="#ext-unc">Appendix C.2</a>.</p>
+<p id="rfc.section.1.2.p.1">The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files.  A UNC filespace selector string has three parts: host, share, and path; see <a href="#unc-syntax">Appendix E</a>.  This document describes but does not specify a means of translating between UNC filespace selector strings and file URIs in <a href="#ext-unc">Appendix C.2</a>.</p>
 <h1 id="rfc.section.1.3"><a href="#rfc.section.1.3">1.3.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
 <p id="rfc.section.1.3.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <p id="rfc.section.1.3.p.2">Throughout this document the term &#8220;local&#8221; is used to describe files that can be accessed directly through the local file system.  It is important to note that a local file may not be physically located on the local machine, for example if a networked file system is transparently mounted into the local file system.</p>
@@ -564,7 +564,7 @@
 <p id="rfc.section.3.p.3">A file URI can only be dereferenced or translated to a local file path if it is local.  A file URI is considered &#8220;local&#8221; if it has a blank or no authority, or the authority is the special string &#8220;localhost&#8221;.</p>
 <p id="rfc.section.3.p.4">This specification neither defines nor forbids a mechanism for accessing non-local files.  See SMB <a href="#MS-SMB">[MS-SMB]</a>, NFS <a href="#RFC3530">[RFC3530]</a>, NCP <a href="#NOVELL">[NOVELL]</a> for examples of protocols that can be used to access files over a network.  Also see <a href="#ext-unc">Appendix C.2</a> for a discussion on translating non-local file URIs to and from UNC stings.</p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#file-to-uri" id="file-to-uri">Translating Local File Path to file URI</a></h1>
-<p id="rfc.section.3.1.p.1">Below is an algorithmic description of the process used to convert a file path to an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a>, which can then be translated to a URI as per Section 3.1 of <a href="#RFC3987">[RFC3987]</a>; see: <a href="#encoding">Section 4</a>.</p>
+<p id="rfc.section.3.1.p.1">Below is an algorithmic description of the process used to convert a file path to a URI; see <a href="#encoding">Section 4</a>.</p>
 <p/>
 
 <ol>
@@ -595,7 +595,7 @@
 <p id="rfc.section.3.3.1.p.1">The Microsoft Windows API defines Win32 Namespaces <a href="#Win32-Namespaces">[Win32-Namespaces]</a> for interacting with files and devices using Windows API functions.  These namespaced paths are prefixed by &#8220;\\?\&#8221; for Win32 File Namespaces and &#8220;\\.\&#8221; for Win32 Device Namespaces.  There is also a special case for UNC file paths in Win32 File Namespaces, referred to as &#8220;Long UNC&#8221;, using the prefix &#8220;\\?\UNC\&#8221;.</p>
 <p id="rfc.section.3.3.1.p.2">This specification does not define a mechanism for translating namespaced paths to or from file URIs.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">Encoding</a></h1>
-<p id="rfc.section.4.p.1">To avoid ambiguity, a file URI SHOULD be transported as an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a>, or as a URI with non-ASCII characters encoded according to the UTF-8 character encoding <a href="#STD63">[STD63]</a> and percent-encoded as needed (<a href="#RFC3986">[RFC3986]</a>, Section 2.5)</p>
+<p id="rfc.section.4.p.1">To avoid ambiguity, a file URI SHOULD be transported as an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a>, or as a URI with non-ASCII characters encoded according to the UTF-8 character encoding <a href="#STD63">[STD63]</a> and percent-encoded as needed (<a href="#RFC3986">[RFC3986]</a>, Section 2.5).</p>
 <p id="rfc.section.4.p.2">The encoding of a file URI depends on the file system that stores the identified file.  If the file system uses a known non-Unicode character encoding, the path SHOULD be converted to a sequence of characters from the Universal Character Set <a href="#ISO10646">[ISO10646]</a> normalized according to Normalization Form C (NFC)  <a href="#UTR15">[UTR15]</a>, before being translated to a file URI, and conversely a file URI SHOULD be converted back to the file system&#8217;s native encoding when dereferencing or translating to a file path.</p>
 <p/>
 
@@ -652,49 +652,49 @@
       <td class="reference">
         <b id="RFC1035">[RFC1035]</b>
       </td>
-      <td class="top"><a title="USC/ISI">Mockapetris, P.</a>, "<a href="http://tools.ietf.org/html/rfc1035">Domain names - implementation and specification</a>", STD 13, RFC 1035, November 1987.</td>
+      <td class="top"><a>Mockapetris, P.</a>, "<a href="http://tools.ietf.org/html/rfc1035">Domain names - implementation and specification</a>", STD 13, RFC 1035, DOI 10.17487/RFC1035, November 1987.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC1123">[RFC1123]</b>
       </td>
-      <td class="top"><a href="mailto:Braden@ISI.EDU" title="University of Southern California (USC), Information Sciences Institute">Braden, R.</a>, "<a href="http://tools.ietf.org/html/rfc1123">Requirements for Internet Hosts - Application and Support</a>", STD 3, RFC 1123, October 1989.</td>
+      <td class="top"><a>Braden, R.</a>, "<a href="http://tools.ietf.org/html/rfc1123">Requirements for Internet Hosts - Application and Support</a>", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC2119">[RFC2119]</b>
       </td>
-      <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997.</td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC3986">[RFC3986]</b>
       </td>
-      <td class="top"><a href="mailto:timbl@w3.org" title="World Wide Web Consortium">Berners-Lee, T.</a>, <a href="mailto:fielding@gbiv.com" title="Day Software">Fielding, R.</a> and <a href="mailto:LMM@acm.org" title="Adobe Systems Incorporated">L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>", STD 66, RFC 3986, January 2005.</td>
+      <td class="top"><a>Berners-Lee, T.</a>, <a>Fielding, R.</a> and <a>L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC3987">[RFC3987]</b>
       </td>
-      <td class="top"><a>Duerst, M.</a> and <a>M. Suignard</a>, "<a href="http://tools.ietf.org/html/rfc3987">Internationalized Resource Identifiers (IRIs)</a>", RFC 3987, January 2005.</td>
+      <td class="top"><a>Duerst, M.</a> and <a>M. Suignard</a>, "<a href="http://tools.ietf.org/html/rfc3987">Internationalized Resource Identifiers (IRIs)</a>", RFC 3987, DOI 10.17487/RFC3987, January 2005.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC4291">[RFC4291]</b>
       </td>
-      <td class="top"><a>Hinden, R.</a> and <a>S. Deering</a>, "<a href="http://tools.ietf.org/html/rfc4291">IP Version 6 Addressing Architecture</a>", RFC 4291, February 2006.</td>
+      <td class="top"><a>Hinden, R.</a> and <a>S. Deering</a>, "<a href="http://tools.ietf.org/html/rfc4291">IP Version 6 Addressing Architecture</a>", RFC 4291, DOI 10.17487/RFC4291, February 2006.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC5234">[RFC5234]</b>
       </td>
-      <td class="top"><a>Crocker, D.</a> and <a>P. Overell</a>, "<a href="http://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>", STD 68, RFC 5234, January 2008.</td>
+      <td class="top"><a>Crocker, D.</a> and <a>P. Overell</a>, "<a href="http://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>", STD 68, RFC 5234, DOI 10.17487/RFC5234, January 2008.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC6874">[RFC6874]</b>
       </td>
-      <td class="top"><a>Carpenter, B.</a>, <a>Cheshire, S.</a> and <a>R. Hinden</a>, "<a href="http://tools.ietf.org/html/rfc6874">Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers</a>", RFC 6874, February 2013.</td>
+      <td class="top"><a>Carpenter, B.</a>, <a>Cheshire, S.</a> and <a>R. Hinden</a>, "<a href="http://tools.ietf.org/html/rfc6874">Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers</a>", RFC 6874, DOI 10.17487/RFC6874, February 2013.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -753,19 +753,19 @@
       <td class="reference">
         <b id="RFC1630">[RFC1630]</b>
       </td>
-      <td class="top"><a href="mailto:timbl@info.cern.ch" title="CERN, World-Wide Web project">Berners-Lee, T.</a>, "<a href="http://tools.ietf.org/html/rfc1630">Universal Resource Identifiers in WWW: A Unifying Syntax for the Expression of Names and Addresses of Objects on the Network as used in the World-Wide Web</a>", RFC 1630, June 1994.</td>
+      <td class="top"><a>Berners-Lee, T.</a>, "<a href="http://tools.ietf.org/html/rfc1630">Universal Resource Identifiers in WWW: A Unifying Syntax for the Expression of Names and Addresses of Objects on the Network as used in the World-Wide Web</a>", RFC 1630, DOI 10.17487/RFC1630, June 1994.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC1738">[RFC1738]</b>
       </td>
-      <td class="top"><a href="mailto:timbl@info.cern.ch" title="CERN, World-Wide Web project">Berners-Lee, T.</a>, <a href="mailto:masinter@parc.xerox.com" title="Xerox PARC">Masinter, L.</a> and <a href="mailto:mpm@boombox.micro.umn.edu" title="University of Minnesota, Computer and Information Services">M. McCahill</a>, "<a href="http://tools.ietf.org/html/rfc1738">Uniform Resource Locators (URL)</a>", RFC 1738, December 1994.</td>
+      <td class="top"><a>Berners-Lee, T.</a>, <a>Masinter, L.</a> and <a>M. McCahill</a>, "<a href="http://tools.ietf.org/html/rfc1738">Uniform Resource Locators (URL)</a>", RFC 1738, DOI 10.17487/RFC1738, December 1994.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC3530">[RFC3530]</b>
       </td>
-      <td class="top"><a>Shepler, S.</a>, <a>Callaghan, B.</a>, <a>Robinson, D.</a>, <a>Thurlow, R.</a>, <a>Beame, C.</a>, <a>Eisler, M.</a> and <a>D. Noveck</a>, "<a href="http://tools.ietf.org/html/rfc3530">Network File System (NFS) version 4 Protocol</a>", RFC 3530, April 2003.</td>
+      <td class="top"><a>Shepler, S.</a>, <a>Callaghan, B.</a>, <a>Robinson, D.</a>, <a>Thurlow, R.</a>, <a>Beame, C.</a>, <a>Eisler, M.</a> and <a>D. Noveck</a>, "<a href="http://tools.ietf.org/html/rfc3530">Network File System (NFS) version 4 Protocol</a>", RFC 3530, DOI 10.17487/RFC3530, April 2003.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -844,7 +844,7 @@
    rel. URI:   ../../bar.txt
    resolved:   file:///c:/bar.txt
 </pre>
-<p id="rfc.section.C.1.1.p.3">Relative paths with a drive letter followed by a character other than a slash (e.g. &#8220;c:bar/baz.txt&#8221; or &#8220;c:../foo.txt&#8221;) should not be accepted as valid URIs in DOS or Windows systems.</p>
+<p id="rfc.section.C.1.1.p.3">Relative paths with a drive letter followed by a character other than a slash (e.g. &#8220;c:bar/baz.txt&#8221; or &#8220;c:../foo.txt&#8221;) should not be accepted as dereferenceable URIs in DOS or Windows systems.</p>
 <h1 id="rfc.appendix.C.1.2"><a href="#rfc.appendix.C.1.2">C.1.2.</a> <a href="#ext-pipe" id="ext-pipe">Vertical Bar Character</a></h1>
 <p id="rfc.section.C.1.2.p.1">Historically some implementations have used a vertical line character &#8220;|&#8221; instead of a colon &#8220;:&#8221; in the drive letter construct.  <a href="#RFC3986">[RFC3986]</a> forbids the use of the vertical line, however it may be necessary to interpret or update old URIs.</p>
 <p id="rfc.section.C.1.2.p.2">For interpreting such URIs, the <samp>auth-path</samp> and <samp>local-path</samp> rules in <a href="#syntax">Section 2</a> and the <samp>drive-letter</samp> rule above are replaced with the following:</p>
@@ -874,7 +874,7 @@
 </ul>
 <p id="rfc.section.C.1.2.p.5">To update such an old URI, replace the vertical line &#8220;|&#8221; with a colon &#8220;:&#8221;.</p>
 <h1 id="rfc.appendix.C.2"><a href="#rfc.appendix.C.2">C.2.</a> <a href="#ext-unc" id="ext-unc">UNC Strings</a></h1>
-<p id="rfc.section.C.2.p.1">A UNC filespace selector string can be directly translated to an Internationalized Resource Identifier (IRI) <a href="#RFC3987">[RFC3987]</a>, which can then be translated to a URI as per Section 3.1 of <a href="#RFC3987">[RFC3987]</a>; see: <a href="#encoding">Section 4</a>.  The following is an algorithmic description of the process of translating a UNC string to a file URI:</p>
+<p id="rfc.section.C.2.p.1">A UNC filespace selector string can be directly translated to a URI; see <a href="#encoding">Section 4</a>.  The following is an algorithmic description of the process of translating a UNC string to a file URI:</p>
 <p/>
 
 <ol>
@@ -946,7 +946,7 @@
 |    "file:///%E3%81%A1"
 |
 | Possible interpretations of the file name, depending on the
-| (unknown) encoding of the file system:
+| encoding of the file system:
 |
 |  o UTF-8:
 |       &lt;HIRAGANA LETTER TI (U+3061)&gt;
