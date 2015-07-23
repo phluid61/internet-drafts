@@ -609,7 +609,7 @@
 <p id="rfc.section.5.p.3">File systems typically assign an operational meaning to special characters, such as the &#8220;/&#8221;, &#8220;\&#8221;, &#8220;:&#8221;, &#8220;[&#8221;, and &#8220;]&#8221; characters, and to special device names like &#8220;.&#8221;, &#8220;..&#8221;, &#8220;&#8230;&#8221;, &#8220;aux&#8221;, &#8220;lpt&#8221;, etc.  In some cases, merely testing for the existence of such a name will cause the operating system to pause or invoke unrelated system calls, leading to significant security concerns regarding denial of service and unintended data transfer.  It would be impossible for this specification to list all such significant characters and device names.  Implementers MUST research the reserved names and characters for the types of storage device that may be attached to their application and restrict the use of data obtained from URI components accordingly.</p>
 <p id="rfc.section.5.p.4">Additionally, as discussed in the HP OpenVMS Systems Documentation &lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt; &#8220;access control strings include sufficient information to allow someone to break in to the remote account, [therefore] they create serious security exposure.&#8221; In a similar vein, the presence of a password in a &#8220;user:password&#8221; userinfo field is deprecated by <a href="#RFC3986">[RFC3986]</a>.  As such, the userinfo field of a file URI, if present, MUST NOT contain a password.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
-<p id="rfc.section.6.p.1">This document defines the following URI scheme, so the &#8220;Permanent URI Schemes&#8221; registry has been updated accordingly.  This registration complies with <a href="#BCP115">[BCP115]</a>.</p>
+<p id="rfc.section.6.p.1">This document defines the following URI scheme, so the &#8220;Permanent URI Schemes&#8221; registry has been updated accordingly.  This registration complies with <a href="#BCP35">[BCP35]</a>.</p>
 <p/>
 
 <dl>
@@ -638,9 +638,9 @@
   <tbody>
     <tr>
       <td class="reference">
-        <b id="BCP115">[BCP115]</b>
+        <b id="BCP35">[BCP35]</b>
       </td>
-      <td class="top"><a>Hansen, T.</a>, <a>Hardie, T.</a> and <a>L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc4395">Guidelines and Registration Procedures for New URI Schemes</a>", BCP 35, RFC 4395, February 2006.</td>
+      <td class="top"><a>Thaler, D.</a>, <a>Hansen, T.</a> and <a>T. Hardie</a>, "<a href="http://tools.ietf.org/html/rfc7595">Guidelines and Registration Procedures for URI Schemes</a>", BCP 35, RFC 7595, DOI 10.17487/RFC7595, June 2015.</td>
     </tr>
     <tr>
       <td class="reference">
