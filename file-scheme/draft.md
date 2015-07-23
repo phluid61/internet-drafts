@@ -200,8 +200,8 @@ The Universal Naming Convention (UNC) {{MS-DTYP}} defines a string
 format that can perform a similar role to the file URI scheme in
 describing the location of files.  A UNC filespace selector string has
 three parts: host, share, and path; see: {{unc-syntax}}.  This document
-describes a means of translating between UNC filespace selector strings
-and file URIs.
+describes but does not specify a means of translating between UNC
+filespace selector strings and file URIs in {{ext-unc}}.
 
 
 ## Notational Conventions
