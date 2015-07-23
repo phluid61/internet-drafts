@@ -489,38 +489,41 @@ Non-local files:
 
 # System-specific Operations
 
-This section provides examples of some system-specific thingies.
+This appendix is not normative; it highlights some observed
+behaviours and provides system-specific guidance for interacting
+with file URIs and paths.
 
-This section is not normative.  \[FIXME: it's also incomplete\]
 
 ## POSIX Systems  {#sys-unix}
 
-* No special considerations (file URIs are based on UNIX paths)
+There is little to say about POSIX file systems; the file URI structure
+already closely resembles POSIX file paths.
+
 
 ## DOS- and Windows-Like Systems  {#sys-dos}
 
-When mapping a DOS- or Windows-like file path to a URI, use
-the drive letter (e.g. "c:") as the first path segment.
+When mapping a DOS- or Windows-like file path to a file URI,
+implementations typically map the drive letter (e.g. "c:") into the
+first path segment.
 
-Some implementations leave the leading slash off before the drive
-letter.  See {{ext-drives}})
-
-Some implementations replace ":" with "|", while others leave it off
-completely.  See {{ext-pipe}}
+See {{ext-drives}} for explicit (but non-normative and strictly
+optional) rules for interacting with DOS- or Windows-like file paths
+and URIs.
 
 
 ## Mac OS X Systems  {#sys-osx}
 
-* HFS+ uses non-standard UTF-8 {{STD63}} form (like NFD)
+The HFS+ file system uses a non-standard normalization form, similar
+to Normalization Form D.  Take care when transforming HFS+ file paths
+to and from URIs using Normalization Form C {{encoding}}.
 
-   * take care transforming <-> NFC {{UTR15}}
 
 ## OpenVMS Files-11 Systems  {#sys-vms}
 
-When mapping a VMS file path to a file URI, use the device name
-as the first path segment.  Note that the dollars sign "$" is
-a reserved character ({{RFC3986}}, Section 2.2), so should be
-percent-encoded.
+When mapping a VMS file path to a file URI, map the device name
+into the first path segment.  Note that the dollars sign "$" is
+a reserved character per the definition in {{RFC3986}}, Section 2.2,
+so should be percent-encoded if present in the device name.
 
 If the VMS file path includes a node reference, use that as the
 authority.  Where the original node reference includes a username and
@@ -534,7 +537,7 @@ considerations ({{security}}) notwithstanding.
 These variations may be encountered for historical reasons, but are
 not supported by the normative syntax of {{syntax}}.
 
-This section is not normative.
+This appendix is not normative.
 
 
 ## DOS and Windows Drive Letters  {#ext-drives}
@@ -556,6 +559,9 @@ This is intended to support URIs of the form:
    > The minimal representation of a local file in a DOS- or
      Windows-based environment, with no authority field and an
      absolute path that begins with a drive letter.
+
+URIs of the form `file:///c:/path/to/file` are already supported by the
+`path-absolute` rule.
 
 Note that comparison of drive letters in DOS or Windows file paths
 is case-insensitive.  Some implementations therefore canonicalize drive
@@ -667,7 +673,8 @@ Example:
 ## UNC Paths  {#ext-unc-path}
 
 It is common to encounter file URIs that encode entire UNC strings in
-the path, with all backslash "\\" characters replaced with slashes "/".
+the path, usually with all backslash "\\" characters replaced with
+slashes "/".
 
 To interpret such URIs, the `auth-path` rule in {{syntax}} is replaced
 with the following:
