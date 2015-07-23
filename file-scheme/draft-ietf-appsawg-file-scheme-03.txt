@@ -248,7 +248,7 @@ Internet-Draft                 file-scheme                     July 2015
    "localhost".
 
    This specification neither defines nor forbids a mechanism for
-   accessing non-local files.  See SMB [MS-SMB], NFS [RFC3530], NCP
+   accessing non-local files.  See SMB [MS-SMB], NFS [RFC7530], NCP
    [NOVELL] for examples of protocols that can be used to access files
    over a network.  Also see Appendix C.2 for a discussion on
    translating non-local file URIs to and from UNC stings.
@@ -468,7 +468,8 @@ Internet-Draft                 file-scheme                     July 2015
 
    [BCP35]    Thaler, D., Ed., Hansen, T., and T. Hardie, "Guidelines
               and Registration Procedures for URI Schemes", BCP 35, RFC
-              7595, DOI 10.17487/RFC7595, June 2015.
+              7595, DOI 10.17487/RFC7595, June 2015,
+              <http://www.rfc-editor.org/info/bcp35>.
 
    [ISO10646]
               International Organization for Standardization,
@@ -500,7 +501,6 @@ Internet-Draft                 file-scheme                     July 2015
 
 
 
-
 Kerwin                  Expires January 24, 2016                [Page 9]
 
 Internet-Draft                 file-scheme                     July 2015
@@ -521,7 +521,8 @@ Internet-Draft                 file-scheme                     July 2015
               February 2013, <http://www.rfc-editor.org/info/rfc6874>.
 
    [UTR15]    Davis, M. and K. Whistler, "Unicode Normalization Forms",
-              August 2012.
+              August 2012,
+              <http://unicode.org/reports/tr15/tr15-18.html>.
 
 8.2.  Informative References
 
@@ -556,7 +557,6 @@ Internet-Draft                 file-scheme                     July 2015
 
 
 
-
 Kerwin                  Expires January 24, 2016               [Page 10]
 
 Internet-Draft                 file-scheme                     July 2015
@@ -572,13 +572,13 @@ Internet-Draft                 file-scheme                     July 2015
               Resource Locators (URL)", RFC 1738, DOI 10.17487/RFC1738,
               December 1994, <http://www.rfc-editor.org/info/rfc1738>.
 
-   [RFC3530]  Shepler, S., Callaghan, B., Robinson, D., Thurlow, R.,
-              Beame, C., Eisler, M., and D. Noveck, "Network File System
-              (NFS) version 4 Protocol", RFC 3530, DOI 10.17487/RFC3530,
-              April 2003, <http://www.rfc-editor.org/info/rfc3530>.
+   [RFC7530]  Haynes, T., Ed. and D. Noveck, Ed., "Network File System
+              (NFS) Version 4 Protocol", RFC 7530, DOI 10.17487/RFC7530,
+              March 2015, <http://www.rfc-editor.org/info/rfc7530>.
 
    [STD63]    Yergeau, F., "UTF-8, a transformation format of ISO
-              10646", STD 63, RFC 3629, November 2003.
+              10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
+              2003, <http://www.rfc-editor.org/info/std63>.
 
    [WHATWG-URL]
               WHATWG, "URL Living Standard", May 2013,
@@ -967,7 +967,7 @@ Internet-Draft                 file-scheme                     July 2015
       [RFC4291].
 
    The precise format of "sharename" depends on the protocol; see: SMB
-   [MS-SMB], NFS [RFC3530], NCP [NOVELL].
+   [MS-SMB], NFS [RFC7530], NCP [NOVELL].
 
 Appendix F.  Collected Rules
 
