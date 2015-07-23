@@ -284,9 +284,7 @@ non-local file URIs to and from UNC stings.
 ## Translating Local File Path to file URI  {#file-to-uri}
 
 Below is an algorithmic description of the process used to convert a
-file path to an Internationalized Resource Identifier (IRI) 
-{{RFC3987}}, which can then be translated to a URI as per Section 3.1
-of {{RFC3987}}; see: {{encoding}}.
+file path to a URI; see {{encoding}}.
 
 1.  Resolve the file path to its fully qualified absolute form.
 
@@ -371,7 +369,7 @@ To avoid ambiguity, a file URI SHOULD be transported as an
 Internationalized Resource Identifier (IRI) {{RFC3987}}, or as a URI
 with non-ASCII characters encoded according to the UTF-8 character
 encoding {{STD63}} and percent-encoded as needed ({{RFC3986}},
-Section 2.5)
+Section 2.5).
 
 The encoding of a file URI depends on the file system that stores the
 identified file.  If the file system uses a known non-Unicode character
@@ -595,7 +593,7 @@ e.g.:
 
 Relative paths with a drive letter followed by a character other than
 a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") should not be
-accepted as valid URIs in DOS or Windows systems.
+accepted as dereferenceable URIs in DOS or Windows systems.
 
 
 ### Vertical Bar Character  {#ext-pipe}
@@ -631,16 +629,15 @@ This is intended to support URIs of the form:
    > Regular DOS or Windows file URIs, with vertical line characters
      in the drive letter construct.
 
-To update such an old URI, replace the vertical line "\|" with a colon ":".
+To update such an old URI, replace the vertical line "\|" with a
+colon ":".
 
 
 ## UNC Strings  {#ext-unc}
 
-A UNC filespace selector string can be directly translated to an
-Internationalized Resource Identifier (IRI) {{RFC3987}}, which can
-then be translated to a URI as per Section 3.1 of {{RFC3987}}; see:
-{{encoding}}.  The following is an algorithmic description of the
-process of translating a UNC string to a file URI:
+A UNC filespace selector string can be directly translated to a
+URI; see {{encoding}}.  The following is an algorithmic description
+of the process of translating a UNC string to a file URI:
 
 
 1.  Initialise the URI with the "file:" scheme identifier.
@@ -772,7 +769,7 @@ Counter-example: ambiguous file URI:
 |    "file:///%E3%81%A1"
 |
 | Possible interpretations of the file name, depending on the
-| (unknown) encoding of the file system:
+| encoding of the file system:
 |
 |  o UTF-8:
 |       <HIRAGANA LETTER TI (U+3061)>
