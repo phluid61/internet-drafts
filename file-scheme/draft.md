@@ -30,19 +30,21 @@ author:
     email: matthew.kerwin@qut.edu.au
 
 normative:
-  BCP115:
-    title: Guidelines and Registration Procedures for New URI Schemes
+  BCP35:
+    title: Guidelines and Registration Procedures for URI Schemes
     author:
+    - ins: D. Thaler
+      name: D. Thaler
+      role: editor
     - ins: T. Hansen
       name: T. Hansen
     - ins: T. Hardie
       name: T. Hardie
-    - ins: L. Masinter
-      name: L. Masinter
-    date: 2006-02
+    date: 2015-06
     seriesinfo:
       BCP: 35
-      RFC: 4395
+      RFC: 7595
+      DOI: 10.17487/RFC7595
   RFC1035:
   RFC1123:
   RFC2119:
@@ -427,7 +429,7 @@ password.
 
 This document defines the following URI scheme, so the "Permanent
 URI Schemes" registry has been updated accordingly.  This registration
-complies with {{BCP115}}.
+complies with {{BCP35}}.
 
 
 Scheme name:
