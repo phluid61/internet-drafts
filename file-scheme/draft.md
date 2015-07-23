@@ -246,6 +246,11 @@ The syntax definition above is different from those given in
 {{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
 of {{RFC3986}}, which post-dates all previous specifications.
 
+As a special case, the "auth-path" rule can match the string
+"localhost" or the empty string in the URI's authority component; this
+is interpreted as "the machine from which the URI is being
+interpreted," exactly as if no authority was present.
+
 Systems exhibit different levels of case-sensitivity.  Unless the file
 system is known to be case-insensitive, implementations MUST maintain
 the case of file and directory names when translating file URIs to and
@@ -267,11 +272,7 @@ such as local file paths or UNC strings.
 
 A file URI can only be dereferenced or translated to a local file path
 if it is local.  A file URI is considered "local" if it has a blank or
-no authority.  Note that this differs from the previous
-specification in {{RFC1738}}, in that previously an authority of
-"localhost" also indicated a local file URI, but in this
-specification it instead refers to a non-local file whose authority is
-the "localhost".
+no authority, or the authority is the special string "localhost".
 
 This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC3530}}, NCP
@@ -314,9 +315,9 @@ of {{RFC3987}}; see: {{encoding}}.
 __Differences from RFC 1738__
 
 In {{RFC1738}} a file URL always started with the token "file://",
-followed by an authority and a "/". That "/" was not considered part
-of the path.  This implies that the correct encoding for a file path
-in a UNIX-like environment would have been:
+followed by an (optionally blank) authority and a "/". That "/" was not
+considered part of the path.  This implies that the correct encoding for
+a file path in a UNIX-like environment would have been:
 
 ~~~~~~~~~~
      token     + authority + slash + path
@@ -483,8 +484,7 @@ Non-local files:
 * `file://host.example.com/path/to/file`
 
    > The representation of a non-local file, with an explicit
-     authority.  Note that, unlike in {{RFC1738}}, the string
-     "localhost" in the authority signifies a non-local file.
+     authority.
 
 
 # System-specific Operations
