@@ -143,7 +143,7 @@ informative:
 This document specifies the "file" Uniform Resource Identifier (URI)
 scheme, obsoleting the definition in RFC 1738.
 
-It attemps to define a common core which is intended to interoperate
+It attempts to define a common core which is intended to interoperate
 across the broad spectrum of existing implementations, while at the
 same time documenting other current practices.
 
@@ -199,7 +199,7 @@ which includes algorithms for interpreting file URIs (as URLs).
 The Universal Naming Convention (UNC) {{MS-DTYP}} defines a string
 format that can perform a similar role to the file URI scheme in
 describing the location of files.  A UNC filespace selector string has
-three parts: host, share, and path; see: {{unc-syntax}}.  This document
+three parts: host, share, and path; see {{unc-syntax}}.  This document
 describes but does not specify a means of translating between UNC
 filespace selector strings and file URIs in {{ext-unc}}.
 
