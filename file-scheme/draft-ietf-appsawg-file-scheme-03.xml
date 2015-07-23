@@ -187,7 +187,7 @@ if it is local.  A file URI is considered “local” if it has a blank or
 no authority, or the authority is the special string “localhost”.</t>
 
 <t>This specification neither defines nor forbids a mechanism for
-accessing non-local files.  See SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP
+accessing non-local files.  See SMB <xref target="MS-SMB"/>, NFS <xref target="RFC7530"/>, NCP
 <xref target="NOVELL"/> for examples of protocols that can be used to access files
 over a network.  Also see <xref target="ext-unc"/> for a discussion on translating
 non-local file URIs to and from UNC stings.</t>
@@ -376,7 +376,7 @@ and Dave Thaler for their comments and suggestions.</t>
 
     <references title='Normative References'>
 
-<reference anchor="BCP35" >
+<reference anchor="BCP35" target="http://www.rfc-editor.org/info/bcp35">
   <front>
     <title>Guidelines and Registration Procedures for URI Schemes</title>
     <author initials="D." surname="Thaler" fullname="D. Thaler" role="editor">
@@ -523,7 +523,7 @@ and Dave Thaler for their comments and suggestions.</t>
   </front>
   <seriesInfo name="ISO/IEC" value="10646:2003"/>
 </reference>
-<reference anchor="UTR15" >
+<reference anchor="UTR15" target="http://unicode.org/reports/tr15/tr15-18.html">
   <front>
     <title>Unicode Normalization Forms</title>
     <author initials="M." surname="Davis" fullname="Mark Davis">
@@ -541,7 +541,7 @@ and Dave Thaler for their comments and suggestions.</t>
 
     <references title='Informative References'>
 
-<reference anchor="STD63" >
+<reference anchor="STD63" target="http://www.rfc-editor.org/info/std63">
   <front>
     <title>UTF-8, a transformation format of ISO 10646</title>
     <author initials="F." surname="Yergeau" fullname="F. Yergeau">
@@ -551,6 +551,7 @@ and Dave Thaler for their comments and suggestions.</t>
   </front>
   <seriesInfo name="STD" value="63"/>
   <seriesInfo name="RFC" value="3629"/>
+  <seriesInfo name="DOI" value="10.17487/RFC3629"/>
 </reference>
 
 
@@ -584,21 +585,16 @@ and Dave Thaler for their comments and suggestions.</t>
 
 
 
-<reference  anchor='RFC3530' target='http://www.rfc-editor.org/info/rfc3530'>
+<reference  anchor='RFC7530' target='http://www.rfc-editor.org/info/rfc7530'>
 <front>
-<title>Network File System (NFS) version 4 Protocol</title>
-<author initials='S.' surname='Shepler' fullname='S. Shepler'><organization /></author>
-<author initials='B.' surname='Callaghan' fullname='B. Callaghan'><organization /></author>
-<author initials='D.' surname='Robinson' fullname='D. Robinson'><organization /></author>
-<author initials='R.' surname='Thurlow' fullname='R. Thurlow'><organization /></author>
-<author initials='C.' surname='Beame' fullname='C. Beame'><organization /></author>
-<author initials='M.' surname='Eisler' fullname='M. Eisler'><organization /></author>
-<author initials='D.' surname='Noveck' fullname='D. Noveck'><organization /></author>
-<date year='2003' month='April' />
-<abstract><t>The Network File System (NFS) version 4 is a distributed filesystem protocol which owes heritage to NFS protocol version 2, RFC 1094, and version 3, RFC 1813.  Unlike earlier versions, the NFS version 4 protocol supports traditional file access while integrating support for file locking and the mount protocol.  In addition, support for strong security (and its negotiation), compound operations, client caching, and internationalization have been added.  Of course, attention has been applied to making NFS version 4 operate well in an Internet environment. This document replaces RFC 3010 as the definition of the NFS version 4 protocol.  [STANDARDS-TRACK]</t></abstract>
+<title>Network File System (NFS) Version 4 Protocol</title>
+<author initials='T.' surname='Haynes' fullname='T. Haynes' role='editor'><organization /></author>
+<author initials='D.' surname='Noveck' fullname='D. Noveck' role='editor'><organization /></author>
+<date year='2015' month='March' />
+<abstract><t>The Network File System (NFS) version 4 protocol is a distributed file system protocol that builds on the heritage of NFS protocol version 2 (RFC 1094) and version 3 (RFC 1813).  Unlike earlier versions, the NFS version 4 protocol supports traditional file access while integrating support for file locking and the MOUNT protocol. In addition, support for strong security (and its negotiation), COMPOUND operations, client caching, and internationalization has been added.  Of course, attention has been applied to making NFS version 4 operate well in an Internet environment.</t><t>This document, together with the companion External Data Representation (XDR) description document, RFC 7531, obsoletes RFC 3530 as the definition of the NFS version 4 protocol.</t></abstract>
 </front>
-<seriesInfo name='RFC' value='3530'/>
-<seriesInfo name='DOI' value='10.17487/RFC3530'/>
+<seriesInfo name='RFC' value='7530'/>
+<seriesInfo name='DOI' value='10.17487/RFC7530'/>
 </reference>
 
 
@@ -1047,7 +1043,7 @@ only; the normative description is in <xref target="MS-DTYP"/>.</t>
 </list></t>
 
 <t>The precise format of <spanx style="verb">sharename</spanx> depends on the protocol;
-see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC3530"/>, NCP <xref target="NOVELL"/>.</t>
+see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC7530"/>, NCP <xref target="NOVELL"/>.</t>
 
 </section>
 <section anchor="collected" title="Collected Rules">
