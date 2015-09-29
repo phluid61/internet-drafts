@@ -298,6 +298,20 @@ transported as an Internationalized Resource Identifier (IRI)
 <xref target="RFC3987"/> to avoid ambiguity.  See <xref target="iri-vs-uri"/> for examples.</t>
 
 </section>
+<section anchor="origin" title="Origins">
+
+<t>As per <xref target="RFC6454"/>, Section 4, when determining the origin of a file
+URI implementations MAY return an implementation-defined value.</t>
+
+<t>Historically, user agents have granted content from the file URI
+scheme a tremendous amount of privilege.  However, granting all local
+files such wide privileges can lead to privilege escalation attacks.
+Some user agents have had success granting local files directory-based
+privileges, but this approach has not been widely adopted.  Other user
+agents use globally unique identifiers for each file URI, which is the
+most secure option.</t>
+
+</section>
 <section anchor="security" title="Security Considerations">
 
 <t>There are many security considerations for URI schemes discussed in
@@ -581,6 +595,19 @@ and Dave Thaler for their comments and suggestions.</t>
 </front>
 <seriesInfo name='RFC' value='1738'/>
 <seriesInfo name='DOI' value='10.17487/RFC1738'/>
+</reference>
+
+
+
+<reference  anchor='RFC6454' target='http://www.rfc-editor.org/info/rfc6454'>
+<front>
+<title>The Web Origin Concept</title>
+<author initials='A.' surname='Barth' fullname='A. Barth'><organization /></author>
+<date year='2011' month='December' />
+<abstract><t>This document defines the concept of an &quot;origin&quot;, which is often used as the scope of authority or privilege by user agents.  Typically, user agents isolate content retrieved from different origins to prevent malicious web site operators from interfering with the operation of benign web sites.  In addition to outlining the principles that underlie the concept of origin, this document details how to determine the origin of a URI and how to serialize an origin into a string.  It also defines an HTTP header field, named &quot;Origin&quot;, that indicates which origins are associated with an HTTP request.   [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='RFC' value='6454'/>
+<seriesInfo name='DOI' value='10.17487/RFC6454'/>
 </reference>
 
 
