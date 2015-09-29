@@ -87,6 +87,7 @@ informative:
     target: http://www.rfc-editor.org/info/std63
   RFC1630:
   RFC1738:
+  RFC6454:
   RFC7530:
   I-D.hoffman-file-uri:
   WHATWG-URL:
@@ -394,6 +395,20 @@ file path.
 When the file system's encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
 {{RFC3987}} to avoid ambiguity.  See {{iri-vs-uri}} for examples.
+
+
+# Origins {#origin}
+
+As per {{RFC6454}}, Section 4, when determining the origin of a file
+URI implementations MAY return an implementation-defined value.
+
+Historically, user agents have granted content from the file URI
+scheme a tremendous amount of privilege.  However, granting all local
+files such wide privileges can lead to privilege escalation attacks.
+Some user agents have had success granting local files directory-based
+privileges, but this approach has not been widely adopted.  Other user
+agents use globally unique identifiers for each file URI, which is the
+most secure option.
 
 
 # Security Considerations {#security}
