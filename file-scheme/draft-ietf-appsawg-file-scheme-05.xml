@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-04" category="std" obsoletes="1738">
+<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-05" category="std" obsoletes="1738">
 
   <front>
     <title abbrev="file-scheme">The file URI Scheme</title>
@@ -158,7 +158,7 @@ but nonstandard variations.</t>
 <xref target="RFC1630"/> and <xref target="RFC1738"/> as it is derived from the generic syntax
 of <xref target="RFC3986"/>, which post-dates all previous specifications.</t>
 
-<t>As a special case, the “auth-path” rule can match the string
+<t>As a special case, the “file-auth” rule can match the string
 “localhost” or the empty string in the URI’s authority component; this
 is interpreted as “the machine from which the URI is being
 interpreted,” exactly as if no authority was present.</t>

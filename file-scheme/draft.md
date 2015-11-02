@@ -253,7 +253,7 @@ The syntax definition above is different from those given in
 {{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
 of {{RFC3986}}, which post-dates all previous specifications.
 
-As a special case, the "auth-path" rule can match the string
+As a special case, the "file-auth" rule can match the string
 "localhost" or the empty string in the URI's authority component; this
 is interpreted as "the machine from which the URI is being
 interpreted," exactly as if no authority was present.
