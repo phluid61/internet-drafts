@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 1738 (if approved)                         September 29, 2015
+Obsoletes: 1738 (if approved)                           November 2, 2015
 Intended status: Standards Track
-Expires: April 1, 2016
+Expires: May 5, 2016
 
 
                           The file URI Scheme
@@ -21,7 +21,7 @@ Abstract
    across the broad spectrum of existing implementations, while at the
    same time documenting other current practices.
 
-   *Note to Readers (To be removed by the RFC Editor)*
+Note to Readers (To be removed by the RFC Editor)
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list <apps-discuss@ietf.org>.
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 1, 2016.
+   This Internet-Draft will expire on May 5, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 1]
+Kerwin                     Expires May 5, 2016                  [Page 1]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    (http://trustee.ietf.org/license-info) in effect on the date of
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 2]
+Kerwin                     Expires May 5, 2016                  [Page 2]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 3]
+Kerwin                     Expires May 5, 2016                  [Page 3]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 1.3.  Notational Conventions
@@ -221,9 +221,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 4]
+Kerwin                     Expires May 5, 2016                  [Page 4]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    URIs to and from the local system's representation of file paths, and
@@ -277,9 +277,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 5]
+Kerwin                     Expires May 5, 2016                  [Page 5]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
        2.  Append the transformed segment and a delimiting slash
@@ -291,7 +291,7 @@ Internet-Draft                 file-scheme                September 2015
 
        2.  Append the transformed segment to the URI.
 
-   *Differences from RFC 1738*
+Differences from RFC 1738
 
    In [RFC1738] a file URL always started with the token "file://",
    followed by an (optionally blank) authority and a "/".  That "/" was
@@ -333,9 +333,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 6]
+Kerwin                     Expires May 5, 2016                  [Page 6]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 3.3.1.  Win32 Namespaces
@@ -389,9 +389,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 7]
+Kerwin                     Expires May 5, 2016                  [Page 7]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    Other user agents use globally unique identifiers for each file URI,
@@ -445,9 +445,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 8]
+Kerwin                     Expires May 5, 2016                  [Page 8]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    Applications/protocols that use this scheme name:
@@ -465,7 +465,7 @@ Internet-Draft                 file-scheme                September 2015
       This scheme is registered under the IETF tree.  As such, the IETF
       maintains change control.
 
-   [*RFC Editor Note:* Replace XXXX with this RFC's reference.]
+   [RFC Editor Note: Replace XXXX with this RFC's reference.]
 
 8.  Acknowledgements
 
@@ -482,8 +482,8 @@ Internet-Draft                 file-scheme                September 2015
 9.1.  Normative References
 
    [BCP35]    Thaler, D., Ed., Hansen, T., and T. Hardie, "Guidelines
-              and Registration Procedures for URI Schemes", BCP 35, RFC
-              7595, DOI 10.17487/RFC7595, June 2015,
+              and Registration Procedures for URI Schemes", BCP 35,
+              RFC 7595, DOI 10.17487/RFC7595, June 2015,
               <http://www.rfc-editor.org/info/bcp35>.
 
    [ISO10646]
@@ -501,24 +501,24 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                 [Page 9]
+Kerwin                     Expires May 5, 2016                  [Page 9]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    [RFC1123]  Braden, R., Ed., "Requirements for Internet Hosts -
-              Application and Support", STD 3, RFC 1123, DOI 10.17487/
-              RFC1123, October 1989,
+              Application and Support", STD 3, RFC 1123,
+              DOI 10.17487/RFC1123, October 1989,
               <http://www.rfc-editor.org/info/rfc1123>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
-              RFC2119, March 1997,
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
-              Resource Identifier (URI): Generic Syntax", STD 66, RFC
-              3986, DOI 10.17487/RFC3986, January 2005,
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
               <http://www.rfc-editor.org/info/rfc3986>.
 
    [RFC3987]  Duerst, M. and M. Suignard, "Internationalized Resource
@@ -530,8 +530,8 @@ Internet-Draft                 file-scheme                September 2015
               2006, <http://www.rfc-editor.org/info/rfc4291>.
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234, DOI 10.17487/
-              RFC5234, January 2008,
+              Specifications: ABNF", STD 68, RFC 5234,
+              DOI 10.17487/RFC5234, January 2008,
               <http://www.rfc-editor.org/info/rfc5234>.
 
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
@@ -557,9 +557,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 10]
+Kerwin                     Expires May 5, 2016                 [Page 10]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.56
@@ -590,8 +590,8 @@ Internet-Draft                 file-scheme                September 2015
               Resource Locators (URL)", RFC 1738, DOI 10.17487/RFC1738,
               December 1994, <http://www.rfc-editor.org/info/rfc1738>.
 
-   [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454, DOI
-              10.17487/RFC6454, December 2011,
+   [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
+              DOI 10.17487/RFC6454, December 2011,
               <http://www.rfc-editor.org/info/rfc6454>.
 
    [RFC7530]  Haynes, T., Ed. and D. Noveck, Ed., "Network File System
@@ -613,9 +613,9 @@ Internet-Draft                 file-scheme                September 2015
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 11]
+Kerwin                     Expires May 5, 2016                 [Page 11]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 Appendix A.  Example URIs
@@ -669,9 +669,9 @@ B.2.  DOS- and Windows-Like Systems
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 12]
+Kerwin                     Expires May 5, 2016                 [Page 12]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 B.3.  Mac OS X Systems
@@ -725,9 +725,9 @@ C.1.  DOS and Windows Drive Letters
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 13]
+Kerwin                     Expires May 5, 2016                 [Page 13]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    Note that comparison of drive letters in DOS or Windows file paths is
@@ -781,9 +781,9 @@ C.1.2.  Vertical Bar Character
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 14]
+Kerwin                     Expires May 5, 2016                 [Page 14]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    o  "file:///c|/path/to/file"
@@ -837,9 +837,9 @@ C.2.  UNC Strings
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 15]
+Kerwin                     Expires May 5, 2016                 [Page 15]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 C.3.  UNC Paths
@@ -893,9 +893,9 @@ C.3.  UNC Paths
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 16]
+Kerwin                     Expires May 5, 2016                 [Page 16]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 C.4.  Backslash as Separator
@@ -949,9 +949,9 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 17]
+Kerwin                     Expires May 5, 2016                 [Page 17]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
    | Percent-encoded file URI, in any ASCII-compatible document:
@@ -1005,9 +1005,9 @@ Appendix E.  UNC Syntax
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 18]
+Kerwin                     Expires May 5, 2016                 [Page 18]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
 Appendix F.  Collected Rules
@@ -1061,9 +1061,9 @@ Appendix F.  Collected Rules
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 19]
+Kerwin                     Expires May 5, 2016                 [Page 19]
 
-Internet-Draft                 file-scheme                September 2015
+Internet-Draft                 file-scheme                 November 2015
 
 
          The minimal representation of a local file in a DOS- or
@@ -1117,4 +1117,4 @@ Author's Address
 
 
 
-Kerwin                    Expires April 1, 2016                [Page 20]
+Kerwin                     Expires May 5, 2016                 [Page 20]
