@@ -394,12 +394,12 @@
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.5.0 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.5.1 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-encoded-data-07" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-7-10" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-11-3" />
   <meta name="dct.abstract" content="This document introduces a new frame type for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
   <meta name="description" content="This document introduces a new frame type for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
 
@@ -416,14 +416,14 @@
 </tr>
 <tr>
   <td class="left">Internet-Draft</td>
-  <td class="right">July 10, 2015</td>
+  <td class="right">November 3, 2015</td>
 </tr>
 <tr>
   <td class="left">Intended status: Experimental</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: January 11, 2016</td>
+  <td class="left">Expires: May 6, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -444,7 +444,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 11, 2016.</p>
+<p>This Internet-Draft will expire on May 6, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -536,7 +536,7 @@
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#security" id="security">Security Considerations</a></h1>
 <p id="rfc.section.4.p.1">Further to the Use of Compression in HTTP/2 (<a href="#RFC7540">[RFC7540]</a>, Section 10.6), intermediaries MUST NOT apply compression to DATA frames, or alter the compression of GZIPPED_DATA frames other than decompressing, unless additional information is available that allows the intermediary to identify the source of data. In particular, frames that are not compressed cannot be compressed, and frames that are separately compressed cannot be merged into a single compressed frame.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
-<p id="rfc.section.5.p.1">This document updates the registries for frame types and error codes in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.  This document also establishes a new registry for HTTP/2 encoding scheme codes.  This new registry is entered into the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.</p>
+<p id="rfc.section.5.p.1">This document updates the registries for frame types, settings, and error codes in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.</p>
 <h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#http2-frame-type-registry-update" id="http2-frame-type-registry-update">HTTP/2 Frame Type Registry Update</a></h1>
 <p id="rfc.section.5.1.p.1">This document updates the &#8220;HTTP/2 Frame Type&#8221; registry (<a href="#RFC7540">[RFC7540]</a>, Section 11.2).  The entries in the following table are registered by this document.</p>
 <table cellpadding="3" cellspacing="0" class="tt full center">
@@ -611,19 +611,19 @@
       <td class="reference">
         <b id="RFC1952">[RFC1952]</b>
       </td>
-      <td class="top"><a href="mailto:ghost@aladdin.com" title="Aladdin Enterprises">Deutsch, P.</a>, <a href="mailto:gzip@prep.ai.mit.edu">Gailly, J-L.</a>, <a href="mailto:madler@alumni.caltech.edu">Adler, M.</a>, <a href="mailto:ghost@aladdin.com">Deutsch, L.</a> and <a href="mailto:randeg@alumni.rpi.edu">G. Randers-Pehrson</a>, "<a href="http://tools.ietf.org/html/rfc1952">GZIP file format specification version 4.3</a>", RFC 1952, May 1996.</td>
+      <td class="top"><a>Deutsch, P.</a>, "<a href="http://tools.ietf.org/html/rfc1952">GZIP file format specification version 4.3</a>", RFC 1952, DOI 10.17487/RFC1952, May 1996.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC2119">[RFC2119]</b>
       </td>
-      <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997.</td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="RFC7540">[RFC7540]</b>
       </td>
-      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/rfc7540">Hypertext Transfer Protocol Version 2 (HTTP/2)</a>", RFC 7540, May 2015.</td>
+      <td class="top"><a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="http://tools.ietf.org/html/rfc7540">Hypertext Transfer Protocol Version 2 (HTTP/2)</a>", RFC 7540, DOI 10.17487/RFC7540, May 2015.</td>
     </tr>
   </tbody>
 </table>
@@ -634,7 +634,7 @@
       <td class="reference">
         <b id="RFC7230">[RFC7230]</b>
       </td>
-      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, June 2014.</td>
+      <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, DOI 10.17487/RFC7230, June 2014.</td>
     </tr>
   </tbody>
 </table>
