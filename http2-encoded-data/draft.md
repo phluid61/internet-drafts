@@ -133,7 +133,7 @@ The GZIPPED\_DATA frame defines the following flags:
 
 
 A GZIPPED\_DATA frame MUST NOT be sent if the ACCEPT\_GZIPPED\_DATA setting
-of the peer is set to 0. {::comment}MUST ignore? Do we need an ACK?{:/comment}
+of the peer is set to 0. {::comment}MUST ignore; use Content-Length?{:/comment}
 
 An intermediary, on receiving a GZIPPED\_DATA frame, MAY decode the data and forward it to its
 downstream peer in one or more DATA frames. If the downstream peer has not advertised support
@@ -191,11 +191,8 @@ be merged into a single compressed frame.
 
 # IANA Considerations  {#iana}
 
-This document updates the registries for frame types and error codes in
-the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.  This
-document also establishes a new registry for HTTP/2 encoding scheme
-codes.  This new registry is entered into the "Hypertext Transfer
-Protocol (HTTP) 2 Parameters" section.
+This document updates the registries for frame types, settings, and error codes in
+the "Hypertext Transfer Protocol (HTTP) 2 Parameters" section.
 
 
 ## HTTP/2 Frame Type Registry Update
