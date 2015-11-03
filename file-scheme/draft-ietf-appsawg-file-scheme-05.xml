@@ -133,8 +133,8 @@ transparently mounted into the local file system.</t>
 
 <t>The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 <xref target="RFC5234"/>, including the core ABNF syntax rule <spanx style="verb">ALPHA</spanx> defined by that
-specification, and importing the <spanx style="verb">userinfo</spanx>, <spanx style="verb">host</spanx>, <spanx style="verb">authority</spanx> and
-<spanx style="verb">path-absolute</spanx> rules from <xref target="RFC3986"/> (as updated by <xref target="RFC6874"/>.)</t>
+specification, and importing the <spanx style="verb">userinfo</spanx>, <spanx style="verb">host</spanx> and <spanx style="verb">path-absolute</spanx>
+rules from <xref target="RFC3986"/> (as updated by <xref target="RFC6874"/>.)</t>
 
 <t>Please note <xref target="nonstandard-syntax"/> that lists some other commonly seen
 but nonstandard variations.</t>

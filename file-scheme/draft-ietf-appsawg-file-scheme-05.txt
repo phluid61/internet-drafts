@@ -77,7 +77,7 @@ Table of Contents
      3.1.  Translating Local File Path to file URI . . . . . . . . .   5
      3.2.  Translating Non-local File Path to file URI . . . . . . .   6
      3.3.  Incompatible File Paths . . . . . . . . . . . . . . . . .   6
-       3.3.1.  Win32 Namespaces  . . . . . . . . . . . . . . . . . .   7
+       3.3.1.  Win32 Namespaces  . . . . . . . . . . . . . . . . . .   6
    4.  Encoding  . . . . . . . . . . . . . . . . . . . . . . . . . .   7
    5.  Origins . . . . . . . . . . . . . . . . . . . . . . . . . . .   7
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
@@ -186,9 +186,8 @@ Internet-Draft                 file-scheme                 November 2015
 
    The file URI syntax is defined here in Augmented Backus-Naur Form
    (ABNF) [RFC5234], including the core ABNF syntax rule "ALPHA" defined
-   by that specification, and importing the "userinfo", "host",
-   "authority" and "path-absolute" rules from [RFC3986] (as updated by
-   [RFC6874].)
+   by that specification, and importing the "userinfo", "host" and
+   "path-absolute" rules from [RFC3986] (as updated by [RFC6874].)
 
    Please note Appendix C that lists some other commonly seen but
    nonstandard variations.
@@ -218,6 +217,7 @@ Internet-Draft                 file-scheme                 November 2015
    Systems exhibit different levels of case-sensitivity.  Unless the
    file system is known to be case-insensitive, implementations MUST
    maintain the case of file and directory names when translating file
+   URIs to and from the local system's representation of file paths, and
 
 
 
@@ -226,7 +226,6 @@ Kerwin                     Expires May 6, 2016                  [Page 4]
 Internet-Draft                 file-scheme                 November 2015
 
 
-   URIs to and from the local system's representation of file paths, and
    any systems or devices that transport file URIs MUST NOT alter the
    case of file URIs they transport.
 
@@ -273,7 +272,8 @@ Internet-Draft                 file-scheme                 November 2015
        1.  Transform the directory name to a path segment ([RFC3986],
            Section 3.3) as per Section 2 of [RFC3986].
 
-
+       2.  Append the transformed segment and a delimiting slash
+           character "/" to the URI.
 
 
 
@@ -281,9 +281,6 @@ Kerwin                     Expires May 6, 2016                  [Page 5]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-       2.  Append the transformed segment and a delimiting slash
-           character "/" to the URI.
 
    6.  If the path includes a file name:
 
@@ -327,9 +324,12 @@ Internet-Draft                 file-scheme                 November 2015
    Some conventional file path formats are known to be incompatible with
    the file URI scheme.
 
+3.3.1.  Win32 Namespaces
 
-
-
+   The Microsoft Windows API defines Win32 Namespaces [Win32-Namespaces]
+   for interacting with files and devices using Windows API functions.
+   These namespaced paths are prefixed by "\\?\" for Win32 File
+   Namespaces and "\\.\" for Win32 Device Namespaces.  There is also a
 
 
 
@@ -338,12 +338,6 @@ Kerwin                     Expires May 6, 2016                  [Page 6]
 Internet-Draft                 file-scheme                 November 2015
 
 
-3.3.1.  Win32 Namespaces
-
-   The Microsoft Windows API defines Win32 Namespaces [Win32-Namespaces]
-   for interacting with files and devices using Windows API functions.
-   These namespaced paths are prefixed by "\\?\" for Win32 File
-   Namespaces and "\\.\" for Win32 Device Namespaces.  There is also a
    special case for UNC file paths in Win32 File Namespaces, referred to
    as "Long UNC", using the prefix "\\?\UNC\".
 
@@ -386,6 +380,12 @@ Internet-Draft                 file-scheme                 November 2015
    files such wide privileges can lead to privilege escalation attacks.
    Some user agents have had success granting local files directory-
    based privileges, but this approach has not been widely adopted.
+   Other user agents use globally unique identifiers for each file URI,
+   which is the most secure option.
+
+
+
+
 
 
 
@@ -393,9 +393,6 @@ Kerwin                     Expires May 6, 2016                  [Page 7]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-   Other user agents use globally unique identifiers for each file URI,
-   which is the most secure option.
 
 6.  Security Considerations
 
@@ -442,6 +439,9 @@ Internet-Draft                 file-scheme                 November 2015
    Status:
       permanent
 
+   Applications/protocols that use this scheme name:
+      Commonly used in hypertext documents to refer to files without
+      depending on network access.  Supported by major browsers.
 
 
 
@@ -449,10 +449,6 @@ Kerwin                     Expires May 6, 2016                  [Page 8]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-   Applications/protocols that use this scheme name:
-      Commonly used in hypertext documents to refer to files without
-      depending on network access.  Supported by major browsers.
 
       Windows API (PathCreateFromUrl, UrlCreateFromPath).
 
@@ -495,6 +491,10 @@ Internet-Draft                 file-scheme                 November 2015
               specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
               November 1987, <http://www.rfc-editor.org/info/rfc1035>.
 
+   [RFC1123]  Braden, R., Ed., "Requirements for Internet Hosts -
+              Application and Support", STD 3, RFC 1123,
+              DOI 10.17487/RFC1123, October 1989,
+              <http://www.rfc-editor.org/info/rfc1123>.
 
 
 
@@ -505,11 +505,6 @@ Kerwin                     Expires May 6, 2016                  [Page 9]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-   [RFC1123]  Braden, R., Ed., "Requirements for Internet Hosts -
-              Application and Support", STD 3, RFC 1123,
-              DOI 10.17487/RFC1123, October 1989,
-              <http://www.rfc-editor.org/info/rfc1123>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -553,6 +548,11 @@ Internet-Draft                 file-scheme                 November 2015
               Hoffman, P., "The file URI Scheme", draft-hoffman-file-
               uri-03 (work in progress), January 2005.
 
+   [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.56
+              UNC", January 2013,
+              <http://msdn.microsoft.com/en-us/library/gg465305.aspx>.
+
+
 
 
 
@@ -561,10 +561,6 @@ Kerwin                     Expires May 6, 2016                 [Page 10]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-   [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.56
-              UNC", January 2013,
-              <http://msdn.microsoft.com/en-us/library/gg465305.aspx>.
 
    [MS-NBTE]  Microsoft Open Specifications, "NetBIOS over TCP (NBT)
               Extensions", May 2014,
@@ -609,6 +605,10 @@ Internet-Draft                 file-scheme                 November 2015
    [Win32-Namespaces]
               Microsoft Developer Network, "Naming Files, Paths, and
               Namespaces", June 2013.
+
+
+
+
 
 
 
