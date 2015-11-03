@@ -228,8 +228,8 @@ transparently mounted into the local file system.
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 {{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `userinfo`, `host`, `authority` and
-`path-absolute` rules from {{RFC3986}} (as updated by {{RFC6874}}.)
+specification, and importing the `userinfo`, `host` and `path-absolute`
+rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
 Please note {{nonstandard-syntax}} that lists some other commonly seen
 but nonstandard variations.
