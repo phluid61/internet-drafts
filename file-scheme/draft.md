@@ -254,9 +254,11 @@ The syntax definition above is different from those given in
 of {{RFC3986}}, which post-dates all previous specifications.
 
 As a special case, the "file-auth" rule can match the string
-"localhost" or the empty string in the URI's authority component; this
-is interpreted as "the machine from which the URI is being
-interpreted," exactly as if no authority was present.
+"localhost" or the empty string; either value is interpreted as "the
+machine from which the URI is being interpreted," exactly as if no
+authority was present.  To maximise compatibility with previous
+specifications, implementations MAY choose to include an empty
+"file-auth".
 
 Systems exhibit different levels of case-sensitivity.  Unless the file
 system is known to be case-insensitive, implementations MUST maintain
