@@ -69,7 +69,7 @@ malformed messages ({{RFC7540}}, Section 8.1.2.6).
 
 SETTINGS\_ACCEPT\_GZIPPED\_DATA (0xTBA) is used to indicate the sender's ability and
 willingness to receive GZIPPED\_DATA frames. An endpoint MUST NOT send a GZIPPED\_DATA
-frame unless it receives this setting with a value of 1. {::comment}Or..?{:/comment}
+frame unless it receives this setting with a value of 1.
 
 The initial value is 0, which indicates that GZIPPED\_DATA frames are not supported. Any
 value other than 0 or 1 MUST be treated as a connection error ({{RFC7540}}, Section 5.4.1)
@@ -133,7 +133,7 @@ The GZIPPED\_DATA frame defines the following flags:
 
 
 A GZIPPED\_DATA frame MUST NOT be sent if the ACCEPT\_GZIPPED\_DATA setting
-of the peer is set to 0. {::comment}MUST ignore; use Content-Length?{:/comment}
+of the peer is set to 0.  See {{experiment}}.
 
 An intermediary, on receiving a GZIPPED\_DATA frame, MAY decode the data and forward it to its
 downstream peer in one or more DATA frames. If the downstream peer has not advertised support
