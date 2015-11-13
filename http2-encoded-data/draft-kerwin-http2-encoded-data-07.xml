@@ -80,7 +80,7 @@ malformed messages (<xref target="RFC7540"/>, Section 8.1.2.6).</t>
 
 <t>SETTINGS_ACCEPT_GZIPPED_DATA (0xTBA) is used to indicate the sender’s ability and
 willingness to receive GZIPPED_DATA frames. An endpoint MUST NOT send a GZIPPED_DATA
-frame unless it receives this setting with a value of 1. </t>
+frame unless it receives this setting with a value of 1.</t>
 
 <t>The initial value is 0, which indicates that GZIPPED_DATA frames are not supported. Any
 value other than 0 or 1 MUST be treated as a connection error (<xref target="RFC7540"/>, Section 5.4.1)
@@ -143,7 +143,7 @@ Bit 4 being set indicates that the Pad Length field is present.</t>
 </list></t>
 
 <t>A GZIPPED_DATA frame MUST NOT be sent if the ACCEPT_GZIPPED_DATA setting
-of the peer is set to 0. </t>
+of the peer is set to 0.  See <xref target="experiment"/>.</t>
 
 <t>An intermediary, on receiving a GZIPPED_DATA frame, MAY decode the data and forward it to its
 downstream peer in one or more DATA frames. If the downstream peer has not advertised support
@@ -185,6 +185,22 @@ The endpoint detected that its peer sent a GZIPPED_DATA frame with an invalid en
 </list></t>
 
 </section>
+</section>
+<section anchor="experiment" title="Experimental Status">
+
+<t>This extension is classified as an experiment because it alters the base semantics of HTTP/2;
+a change that, if specified insufficiently or implemented incorrectly, could result in data loss
+that is hard to detect or diagnose.</t>
+
+<t><xref target="RFC7540"/>, Section 5.5, mandates that “implementations MUST discard frames that have unknown
+or unsupported types”; so if an endpoint or intermediary mishandles GZIPPED_DATA frames, for
+example by incorrectly emitting an ACCEPT_GZIPPED_DATA setting or propagating GZIPPED_DATA
+frames, and those frames are subsequently discarded, data will be lost.  There is no reliable
+mechanism to detect such a loss.</t>
+
+<t>The experiment therefore is to explore the robustness of the HTTP/2 ecosystem in the presence of
+such potential failures.</t>
+
 </section>
 <section anchor="fragmentation" title="Fragmentation">
 
