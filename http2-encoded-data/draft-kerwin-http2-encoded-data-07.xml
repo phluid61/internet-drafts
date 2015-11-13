@@ -370,6 +370,7 @@ following table are registered by this document.</t>
   <t>change document title from “Encoded” to “Gzipped”</t>
   <t>improve text under GZIPPED_DATA (<xref target="gzipped-data"/>)</t>
   <t>clarify that GZIPPED_DATA and DATA can be interleaved</t>
+  <t>explain experimental status and risks of broken implementations</t>
 </list></t>
 
 <t>Since -05:</t>
