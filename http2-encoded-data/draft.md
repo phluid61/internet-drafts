@@ -179,7 +179,7 @@ This extension is classified as an experiment because it alters the base semanti
 a change that, if specified insufficiently or implemented incorrectly, could result in data loss
 that is hard to detect or diagnose.
 
-{{RFC6750}}, Section 5.5, mandates that "implementations MUST discard frames that have unknown
+{{RFC7540}}, Section 5.5, mandates that "implementations MUST discard frames that have unknown
 or unsupported types"; so if an endpoint or intermediary mishandles GZIPPED\_DATA frames, for
 example by incorrectly emitting an ACCEPT\_GZIPPED\_DATA setting or propagating GZIPPED\_DATA
 frames, and those frames are subsequently discarded, data will be lost.  There is no reliable
