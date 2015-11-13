@@ -378,14 +378,14 @@ Appendix A.  Changelog
 
    o  clarify that GZIPPED_DATA and DATA can be interleaved
 
+   o  explain experimental status and risks of broken implementations
+
    Since -05:
 
    o  changed ACCEPT_ENCODED_DATA back from a frame to a setting, since
       it carries a single scalar value now
 
    Since -04:
-
-
 
 
 

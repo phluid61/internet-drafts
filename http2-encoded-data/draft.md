@@ -263,6 +263,7 @@ Since -06:
  * change document title from "Encoded" to "Gzipped"
  * improve text under GZIPPED\_DATA ({{gzipped-data}})
  * clarify that GZIPPED\_DATA and DATA can be interleaved
+ * explain experimental status and risks of broken implementations
 
 Since -05:
 
