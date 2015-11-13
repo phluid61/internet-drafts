@@ -173,6 +173,22 @@ The following new error code is defined:
   The endpoint detected that its peer sent a GZIPPED\_DATA frame with an invalid encoding.
 
 
+# Experimental Status  {#experiment}
+
+This extension is classified as an experiment because it alters the base semantics of HTTP/2;
+a change that, if specified insufficiently or implemented incorrectly, could result in data loss
+that is hard to detect or diagnose.
+
+{{RFC6750}}, Section 5.5, mandates that "implementations MUST discard frames that have unknown
+or unsupported types"; so if an endpoint or intermediary mishandles GZIPPED\_DATA frames, for
+example by incorrectly emitting an ACCEPT\_GZIPPED\_DATA setting or propagating GZIPPED\_DATA
+frames, and those frames are subsequently discarded, data will be lost.  There is no reliable
+mechanism to detect such a loss.
+
+The experiment therefore is to explore the robustness of the HTTP/2 ecosystem in the presence of
+such potential failures.
+
+
 # Fragmentation  {#fragmentation}
 
 Traversing a network segment with small frame size limits introduces the risk of fragmenting an
