@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 1738 (if approved)                          November 13, 2015
+Obsoletes: 1738 (if approved)                          November 23, 2015
 Intended status: Standards Track
-Expires: May 16, 2016
+Expires: May 26, 2016
 
 
                           The file URI Scheme
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 16, 2016.
+   This Internet-Draft will expire on May 26, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                    Expires May 16, 2016                  [Page 1]
+Kerwin                    Expires May 26, 2016                  [Page 1]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -76,7 +76,7 @@ Table of Contents
    3.  Operations on file URIs . . . . . . . . . . . . . . . . . . .   5
      3.1.  Translating Local File Path to file URI . . . . . . . . .   5
      3.2.  Translating Non-local File Path to file URI . . . . . . .   6
-     3.3.  Incompatible File Paths . . . . . . . . . . . . . . . . .   6
+     3.3.  Incompatible File Paths . . . . . . . . . . . . . . . . .   7
        3.3.1.  Win32 Namespaces  . . . . . . . . . . . . . . . . . .   7
    4.  Encoding  . . . . . . . . . . . . . . . . . . . . . . . . . .   7
    5.  Origins . . . . . . . . . . . . . . . . . . . . . . . . . . .   7
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                    Expires May 16, 2016                  [Page 2]
+Kerwin                    Expires May 26, 2016                  [Page 2]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -165,7 +165,7 @@ Internet-Draft                 file-scheme                 November 2015
 
 
 
-Kerwin                    Expires May 16, 2016                  [Page 3]
+Kerwin                    Expires May 26, 2016                  [Page 3]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -188,6 +188,11 @@ Internet-Draft                 file-scheme                 November 2015
    (ABNF) [RFC5234], including the core ABNF syntax rule "ALPHA" defined
    by that specification, and importing the "userinfo", "host" and
    "path-absolute" rules from [RFC3986] (as updated by [RFC6874].)
+
+   The core syntax in [RFC3986] includes "path" and "authority"
+   components, for each of which only a subset is used in the definition
+   of the file URI scheme.  The used subset of "path" is "path-
+   absolute", and the subset of "authority" is "file-auth", given below.
 
    Please note Appendix C that lists some other commonly seen but
    nonstandard variations.
@@ -213,19 +218,19 @@ Internet-Draft                 file-scheme                 November 2015
    "localhost" or the empty string; either value is interpreted as "the
    machine from which the URI is being interpreted," exactly as if no
    authority was present.  To maximise compatibility with previous
+
+
+
+Kerwin                    Expires May 26, 2016                  [Page 4]
+
+Internet-Draft                 file-scheme                 November 2015
+
+
    specifications, implementations MAY choose to include an empty "file-
    auth".
 
    Systems exhibit different levels of case-sensitivity.  Unless the
    file system is known to be case-insensitive, implementations MUST
-
-
-
-Kerwin                    Expires May 16, 2016                  [Page 4]
-
-Internet-Draft                 file-scheme                 November 2015
-
-
    maintain the case of file and directory names when translating file
    URIs to and from the local system's representation of file paths, and
    any systems or devices that transport file URIs MUST NOT alter the
@@ -269,18 +274,18 @@ Internet-Draft                 file-scheme                 November 2015
    4.  Append a slash character "/" to the URI, to signify the path
        root.
 
+
+
+
+Kerwin                    Expires May 26, 2016                  [Page 5]
+
+Internet-Draft                 file-scheme                 November 2015
+
+
    5.  For each directory in the path after the root:
 
        1.  Transform the directory name to a path segment ([RFC3986],
            Section 3.3) as per Section 2 of [RFC3986].
-
-
-
-
-Kerwin                    Expires May 16, 2016                  [Page 5]
-
-Internet-Draft                 file-scheme                 November 2015
-
 
        2.  Append the transformed segment and a delimiting slash
            character "/" to the URI.
@@ -322,21 +327,21 @@ Internet-Draft                 file-scheme                 November 2015
 
    See Appendix C.2 for an explicit handling of UNC strings.
 
+
+
+
+
+
+
+Kerwin                    Expires May 26, 2016                  [Page 6]
+
+Internet-Draft                 file-scheme                 November 2015
+
+
 3.3.  Incompatible File Paths
 
    Some conventional file path formats are known to be incompatible with
    the file URI scheme.
-
-
-
-
-
-
-
-Kerwin                    Expires May 16, 2016                  [Page 6]
-
-Internet-Draft                 file-scheme                 November 2015
-
 
 3.3.1.  Win32 Namespaces
 
@@ -381,19 +386,19 @@ Internet-Draft                 file-scheme                 November 2015
    As per [RFC6454], Section 4, when determining the origin of a file
    URI implementations MAY return an implementation-defined value.
 
+
+
+
+Kerwin                    Expires May 26, 2016                  [Page 7]
+
+Internet-Draft                 file-scheme                 November 2015
+
+
    Historically, user agents have granted content from the file URI
    scheme a tremendous amount of privilege.  However, granting all local
    files such wide privileges can lead to privilege escalation attacks.
    Some user agents have had success granting local files directory-
    based privileges, but this approach has not been widely adopted.
-
-
-
-Kerwin                    Expires May 16, 2016                  [Page 7]
-
-Internet-Draft                 file-scheme                 November 2015
-
-
    Other user agents use globally unique identifiers for each file URI,
    which is the most secure option.
 
@@ -437,18 +442,18 @@ Internet-Draft                 file-scheme                 November 2015
    complies with [BCP35].
 
    Scheme name:
+
+
+
+Kerwin                    Expires May 26, 2016                  [Page 8]
+
+Internet-Draft                 file-scheme                 November 2015
+
+
       file
 
    Status:
       permanent
-
-
-
-
-Kerwin                    Expires May 16, 2016                  [Page 8]
-
-Internet-Draft                 file-scheme                 November 2015
-
 
    Applications/protocols that use this scheme name:
       Commonly used in hypertext documents to refer to files without
@@ -491,20 +496,19 @@ Internet-Draft                 file-scheme                 November 2015
               "Information Technology - Universal Multiple-Octet Coded
               Character Set (UCS)", ISO/IEC 10646:2003, December 2003.
 
-   [RFC1035]  Mockapetris, P., "Domain names - implementation and
-              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
-              November 1987, <http://www.rfc-editor.org/info/rfc1035>.
 
 
 
 
 
-
-
-Kerwin                    Expires May 16, 2016                  [Page 9]
+Kerwin                    Expires May 26, 2016                  [Page 9]
 
 Internet-Draft                 file-scheme                 November 2015
 
+
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
+              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
+              November 1987, <http://www.rfc-editor.org/info/rfc1035>.
 
    [RFC1123]  Braden, R., Ed., "Requirements for Internet Hosts -
               Application and Support", STD 3, RFC 1123,
@@ -549,18 +553,18 @@ Internet-Draft                 file-scheme                 November 2015
               Bugzilla@Mozilla, "Bug 107540", October 2007,
               <https://bugzilla.mozilla.org/show_bug.cgi?id=107540>.
 
-   [I-D.hoffman-file-uri]
-              Hoffman, P., "The file URI Scheme", draft-hoffman-file-
-              uri-03 (work in progress), January 2005.
 
 
 
 
-
-Kerwin                    Expires May 16, 2016                 [Page 10]
+Kerwin                    Expires May 26, 2016                 [Page 10]
 
 Internet-Draft                 file-scheme                 November 2015
 
+
+   [I-D.hoffman-file-uri]
+              Hoffman, P., "The file URI Scheme", draft-hoffman-file-
+              uri-03 (work in progress), January 2005.
 
    [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.56
               UNC", January 2013,
@@ -606,17 +610,17 @@ Internet-Draft                 file-scheme                 November 2015
               WHATWG, "URL Living Standard", May 2013,
               <http://url.spec.whatwg.org/>.
 
-   [Win32-Namespaces]
-              Microsoft Developer Network, "Naming Files, Paths, and
-              Namespaces", June 2013.
 
 
 
-
-Kerwin                    Expires May 16, 2016                 [Page 11]
+Kerwin                    Expires May 26, 2016                 [Page 11]
 
 Internet-Draft                 file-scheme                 November 2015
 
+
+   [Win32-Namespaces]
+              Microsoft Developer Network, "Naming Files, Paths, and
+              Namespaces", June 2013.
 
 Appendix A.  Example URIs
 
@@ -665,11 +669,7 @@ B.2.  DOS- and Windows-Like Systems
 
 
 
-
-
-
-
-Kerwin                    Expires May 16, 2016                 [Page 12]
+Kerwin                    Expires May 26, 2016                 [Page 12]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -725,7 +725,7 @@ C.1.  DOS and Windows Drive Letters
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 13]
+Kerwin                    Expires May 26, 2016                 [Page 13]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -781,7 +781,7 @@ C.1.2.  Vertical Bar Character
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 14]
+Kerwin                    Expires May 26, 2016                 [Page 14]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -837,7 +837,7 @@ C.2.  UNC Strings
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 15]
+Kerwin                    Expires May 26, 2016                 [Page 15]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -893,7 +893,7 @@ C.3.  UNC Paths
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 16]
+Kerwin                    Expires May 26, 2016                 [Page 16]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -949,7 +949,7 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 17]
+Kerwin                    Expires May 26, 2016                 [Page 17]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -1005,7 +1005,7 @@ Appendix E.  UNC Syntax
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 18]
+Kerwin                    Expires May 26, 2016                 [Page 18]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -1061,7 +1061,7 @@ Appendix F.  Collected Rules
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 19]
+Kerwin                    Expires May 26, 2016                 [Page 19]
 
 Internet-Draft                 file-scheme                 November 2015
 
@@ -1117,4 +1117,4 @@ Author's Address
 
 
 
-Kerwin                    Expires May 16, 2016                 [Page 20]
+Kerwin                    Expires May 26, 2016                 [Page 20]
