@@ -416,7 +416,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-05" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-11-13" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-11-23" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
 
@@ -437,14 +437,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">November 13, 2015</td>
+  <td class="right">November 23, 2015</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: May 16, 2016</td>
+  <td class="left">Expires: May 26, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -470,7 +470,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 16, 2016.</p>
+<p>This Internet-Draft will expire on May 26, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -542,7 +542,8 @@
 <p id="rfc.section.1.3.p.2">Throughout this document the term &#8220;local&#8221; is used to describe files that can be accessed directly through the local file system.  It is important to note that a local file may not be physically located on the local machine, for example if a networked file system is transparently mounted into the local file system.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#syntax" id="syntax">Syntax</a></h1>
 <p id="rfc.section.2.p.1">The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF) <a href="#RFC5234">[RFC5234]</a>, including the core ABNF syntax rule <samp>ALPHA</samp> defined by that specification, and importing the <samp>userinfo</samp>, <samp>host</samp> and <samp>path-absolute</samp> rules from <a href="#RFC3986">[RFC3986]</a> (as updated by <a href="#RFC6874">[RFC6874]</a>.)</p>
-<p id="rfc.section.2.p.2">Please note <a href="#nonstandard-syntax">Appendix C</a> that lists some other commonly seen but nonstandard variations.</p>
+<p id="rfc.section.2.p.2">The core syntax in <a href="#RFC3986">[RFC3986]</a> includes <samp>path</samp> and <samp>authority</samp> components, for each of which only a subset is used in the definition of the file URI scheme.  The used subset of <samp>path</samp> is <samp>path-absolute</samp>, and the subset of <samp>authority</samp> is <samp>file-auth</samp>, given below.</p>
+<p id="rfc.section.2.p.3">Please note <a href="#nonstandard-syntax">Appendix C</a> that lists some other commonly seen but nonstandard variations.</p>
 <pre>
    file-URI       = file-scheme ":" file-hier-part
 
@@ -557,9 +558,9 @@
 
    file-auth      = [ userinfo "@" ] host
 </pre>
-<p id="rfc.section.2.p.3">The syntax definition above is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates all previous specifications.</p>
-<p id="rfc.section.2.p.4">As a special case, the &#8220;file-auth&#8221; rule can match the string &#8220;localhost&#8221; or the empty string; either value is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority was present.  To maximise compatibility with previous specifications, implementations MAY choose to include an empty &#8220;file-auth&#8221;.</p>
-<p id="rfc.section.2.p.5">Systems exhibit different levels of case-sensitivity.  Unless the file system is known to be case-insensitive, implementations MUST maintain the case of file and directory names when translating file URIs to and from the local system&#8217;s representation of file paths, and any systems or devices that transport file URIs MUST NOT alter the case of file URIs they transport.</p>
+<p id="rfc.section.2.p.4">The syntax definition above is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates all previous specifications.</p>
+<p id="rfc.section.2.p.5">As a special case, the &#8220;file-auth&#8221; rule can match the string &#8220;localhost&#8221; or the empty string; either value is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority was present.  To maximise compatibility with previous specifications, implementations MAY choose to include an empty &#8220;file-auth&#8221;.</p>
+<p id="rfc.section.2.p.6">Systems exhibit different levels of case-sensitivity.  Unless the file system is known to be case-insensitive, implementations MUST maintain the case of file and directory names when translating file URIs to and from the local system&#8217;s representation of file paths, and any systems or devices that transport file URIs MUST NOT alter the case of file URIs they transport.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#operations" id="operations">Operations on file URIs</a></h1>
 <p id="rfc.section.3.p.1">Implementations SHOULD, at a minimum, provide a read-like operation to return the contents of a file located by a file URI.  Additional operations MAY be provided, such as writing to, creating, and deleting files.  See the POSIX file and directory operations <a href="#POSIX">[POSIX]</a> for examples of standardized operations that can be performed on files.</p>
 <p id="rfc.section.3.p.2">File URIs can also be translated to and from other, similar constructs, such as local file paths or UNC strings.</p>
