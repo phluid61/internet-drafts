@@ -479,8 +479,6 @@ Change Controller:
    maintains change control.
 {: vspace="0"}
 
-\[**RFC Editor Note:** Replace XXXX with this RFC's reference.\]
-
 
 # Acknowledgements
 
