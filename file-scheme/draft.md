@@ -233,8 +233,9 @@ rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
 The core syntax in {{RFC3986}} includes `path` and `authority`
 components, for each of which only a subset is used in the definition
-of the file URI scheme.  The used subset of `path` is `path-absolute`,
-and the subset of `authority` is `file-auth`, given below.
+of the file URI scheme.  The relevant subset of `path` is
+`path-absolute`, and the subset of `authority` is `file-auth`, given
+below.
 
 Please note {{nonstandard-syntax}} that lists some other commonly seen
 but nonstandard variations.
