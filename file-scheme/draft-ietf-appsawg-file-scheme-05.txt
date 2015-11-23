@@ -470,8 +470,6 @@ Internet-Draft                 file-scheme                 November 2015
       This scheme is registered under the IETF tree.  As such, the IETF
       maintains change control.
 
-   [*RFC Editor Note:* Replace XXXX with this RFC's reference.]
-
 8.  Acknowledgements
 
    This specification is derived from [RFC1738], [RFC3986], and
@@ -496,7 +494,9 @@ Internet-Draft                 file-scheme                 November 2015
               "Information Technology - Universal Multiple-Octet Coded
               Character Set (UCS)", ISO/IEC 10646:2003, December 2003.
 
-
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
+              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
+              November 1987, <http://www.rfc-editor.org/info/rfc1035>.
 
 
 
@@ -505,10 +505,6 @@ Kerwin                    Expires May 26, 2016                  [Page 9]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-   [RFC1035]  Mockapetris, P., "Domain names - implementation and
-              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
-              November 1987, <http://www.rfc-editor.org/info/rfc1035>.
 
    [RFC1123]  Braden, R., Ed., "Requirements for Internet Hosts -
               Application and Support", STD 3, RFC 1123,
@@ -553,6 +549,10 @@ Internet-Draft                 file-scheme                 November 2015
               Bugzilla@Mozilla, "Bug 107540", October 2007,
               <https://bugzilla.mozilla.org/show_bug.cgi?id=107540>.
 
+   [I-D.hoffman-file-uri]
+              Hoffman, P., "The file URI Scheme", draft-hoffman-file-
+              uri-03 (work in progress), January 2005.
+
 
 
 
@@ -561,10 +561,6 @@ Kerwin                    Expires May 26, 2016                 [Page 10]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-   [I-D.hoffman-file-uri]
-              Hoffman, P., "The file URI Scheme", draft-hoffman-file-
-              uri-03 (work in progress), January 2005.
 
    [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.56
               UNC", January 2013,
@@ -610,6 +606,10 @@ Internet-Draft                 file-scheme                 November 2015
               WHATWG, "URL Living Standard", May 2013,
               <http://url.spec.whatwg.org/>.
 
+   [Win32-Namespaces]
+              Microsoft Developer Network, "Naming Files, Paths, and
+              Namespaces", June 2013.
+
 
 
 
@@ -617,10 +617,6 @@ Kerwin                    Expires May 26, 2016                 [Page 11]
 
 Internet-Draft                 file-scheme                 November 2015
 
-
-   [Win32-Namespaces]
-              Microsoft Developer Network, "Naming Files, Paths, and
-              Namespaces", June 2013.
 
 Appendix A.  Example URIs
 
@@ -666,6 +662,10 @@ B.2.  DOS- and Windows-Like Systems
    See Appendix C.1 for explicit (but non-normative and strictly
    optional) rules for interacting with DOS- or Windows-like file paths
    and URIs.
+
+
+
+
 
 
 
