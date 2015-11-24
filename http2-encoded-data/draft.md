@@ -6,9 +6,12 @@ date: 2015
 category: exp
 
 ipr: trust200902
-area: General
+area: Applications and Real-Time
 workgroup: 
-keyword: Internet-Draft
+keyword:
+- HTTP
+- H2
+- GZIP
 
 stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
