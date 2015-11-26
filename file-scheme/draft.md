@@ -503,23 +503,21 @@ following forms:
 
 Local files:
 
-* `file:///path/to/file`
+* A traditional file URI for a local file, with an empty authority.
+  This is the most common format in use today. E.g.:
 
-   > A traditional file URI for a local file, with an empty
-     authority.  This is the most common format in use today.
+  * `file:///path/to/file`
 
-* `file:/path/to/file`
+* The minimal representation of a local file, with no authority field
+  and an absolute path that begins with a slash "/". E.g.:
 
-   > The minimal representation of a local file, with no authority
-     field and an absolute path that begins with a slash "/".
+  * `file:/path/to/file`
 
 Non-local files:
 
-* `file://host.example.com/path/to/file`
+* A non-local file, with an explicit authority. E.g.:
 
-   > The representation of a non-local file, with an explicit
-     authority.
-
+  * `file://host.example.com/path/to/file`
 
 # System-specific Operations
 
@@ -586,13 +584,11 @@ with a drive letter.  To facilitate this, the `local-path` rule in
    drive-letter   = ALPHA ":"
 ~~~~~~~~~~
 
-This is intended to support URIs of the form:
+This is intended to support the minimal representation of a local file
+in a DOS- or Windows-based environment, with no authority field and an
+absolute path that begins with a drive letter.  E.g.:
 
 * `file:c:/path/to/file`
-
-   > The minimal representation of a local file in a DOS- or
-     Windows-based environment, with no authority field and an
-     absolute path that begins with a drive letter.
 
 URIs of the form `file:///c:/path/to/file` are already supported by the
 `path-absolute` rule.
@@ -650,14 +646,12 @@ following:
                   / ALPHA "|"
 ~~~~~~~~~~
 
-This is intended to support URIs of the form:
+This is intended to support regular DOS or Windows file URIs with
+vertical line characters in the drive letter construct.  E.g.:
 
 * `file:///c|/path/to/file`
 * `file:/c|/path/to/file`
 * `file:c|/path/to/file`
-
-   > Regular DOS or Windows file URIs, with vertical line characters
-     in the drive letter construct.
 
 To update such an old URI, replace the vertical line "\|" with a
 colon ":".
@@ -734,18 +728,17 @@ following forms, in addition to those in {{examples}}:
 
 Non-local files:
 
-* `file:////host.example.com/path/to/file`
+* The "traditional" representation of a non-local file, with an empty
+  authority and a complete (transformed) UNC string in the path.  E.g.:
 
-   > The "traditional" representation of a non-local file, with an
-     empty authority and a complete (transformed) UNC string in the
-     path.
+  * `file:////host.example.com/path/to/file`
 
-* `file://///host.example.com/path/to/file`
+* As above, with an extra slash between the empty authority and the
+  transformed UNC string, conformant with the definition from
+  {{RFC1738}}.  This representation is notably used by the Firefox
+  web browser.  See Bugzilla#107540 [Bug107540].
 
-   > As above, with an extra slash between the empty authority and the
-     transformed UNC string, conformant with the definition from
-     {{RFC1738}}.  This representation is notably used by the Firefox
-     web browser.  See Bugzilla#107540 [Bug107540].
+  * `file://///host.example.com/path/to/file`
 
 
 It also further limits the set of file URIs that can be translated to
