@@ -873,10 +873,12 @@ Internet-Draft                 file-scheme                 November 2015
 
    o  As above, with an extra slash between the empty authority and the
       transformed UNC string, conformant with the definition from
-      [RFC1738].  This representation is notably used by the Firefox web
-      browser.  See Bugzilla#107540 [Bug107540].
+      [RFC1738].  E.g.:
 
       *  "file://///host.example.com/path/to/file"
+
+      This representation is notably used by the Firefox web browser.
+      See Bugzilla#107540 [Bug107540].
 
    It also further limits the set of file URIs that can be translated to
    a local file path to those with a path that does not encode a UNC
@@ -888,8 +890,6 @@ C.4.  Backslash as Separator
    the path components of file URIs.  Where DOS or Windows file paths
    were copied thus, resulting URI strings contained unencoded backslash
    "\" characters, which are forbidden by both [RFC1738] and [RFC3986].
-
-
 
 
 
@@ -1048,14 +1048,14 @@ Appendix F.  Collected Rules
    Local files:
 
    o  A traditional file URI for a local file, with an empty authority.
+      E.g.:
 
       *  "file:///path/to/file"
 
    o  The minimal representation of a local file, with no authority
-      field and an absolute path that begins with a slash "/".
+      field and an absolute path that begins with a slash "/".  E.g.:
 
       *  "file:/path/to/file"
-
 
 
 
@@ -1068,12 +1068,12 @@ Internet-Draft                 file-scheme                 November 2015
 
    o  The minimal representation of a local file in a DOS- or Windows-
       based environment, with no authority field and an absolute path
-      that begins with a drive letter.
+      that begins with a drive letter.  E.g.:
 
       *  "file:c:/path/to/file"
 
    o  Regular DOS or Windows file URIs, with vertical line characters in
-      the drive letter construct.
+      the drive letter construct.  E.g.:
 
       *  "file:///c|/path/to/file"
 
@@ -1084,18 +1084,18 @@ Internet-Draft                 file-scheme                 November 2015
    Non-local files:
 
    o  The representation of a non-local file, with an explicit
-      authority.
+      authority.  E.g.:
 
       *  "file://host.example.com/path/to/file"
 
    o  The "traditional" representation of a non-local file, with an
       empty authority and a complete (transformed) UNC string in the
-      path.
+      path.  E.g.:
 
       *  "file:////host.example.com/path/to/file"
 
    o  As above, with an extra slash between the empty authority and the
-      transformed UNC string.
+      transformed UNC string.  E.g.:
 
       *  "file://///host.example.com/path/to/file"
 
