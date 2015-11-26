@@ -136,6 +136,7 @@ informative:
     author:
     - organization: Microsoft Developer Network
     date: 2013-06
+    target: https://msdn.microsoft.com/en-au/library/windows/desktop/aa365247(v=vs.85).aspx
 
   Bug107540:
     title: Bug 107540
@@ -183,7 +184,7 @@ The file URI scheme was first defined in {{RFC1630}}, which, being an
 informational RFC, does not specify an Internet standard.  The
 definition was standardised in {{RFC1738}}, and the scheme was
 registered with the Internet Assigned Numbers Authority (IANA);
-however that definition omitted certain language included by former
+however that definition omitted certain language included by the former
 that clarified aspects such as:
 
 * the use of slashes to denote boundaries between directory
@@ -840,7 +841,7 @@ see: SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP {{NOVELL}}.
 # Collected Rules  {#collected}
 
 Here are the collected syntax rules for all optional appendices,
-presented for convenience.
+presented for convenience.  This collected syntax is not normative.
 
 ~~~~~~~~~~
    file-URI       = file-scheme ":" file-hier-part
