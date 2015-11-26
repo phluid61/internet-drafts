@@ -928,7 +928,7 @@
 
 <ul>
   <li>The &#8220;traditional&#8221; representation of a non-local file, with an empty authority and a complete (transformed) UNC string in the path.  E.g.:  <ul><li><samp>file:////host.example.com/path/to/file</samp></li></ul></li>
-  <li>As above, with an extra slash between the empty authority and the transformed UNC string, conformant with the definition from <a href="#RFC1738">[RFC1738]</a>.  This representation is notably used by the Firefox web browser.  See Bugzilla#107540 <a href="#Bug107540">[Bug107540]</a>.  <ul><li><samp>file://///host.example.com/path/to/file</samp></li></ul></li>
+  <li>As above, with an extra slash between the empty authority and the transformed UNC string, conformant with the definition from <a href="#RFC1738">[RFC1738]</a>.  E.g.:  <ul><li><samp>file://///host.example.com/path/to/file</samp></li></ul><p> This representation is notably used by the Firefox web browser.  See Bugzilla#107540 </p><a href="#Bug107540">[Bug107540]</a>.</li>
 </ul>
 <p id="rfc.section.C.3.p.8">It also further limits the set of file URIs that can be translated to a local file path to those with a path that does not encode a UNC string.</p>
 <h1 id="rfc.appendix.C.4"><a href="#rfc.appendix.C.4">C.4.</a> <a href="#ext-backslash" id="ext-backslash">Backslash as Separator</a></h1>
@@ -1028,18 +1028,18 @@
 <p/>
 
 <ul>
-  <li>A traditional file URI for a local file, with an empty authority.  <ul><li><samp>file:///path/to/file</samp></li></ul></li>
-  <li>The minimal representation of a local file, with no authority field and an absolute path that begins with a slash &#8220;/&#8221;.  <ul><li><samp>file:/path/to/file</samp></li></ul></li>
-  <li>The minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.  <ul><li><samp>file:c:/path/to/file</samp></li></ul></li>
-  <li>Regular DOS or Windows file URIs, with vertical line characters in the drive letter construct.  <ul><li><samp>file:///c|/path/to/file</samp></li><li><samp>file:/c|/path/to/file</samp></li><li><samp>file:c|/path/to/file</samp></li></ul></li>
+  <li>A traditional file URI for a local file, with an empty authority.  E.g.:  <ul><li><samp>file:///path/to/file</samp></li></ul></li>
+  <li>The minimal representation of a local file, with no authority field and an absolute path that begins with a slash &#8220;/&#8221;.  E.g.:  <ul><li><samp>file:/path/to/file</samp></li></ul></li>
+  <li>The minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.  E.g.:  <ul><li><samp>file:c:/path/to/file</samp></li></ul></li>
+  <li>Regular DOS or Windows file URIs, with vertical line characters in the drive letter construct.  E.g.:  <ul><li><samp>file:///c|/path/to/file</samp></li><li><samp>file:/c|/path/to/file</samp></li><li><samp>file:c|/path/to/file</samp></li></ul></li>
 </ul>
 <p id="rfc.section.F.p.5">Non-local files:</p>
 <p/>
 
 <ul>
-  <li>The representation of a non-local file, with an explicit authority.  <ul><li><samp>file://host.example.com/path/to/file</samp></li></ul></li>
-  <li>The &#8220;traditional&#8221; representation of a non-local file, with an empty authority and a complete (transformed) UNC string in the path.  <ul><li><samp>file:////host.example.com/path/to/file</samp></li></ul></li>
-  <li>As above, with an extra slash between the empty authority and the transformed UNC string.  <ul><li><samp>file://///host.example.com/path/to/file</samp></li></ul></li>
+  <li>The representation of a non-local file, with an explicit authority.  E.g.:  <ul><li><samp>file://host.example.com/path/to/file</samp></li></ul></li>
+  <li>The &#8220;traditional&#8221; representation of a non-local file, with an empty authority and a complete (transformed) UNC string in the path.  E.g.:  <ul><li><samp>file:////host.example.com/path/to/file</samp></li></ul></li>
+  <li>As above, with an extra slash between the empty authority and the transformed UNC string.  E.g.:  <ul><li><samp>file://///host.example.com/path/to/file</samp></li></ul></li>
 </ul>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Author's Address</a>
