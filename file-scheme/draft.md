@@ -277,18 +277,20 @@ they transport.
 
 # Operations on file URIs  {#operations}
 
-Implementations SHOULD, at a minimum, provide a read-like operation to
-return the contents of a file located by a file URI.  Additional
-operations MAY be provided, such as writing to, creating, and deleting
-files.  See the POSIX file and directory operations {{POSIX}} for
-examples of standardized operations that can be performed on files.
+Implementations that provide dereferencing  ooperations on file URIs
+SHOULD, at a minimum, provide a read-like operation to return the
+contents of a file located by a file URI.  Additional operations MAY be
+provided, such as writing to, creating, and deleting files.  See the
+POSIX file and directory operations {{POSIX}} for examples of
+standardized operations that can be performed on files.
 
 File URIs can also be translated to and from other, similar constructs,
 such as local file paths or UNC strings.
 
-A file URI can only be dereferenced or translated to a local file path
-if it is local.  A file URI is considered "local" if it has a blank or
-no authority, or the authority is the special string "localhost".
+A file URI can be dependably dereferenced or translated to a local file
+path only if it is local.  A file URI is considered "local" if it has a
+blank or no authority, or the authority is the special string
+"localhost".
 
 This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP
