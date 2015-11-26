@@ -973,10 +973,11 @@ authority and a complete (transformed) UNC string in the path.  E.g.:  <list sty
     </list></t>
   <t>As above, with an extra slash between the empty authority and the
 transformed UNC string, conformant with the definition from
-<xref target="RFC1738"/>.  This representation is notably used by the Firefox
-web browser.  See Bugzilla#107540 <xref target="Bug107540"></xref>.  <list style="symbols">
+<xref target="RFC1738"/>.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file://///host.example.com/path/to/file</spanx></t>
-    </list></t>
+    </list>
+This representation is notably used by the Firefox web browser.
+See Bugzilla#107540 <xref target="Bug107540"></xref>.</t>
 </list></t>
 
 <t>It also further limits the set of file URIs that can be translated to
@@ -1115,20 +1116,21 @@ following forms:</t>
 <t>Local files:</t>
 
 <t><list style="symbols">
-  <t>A traditional file URI for a local file, with an empty authority.  <list style="symbols">
+  <t>A traditional file URI for a local file, with an empty authority.
+E.g.:  <list style="symbols">
       <t><spanx style="verb">file:///path/to/file</spanx></t>
     </list></t>
   <t>The minimal representation of a local file, with no authority
-field and an absolute path that begins with a slash “/”.  <list style="symbols">
+field and an absolute path that begins with a slash “/”.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file:/path/to/file</spanx></t>
     </list></t>
   <t>The minimal representation of a local file in a DOS- or
 Windows-based environment, with no authority field and an
-absolute path that begins with a drive letter.  <list style="symbols">
+absolute path that begins with a drive letter.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file:c:/path/to/file</spanx></t>
     </list></t>
   <t>Regular DOS or Windows file URIs, with vertical line characters
-in the drive letter construct.  <list style="symbols">
+in the drive letter construct.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file:///c|/path/to/file</spanx></t>
       <t><spanx style="verb">file:/c|/path/to/file</spanx></t>
       <t><spanx style="verb">file:c|/path/to/file</spanx></t>
@@ -1138,16 +1140,17 @@ in the drive letter construct.  <list style="symbols">
 <t>Non-local files:</t>
 
 <t><list style="symbols">
-  <t>The representation of a non-local file, with an explicit authority.  <list style="symbols">
+  <t>The representation of a non-local file, with an explicit authority.
+E.g.:  <list style="symbols">
       <t><spanx style="verb">file://host.example.com/path/to/file</spanx></t>
     </list></t>
   <t>The “traditional” representation of a non-local file, with an
 empty authority and a complete (transformed) UNC string in the
-path.  <list style="symbols">
+path.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file:////host.example.com/path/to/file</spanx></t>
     </list></t>
   <t>As above, with an extra slash between the empty authority and the
-transformed UNC string.  <list style="symbols">
+transformed UNC string.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file://///host.example.com/path/to/file</spanx></t>
     </list></t>
 </list></t>

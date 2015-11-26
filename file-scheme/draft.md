@@ -735,11 +735,12 @@ Non-local files:
 
 * As above, with an extra slash between the empty authority and the
   transformed UNC string, conformant with the definition from
-  {{RFC1738}}.  This representation is notably used by the Firefox
-  web browser.  See Bugzilla#107540 [Bug107540].
+  {{RFC1738}}.  E.g.:
 
   * `file://///host.example.com/path/to/file`
 
+  This representation is notably used by the Firefox web browser.
+  See Bugzilla#107540 [Bug107540].
 
 It also further limits the set of file URIs that can be translated to
 a local file path to those with a path that does not encode a UNC
@@ -873,22 +874,23 @@ following forms:
 Local files:
 
 * A traditional file URI for a local file, with an empty authority.
+  E.g.:
 
   * `file:///path/to/file`
 
 * The minimal representation of a local file, with no authority
-  field and an absolute path that begins with a slash "/".
+  field and an absolute path that begins with a slash "/".  E.g.:
 
   * `file:/path/to/file`
 
 * The minimal representation of a local file in a DOS- or
   Windows-based environment, with no authority field and an
-  absolute path that begins with a drive letter.
+  absolute path that begins with a drive letter.  E.g.:
 
   * `file:c:/path/to/file`
 
 * Regular DOS or Windows file URIs, with vertical line characters
-  in the drive letter construct.
+  in the drive letter construct.  E.g.:
 
   * `file:///c|/path/to/file`
   * `file:/c|/path/to/file`
@@ -897,17 +899,18 @@ Local files:
 Non-local files:
 
 * The representation of a non-local file, with an explicit authority.
+  E.g.:
 
   * `file://host.example.com/path/to/file`
 
 * The "traditional" representation of a non-local file, with an
   empty authority and a complete (transformed) UNC string in the
-  path.
+  path.  E.g.:
 
   * `file:////host.example.com/path/to/file`
 
 * As above, with an extra slash between the empty authority and the
-  transformed UNC string.
+  transformed UNC string.  E.g.:
 
   * `file://///host.example.com/path/to/file`
 
