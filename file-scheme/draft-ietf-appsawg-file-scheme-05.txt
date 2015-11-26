@@ -21,7 +21,7 @@ Abstract
    across the broad spectrum of existing implementations, while at the
    same time documenting other current practices.
 
-   *Note to Readers (To be removed by the RFC Editor)*
+Note to Readers (To be removed by the RFC Editor)
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list <apps-discuss@ietf.org>.
@@ -296,7 +296,7 @@ Internet-Draft                 file-scheme                 November 2015
 
        2.  Append the transformed segment to the URI.
 
-   *Differences from RFC 1738*
+Differences from RFC 1738
 
    In [RFC1738] a file URL always started with the token "file://",
    followed by an (optionally blank) authority and a "/".  That "/" was
@@ -927,7 +927,7 @@ Appendix D.  Example of IRI vs Percent-Encoded URI
    |  o Codepage 437 (e.g. MS-DOS):
    |       43   3a   5c   72   65   87   75   2e   74   78   74
 
-   Counter-example: ambiguous file URI:
+
 
 
 
@@ -953,6 +953,8 @@ Kerwin                    Expires May 29, 2016                 [Page 17]
 
 Internet-Draft                 file-scheme                 November 2015
 
+
+   Counter-example: ambiguous file URI:
 
    | Percent-encoded file URI, in any ASCII-compatible document:
    |    "file:///%E3%81%A1"
@@ -997,8 +999,6 @@ Appendix E.  UNC Syntax
 
    The precise format of "sharename" depends on the protocol; see: SMB
    [MS-SMB], NFS [RFC7530], NCP [NOVELL].
-
-
 
 
 
