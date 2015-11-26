@@ -85,7 +85,7 @@ deprecates some less common or outdated constructs.</t>
 informational RFC, does not specify an Internet standard.  The
 definition was standardised in <xref target="RFC1738"/>, and the scheme was
 registered with the Internet Assigned Numbers Authority (IANA);
-however that definition omitted certain language included by former
+however that definition omitted certain language included by the former
 that clarified aspects such as:</t>
 
 <t><list style="symbols">
@@ -181,18 +181,20 @@ they transport.</t>
 </section>
 <section anchor="operations" title="Operations on file URIs">
 
-<t>Implementations SHOULD, at a minimum, provide a read-like operation to
-return the contents of a file located by a file URI.  Additional
-operations MAY be provided, such as writing to, creating, and deleting
-files.  See the POSIX file and directory operations <xref target="POSIX"/> for
-examples of standardized operations that can be performed on files.</t>
+<t>Implementations that provide dereferencing  ooperations on file URIs
+SHOULD, at a minimum, provide a read-like operation to return the
+contents of a file located by a file URI.  Additional operations MAY be
+provided, such as writing to, creating, and deleting files.  See the
+POSIX file and directory operations <xref target="POSIX"/> for examples of
+standardized operations that can be performed on files.</t>
 
 <t>File URIs can also be translated to and from other, similar constructs,
 such as local file paths or UNC strings.</t>
 
-<t>A file URI can only be dereferenced or translated to a local file path
-if it is local.  A file URI is considered “local” if it has a blank or
-no authority, or the authority is the special string “localhost”.</t>
+<t>A file URI can be dependably dereferenced or translated to a local file
+path only if it is local.  A file URI is considered “local” if it has a
+blank or no authority, or the authority is the special string
+“localhost”.</t>
 
 <t>This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB <xref target="MS-SMB"/>, NFS <xref target="RFC7530"/>, NCP
@@ -706,7 +708,7 @@ and Dave Thaler for their comments and suggestions.</t>
     <date year="2013"/>
   </front>
 </reference>
-<reference anchor="Win32-Namespaces" >
+<reference anchor="Win32-Namespaces" target="https://msdn.microsoft.com/en-au/library/windows/desktop/aa365247(v=vs.85).aspx">
   <front>
     <title>Naming Files, Paths, and Namespaces</title>
     <author >
@@ -737,22 +739,21 @@ following forms:</t>
 <t>Local files:</t>
 
 <t><list style="symbols">
-  <t><spanx style="verb">file:///path/to/file</spanx>  <list style='empty'>
-      <t>A traditional file URI for a local file, with an empty
-   authority.  This is the most common format in use today.</t>
+  <t>A traditional file URI for a local file, with an empty authority.
+This is the most common format in use today. E.g.:  <list style="symbols">
+      <t><spanx style="verb">file:///path/to/file</spanx></t>
     </list></t>
-  <t><spanx style="verb">file:/path/to/file</spanx>  <list style='empty'>
-      <t>The minimal representation of a local file, with no authority
-   field and an absolute path that begins with a slash “/”.</t>
+  <t>The minimal representation of a local file, with no authority field
+and an absolute path that begins with a slash “/”. E.g.:  <list style="symbols">
+      <t><spanx style="verb">file:/path/to/file</spanx></t>
     </list></t>
 </list></t>
 
 <t>Non-local files:</t>
 
 <t><list style="symbols">
-  <t><spanx style="verb">file://host.example.com/path/to/file</spanx>  <list style='empty'>
-      <t>The representation of a non-local file, with an explicit
-   authority.</t>
+  <t>A non-local file, with an explicit authority. E.g.:  <list style="symbols">
+      <t><spanx style="verb">file://host.example.com/path/to/file</spanx></t>
     </list></t>
 </list></t>
 
@@ -821,14 +822,12 @@ with a drive letter.  To facilitate this, the <spanx style="verb">local-path</sp
    drive-letter   = ALPHA ":"
 ]]></artwork></figure>
 
-<t>This is intended to support URIs of the form:</t>
+<t>This is intended to support the minimal representation of a local file
+in a DOS- or Windows-based environment, with no authority field and an
+absolute path that begins with a drive letter.  E.g.:</t>
 
 <t><list style="symbols">
-  <t><spanx style="verb">file:c:/path/to/file</spanx>  <list style='empty'>
-      <t>The minimal representation of a local file in a DOS- or
-   Windows-based environment, with no authority field and an
-   absolute path that begins with a drive letter.</t>
-    </list></t>
+  <t><spanx style="verb">file:c:/path/to/file</spanx></t>
 </list></t>
 
 <t>URIs of the form <spanx style="verb">file:///c:/path/to/file</spanx> are already supported by the
@@ -886,15 +885,13 @@ following:</t>
                   / ALPHA "|"
 ]]></artwork></figure>
 
-<t>This is intended to support URIs of the form:</t>
+<t>This is intended to support regular DOS or Windows file URIs with
+vertical line characters in the drive letter construct.  E.g.:</t>
 
 <t><list style="symbols">
   <t><spanx style="verb">file:///c|/path/to/file</spanx></t>
   <t><spanx style="verb">file:/c|/path/to/file</spanx></t>
-  <t><spanx style="verb">file:c|/path/to/file</spanx>  <list style='empty'>
-      <t>Regular DOS or Windows file URIs, with vertical line characters
-   in the drive letter construct.</t>
-    </list></t>
+  <t><spanx style="verb">file:c|/path/to/file</spanx></t>
 </list></t>
 
 <t>To update such an old URI, replace the vertical line “|” with a
@@ -970,16 +967,15 @@ following forms, in addition to those in <xref target="examples"/>:</t>
 <t>Non-local files:</t>
 
 <t><list style="symbols">
-  <t><spanx style="verb">file:////host.example.com/path/to/file</spanx>  <list style='empty'>
-      <t>The “traditional” representation of a non-local file, with an
-   empty authority and a complete (transformed) UNC string in the
-   path.</t>
+  <t>The “traditional” representation of a non-local file, with an empty
+authority and a complete (transformed) UNC string in the path.  E.g.:  <list style="symbols">
+      <t><spanx style="verb">file:////host.example.com/path/to/file</spanx></t>
     </list></t>
-  <t><spanx style="verb">file://///host.example.com/path/to/file</spanx>  <list style='empty'>
-      <t>As above, with an extra slash between the empty authority and the
-   transformed UNC string, conformant with the definition from
-   <xref target="RFC1738"/>.  This representation is notably used by the Firefox
-   web browser.  See Bugzilla#107540 <xref target="Bug107540"></xref>.</t>
+  <t>As above, with an extra slash between the empty authority and the
+transformed UNC string, conformant with the definition from
+<xref target="RFC1738"/>.  This representation is notably used by the Firefox
+web browser.  See Bugzilla#107540 <xref target="Bug107540"></xref>.  <list style="symbols">
+      <t><spanx style="verb">file://///host.example.com/path/to/file</spanx></t>
     </list></t>
 </list></t>
 
@@ -1082,7 +1078,7 @@ see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC7530"/>, NCP <xref target
 <section anchor="collected" title="Collected Rules">
 
 <t>Here are the collected syntax rules for all optional appendices,
-presented for convenience.</t>
+presented for convenience.  This collected syntax is not normative.</t>
 
 <figure><artwork><![CDATA[
    file-URI       = file-scheme ":" file-hier-part
