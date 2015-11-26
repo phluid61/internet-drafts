@@ -1047,17 +1047,17 @@ Appendix F.  Collected Rules
 
    Local files:
 
-   o  "file:///path/to/file"
+   o  A traditional file URI for a local file, with an empty authority.
 
-         A traditional file URI for a local file, with an empty
-         authority.
+      *  "file:///path/to/file"
 
-   o  "file:/path/to/file"
+   o  The minimal representation of a local file, with no authority
+      field and an absolute path that begins with a slash "/".
 
-         The minimal representation of a local file, with no authority
-         field and an absolute path that begins with a slash "/".
+      *  "file:/path/to/file"
 
-   o  "file:c:/path/to/file"
+
+
 
 
 
@@ -1066,36 +1066,38 @@ Kerwin                    Expires May 29, 2016                 [Page 19]
 Internet-Draft                 file-scheme                 November 2015
 
 
-         The minimal representation of a local file in a DOS- or
-         Windows-based environment, with no authority field and an
-         absolute path that begins with a drive letter.
+   o  The minimal representation of a local file in a DOS- or Windows-
+      based environment, with no authority field and an absolute path
+      that begins with a drive letter.
 
-   o  "file:///c|/path/to/file"
+      *  "file:c:/path/to/file"
 
-   o  "file:/c|/path/to/file"
+   o  Regular DOS or Windows file URIs, with vertical line characters in
+      the drive letter construct.
 
-   o  "file:c|/path/to/file"
+      *  "file:///c|/path/to/file"
 
-         Regular DOS or Windows file URIs, with vertical line characters
-         in the drive letter construct.
+      *  "file:/c|/path/to/file"
+
+      *  "file:c|/path/to/file"
 
    Non-local files:
 
-   o  "file://host.example.com/path/to/file"
+   o  The representation of a non-local file, with an explicit
+      authority.
 
-         The representation of a non-local file, with an explicit
-         authority.
+      *  "file://host.example.com/path/to/file"
 
-   o  "file:////host.example.com/path/to/file"
+   o  The "traditional" representation of a non-local file, with an
+      empty authority and a complete (transformed) UNC string in the
+      path.
 
-         The "traditional" representation of a non-local file, with an
-         empty authority and a complete (transformed) UNC string in the
-         path.
+      *  "file:////host.example.com/path/to/file"
 
-   o  "file://///host.example.com/path/to/file"
+   o  As above, with an extra slash between the empty authority and the
+      transformed UNC string.
 
-         As above, with an extra slash between the empty authority and
-         the transformed UNC string.
+      *  "file://///host.example.com/path/to/file"
 
 Author's Address
 
@@ -1106,8 +1108,6 @@ Author's Address
    Australia
 
    Email: matthew.kerwin@qut.edu.au
-
-
 
 
 
