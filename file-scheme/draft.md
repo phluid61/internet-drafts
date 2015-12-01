@@ -277,7 +277,7 @@ they transport.
 
 # Operations on file URIs  {#operations}
 
-Implementations that provide dereferencing  ooperations on file URIs
+Implementations that provide dereferencing operations on file URIs
 SHOULD, at a minimum, provide a read-like operation to return the
 contents of a file located by a file URI.  Additional operations MAY be
 provided, such as writing to, creating, and deleting files.  See the
