@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                         November 24, 2015
+Internet-Draft                                          December 8, 2015
 Intended status: Experimental
-Expires: May 27, 2016
+Expires: June 10, 2016
 
 
                           HTTP/2 Gzipped Data
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 27, 2016.
+   This Internet-Draft will expire on June 10, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 1]
+Kerwin                    Expires June 10, 2016                 [Page 1]
 
-Internet-Draft             http2-encoded-data              November 2015
+Internet-Draft             http2-encoded-data              December 2015
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 2]
+Kerwin                    Expires June 10, 2016                 [Page 2]
 
-Internet-Draft             http2-encoded-data              November 2015
+Internet-Draft             http2-encoded-data              December 2015
 
 
 2.1.  SETTINGS_ACCEPT_GZIPPED_DATA
@@ -165,9 +165,9 @@ Internet-Draft             http2-encoded-data              November 2015
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 3]
+Kerwin                    Expires June 10, 2016                 [Page 3]
 
-Internet-Draft             http2-encoded-data              November 2015
+Internet-Draft             http2-encoded-data              December 2015
 
 
    o  Data: Encoded application data.  The amount of encoded data is the
@@ -221,9 +221,9 @@ Internet-Draft             http2-encoded-data              November 2015
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 4]
+Kerwin                    Expires June 10, 2016                 [Page 4]
 
-Internet-Draft             http2-encoded-data              November 2015
+Internet-Draft             http2-encoded-data              December 2015
 
 
    including the Pad Length and Padding fields if present.  If a
@@ -277,9 +277,9 @@ Internet-Draft             http2-encoded-data              November 2015
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 5]
+Kerwin                    Expires June 10, 2016                 [Page 5]
 
-Internet-Draft             http2-encoded-data              November 2015
+Internet-Draft             http2-encoded-data              December 2015
 
 
    are separately compressed cannot be merged into a single compressed
@@ -333,9 +333,9 @@ Internet-Draft             http2-encoded-data              November 2015
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 6]
+Kerwin                    Expires June 10, 2016                 [Page 6]
 
-Internet-Draft             http2-encoded-data              November 2015
+Internet-Draft             http2-encoded-data              December 2015
 
 
 7.  Acknowledgements
@@ -389,9 +389,9 @@ Appendix A.  Changelog
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 7]
+Kerwin                    Expires June 10, 2016                 [Page 7]
 
-Internet-Draft             http2-encoded-data              November 2015
+Internet-Draft             http2-encoded-data              December 2015
 
 
    o  reduced encoding options to only gzip (suggested by Martin
@@ -445,4 +445,4 @@ Author's Address
 
 
 
-Kerwin                    Expires May 27, 2016                  [Page 8]
+Kerwin                    Expires June 10, 2016                 [Page 8]
