@@ -1,7 +1,7 @@
 ---
 title: HTTP/2 Gzipped Data
 abbrev: http2-encoded-data
-docname: draft-kerwin-http2-encoded-data-07
+docname: draft-kerwin-http2-encoded-data-08
 date: 2015
 category: exp
 
@@ -260,6 +260,10 @@ Thanks to Keith Morgan for his advice, input, and editorial contributions.
 --- back
 
 # Changelog
+
+Since -07:
+
+ * (TODO)
 
 Since -06:
 
