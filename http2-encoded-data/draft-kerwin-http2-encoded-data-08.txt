@@ -9,7 +9,7 @@ Expires: June 10, 2016
 
 
                           HTTP/2 Gzipped Data
-                   draft-kerwin-http2-encoded-data-07
+                   draft-kerwin-http2-encoded-data-08
 
 Abstract
 
@@ -370,6 +370,10 @@ Internet-Draft             http2-encoded-data              December 2015
 
 Appendix A.  Changelog
 
+   Since -07:
+
+   o  (TODO)
+
    Since -06:
 
    o  change document title from "Encoded" to "Gzipped"
@@ -382,10 +386,6 @@ Appendix A.  Changelog
 
    Since -05:
 
-   o  changed ACCEPT_ENCODED_DATA back from a frame to a setting, since
-      it carries a single scalar value now
-
-   Since -04:
 
 
 
@@ -393,6 +393,11 @@ Kerwin                    Expires June 10, 2016                 [Page 7]
 
 Internet-Draft             http2-encoded-data              December 2015
 
+
+   o  changed ACCEPT_ENCODED_DATA back from a frame to a setting, since
+      it carries a single scalar value now
+
+   Since -04:
 
    o  reduced encoding options to only gzip (suggested by Martin
       Thomson)
@@ -436,11 +441,6 @@ Author's Address
 
    Email: matthew@kerwin.net.au
    URI:   http://matthew.kerwin.net.au/
-
-
-
-
-
 
 
 
