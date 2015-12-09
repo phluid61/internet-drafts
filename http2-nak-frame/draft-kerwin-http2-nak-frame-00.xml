@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-kerwin-http2-nak-frame-00" category="exp">
+<rfc ipr="trust200902" docName="draft-kerwin-http2-nak-frame-00" category="std">
 
   <front>
     <title abbrev="http2-nak-frame">HTTP/2 "Dropped Frame" Frame</title>
@@ -29,9 +29,9 @@
 
     <date year="2015"/>
 
-    <area>General</area>
+    <area>Applications and Real-Time</area>
     
-    <keyword>Internet-Draft</keyword>
+    <keyword>HTTP</keyword> <keyword>H2</keyword>
 
     <abstract>
 

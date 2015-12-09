@@ -3,12 +3,14 @@ title: HTTP/2 "Dropped Frame" Frame
 abbrev: http2-nak-frame
 docname: draft-kerwin-http2-nak-frame-00
 date: 2015
-category: exp
+category: std
 
 ipr: trust200902
-area: General
+area: Applications and Real-Time
 workgroup: 
-keyword: Internet-Draft
+keyword:
+ - HTTP
+ - H2
 
 stand_alone: yes
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
