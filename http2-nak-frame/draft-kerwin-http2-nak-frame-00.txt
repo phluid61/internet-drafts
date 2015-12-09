@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                          November 3, 2015
-Intended status: Experimental
-Expires: May 6, 2016
+Internet-Draft                                          December 9, 2015
+Intended status: Standards Track
+Expires: June 11, 2016
 
 
                       HTTP/2 "Dropped Frame" Frame
@@ -32,7 +32,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 6, 2016.
+   This Internet-Draft will expire on June 11, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                     Expires May 6, 2016                  [Page 1]
+Kerwin                    Expires June 11, 2016                 [Page 1]
 
-Internet-Draft               http2-nak-frame               November 2015
+Internet-Draft               http2-nak-frame               December 2015
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                     Expires May 6, 2016                  [Page 2]
+Kerwin                    Expires June 11, 2016                 [Page 2]
 
-Internet-Draft               http2-nak-frame               November 2015
+Internet-Draft               http2-nak-frame               December 2015
 
 
      +---------------+
@@ -165,9 +165,9 @@ Internet-Draft               http2-nak-frame               November 2015
 
 
 
-Kerwin                     Expires May 6, 2016                  [Page 3]
+Kerwin                    Expires June 11, 2016                 [Page 3]
 
-Internet-Draft               http2-nak-frame               November 2015
+Internet-Draft               http2-nak-frame               December 2015
 
 
 Author's Address
@@ -221,4 +221,4 @@ Author's Address
 
 
 
-Kerwin                     Expires May 6, 2016                  [Page 4]
+Kerwin                    Expires June 11, 2016                 [Page 4]
