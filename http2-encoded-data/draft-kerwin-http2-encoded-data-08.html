@@ -400,7 +400,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-encoded-data-08" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-12-8" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-12-28" />
   <meta name="dct.abstract" content="This document introduces a new frame type for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
   <meta name="description" content="This document introduces a new frame type for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
 
@@ -417,14 +417,14 @@
 </tr>
 <tr>
   <td class="left">Internet-Draft</td>
-  <td class="right">December 8, 2015</td>
+  <td class="right">December 28, 2015</td>
 </tr>
 <tr>
   <td class="left">Intended status: Experimental</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: June 10, 2016</td>
+  <td class="left">Expires: June 30, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -439,13 +439,18 @@
   <a href="#rfc.abstract">Abstract</a>
 </h1>
 <p>This document introduces a new frame type for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding.</p>
+<p>
+  <strong>Note to Readers</strong>
+</p>
+<p>The issues list for this draft can be found at <a href="https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20Gzipped%20Data">https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20Gzipped%20Data</a></p>
+<p>The most recent (often unpublished) draft is at <a href="http://phluid61.github.io/internet-drafts/http2-encoded-data/">http://phluid61.github.io/internet-drafts/http2-encoded-data/</a></p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 10, 2016.</p>
+<p>This Internet-Draft will expire on June 30, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -535,8 +540,15 @@
 </ul>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#experiment" id="experiment">Experimental Status</a></h1>
 <p id="rfc.section.3.p.1">This extension is classified as an experiment because it alters the base semantics of HTTP/2; a change that, if specified insufficiently or implemented incorrectly, could result in data loss that is hard to detect or diagnose.</p>
-<p><a href="#RFC7540">[RFC7540]</a>, Section 5.5, mandates that &#8220;implementations MUST discard frames that have unknown or unsupported types&#8221;; so if an endpoint or intermediary mishandles GZIPPED_DATA frames, for example by incorrectly emitting an ACCEPT_GZIPPED_DATA setting or propagating GZIPPED_DATA frames, and those frames are subsequently discarded, data will be lost.  There is no reliable mechanism to detect such a loss.</p>
+<p><a href="#RFC7540">[RFC7540]</a>, Section 5.5, mandates that &#8220;implementations MUST discard frames that have unknown or unsupported types&#8221;; so if an endpoint or intermediary mishandles GZIPPED_DATA frames, for example by incorrectly emitting an ACCEPT_GZIPPED_DATA setting or propagating GZIPPED_DATA frames, and those frames are subsequently discarded, data will be lost.  There is no reliable mechanism to detect such a loss[*].</p>
 <p id="rfc.section.3.p.3">The experiment therefore is to explore the robustness of the HTTP/2 ecosystem in the presence of such potential failures.</p>
+<p id="rfc.section.3.p.4">[*] For some unreliable mechanisms (i.e. not guaranteed to be in use in all cases, and/or requiring inspection of HTTP headers) see:</p>
+<p/>
+
+<ul>
+  <li>Section 8.1.2.6 of <a href="#RFC7540">[RFC7540]</a>, for using the content-length header to detect malformed messages</li>
+  <li><a href="#RFC3230">[RFC3230]</a>, for HTTP instance digests</li>
+</ul>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#fragmentation" id="fragmentation">Fragmentation</a></h1>
 <p id="rfc.section.4.p.1">Traversing a network segment with small frame size limits introduces the risk of fragmenting an encoded stream. </p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security" id="security">Security Considerations</a></h1>
@@ -638,6 +650,12 @@
   <tbody>
     <tr>
       <td class="reference">
+        <b id="RFC3230">[RFC3230]</b>
+      </td>
+      <td class="top"><a>Mogul, J.</a> and <a>A. Van Hoff</a>, "<a href="http://tools.ietf.org/html/rfc3230">Instance Digests in HTTP</a>", RFC 3230, DOI 10.17487/RFC3230, January 2002.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC7230">[RFC7230]</b>
       </td>
       <td class="top"><a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, DOI 10.17487/RFC7230, June 2014.</td>
@@ -649,7 +667,7 @@
 <p/>
 
 <ul>
-  <li>(TODO)</li>
+  <li>define &#8220;reliable&#8221; in the &#8216;experimental&#8217; section, and provide pointers to potential workarounds</li>
 </ul>
 <p id="rfc.section.A.p.3">Since -06:</p>
 <p/>
