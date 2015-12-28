@@ -186,7 +186,8 @@ that is hard to detect or diagnose.
 or unsupported types"; so if an endpoint or intermediary mishandles GZIPPED\_DATA frames, for
 example by incorrectly emitting an ACCEPT\_GZIPPED\_DATA setting or propagating GZIPPED\_DATA
 frames, and those frames are subsequently discarded, data will be lost.  There is no reliable
-mechanism to detect such a loss.
+mechanism to detect such a loss.  (See Section 8.1.2.6 of [RFC7540] for a discussion on using
+the content-length header to detect malformed messages.)
 
 The experiment therefore is to explore the robustness of the HTTP/2 ecosystem in the presence of
 such potential failures.
