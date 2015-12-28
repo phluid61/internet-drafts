@@ -38,6 +38,12 @@ This document introduces a new frame type for transporting gzip-encoded data bet
 Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling
 invalid encoding.
 
+**Note to Readers**
+
+The issues list for this draft can be found at <https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20Gzipped%20Data>
+
+The most recent (often unpublished) draft is at <http://phluid61.github.io/internet-drafts/http2-encoded-data/>
+
 
 --- middle
 
