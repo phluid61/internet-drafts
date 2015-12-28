@@ -30,6 +30,7 @@ normative:
 
 informative:
   RFC7230:
+  RFC3230:
 
 
 --- abstract
@@ -192,11 +193,17 @@ that is hard to detect or diagnose.
 or unsupported types"; so if an endpoint or intermediary mishandles GZIPPED\_DATA frames, for
 example by incorrectly emitting an ACCEPT\_GZIPPED\_DATA setting or propagating GZIPPED\_DATA
 frames, and those frames are subsequently discarded, data will be lost.  There is no reliable
-mechanism to detect such a loss.  (See Section 8.1.2.6 of [RFC7540] for a discussion on using
-the content-length header to detect malformed messages.)
+mechanism to detect such a loss\[\*\].
 
 The experiment therefore is to explore the robustness of the HTTP/2 ecosystem in the presence of
 such potential failures.
+
+\[\*\] For some unreliable mechanisms (i.e. not guaranteed to be in use in all cases, and/or
+requiring inspection of HTTP headers) see:
+
+* Section 8.1.2.6 of [RFC7540], for using the content-length header to detect malformed messages
+
+* [RFC3230], for HTTP instance digests
 
 
 # Fragmentation  {#fragmentation}
@@ -270,7 +277,8 @@ Thanks to Keith Morgan for his advice, input, and editorial contributions.
 
 Since -07:
 
- * (TODO)
+ * define "reliable" in the 'experimental' section, and provide pointers
+   to potential workarounds
 
 Since -06:
 
