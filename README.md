@@ -36,7 +36,15 @@ the process.
 The entire toolchain was copied from https://github.com/mnot/I-D/
 
 
+Code of Conduct
+---------------
+
+Further to the standards, guidelines, and expectations of the IETF,
+this particular repository is subject to its own [Code of Conduct][6]
+
+
 [3]: https://github.com/cabo/kramdown-rfc2629
 [4]: https://tools.ietf.org/html/rfc2629
 [5]: http://xml2rfc.ietf.org/
+[6]: code_of_conduct.md
 
