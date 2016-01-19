@@ -16,6 +16,12 @@ discussion about that draft is held.  Pull requests are welcome.
 Please try to ensure that pull requests update the `draft.md`
 documents.
 
+### Code of Conduct
+
+Further to the standards, guidelines, and expectations of the IETF,
+this particular repository is subject to its own
+[Contributor Code of Conduct][6]
+
 
 Tool Chain
 ----------
@@ -34,13 +40,6 @@ There is a Makefile in the same directory as each draft to automate
 the process.
 
 The entire toolchain was copied from https://github.com/mnot/I-D/
-
-
-Code of Conduct
----------------
-
-Further to the standards, guidelines, and expectations of the IETF,
-this particular repository is subject to its own [Code of Conduct][6]
 
 
 [3]: https://github.com/cabo/kramdown-rfc2629
