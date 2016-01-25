@@ -2,7 +2,7 @@
 title: HTTP/2 "Dropped Frame" Frame
 abbrev: http2-nak-frame
 docname: draft-kerwin-http2-nak-frame-00
-date: 2015
+date: 2016
 category: std
 
 ipr: trust200902
@@ -46,7 +46,7 @@ peer if such a frame is discarded.
 
 This document defines an extension to HTTP/2 that allows a peer to signal that a received frame
 was discarded, without altering the stream or connection state ({{RFC7540}}, Section 5.1), and in
-particular without trigger an error condition.
+particular without triggering an error condition.
 
 
 ## Notational Conventions
