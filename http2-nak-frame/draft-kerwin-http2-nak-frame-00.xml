@@ -27,7 +27,7 @@
       </address>
     </author>
 
-    <date year="2015"/>
+    <date year="2016"/>
 
     <area>Applications and Real-Time</area>
     
@@ -59,7 +59,7 @@ peer if such a frame is discarded.</t>
 
 <t>This document defines an extension to HTTP/2 that allows a peer to signal that a received frame
 was discarded, without altering the stream or connection state (<xref target="RFC7540"/>, Section 5.1), and in
-particular without trigger an error condition.</t>
+particular without triggering an error condition.</t>
 
 <section anchor="notational-conventions" title="Notational Conventions">
 
