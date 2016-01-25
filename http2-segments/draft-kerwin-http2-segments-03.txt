@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft
-Intended status: Experimental                             March 25, 2015
-Expires: September 26, 2015
+Internet-Draft                                          January 25, 2016
+Intended status: Experimental
+Expires: July 28, 2016
 
 
                             HTTP/2 Segments
@@ -37,11 +37,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 26, 2015.
+   This Internet-Draft will expire on July 28, 2016.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2016 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                 Expires September 26, 2015               [Page 1]
+Kerwin                    Expires July 28, 2016                 [Page 1]
 
-Internet-Draft               http2-segments                   March 2015
+Internet-Draft               http2-segments                 January 2016
 
 
    include Simplified BSD License text as described in Section 4.e of
@@ -93,10 +93,11 @@ Table of Contents
 
    A "segment" is a contiguous region of a HTTP/2 message's payload data
    which can be freely fragmented and recombined.  A segment is
-   expressed by marking all but the final frame in the segment with the
-   SEGMENT_CONTINUES flag (Section 4).  Any data-bearing frame that does
-   not have the SEGMENT_CONTINUES flag set, and does not follow one that
-   does, comprises a single segment.
+   expressed using the SEGMENT and SEGMENT_CONTINUES flags (Section 4).
+   Any data within a frame that does not have the SEGMENT or
+   SEGMENT_CONTINUES flags set and that does not follow a frame with the
+   SEGMENT_CONTINUES flag set does not contain any segmentation
+   information, and MUST NOT be included in a segment.
 
    Segments can be used to mitigate the effects of fragmentation within
    a stream.  For example, an endpoint may have a large chunk of data
@@ -108,10 +109,9 @@ Table of Contents
 
 
 
-
-Kerwin                 Expires September 26, 2015               [Page 2]
+Kerwin                    Expires July 28, 2016                 [Page 2]
 
-Internet-Draft               http2-segments                   March 2015
+Internet-Draft               http2-segments                 January 2016
 
 
 3.  SETTINGS_USE_SEGMENTS Setting
@@ -165,9 +165,9 @@ Internet-Draft               http2-segments                   March 2015
 
 
 
-Kerwin                 Expires September 26, 2015               [Page 3]
+Kerwin                    Expires July 28, 2016                 [Page 3]
 
-Internet-Draft               http2-segments                   March 2015
+Internet-Draft               http2-segments                 January 2016
 
 
 6.1.  HTTP/2 Settings Registry Update
@@ -190,7 +190,9 @@ Internet-Draft               http2-segments                   March 2015
               progress), February 2015.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
 
 Author's Address
 
@@ -219,6 +221,4 @@ Author's Address
 
 
 
-
-
-Kerwin                 Expires September 26, 2015               [Page 4]
+Kerwin                    Expires July 28, 2016                 [Page 4]
