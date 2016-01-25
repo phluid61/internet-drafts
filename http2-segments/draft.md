@@ -57,11 +57,12 @@ document are to be interpreted as described in {{RFC2119}}.
 # Segments  {#segments}
 
 A "segment" is a contiguous region of a HTTP/2 message's payload data
-which can be freely fragmented and recombined. A segment is expressed by
-marking all but the final frame in the segment with the
-SEGMENT\_CONTINUES flag ({{flag}}). Any data-bearing frame that does
-not have the SEGMENT\_CONTINUES flag set, and does not follow one that
-does, comprises a single segment.
+which can be freely fragmented and recombined. A segment is expressed
+using the SEGMENT and SEGMENT\_CONTINUES flags ({{flag}}). Any data
+within a frame that does not have the SEGMENT or SEGMENT\_CONTINUES
+flags set and that does not follow a frame with the SEGMENT\_CONTINUES
+flag set does not contain any segmentation information, and MUST NOT be
+included in a segment.
 
 Segments can be used to mitigate the effects of fragmentation within a
 stream. For example, an endpoint may have a large chunk of data which it
