@@ -80,9 +80,9 @@ time it discards such a frame.
 An endpoint MAY send a DROPPED\_FRAME frame for a particular incoming frame type only once, even
 if it discards multiple frames of that type.
 
-An endpoint that receives a DROPPED\_FRAME frame MAY choose to not send further frames of that
-type to this peer, or to take it as an indication that the extension is not supported by the peer,
-or to enter into extension negotiations with the peer.
+An endpoint that receives a DROPPED\_FRAME frame ought to take it as an indication that the
+extension is not supported by the peer, and MAY subsequently choose to not send further frames of
+that type or to enter into extension negotiations with the peer.
 
 <!--
 
