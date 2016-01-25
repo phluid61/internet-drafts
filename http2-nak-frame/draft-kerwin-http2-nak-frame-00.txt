@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                          December 9, 2015
+Internet-Draft                                          January 25, 2016
 Intended status: Standards Track
-Expires: June 11, 2016
+Expires: July 28, 2016
 
 
                       HTTP/2 "Dropped Frame" Frame
@@ -32,11 +32,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 11, 2016.
+   This Internet-Draft will expire on July 28, 2016.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2016 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                    Expires June 11, 2016                 [Page 1]
+Kerwin                    Expires July 28, 2016                 [Page 1]
 
-Internet-Draft               http2-nak-frame               December 2015
+Internet-Draft               http2-nak-frame                January 2016
 
 
 Table of Contents
@@ -83,7 +83,7 @@ Table of Contents
    This document defines an extension to HTTP/2 that allows a peer to
    signal that a received frame was discarded, without altering the
    stream or connection state ([RFC7540], Section 5.1), and in
-   particular without trigger an error condition.
+   particular without triggering an error condition.
 
 1.1.  Notational Conventions
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                    Expires June 11, 2016                 [Page 2]
+Kerwin                    Expires July 28, 2016                 [Page 2]
 
-Internet-Draft               http2-nak-frame               December 2015
+Internet-Draft               http2-nak-frame                January 2016
 
 
      +---------------+
@@ -165,9 +165,9 @@ Internet-Draft               http2-nak-frame               December 2015
 
 
 
-Kerwin                    Expires June 11, 2016                 [Page 3]
+Kerwin                    Expires July 28, 2016                 [Page 3]
 
-Internet-Draft               http2-nak-frame               December 2015
+Internet-Draft               http2-nak-frame                January 2016
 
 
 Author's Address
@@ -221,4 +221,4 @@ Author's Address
 
 
 
-Kerwin                    Expires June 11, 2016                 [Page 4]
+Kerwin                    Expires July 28, 2016                 [Page 4]
