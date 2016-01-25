@@ -478,7 +478,7 @@
 <p class="figure">DROPPED_FRAME Frame Payload</p>
 <p id="rfc.section.2.1.p.3">An endpoint SHOULD send a DROPPED_FRAME frame for an unknown or unsupported frame type the first time it discards such a frame.</p>
 <p id="rfc.section.2.1.p.4">An endpoint MAY send a DROPPED_FRAME frame for a particular incoming frame type only once, even if it discards multiple frames of that type.</p>
-<p id="rfc.section.2.1.p.5">An endpoint that receives a DROPPED_FRAME frame MAY choose to not send further frames of that type to this peer, or to take it as an indication that the extension is not supported by the peer, or to enter into extension negotiations with the peer.</p>
+<p id="rfc.section.2.1.p.5">An endpoint that receives a DROPPED_FRAME frame ought to take it as an indication that the extension is not supported by the peer, and MAY subsequently choose to not send further frames of that type or to enter into extension negotiations with the peer.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
 <p id="rfc.section.4.p.1">This document updates the registriy for frame types in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.</p>
