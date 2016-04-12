@@ -42,6 +42,13 @@ the process.
 The entire toolchain was copied from https://github.com/mnot/I-D/
 
 
+Notes to self
+-------------
+
+* <https://tools.ietf.org/tools/idnits/> check for nits
+* <https://datatracker.ietf.org/submit/> submit draft
+
+
 [3]: https://github.com/cabo/kramdown-rfc2629
 [4]: https://tools.ietf.org/html/rfc2629
 [5]: http://xml2rfc.ietf.org/
