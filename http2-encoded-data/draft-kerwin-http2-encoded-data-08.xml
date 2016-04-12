@@ -27,7 +27,7 @@
       </address>
     </author>
 
-    <date year="2015"/>
+    <date year="2016"/>
 
     <area>Applications and Real-Time</area>
     
@@ -216,12 +216,6 @@ requiring inspection of HTTP headers) see:</t>
 </list></t>
 
 </section>
-<section anchor="fragmentation" title="Fragmentation">
-
-<t>Traversing a network segment with small frame size limits introduces the risk of fragmenting an
-encoded stream. </t>
-
-</section>
 <section anchor="security" title="Security Considerations">
 
 <t>Further to the Use of Compression in HTTP/2 (<xref target="RFC7540"/>, Section 10.6),
@@ -397,6 +391,7 @@ following table are registered by this document.</t>
 <t><list style="symbols">
   <t>define “reliable” in the ‘experimental’ section, and provide pointers
 to potential workarounds</t>
+  <t>remove fragmentation, since the text added no value</t>
 </list></t>
 
 <t>Since -06:</t>
