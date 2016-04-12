@@ -296,7 +296,7 @@ This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP
 {{NOVELL}} for examples of protocols that can be used to access files
 over a network.  Also see {{ext-unc}} for a non-normative discussion on
-translating non-local file URIs to and from UNC stings.
+translating non-local file URIs to and from UNC strings.
 
 
 ## Translating Local File Path to file URI  {#file-to-uri}
