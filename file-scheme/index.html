@@ -587,7 +587,7 @@
    = "file://" + ""        + "/"   + "/path/to/file.txt"
    = "file:////path/to/file.txt"
 </pre>
-<p id="rfc.section.3.1.p.5">However that construct was never observed in practice, and in fact would have collided with the eventual encoding of UNC strings in URIs described in <a href="#ext-unc-path">Appendix C.3</a>.</p>
+<p id="rfc.section.3.1.p.5">However that construct was never observed in practice, and in fact would have collided with the eventual encoding of UNC strings in URIs described non-normatively in <a href="#ext-unc-path">Appendix C.3</a>.</p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#remote-to-uri" id="remote-to-uri">Translating Non-local File Path to file URI</a></h1>
 <p id="rfc.section.3.2.p.1">Translating a non-local file path, including a UNC string, to a file URI follows the same basic algorithm as for local files, above, except that the authority MUST refer to the network-accesible node that hosts the file.</p>
 <p id="rfc.section.3.2.p.2">For example, in a clustered OpenVMS Files-11 system the authority would contain the node name.  Where the original node reference includes a username and password in an access control string, they MAY be transcribed into the userinfo field of the authority (<a href="#RFC3986">[RFC3986]</a>, Section 3.2.1), security considerations (<a href="#security">Section 6</a>) notwithstanding.</p>
