@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                         December 28, 2015
+Internet-Draft                                            April 12, 2016
 Intended status: Experimental
-Expires: June 30, 2016
+Expires: October 14, 2016
 
 
                           HTTP/2 Gzipped Data
@@ -42,20 +42,20 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 30, 2016.
+   This Internet-Draft will expire on October 14, 2016.
 
 Copyright Notice
 
-   Copyright (c) 2015 IETF Trust and the persons identified as the
+   Copyright (c) 2016 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
 
 
 
-Kerwin                    Expires June 30, 2016                 [Page 1]
+Kerwin                  Expires October 14, 2016                [Page 1]
 
-Internet-Draft             http2-encoded-data              December 2015
+Internet-Draft             http2-encoded-data                 April 2016
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -77,16 +77,15 @@ Table of Contents
      2.2.  GZIPPED_DATA  . . . . . . . . . . . . . . . . . . . . . .   3
      2.3.  DATA_ENCODING_ERROR . . . . . . . . . . . . . . . . . . .   5
    3.  Experimental Status . . . . . . . . . . . . . . . . . . . . .   5
-   4.  Fragmentation . . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-     6.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   6
-     6.2.  HTTP/2 Settings Registry Update . . . . . . . . . . . . .   7
-     6.3.  HTTP/2 Error Code Registry Update . . . . . . . . . . . .   7
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .   8
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+     5.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   6
+     5.2.  HTTP/2 Settings Registry Update . . . . . . . . . . . . .   6
+     5.3.  HTTP/2 Error Code Registry Update . . . . . . . . . . . .   7
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   7
    Appendix A.  Changelog  . . . . . . . . . . . . . . . . . . . . .   8
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
@@ -109,9 +108,10 @@ Table of Contents
 
 
 
-Kerwin                    Expires June 30, 2016                 [Page 2]
+
+Kerwin                  Expires October 14, 2016                [Page 2]
 
-Internet-Draft             http2-encoded-data              December 2015
+Internet-Draft             http2-encoded-data                 April 2016
 
 
 2.  Additions to HTTP/2
@@ -165,9 +165,9 @@ Internet-Draft             http2-encoded-data              December 2015
 
 
 
-Kerwin                    Expires June 30, 2016                 [Page 3]
+Kerwin                  Expires October 14, 2016                [Page 3]
 
-Internet-Draft             http2-encoded-data              December 2015
+Internet-Draft             http2-encoded-data                 April 2016
 
 
      +---------------+
@@ -221,9 +221,9 @@ Internet-Draft             http2-encoded-data              December 2015
 
 
 
-Kerwin                    Expires June 30, 2016                 [Page 4]
+Kerwin                  Expires October 14, 2016                [Page 4]
 
-Internet-Draft             http2-encoded-data              December 2015
+Internet-Draft             http2-encoded-data                 April 2016
 
 
    endpoint MAY then choose to immediately send an ACCEPT_GZIPPED_DATA
@@ -277,9 +277,9 @@ Internet-Draft             http2-encoded-data              December 2015
 
 
 
-Kerwin                    Expires June 30, 2016                 [Page 5]
+Kerwin                  Expires October 14, 2016                [Page 5]
 
-Internet-Draft             http2-encoded-data              December 2015
+Internet-Draft             http2-encoded-data                 April 2016
 
 
    The experiment therefore is to explore the robustness of the HTTP/2
@@ -293,12 +293,7 @@ Internet-Draft             http2-encoded-data              December 2015
 
    o  [RFC3230], for HTTP instance digests
 
-4.  Fragmentation
-
-   Traversing a network segment with small frame size limits introduces
-   the risk of fragmenting an encoded stream.
-
-5.  Security Considerations
+4.  Security Considerations
 
    Further to the Use of Compression in HTTP/2 ([RFC7540],
    Section 10.6), intermediaries MUST NOT apply compression to DATA
@@ -309,13 +304,13 @@ Internet-Draft             http2-encoded-data              December 2015
    are separately compressed cannot be merged into a single compressed
    frame.
 
-6.  IANA Considerations
+5.  IANA Considerations
 
    This document updates the registries for frame types, settings, and
    error codes in the "Hypertext Transfer Protocol (HTTP) 2 Parameters"
    section.
 
-6.1.  HTTP/2 Frame Type Registry Update
+5.1.  HTTP/2 Frame Type Registry Update
 
    This document updates the "HTTP/2 Frame Type" registry ([RFC7540],
    Section 11.2).  The entries in the following table are registered by
@@ -327,22 +322,21 @@ Internet-Draft             http2-encoded-data              December 2015
                    | GZIPPED_DATA | TBD  | Section 2.2 |
                    +--------------+------+-------------+
 
-
-
-
-
-
-
-Kerwin                    Expires June 30, 2016                 [Page 6]
-
-Internet-Draft             http2-encoded-data              December 2015
-
-
-6.2.  HTTP/2 Settings Registry Update
+5.2.  HTTP/2 Settings Registry Update
 
    This document updates the "HTTP/2 Settings" registry ([RFC7540],
    Section 11.3).  The entries in the following table are registered by
    this document.
+
+
+
+
+
+
+Kerwin                  Expires October 14, 2016                [Page 6]
+
+Internet-Draft             http2-encoded-data                 April 2016
+
 
       +---------------------+------+---------------+---------------+
       | Frame Type          | Code | Initial Value | Specification |
@@ -350,7 +344,7 @@ Internet-Draft             http2-encoded-data              December 2015
       | ACCEPT_GZIPPED_DATA | TBD  | 0             | Section 2.1   |
       +---------------------+------+---------------+---------------+
 
-6.3.  HTTP/2 Error Code Registry Update
+5.3.  HTTP/2 Error Code Registry Update
 
    This document updates the "HTTP/2 Error Code" registry ([RFC7540],
    Section 11.4).  The entries in the following table are registered by
@@ -363,14 +357,14 @@ Internet-Draft             http2-encoded-data              December 2015
    |                     |      | detected             |               |
    +---------------------+------+----------------------+---------------+
 
-7.  Acknowledgements
+6.  Acknowledgements
 
    Thanks to Keith Morgan for his advice, input, and editorial
    contributions.
 
-8.  References
+7.  References
 
-8.1.  Normative References
+7.1.  Normative References
 
    [RFC1952]  Deutsch, P., "GZIP file format specification version 4.3",
               RFC 1952, DOI 10.17487/RFC1952, May 1996,
@@ -386,19 +380,19 @@ Internet-Draft             http2-encoded-data              December 2015
               DOI 10.17487/RFC7540, May 2015,
               <http://www.rfc-editor.org/info/rfc7540>.
 
-
-
-
-Kerwin                    Expires June 30, 2016                 [Page 7]
-
-Internet-Draft             http2-encoded-data              December 2015
-
-
-8.2.  Informative References
+7.2.  Informative References
 
    [RFC3230]  Mogul, J. and A. Van Hoff, "Instance Digests in HTTP",
               RFC 3230, DOI 10.17487/RFC3230, January 2002,
               <http://www.rfc-editor.org/info/rfc3230>.
+
+
+
+
+Kerwin                  Expires October 14, 2016                [Page 7]
+
+Internet-Draft             http2-encoded-data                 April 2016
+
 
    [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Message Syntax and Routing",
@@ -411,6 +405,8 @@ Appendix A.  Changelog
 
    o  define "reliable" in the 'experimental' section, and provide
       pointers to potential workarounds
+
+   o  remove fragmentation, since the text added no value
 
    Since -06:
 
@@ -442,18 +438,17 @@ Appendix A.  Changelog
    o  added 'identity' encoding; removed 'compress' and 'zlib'
       (suggested by PHK)
 
-
-
-
-Kerwin                    Expires June 30, 2016                 [Page 8]
-
-Internet-Draft             http2-encoded-data              December 2015
-
-
    o  added SEGMENT flag, for segments that don't continue
 
    o  clarified that ACCEPT is for a connection, and ENCODED_DATA is for
       a stream
+
+
+
+Kerwin                  Expires October 14, 2016                [Page 8]
+
+Internet-Draft             http2-encoded-data                 April 2016
+
 
    o  copied "padding" text from HTTP/2 draft
 
@@ -501,4 +496,9 @@ Author's Address
 
 
 
-Kerwin                    Expires June 30, 2016                 [Page 9]
+
+
+
+
+
+Kerwin                  Expires October 14, 2016                [Page 9]
