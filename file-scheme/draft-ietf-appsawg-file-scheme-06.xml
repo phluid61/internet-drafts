@@ -199,13 +199,13 @@ blank or no authority, or the authority is the special string
 <t>This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB <xref target="MS-SMB"/>, NFS <xref target="RFC7530"/>, NCP
 <xref target="NOVELL"/> for examples of protocols that can be used to access files
-over a network.  Also see <xref target="ext-unc"/> for a discussion on translating
-non-local file URIs to and from UNC stings.</t>
+over a network.  Also see <xref target="ext-unc"/> for a non-normative discussion on
+translating non-local file URIs to and from UNC strings.</t>
 
 <section anchor="file-to-uri" title="Translating Local File Path to file URI">
 
 <t>Below is an algorithmic description of the process used to convert a
-file path to a URI; see <xref target="encoding"/>.</t>
+file path to a URI; see <xref target="encoding"/> for encoding considerations.</t>
 
 <t><list style="numbers">
   <t>Resolve the file path to its fully qualified absolute form.</t>
@@ -224,6 +224,10 @@ Section 3.3) as per Section 2 of <xref target="RFC3986"/>.</t>
       <t>Append the transformed segment to the URI.</t>
     </list></t>
 </list></t>
+
+<t>This algorithm is intentionally general, and may not cover some
+system-specific edge cases.  See <xref target="system-specific"/> for brief
+discussions on system-specific considerations for some systems.</t>
 
 <t><spanx style="strong">Differences from RFC 1738</spanx></t>
 
@@ -759,7 +763,7 @@ and an absolute path that begins with a slash “/”. E.g.:  <list style="symbo
 </list></t>
 
 </section>
-<section anchor="system-specific-operations" title="System-specific Operations">
+<section anchor="system-specific" title="System-specific Operations">
 
 <t>This appendix is not normative; it highlights some observed
 behaviours and provides system-specific guidance for interacting
@@ -786,7 +790,7 @@ paths and URIs.</t>
 
 <t>The HFS+ file system uses a non-standard normalization form, similar
 to Normalization Form D.  Take care when transforming HFS+ file paths
-to and from URIs using Normalization Form C <xref target="encoding"/>.</t>
+to and from URIs using Normalization Form C (<xref target="encoding"/>).</t>
 
 </section>
 <section anchor="sys-vms" title="OpenVMS Files-11 Systems">

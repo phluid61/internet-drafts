@@ -565,9 +565,9 @@
 <p id="rfc.section.3.p.1">Implementations that provide dereferencing operations on file URIs SHOULD, at a minimum, provide a read-like operation to return the contents of a file located by a file URI.  Additional operations MAY be provided, such as writing to, creating, and deleting files.  See the POSIX file and directory operations <a href="#POSIX">[POSIX]</a> for examples of standardized operations that can be performed on files.</p>
 <p id="rfc.section.3.p.2">File URIs can also be translated to and from other, similar constructs, such as local file paths or UNC strings.</p>
 <p id="rfc.section.3.p.3">A file URI can be dependably dereferenced or translated to a local file path only if it is local.  A file URI is considered &#8220;local&#8221; if it has a blank or no authority, or the authority is the special string &#8220;localhost&#8221;.</p>
-<p id="rfc.section.3.p.4">This specification neither defines nor forbids a mechanism for accessing non-local files.  See SMB <a href="#MS-SMB">[MS-SMB]</a>, NFS <a href="#RFC7530">[RFC7530]</a>, NCP <a href="#NOVELL">[NOVELL]</a> for examples of protocols that can be used to access files over a network.  Also see <a href="#ext-unc">Appendix C.2</a> for a discussion on translating non-local file URIs to and from UNC stings.</p>
+<p id="rfc.section.3.p.4">This specification neither defines nor forbids a mechanism for accessing non-local files.  See SMB <a href="#MS-SMB">[MS-SMB]</a>, NFS <a href="#RFC7530">[RFC7530]</a>, NCP <a href="#NOVELL">[NOVELL]</a> for examples of protocols that can be used to access files over a network.  Also see <a href="#ext-unc">Appendix C.2</a> for a non-normative discussion on translating non-local file URIs to and from UNC strings.</p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#file-to-uri" id="file-to-uri">Translating Local File Path to file URI</a></h1>
-<p id="rfc.section.3.1.p.1">Below is an algorithmic description of the process used to convert a file path to a URI; see <a href="#encoding">Section 4</a>.</p>
+<p id="rfc.section.3.1.p.1">Below is an algorithmic description of the process used to convert a file path to a URI; see <a href="#encoding">Section 4</a> for encoding considerations.</p>
 <p/>
 
 <ol>
@@ -578,16 +578,17 @@
   <li>For each directory in the path after the root:  <ol><li>Transform the directory name to a path segment (<a href="#RFC3986">[RFC3986]</a>, Section 3.3) as per Section 2 of <a href="#RFC3986">[RFC3986]</a>.</li><li>Append the transformed segment and a delimiting slash character &#8220;/&#8221; to the URI.</li></ol></li>
   <li>If the path includes a file name:  <ol><li>Transform the file name to a path segment as above.</li><li>Append the transformed segment to the URI.</li></ol></li>
 </ol>
+<p id="rfc.section.3.1.p.3">This algorithm is intentionally general, and may not cover some system-specific edge cases.  See <a href="#system-specific">Appendix B</a> for brief discussions on system-specific considerations for some systems.</p>
 <p>
   <strong>Differences from RFC 1738</strong>
 </p>
-<p id="rfc.section.3.1.p.4">In <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) authority and a &#8220;/&#8221;. That &#8220;/&#8221; was not considered part of the path.  This implies that the correct encoding for a file path in a UNIX-like environment would have been:</p>
+<p id="rfc.section.3.1.p.5">In <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) authority and a &#8220;/&#8221;. That &#8220;/&#8221; was not considered part of the path.  This implies that the correct encoding for a file path in a UNIX-like environment would have been:</p>
 <pre>
      token     + authority + slash + path
    = "file://" + ""        + "/"   + "/path/to/file.txt"
    = "file:////path/to/file.txt"
 </pre>
-<p id="rfc.section.3.1.p.5">However that construct was never observed in practice, and in fact would have collided with the eventual encoding of UNC strings in URIs described non-normatively in <a href="#ext-unc-path">Appendix C.3</a>.</p>
+<p id="rfc.section.3.1.p.6">However that construct was never observed in practice, and in fact would have collided with the eventual encoding of UNC strings in URIs described non-normatively in <a href="#ext-unc-path">Appendix C.3</a>.</p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#remote-to-uri" id="remote-to-uri">Translating Non-local File Path to file URI</a></h1>
 <p id="rfc.section.3.2.p.1">Translating a non-local file path, including a UNC string, to a file URI follows the same basic algorithm as for local files, above, except that the authority MUST refer to the network-accesible node that hosts the file.</p>
 <p id="rfc.section.3.2.p.2">For example, in a clustered OpenVMS Files-11 system the authority would contain the node name.  Where the original node reference includes a username and password in an access control string, they MAY be transcribed into the userinfo field of the authority (<a href="#RFC3986">[RFC3986]</a>, Section 3.2.1), security considerations (<a href="#security">Section 6</a>) notwithstanding.</p>
@@ -813,7 +814,7 @@
 <ul>
   <li>A non-local file, with an explicit authority. E.g.:  <ul><li><samp>file://host.example.com/path/to/file</samp></li></ul></li>
 </ul>
-<h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#system-specific-operations" id="system-specific-operations">System-specific Operations</a></h1>
+<h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#system-specific" id="system-specific">System-specific Operations</a></h1>
 <p id="rfc.section.B.p.1">This appendix is not normative; it highlights some observed behaviours and provides system-specific guidance for interacting with file URIs and paths.</p>
 <h1 id="rfc.appendix.B.1"><a href="#rfc.appendix.B.1">B.1.</a> <a href="#sys-unix" id="sys-unix">POSIX Systems</a></h1>
 <p id="rfc.section.B.1.p.1">There is little to say about POSIX file systems; the file URI structure already closely resembles POSIX file paths.</p>
@@ -821,7 +822,7 @@
 <p id="rfc.section.B.2.p.1">When mapping a DOS- or Windows-like file path to a file URI, implementations typically map the drive letter (e.g. &#8220;c:&#8221;) into the first path segment.</p>
 <p id="rfc.section.B.2.p.2">See <a href="#nonstandard-syntax">Appendix C</a> for some explicit (but non-normative and strictly optional) rules for interacting with DOS- or Windows-like file paths and URIs.</p>
 <h1 id="rfc.appendix.B.3"><a href="#rfc.appendix.B.3">B.3.</a> <a href="#sys-osx" id="sys-osx">Mac OS X Systems</a></h1>
-<p id="rfc.section.B.3.p.1">The HFS+ file system uses a non-standard normalization form, similar to Normalization Form D.  Take care when transforming HFS+ file paths to and from URIs using Normalization Form C <a href="#encoding">Section 4</a>.</p>
+<p id="rfc.section.B.3.p.1">The HFS+ file system uses a non-standard normalization form, similar to Normalization Form D.  Take care when transforming HFS+ file paths to and from URIs using Normalization Form C (<a href="#encoding">Section 4</a>).</p>
 <h1 id="rfc.appendix.B.4"><a href="#rfc.appendix.B.4">B.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-11 Systems</a></h1>
 <p id="rfc.section.B.4.p.1">When mapping a VMS file path to a file URI, map the device name into the first path segment.  Note that the dollars sign &#8220;$&#8221; is a reserved character per the definition in <a href="#RFC3986">[RFC3986]</a>, Section 2.2, so should be percent-encoded if present in the device name.</p>
 <p id="rfc.section.B.4.p.2">If the VMS file path includes a node reference, use that as the authority.  Where the original node reference includes a username and password in an access control string, they can be transcribed into the userinfo field of the authority (<a href="#RFC3986">[RFC3986]</a>, Section 3.2.1), security considerations (<a href="#security">Section 6</a>) notwithstanding.</p>
