@@ -343,7 +343,7 @@ a file path in a UNIX-like environment would have been:
 
 However that construct was never observed in practice, and in fact
 would have collided with the eventual encoding of UNC strings in URIs
-described in {{ext-unc-path}}.
+described non-normatively in {{ext-unc-path}}.
 
 
 ## Translating Non-local File Path to file URI  {#remote-to-uri}
