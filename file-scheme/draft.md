@@ -328,6 +328,11 @@ file path to a URI; see {{encoding}} for encoding considerations.
     2.  Append the transformed segment to the URI.
 
 
+This algorithm is intentionally general, and may not cover some
+system-specific edge cases.  See {{system-specific}} for brief
+discussions on system-specific considerations for some systems.
+
+
 __Differences from RFC 1738__
 
 In {{RFC1738}} a file URL always started with the token "file://",
@@ -520,7 +525,7 @@ Non-local files:
 
   * `file://host.example.com/path/to/file`
 
-# System-specific Operations
+# System-specific Operations  {#system-specific}
 
 This appendix is not normative; it highlights some observed
 behaviours and provides system-specific guidance for interacting
@@ -548,7 +553,7 @@ paths and URIs.
 
 The HFS+ file system uses a non-standard normalization form, similar
 to Normalization Form D.  Take care when transforming HFS+ file paths
-to and from URIs using Normalization Form C {{encoding}}.
+to and from URIs using Normalization Form C \[{{encoding}}].
 
 
 ## OpenVMS Files-11 Systems  {#sys-vms}
