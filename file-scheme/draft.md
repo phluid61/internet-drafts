@@ -295,14 +295,14 @@ blank or no authority, or the authority is the special string
 This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP
 {{NOVELL}} for examples of protocols that can be used to access files
-over a network.  Also see {{ext-unc}} for a discussion on translating
-non-local file URIs to and from UNC stings.
+over a network.  Also see {{ext-unc}} for a non-normative discussion on
+translating non-local file URIs to and from UNC stings.
 
 
 ## Translating Local File Path to file URI  {#file-to-uri}
 
 Below is an algorithmic description of the process used to convert a
-file path to a URI; see {{encoding}}.
+file path to a URI; see {{encoding}} for encoding considerations.
 
 1.  Resolve the file path to its fully qualified absolute form.
 
