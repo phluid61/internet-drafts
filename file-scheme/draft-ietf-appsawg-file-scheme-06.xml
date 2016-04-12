@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-05" category="std" obsoletes="1738">
+<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-06" category="std" obsoletes="1738">
 
   <front>
     <title abbrev="file-scheme">The file URI Scheme</title>
@@ -33,7 +33,7 @@
       </address>
     </author>
 
-    <date year="2015"/>
+    <date year="2016"/>
 
     <area>General</area>
     <workgroup>Applications Area Working Group</workgroup>
@@ -181,7 +181,7 @@ they transport.</t>
 </section>
 <section anchor="operations" title="Operations on file URIs">
 
-<t>Implementations that provide dereferencing  ooperations on file URIs
+<t>Implementations that provide dereferencing operations on file URIs
 SHOULD, at a minimum, provide a read-like operation to return the
 contents of a file located by a file URI.  Additional operations MAY be
 provided, such as writing to, creating, and deleting files.  See the
@@ -256,7 +256,8 @@ includes a username and password in an access control string, they MAY
 be transcribed into the userinfo field of the authority (<xref target="RFC3986"/>,
 Section 3.2.1), security considerations (<xref target="security"/>) notwithstanding.</t>
 
-<t>See <xref target="ext-unc"/> for an explicit handling of UNC strings.</t>
+<t>See <xref target="ext-unc"/> for an explicit (but non-normative and strictly optional)
+handling of UNC strings.</t>
 
 </section>
 <section anchor="incompat" title="Incompatible File Paths">
@@ -776,9 +777,9 @@ already closely resembles POSIX file paths.</t>
 implementations typically map the drive letter (e.g. “c:”) into the
 first path segment.</t>
 
-<t>See <xref target="ext-drives"/> for explicit (but non-normative and strictly
-optional) rules for interacting with DOS- or Windows-like file paths
-and URIs.</t>
+<t>See <xref target="nonstandard-syntax"/> for some explicit (but non-normative and
+strictly optional) rules for interacting with DOS- or Windows-like file
+paths and URIs.</t>
 
 </section>
 <section anchor="sys-osx" title="Mac OS X Systems">
