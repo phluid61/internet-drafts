@@ -359,7 +359,8 @@ includes a username and password in an access control string, they MAY
 be transcribed into the userinfo field of the authority ({{RFC3986}},
 Section 3.2.1), security considerations ({{security}}) notwithstanding.
 
-See {{ext-unc}} for an explicit handling of UNC strings.
+See {{ext-unc}} for an explicit (but non-normative and strictly optional)
+handling of UNC strings.
 
 
 ## Incompatible File Paths {#incompat}
@@ -538,9 +539,9 @@ When mapping a DOS- or Windows-like file path to a file URI,
 implementations typically map the drive letter (e.g. "c:") into the
 first path segment.
 
-See {{ext-drives}} for explicit (but non-normative and strictly
-optional) rules for interacting with DOS- or Windows-like file paths
-and URIs.
+See {{nonstandard-syntax}} for some explicit (but non-normative and
+strictly optional) rules for interacting with DOS- or Windows-like file
+paths and URIs.
 
 
 ## Mac OS X Systems  {#sys-osx}
