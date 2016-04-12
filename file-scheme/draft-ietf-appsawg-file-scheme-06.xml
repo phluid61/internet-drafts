@@ -240,7 +240,7 @@ a file path in a UNIX-like environment would have been:</t>
 
 <t>However that construct was never observed in practice, and in fact
 would have collided with the eventual encoding of UNC strings in URIs
-described in <xref target="ext-unc-path"/>.</t>
+described non-normatively in <xref target="ext-unc-path"/>.</t>
 
 </section>
 <section anchor="remote-to-uri" title="Translating Non-local File Path to file URI">

@@ -309,7 +309,7 @@ Internet-Draft                 file-scheme                    April 2016
 
    However that construct was never observed in practice, and in fact
    would have collided with the eventual encoding of UNC strings in URIs
-   described in Appendix C.3.
+   described non-normatively in Appendix C.3.
 
 3.2.  Translating Non-local File Path to file URI
 
