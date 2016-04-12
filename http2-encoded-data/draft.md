@@ -2,7 +2,7 @@
 title: HTTP/2 Gzipped Data
 abbrev: http2-encoded-data
 docname: draft-kerwin-http2-encoded-data-08
-date: 2015
+date: 2016
 category: exp
 
 ipr: trust200902
@@ -206,12 +206,6 @@ requiring inspection of HTTP headers) see:
 * [RFC3230], for HTTP instance digests
 
 
-# Fragmentation  {#fragmentation}
-
-Traversing a network segment with small frame size limits introduces the risk of fragmenting an
-encoded stream. {::comment}FIXME: provide some advice?{:/comment}
-
-
 # Security Considerations  {#security}
 
 Further to the Use of Compression in HTTP/2 ({{RFC7540}}, Section 10.6),
@@ -279,6 +273,7 @@ Since -07:
 
  * define "reliable" in the 'experimental' section, and provide pointers
    to potential workarounds
+ * remove fragmentation, since the text added no value
 
 Since -06:
 
