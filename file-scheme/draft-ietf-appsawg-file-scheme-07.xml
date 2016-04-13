@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-06" category="std" obsoletes="1738">
+<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-07" category="std" obsoletes="1738">
 
   <front>
     <title abbrev="file-scheme">The file URI Scheme</title>
@@ -45,9 +45,9 @@
 <t>This document specifies the “file” Uniform Resource Identifier (URI)
 scheme, obsoleting the definition in RFC 1738.</t>
 
-<t>It attempts to define a common core which is intended to interoperate
-across the broad spectrum of existing implementations, while at the
-same time documenting other current practices.</t>
+<t>It defines a common core of syntax and semantics which is intended to
+interoperate across the broad spectrum of existing implementations,
+while at the same time documenting other current practices.</t>
 
 <t><spanx style="strong">Note to Readers (To be removed by the RFC Editor)</spanx></t>
 
@@ -66,18 +66,19 @@ Group discussion list &lt;apps-discuss@ietf.org&gt;.</t>
 
 <section anchor="introduction" title="Introduction">
 
-<t>A file URI identifies a file on a particular file system.  It can be
-used in discussions about the file, and if other conditions are met it
-can be dereferenced to directly access the file.</t>
+<t>A file URI identified an object (a “file”) stored in a structured
+object naming and accessing environment on a host (a “file system.”)
+The URI can be used in discussions about the file, and if other
+conditions are met it can be dereferenced to directly access the file.</t>
 
 <t>The file URI scheme is not coupled with a specific protocol, nor with a
-specific media type.  See <xref target="operations"/> for a discussion of operations
-that can be performed on a file URI.</t>
+specific media type <xref target="RFC6838"/>.  See <xref target="operations"/> for a discussion
+of operations that can be performed on a file URI or the the object it
+identifies.</t>
 
-<t>This document defines a syntax that is compatible with most extant
-implementations, while attempting to push towards a stricter subset of
-“ideal” constructs.  In many cases it simultaneously acknowledges and
-deprecates some less common or outdated constructs.</t>
+<t>This document specifies a syntax that is compatible with most extant
+implementations.  It also documents other less common or outdated
+constructs.</t>
 
 <section anchor="history" title="History">
 
@@ -111,8 +112,8 @@ which includes algorithms for interpreting file URIs (as URLs).</t>
 format that can perform a similar role to the file URI scheme in
 describing the location of files.  A UNC filespace selector string has
 three parts: host, share, and path; see <xref target="unc-syntax"/>.  This document
-describes but does not specify a means of translating between UNC
-filespace selector strings and file URIs in <xref target="ext-unc"/>.</t>
+describes a possible mechanism for translating between UNC filespace
+selector strings and file URIs in <xref target="ext-unc"/>.</t>
 
 </section>
 <section anchor="notational-conventions" title="Notational Conventions">
@@ -121,11 +122,16 @@ filespace selector strings and file URIs in <xref target="ext-unc"/>.</t>
 “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this
 document are to be interpreted as described in <xref target="RFC2119"/>.</t>
 
-<t>Throughout this document the term “local” is used to describe files
-that can be accessed directly through the local file system.  It is
-important to note that a local file may not be physically located on
-the local machine, for example if a networked file system is
-transparently mounted into the local file system.</t>
+<t>Throughout this document the term “local file” is used to describe
+files that can be accessed through the local file system API without
+explicitly establishing network connections or engaging network
+protocols.  It is important to note that a local file may not be
+physically located on the local machine, for example if a networked
+file system is transparently mounted into the local file system.</t>
+
+<t>The term “local file URI” is used to describe file URIs which have
+no authority, or where the authority is the special string
+“localhost” [<xref target="syntax"/>].</t>
 
 </section>
 </section>
@@ -150,26 +156,26 @@ but nonstandard variations.</t>
 
    file-scheme    = "file"
 
-   file-hier-part = "//" auth-path
+   file-hier-part = ( "//" auth-path )
                   / local-path
 
    auth-path      = [ file-auth ] path-absolute
 
    local-path     = path-absolute
 
-   file-auth      = [ userinfo "@" ] host
+   file-auth      = "localhost"
+                  / [ userinfo "@" ] host
 ]]></artwork></figure>
 
 <t>The syntax definition above is different from those given in
 <xref target="RFC1630"/> and <xref target="RFC1738"/> as it is derived from the generic syntax
-of <xref target="RFC3986"/>, which post-dates all previous specifications.</t>
+of <xref target="RFC3986"/>, which post-dates the previous file URI specifications.</t>
 
 <t>As a special case, the “file-auth” rule can match the string
-“localhost” or the empty string; either value is interpreted as “the
-machine from which the URI is being interpreted,” exactly as if no
-authority was present.  To maximise compatibility with previous
-specifications, implementations MAY choose to include an empty
-“file-auth”.</t>
+“localhost” which is interpreted as “the machine from which the URI is
+being interpreted,” exactly as if no authority were present.  To
+maximise compatibility with previous specifications, implementations
+MAY choose to include an “auth-path” with no “file-auth”.</t>
 
 <t>Systems exhibit different levels of case-sensitivity.  Unless the file
 system is known to be case-insensitive, implementations MUST maintain
@@ -178,8 +184,15 @@ from the local system’s representation of file paths, and any systems or
 devices that transport file URIs MUST NOT alter the case of file URIs
 they transport.</t>
 
+<t>Some systems have case-sensitive file naming and some do not.  As such
+the file scheme supports case sensitivity, in order to retain the case
+as given.  Any transport-related handling of the file URI scheme MUST
+retain the case as given.  Any mapping to or from a case-insensitive
+form is soley the responsibility of the implementation processing the
+file URI on behalf of the referenced file system.</t>
+
 </section>
-<section anchor="operations" title="Operations on file URIs">
+<section anchor="operations" title="Operations Involving file URIs">
 
 <t>Implementations that provide dereferencing operations on file URIs
 SHOULD, at a minimum, provide a read-like operation to return the
@@ -192,9 +205,8 @@ standardized operations that can be performed on files.</t>
 such as local file paths or UNC strings.</t>
 
 <t>A file URI can be dependably dereferenced or translated to a local file
-path only if it is local.  A file URI is considered “local” if it has a
-blank or no authority, or the authority is the special string
-“localhost”.</t>
+path only if it is local.  A file URI is considered “local” if it has
+no file-auth, or the file-auth is the special string “localhost”.</t>
 
 <t>This specification neither defines nor forbids a mechanism for
 accessing non-local files.  See SMB <xref target="MS-SMB"/>, NFS <xref target="RFC7530"/>, NCP
@@ -208,14 +220,20 @@ translating non-local file URIs to and from UNC strings.</t>
 file path to a URI; see <xref target="encoding"/> for encoding considerations.</t>
 
 <t><list style="numbers">
-  <t>Resolve the file path to its fully qualified absolute form.</t>
+  <t>Resolve the file path to its fully qualified absolute form. <!-- FIXME --></t>
   <t>Initialise the URI with the “file:” scheme identifier.</t>
-  <t>If including an empty authority field, append the “//” sigil to
-the URI.</t>
+  <t>If including an authority field, append the “//” token to
+the URI.  <list style="numbers">
+      <t>If the authority field is to be non-empty, append the special
+string “localhost” to the URI.</t>
+    </list></t>
   <t>Append a slash character “/” to the URI, to signify the path root.</t>
   <t>For each directory in the path after the root:  <list style="numbers">
       <t>Transform the directory name to a path segment (<xref target="RFC3986"/>,
-Section 3.3) as per Section 2 of <xref target="RFC3986"/>.</t>
+Section 3.3) to conform to the encoding rules of Section 2 of
+<xref target="RFC3986"/>.  The specific rules for mapping between a file
+system name and a file scheme URI are outside the scope of
+this specification.</t>
       <t>Append the transformed segment and a delimiting slash character
 “/” to the URI.</t>
     </list></t>
@@ -228,6 +246,8 @@ Section 3.3) as per Section 2 of <xref target="RFC3986"/>.</t>
 <t>This algorithm is intentionally general, and may not cover some
 system-specific edge cases.  See <xref target="system-specific"/> for brief
 discussions on system-specific considerations for some systems.</t>
+
+<!-- fixme: move this to an appendix -->
 
 <t><spanx style="strong">Differences from RFC 1738</spanx></t>
 
@@ -251,7 +271,7 @@ described non-normatively in <xref target="ext-unc-path"/>.</t>
 
 <t>Translating a non-local file path, including a UNC string, to a file
 URI follows the same basic algorithm as for local files, above, except
-that the authority MUST refer to the network-accesible node that hosts
+that the authority MUST refer to the network-accessible node that hosts
 the file.</t>
 
 <t>For example, in a clustered OpenVMS Files-11 system the authority
@@ -262,6 +282,8 @@ Section 3.2.1), security considerations (<xref target="security"/>) notwithstand
 
 <t>See <xref target="ext-unc"/> for an explicit (but non-normative and strictly optional)
 handling of UNC strings.</t>
+
+<!-- fixme: move this out of the main spec (appendix or intro?) -->
 
 </section>
 <section anchor="incompat" title="Incompatible File Paths">
@@ -312,19 +334,22 @@ settings, or defaults to UTF-8 <xref target="STD63"/>.</t>
 transported as an Internationalized Resource Identifier (IRI)
 <xref target="RFC3987"/> to avoid ambiguity.  See <xref target="iri-vs-uri"/> for examples.</t>
 
+<!-- fixme: from Dave Crocker:
+
+  I'm inclined to think that this section either needs to be far more
+  complete - and I'm not recommending it do that - or it merely needs to
+  caution implementers to make sure that file scheme URI storage needs to
+  be idempotent with the original, interoperable form.
+
+-->
+
 </section>
 <section anchor="origin" title="Origins">
 
+<!-- fixme: are we keeping this? -->
+
 <t>As per <xref target="RFC6454"/>, Section 4, when determining the origin of a file
 URI implementations MAY return an implementation-defined value.</t>
-
-<t>Historically, user agents have granted content from the file URI
-scheme a tremendous amount of privilege.  However, granting all local
-files such wide privileges can lead to privilege escalation attacks.
-Some user agents have had success granting local files directory-based
-privileges, but this approach has not been widely adopted.  Other user
-agents use globally unique identifiers for each file URI, which is the
-most secure option.</t>
 
 </section>
 <section anchor="security" title="Security Considerations">
@@ -334,9 +359,15 @@ most secure option.</t>
 
 <t>File access and the granting of privileges for specific operations
 are complex topics, and the use of file URIs can complicate the
-security model in effect for file privileges.  Software using file
-URIs MUST NOT grant greater access than would be available for other
-file access methods.</t>
+security model in effect for file privileges.</t>
+
+<t>Historically, user agents have granted content from the file URI
+scheme a tremendous amount of privilege.  However, granting all local
+files such wide privileges can lead to privilege escalation attacks.
+Some user agents have had success granting local files directory-based
+privileges, but this approach has not been widely adopted.  Other user
+agents use globally unique identifiers as the origin for each file URI
+<xref target="RFC6454"/>, which is the most secure option.</t>
 
 <t>File systems typically assign an operational meaning to special
 characters, such as the “/”, “\”, “:”, “[”, and “]” characters, and
@@ -621,6 +652,22 @@ and Dave Thaler for their comments and suggestions.</t>
 </front>
 <seriesInfo name='RFC' value='6454'/>
 <seriesInfo name='DOI' value='10.17487/RFC6454'/>
+</reference>
+
+
+
+<reference  anchor='RFC6838' target='http://www.rfc-editor.org/info/rfc6838'>
+<front>
+<title>Media Type Specifications and Registration Procedures</title>
+<author initials='N.' surname='Freed' fullname='N. Freed'><organization /></author>
+<author initials='J.' surname='Klensin' fullname='J. Klensin'><organization /></author>
+<author initials='T.' surname='Hansen' fullname='T. Hansen'><organization /></author>
+<date year='2013' month='January' />
+<abstract><t>This document defines procedures for the specification and registration of media types for use in HTTP, MIME, and other Internet protocols.  This memo documents an Internet Best Current Practice.</t></abstract>
+</front>
+<seriesInfo name='BCP' value='13'/>
+<seriesInfo name='RFC' value='6838'/>
+<seriesInfo name='DOI' value='10.17487/RFC6838'/>
 </reference>
 
 
@@ -1091,7 +1138,7 @@ presented for convenience.  This collected syntax is not normative.</t>
 
    file-scheme    = "file"
 
-   file-hier-part = "//" auth-path
+   file-hier-part = ( "//" auth-path )
                   / local-path
 
    auth-path      = [ file-auth ] path-absolute
@@ -1101,7 +1148,8 @@ presented for convenience.  This collected syntax is not normative.</t>
    local-path     = [ drive-letter ] path-absolute
                   / file-absolute
 
-   file-auth      = [ userinfo "@" ] host
+   file-auth      = "localhost"
+                  / [ userinfo "@" ] host
 
    unc-authority  = 2*3"/" [ userinfo "@" ] file-host
 
