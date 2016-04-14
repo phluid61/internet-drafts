@@ -76,7 +76,7 @@ specific media type <xref target="RFC6838"/>.  See <xref target="operations"/> f
 of operations that can be performed on a file URI or the the object it
 identifies.</t>
 
-<t>This document specifies a syntax that is compatible with most extant
+<t>This document specifies a syntax that is compatible with most existing
 implementations.  It also documents other less common or outdated
 constructs.</t>
 
