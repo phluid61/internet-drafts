@@ -175,7 +175,7 @@ specific media type {{RFC6838}}.  See {{operations}} for a discussion
 of operations that can be performed on a file URI or the the object it
 identifies.
 
-This document specifies a syntax that is compatible with most extant
+This document specifies a syntax that is compatible with most existing
 implementations.  It also documents other less common or outdated
 constructs.
 
