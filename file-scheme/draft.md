@@ -489,6 +489,12 @@ Implementers MUST research the reserved names and characters for the
 types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.
 
+<!-- fixme -->
+Some file systems have case-sensitive file naming and some do not.
+Care must (?) be taken to avoid issues resulting from possibly
+unexpected aliasing from case-only differences between file paths or
+URIs.
+
 Additionally, as discussed in the HP OpenVMS Systems Documentation
 \<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
 "access control strings include sufficient information to allow someone
