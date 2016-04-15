@@ -228,7 +228,7 @@ the URI.  <list style="numbers">
 string “localhost” to the URI.</t>
     </list></t>
   <t>Append a slash character “/” to the URI, to signify the path root.</t>
-  <t>For each directory in the path after the root:  <list style="numbers">
+  <t>For each directory in the path after the root [*]:  <list style="numbers">
       <t>Transform the directory name to a path segment (<xref target="RFC3986"/>,
 Section 3.3) to conform to the encoding rules of Section 2 of
 <xref target="RFC3986"/>.  The specific rules for mapping between a file
@@ -243,8 +243,15 @@ this specification.</t>
     </list></t>
 </list></t>
 
-<t>This algorithm is intentionally general, and may not cover some
-system-specific edge cases.  See <xref target="system-specific"/> for brief
+<t>[*] Some file systems allow directory objects to be treated as files
+in some cases.  This can be reflected in a file URI by using the
+name of the ultimate directory as the file name (such that the URI does
+not have a trailing slash “/”).  Be aware that merging a relative URI
+reference to such a base URI as per Section 5.2 of <xref target="RFC3986"/> could
+remove the directory name from the resulting target URI.</t>
+
+<t>The algorithm given here is intentionally general, and may not cover
+some system-specific edge cases.  See <xref target="system-specific"/> for brief
 discussions on system-specific considerations for some systems.</t>
 
 <!-- fixme: move this to an appendix -->
