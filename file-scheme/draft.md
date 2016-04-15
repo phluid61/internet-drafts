@@ -274,13 +274,6 @@ being interpreted," exactly as if no authority were present.  To
 maximise compatibility with previous specifications, implementations
 MAY choose to include an "auth-path" with no "file-auth".
 
-Systems exhibit different levels of case-sensitivity.  Unless the file
-system is known to be case-insensitive, implementations MUST maintain
-the case of file and directory names when translating file URIs to and
-from the local system's representation of file paths, and any systems or
-devices that transport file URIs MUST NOT alter the case of file URIs
-they transport.
-
 Some systems have case-sensitive file naming and some do not.  As such
 the file scheme supports case sensitivity, in order to retain the case
 as given.  Any transport-related handling of the file URI scheme MUST
