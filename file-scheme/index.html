@@ -416,7 +416,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-4-14" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-4-15" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
 
@@ -437,14 +437,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">April 14, 2016</td>
+  <td class="right">April 15, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: October 16, 2016</td>
+  <td class="left">Expires: October 17, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -470,7 +470,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on October 16, 2016.</p>
+<p>This Internet-Draft will expire on October 17, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -578,20 +578,21 @@
   <li>Initialise the URI with the &#8220;file:&#8221; scheme identifier.</li>
   <li>If including an authority field, append the &#8220;//&#8221; token to the URI.  <ol><li>If the authority field is to be non-empty, append the special string &#8220;localhost&#8221; to the URI.</li></ol></li>
   <li>Append a slash character &#8220;/&#8221; to the URI, to signify the path root.</li>
-  <li>For each directory in the path after the root:  <ol><li>Transform the directory name to a path segment (<a href="#RFC3986">[RFC3986]</a>, Section 3.3) to conform to the encoding rules of Section 2 of <a href="#RFC3986">[RFC3986]</a>.  The specific rules for mapping between a file system name and a file scheme URI are outside the scope of this specification.</li><li>Append the transformed segment and a delimiting slash character &#8220;/&#8221; to the URI.</li></ol></li>
+  <li>For each directory in the path after the root [*]:  <ol><li>Transform the directory name to a path segment (<a href="#RFC3986">[RFC3986]</a>, Section 3.3) to conform to the encoding rules of Section 2 of <a href="#RFC3986">[RFC3986]</a>.  The specific rules for mapping between a file system name and a file scheme URI are outside the scope of this specification.</li><li>Append the transformed segment and a delimiting slash character &#8220;/&#8221; to the URI.</li></ol></li>
   <li>If the path includes a file name:  <ol><li>Transform the file name to a path segment as above.</li><li>Append the transformed segment to the URI.</li></ol></li>
 </ol>
-<p id="rfc.section.3.1.p.3">This algorithm is intentionally general, and may not cover some system-specific edge cases.  See <a href="#system-specific">Appendix B</a> for brief discussions on system-specific considerations for some systems.</p>
+<p id="rfc.section.3.1.p.3">[*] Some file systems allow directory objects to be treated as files in some cases.  This can be reflected in a file URI by using the name of the ultimate directory as the file name (such that the URI does not have a trailing slash &#8220;/&#8221;).  Be aware that merging a relative URI reference to such a base URI as per Section 5.2 of <a href="#RFC3986">[RFC3986]</a> could remove the directory name from the resulting target URI.</p>
+<p id="rfc.section.3.1.p.4">The algorithm given here is intentionally general, and may not cover some system-specific edge cases.  See <a href="#system-specific">Appendix B</a> for brief discussions on system-specific considerations for some systems.</p>
 <p>
   <strong>Differences from RFC 1738</strong>
 </p>
-<p id="rfc.section.3.1.p.5">In <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) authority and a &#8220;/&#8221;. That &#8220;/&#8221; was not considered part of the path.  This implies that the correct encoding for a file path in a UNIX-like environment would have been:</p>
+<p id="rfc.section.3.1.p.6">In <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) authority and a &#8220;/&#8221;. That &#8220;/&#8221; was not considered part of the path.  This implies that the correct encoding for a file path in a UNIX-like environment would have been:</p>
 <pre>
      token     + authority + slash + path
    = "file://" + ""        + "/"   + "/path/to/file.txt"
    = "file:////path/to/file.txt"
 </pre>
-<p id="rfc.section.3.1.p.6">However that construct was never observed in practice, and in fact would have collided with the eventual encoding of UNC strings in URIs described non-normatively in <a href="#ext-unc-path">Appendix C.3</a>.</p>
+<p id="rfc.section.3.1.p.7">However that construct was never observed in practice, and in fact would have collided with the eventual encoding of UNC strings in URIs described non-normatively in <a href="#ext-unc-path">Appendix C.3</a>.</p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#remote-to-uri" id="remote-to-uri">Translating Non-local File Path to file URI</a></h1>
 <p id="rfc.section.3.2.p.1">Translating a non-local file path, including a UNC string, to a file URI follows the same basic algorithm as for local files, above, except that the authority MUST refer to the network-accessible node that hosts the file.</p>
 <p id="rfc.section.3.2.p.2">For example, in a clustered OpenVMS Files-11 system the authority would contain the node name.  Where the original node reference includes a username and password in an access control string, they MAY be transcribed into the userinfo field of the authority (<a href="#RFC3986">[RFC3986]</a>, Section 3.2.1), security considerations (<a href="#security">Section 6</a>) notwithstanding.</p>
