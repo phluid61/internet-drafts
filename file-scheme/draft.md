@@ -329,7 +329,7 @@ file path to a URI; see {{encoding}} for encoding considerations.
 
 4.  Append a slash character "/" to the URI, to signify the path root.
 
-5.  For each directory in the path after the root:
+5.  For each directory in the path after the root \[\*]:
 
     1.  Transform the directory name to a path segment ({{RFC3986}},
         Section 3.3) to conform to the encoding rules of Section 2 of
@@ -347,8 +347,15 @@ file path to a URI; see {{encoding}} for encoding considerations.
     2.  Append the transformed segment to the URI.
 
 
-This algorithm is intentionally general, and may not cover some
-system-specific edge cases.  See {{system-specific}} for brief
+\[\*] Some file systems allow directory objects to be treated as files
+in some cases.  This can be reflected in a file URI by using the
+name of the ultimate directory as the file name (such that the URI does
+not have a trailing slash "/").  Be aware that merging a relative URI
+reference to such a base URI as per Section 5.2 of {{RFC3986}} could
+remove the directory name from the resulting target URI.
+
+The algorithm given here is intentionally general, and may not cover
+some system-specific edge cases.  See {{system-specific}} for brief
 discussions on system-specific considerations for some systems.
 
 <!-- fixme: move this to an appendix -->
