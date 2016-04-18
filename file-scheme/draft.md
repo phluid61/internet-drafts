@@ -153,8 +153,8 @@ This document specifies the "file" Uniform Resource Identifier (URI)
 scheme, obsoleting the definition in RFC 1738.
 
 It defines a common core of syntax and semantics which is intended to
-interoperate across the broad spectrum of existing implementations,
-while at the same time documenting other current practices.
+interoperate across the broad spectrum of existing usages, while at the
+same time documenting other current practices.
 
 **Note to Readers (To be removed by the RFC Editor)**
 
@@ -165,7 +165,7 @@ Group discussion list \<apps-discuss@ietf.org>.
 
 # Introduction
 
-A file URI identified an object (a "file") stored in a structured
+A file URI identifies an object (a "file") stored in a structured
 object naming and accessing environment on a host (a "file system.")
 The URI can be used in discussions about the file, and if other
 conditions are met it can be dereferenced to directly access the file.
@@ -176,32 +176,7 @@ of operations that can be performed on a file URI or the the object it
 identifies.
 
 This document specifies a syntax that is compatible with most existing
-implementations.  It also documents other less common or outdated
-constructs.
-
-
-## History {#history}
-
-The file URI scheme was first defined in {{RFC1630}}, which, being an
-informational RFC, does not specify an Internet standard.  The
-definition was standardised in {{RFC1738}}, and the scheme was
-registered with the Internet Assigned Numbers Authority (IANA);
-however that definition omitted certain language included by the former
-that clarified aspects such as:
-
-* the use of slashes to denote boundaries between directory
-  levels of a hierarchical file system; and
-* the requirement that client software convert the file URI
-  into a file name in the local file name conventions.
-
-The Internet draft {{I-D.hoffman-file-uri}} was written in an
-effort to keep the file URI scheme on standards track when {{RFC1738}}
-was made obsolete, but that draft expired in 2005.  It enumerated
-concerns arising from the various, often conflicting implementations
-of the scheme.  It serves as the spiritual predecessor of this document.
-
-Additionally the WHATWG defines a living URL standard {{WHATWG-URL}},
-which includes algorithms for interpreting file URIs (as URLs).
+usages.  It also lists other less common or outdated constructs.
 
 
 ## Similar Technologies
@@ -213,6 +188,9 @@ three parts: host, share, and path; see {{unc-syntax}}.  This document
 describes a possible mechanism for translating between UNC filespace
 selector strings and file URIs in {{ext-unc}}.
 
+The WHATWG defines a living URL standard {{WHATWG-URL}}, which includes
+algorithms for interpreting file URIs (as URLs).
+
 
 ## Notational Conventions
 
@@ -221,11 +199,12 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 document are to be interpreted as described in {{RFC2119}}.
 
 Throughout this document the term "local file" is used to describe
-files that can be accessed through the local file system API without
-explicitly establishing network connections or engaging network
-protocols.  It is important to note that a local file may not be
-physically located on the local machine, for example if a networked
-file system is transparently mounted into the local file system.
+files that can be accessed through the local file system API using only
+the information included in the file path, not relying on other
+information such as network addresses.  It is important to note that a
+local file may not be physically located on the local machine, for
+example if a networked file system is transparently mounted into the
+local file system.
 
 The term "local file URI" is used to describe file URIs which have
 no authority, or where the authority is the special string
@@ -271,8 +250,8 @@ of {{RFC3986}}, which post-dates the previous file URI specifications.
 As a special case, the "file-auth" rule can match the string
 "localhost" which is interpreted as "the machine from which the URI is
 being interpreted," exactly as if no authority were present.  To
-maximise compatibility with previous specifications, implementations
-MAY choose to include an "auth-path" with no "file-auth".
+maximise compatibility with previous specifications, users MAY choose
+to include an "auth-path" with no "file-auth" when creating a URI.
 
 Some systems have case-sensitive file naming and some do not.  As such
 the file scheme supports case sensitivity, in order to retain the case
@@ -577,9 +556,8 @@ already closely resembles POSIX file paths.
 
 ## DOS- and Windows-Like Systems  {#sys-dos}
 
-When mapping a DOS- or Windows-like file path to a file URI,
-implementations typically map the drive letter (e.g. "c:") into the
-first path segment.
+When mapping a DOS- or Windows-like file path to a file URI, the drive
+letter (e.g. "c:") is typically mapped into the first path segment.
 
 See {{nonstandard-syntax}} for some explicit (but non-normative and
 strictly optional) rules for interacting with DOS- or Windows-like file
@@ -637,8 +615,8 @@ URIs of the form `file:///c:/path/to/file` are already supported by the
 `path-absolute` rule.
 
 Note that comparison of drive letters in DOS or Windows file paths
-is case-insensitive.  Some implementations therefore canonicalize drive
-letters in file URIs by converting them to uppercase.
+is case-insensitive.  Some usages of file URIs therefore canonicalize
+drive letters by converting them to uppercase.
 
 
 ### Relative Paths  {#ext-relative}
@@ -667,8 +645,8 @@ accepted as dereferenceable URIs in DOS or Windows systems.
 
 ### Vertical Bar Character  {#ext-pipe}
 
-Historically some implementations have used a vertical line character
-"\|" instead of a colon ":" in the drive letter construct.  {{RFC3986}}
+Historically some usages have included a vertical line character "\|"
+instead of a colon ":" in the drive letter construct.  {{RFC3986}}
 forbids the use of the vertical line, however it may be necessary to
 interpret or update old URIs.
 
@@ -792,9 +770,9 @@ string.
 
 ## Backslash as Separator  {#ext-backslash}
 
-Historically some implementations have copied entire file paths into
-the path components of file URIs.  Where DOS or Windows file paths were
-copied thus, resulting URI strings contained unencoded backslash "\\"
+Historically some usages have copied entire file paths into the path
+components of file URIs.  Where DOS or Windows file paths were copied
+thus, resulting URI strings contained unencoded backslash "\\"
 characters, which are forbidden by both {{RFC1738}} and {{RFC3986}}.
 
 It may be possible to translate or update such an invalid file URI by
