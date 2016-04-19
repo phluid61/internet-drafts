@@ -504,7 +504,7 @@ This appendix is not normative.
 
 ## DOS and Windows Drive Letters  {#ext-drives}
 
-On Windows- or DOS-based file systems a absolute file path can begin
+On Windows- or DOS-based file systems an absolute file path can begin
 with a drive letter.  To facilitate this, the `local-path` rule in
 {{syntax}} can be replaced with the following:
 
