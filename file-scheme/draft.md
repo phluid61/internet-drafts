@@ -46,14 +46,22 @@ normative:
       RFC: 7595
       DOI: 10.17487/RFC7595
     target: http://www.rfc-editor.org/info/bcp35
-  RFC1035:
-  RFC1123:
   RFC2119:
   RFC3986:
   RFC3987:
-  RFC4291:
   RFC5234:
   RFC6874:
+  STD63:
+    title: UTF-8, a transformation format of ISO 10646
+    author:
+    - ins: F. Yergeau
+      name: F. Yergeau
+    date: 2003-11
+    seriesinfo:
+      STD: 63
+      RFC: 3629
+      DOI: 10.17487/RFC3629
+    target: http://www.rfc-editor.org/info/std63
   ISO10646:
     title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
     author:
@@ -74,19 +82,11 @@ normative:
     target: http://unicode.org/reports/tr15/tr15-18.html
 
 informative:
-  STD63:
-    title: UTF-8, a transformation format of ISO 10646
-    author:
-    - ins: F. Yergeau
-      name: F. Yergeau
-    date: 2003-11
-    seriesinfo:
-      STD: 63
-      RFC: 3629
-      DOI: 10.17487/RFC3629
-    target: http://www.rfc-editor.org/info/std63
+  RFC1035:
+  RFC1123:
   RFC1630:
   RFC1738:
+  RFC4291:
   RFC6454:
   RFC6838:
   RFC7530:
@@ -152,9 +152,9 @@ informative:
 This document specifies the "file" Uniform Resource Identifier (URI)
 scheme, obsoleting the definition in RFC 1738.
 
-It defines a common core of syntax and semantics which is intended to
-interoperate across the broad spectrum of existing usages, while at the
-same time documenting other current practices.
+It defines a common syntax which is intended to interoperate across
+the broad spectrum of existing usages.  At the same time it notes
+some other current practices around the use of file URIs.
 
 **Note to Readers (To be removed by the RFC Editor)**
 
@@ -170,26 +170,16 @@ object naming and accessing environment on a host (a "file system.")
 The URI can be used in discussions about the file, and if other
 conditions are met it can be dereferenced to directly access the file.
 
+This document specifies a syntax based on the generic syntax of
+{{RFC3986}} that is compatible with most existing usages.  Optional
+extensions to the syntax which might be encountered in practice are
+listed in appendices;  these extensions are listed for informational
+purposes only.
+
 The file URI scheme is not coupled with a specific protocol, nor with a
 specific media type {{RFC6838}}.  See {{operations}} for a discussion
-of operations that can be performed on a file URI or the the object it
-identifies.
-
-This document specifies a syntax that is compatible with most existing
-usages.  It also lists other less common or outdated constructs.
-
-
-## Similar Technologies
-
-The Universal Naming Convention (UNC) {{MS-DTYP}} defines a string
-format that can perform a similar role to the file URI scheme in
-describing the location of files.  A UNC filespace selector string has
-three parts: host, share, and path; see {{unc-syntax}}.  This document
-describes a possible mechanism for translating between UNC filespace
-selector strings and file URIs in {{ext-unc}}.
-
-The WHATWG defines a living URL standard {{WHATWG-URL}}, which includes
-algorithms for interpreting file URIs (as URLs).
+of operations that can be performed on the object identified by a file
+URI.
 
 
 ## Notational Conventions
@@ -208,7 +198,7 @@ local file system.
 
 The term "local file URI" is used to describe file URIs which have
 no authority, or where the authority is the special string
-"localhost" \[{{syntax}}\].
+"localhost" ({{syntax}}).
 
 
 # Syntax {#syntax}
@@ -218,14 +208,15 @@ The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 specification, and importing the `userinfo`, `host` and `path-absolute`
 rules from {{RFC3986}} (as updated by {{RFC6874}}.)
 
-The core syntax in {{RFC3986}} includes `path` and `authority`
+The generic syntax in {{RFC3986}} includes `path` and `authority`
 components, for each of which only a subset is used in the definition
 of the file URI scheme.  The relevant subset of `path` is
 `path-absolute`, and the subset of `authority` is `file-auth`, given
 below.
 
-Please note {{nonstandard-syntax}} that lists some other commonly seen
-but nonstandard variations.
+The syntax definition below is different from those given in
+{{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
+of {{RFC3986}}, which post-dates the previous file URI specifications.
 
 ~~~~~~~~~~
    file-URI       = file-scheme ":" file-hier-part
@@ -243,10 +234,6 @@ but nonstandard variations.
                   / [ userinfo "@" ] host
 ~~~~~~~~~~
 
-The syntax definition above is different from those given in
-{{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
-of {{RFC3986}}, which post-dates the previous file URI specifications.
-
 As a special case, the "file-auth" rule can match the string
 "localhost" which is interpreted as "the machine from which the URI is
 being interpreted," exactly as if no authority were present.  To
@@ -260,6 +247,15 @@ retain the case as given.  Any mapping to or from a case-insensitive
 form is soley the responsibility of the implementation processing the
 file URI on behalf of the referenced file system.
 
+Some file systems allow directory objects to be treated as files
+in some cases.  This can be reflected in a file URI by omitting the
+trailing slash "/" from the path.  Be aware that merging a relative URI
+reference to such a base URI as per Section 5.2 of {{RFC3986}} could
+remove the directory name from the resulting target URI.
+
+Also see {{nonstandard-syntax}} that lists some nonstandard syntax
+variations that can be encountered in practice.
+
 
 # Operations Involving file URIs  {#operations}
 
@@ -270,131 +266,15 @@ provided, such as writing to, creating, and deleting files.  See the
 POSIX file and directory operations {{POSIX}} for examples of
 standardized operations that can be performed on files.
 
-File URIs can also be translated to and from other, similar constructs,
-such as local file paths or UNC strings.
-
 A file URI can be dependably dereferenced or translated to a local file
 path only if it is local.  A file URI is considered "local" if it has
 no file-auth, or the file-auth is the special string "localhost".
 
-This specification neither defines nor forbids a mechanism for
-accessing non-local files.  See SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP
-{{NOVELL}} for examples of protocols that can be used to access files
-over a network.  Also see {{ext-unc}} for a non-normative discussion on
-translating non-local file URIs to and from UNC strings.
-
-
-## Translating Local File Path to file URI  {#file-to-uri}
-
-Below is an algorithmic description of the process used to convert a
-file path to a URI; see {{encoding}} for encoding considerations.
-
-1.  Resolve the file path to its fully qualified absolute form. <!-- FIXME -->
-
-2.  Initialise the URI with the "file:" scheme identifier.
-
-3.  If including an authority field, append the "//" token to
-    the URI.
-
-    1. If the authority field is to be non-empty, append the special
-       string "localhost" to the URI.
-
-4.  Append a slash character "/" to the URI, to signify the path root.
-
-5.  For each directory in the path after the root \[\*]:
-
-    1.  Transform the directory name to a path segment ({{RFC3986}},
-        Section 3.3) to conform to the encoding rules of Section 2 of
-        {{RFC3986}}.  The specific rules for mapping between a file
-        system name and a file scheme URI are outside the scope of
-        this specification.
-
-    2.  Append the transformed segment and a delimiting slash character
-        "/" to the URI.
-
-6.  If the path includes a file name:
-
-    1.  Transform the file name to a path segment as above.
-
-    2.  Append the transformed segment to the URI.
-
-
-\[\*] Some file systems allow directory objects to be treated as files
-in some cases.  This can be reflected in a file URI by using the
-name of the ultimate directory as the file name (such that the URI does
-not have a trailing slash "/").  Be aware that merging a relative URI
-reference to such a base URI as per Section 5.2 of {{RFC3986}} could
-remove the directory name from the resulting target URI.
-
-The algorithm given here is intentionally general, and may not cover
-some system-specific edge cases.  See {{system-specific}} for brief
-discussions on system-specific considerations for some systems.
-
-<!-- fixme: move this to an appendix -->
-
-__Differences from RFC 1738__
-
-In {{RFC1738}} a file URL always started with the token "file://",
-followed by an (optionally blank) authority and a "/". That "/" was not
-considered part of the path.  This implies that the correct encoding for
-a file path in a UNIX-like environment would have been:
-
-~~~~~~~~~~
-     token     + authority + slash + path
-   = "file://" + ""        + "/"   + "/path/to/file.txt"
-   = "file:////path/to/file.txt"
-~~~~~~~~~~
-
-However that construct was never observed in practice, and in fact
-would have collided with the eventual encoding of UNC strings in URIs
-described non-normatively in {{ext-unc-path}}.
-
-
-## Translating Non-local File Path to file URI  {#remote-to-uri}
-
-Translating a non-local file path, including a UNC string, to a file
-URI follows the same basic algorithm as for local files, above, except
-that the authority MUST refer to the network-accessible node that hosts
-the file.
-
-For example, in a clustered OpenVMS Files-11 system the authority
-would contain the node name.  Where the original node reference
-includes a username and password in an access control string, they MAY
-be transcribed into the userinfo field of the authority ({{RFC3986}},
-Section 3.2.1), security considerations ({{security}}) notwithstanding.
-
-See {{ext-unc}} for an explicit (but non-normative and strictly optional)
-handling of UNC strings.
-
-
-<!-- fixme: move this out of the main spec (appendix or intro?) -->
-
-## Incompatible File Paths {#incompat}
-
-Some conventional file path formats are known to be incompatible with
-the file URI scheme.
-
-
-### Win32 Namespaces {#namespaces}
-
-The Microsoft Windows API defines Win32 Namespaces {{Win32-Namespaces}}
-for interacting with files and devices using Windows API functions.
-These namespaced paths are prefixed by "\\\\?\\" for Win32 File
-Namespaces and "\\\\.\\" for Win32 Device Namespaces.  There is also a
-special case for UNC file paths in Win32 File Namespaces, referred to as
-"Long UNC", using the prefix "\\\\?\\UNC\\".
-
-This specification does not define a mechanism for translating
-namespaced paths to or from file URIs.
+This specification neither defines nor forbids any set of operations
+that might be performed on a file identified by a non-local file URI.
 
 
 # Encoding {#encoding}
-
-To avoid ambiguity, a file URI SHOULD be transported as an
-Internationalized Resource Identifier (IRI) {{RFC3987}}, or as a URI
-with non-ASCII characters encoded according to the UTF-8 character
-encoding {{STD63}} and percent-encoded as needed ({{RFC3986}},
-Section 2.5).
 
 The encoding of a file URI depends on the file system that stores the
 identified file.  If the file system uses a known non-Unicode character
@@ -422,14 +302,6 @@ transported as an Internationalized Resource Identifier (IRI)
   be idempotent with the original, interoperable form.
 
 -->
-
-
-# Origins {#origin}
-
-<!-- fixme: are we keeping this? -->
-
-As per {{RFC6454}}, Section 4, when determining the origin of a file
-URI implementations MAY return an implementation-defined value.
 
 
 # Security Considerations {#security}
@@ -461,7 +333,7 @@ Implementers MUST research the reserved names and characters for the
 types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.
 
-<!-- fixme -->
+<!-- fixme: improve this; add encoding security concerns -->
 Some file systems have case-sensitive file naming and some do not.
 Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
@@ -518,6 +390,17 @@ and Dave Thaler for their comments and suggestions.
 
 --- back
 
+# Differences from Previous Specifications
+
+According to the definition in {{RFC1738}} a file URL always started
+with the token "file://", followed by an (optionally blank) host name
+and a "/".  The syntax given in {{syntax}} makes the entire authority
+component optional.
+
+Additionally, the definition in {{RFC1738}} did not include any user
+information in the authority.
+
+
 # Example URIs  {#examples}
 
 The syntax in {{syntax}} is intended to support file URIs that take the
@@ -540,6 +423,32 @@ Non-local files:
 * A non-local file, with an explicit authority. E.g.:
 
   * `file://host.example.com/path/to/file`
+
+
+# Similar Technologies
+
+* The WHATWG defines a living URL standard {{WHATWG-URL}}, which
+  includes algorithms for interpreting file URIs (as URLs).
+
+* The Universal Naming Convention (UNC) {{MS-DTYP}} defines a string
+  format that can perform a similar role to the file URI scheme in
+  describing the location of files, except that files located by UNC
+  filespace selector strings are typically stored on a remote machine
+  and accessed using a network protocol.  A UNC filespace selector
+  string has three parts: host, share, and path; described for
+  informational purposes in {{unc-syntax}}.  {{ext-unc}} lists some
+  ways in which UNC filespace selector strings are currently made to
+  interoperate with the file URI scheme.
+
+* The Microsoft Windows API defines Win32 Namespaces
+  {{Win32-Namespaces}} for interacting with files and devices using
+  Windows API functions.  These namespaced paths are prefixed by
+  "\\\\?\\" for Win32 File Namespaces and "\\\\.\\" for Win32 Device
+  Namespaces.  There is also a special case for UNC file paths in Win32
+  File Namespaces, referred to as "Long UNC", using the prefix
+  "\\\\?\\UNC\\".  This specification does not define a mechanism for
+  translating namespaced paths to or from file URIs.
+
 
 # System-specific Operations  {#system-specific}
 
@@ -573,12 +482,12 @@ to and from URIs using Normalization Form C ({{encoding}}).
 
 ## OpenVMS Files-11 Systems  {#sys-vms}
 
-When mapping a VMS file path to a file URI, map the device name
+When mapping a VMS file path to a file URI, the device name is mapped
 into the first path segment.  Note that the dollars sign "$" is
 a reserved character per the definition in {{RFC3986}}, Section 2.2,
 so should be percent-encoded if present in the device name.
 
-If the VMS file path includes a node reference, use that as the
+If the VMS file path includes a node reference, that is used as the
 authority.  Where the original node reference includes a username and
 password in an access control string, they can be transcribed into the
 userinfo field of the authority ({{RFC3986}}, Section 3.2.1), security
@@ -587,8 +496,8 @@ considerations ({{security}}) notwithstanding.
 
 # Nonstandard Syntax Variations  {#nonstandard-syntax}
 
-These variations may be encountered for historical reasons, but are
-not supported by the normative syntax of {{syntax}}.
+These variations may be encountered by existing usages of the file URI
+scheme, but are not supported by the normative syntax of {{syntax}}.
 
 This appendix is not normative.
 
@@ -615,18 +524,19 @@ URIs of the form `file:///c:/path/to/file` are already supported by the
 `path-absolute` rule.
 
 Note that comparison of drive letters in DOS or Windows file paths
-is case-insensitive.  Some usages of file URIs therefore canonicalize
+is case-insensitive, some usages of file URIs therefore canonicalize
 drive letters by converting them to uppercase.
 
 
 ### Relative Paths  {#ext-relative}
 
-In DOS- or Windows-based file systems, relative paths beginning with
-a slash "/" should be resolved relative to the drive letter, and
-resolution of ".." dot segments (per Section 5.2.4 of {{RFC3986}})
-should not ever overwrite the drive letter.
+To mimic the behaviour of DOS- or Windows-based file systems, relative
+paths beginning with a slash "/" can be resolved relative to the drive
+letter, when present, and resolution of ".." dot segments (per Section
+5.2.4 of {{RFC3986}}) can be modified to not ever overwrite the drive
+letter.
 
-e.g.:
+For example:
 
 ~~~~~~~~~~
    base:       file:///c:/path/to/file.txt
@@ -639,19 +549,19 @@ e.g.:
 ~~~~~~~~~~
 
 Relative paths with a drive letter followed by a character other than
-a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") should not be
+a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") might not be
 accepted as dereferenceable URIs in DOS or Windows systems.
 
 
 ### Vertical Bar Character  {#ext-pipe}
 
-Historically some usages have included a vertical line character "\|"
-instead of a colon ":" in the drive letter construct.  {{RFC3986}}
-forbids the use of the vertical line, however it may be necessary to
-interpret or update old URIs.
+Historically some usages of file URIs have included a vertical line
+character "\|" instead of a colon ":" in the drive letter construct.
+{{RFC3986}} forbids the use of the vertical line, however it may be
+necessary to interpret or update old URIs.
 
 For interpreting such URIs, the `auth-path` and `local-path` rules in
-{{syntax}} and the `drive-letter` rule above are replaced with the
+{{syntax}} and the `drive-letter` rule above can be replaced with the
 following:
 
 ~~~~~~~~~~
@@ -680,9 +590,17 @@ colon ":".
 
 ## UNC Strings  {#ext-unc}
 
-A UNC filespace selector string can be directly translated to a
-URI; see {{encoding}}.  The following is an algorithmic description
-of the process of translating a UNC string to a file URI:
+Some usages of the file URI scheme allow UNC filespace selector strings
+to be translated to and from file URIs, either by mapping the
+equivalent segments of the two schemes (hostname to authority,
+sharename+objects to path), or by mapping the entire UNC string to the
+path segment of a URI.
+
+### file URI with Authority  {#ext-unc-map}
+
+The following is an algorithmic description of the process of
+translating a UNC filespace selector string to a file URI by
+mapping the equivalent segments of the two schemes:
 
 
 1.  Initialise the URI with the "file:" scheme identifier.
@@ -696,21 +614,21 @@ of the process of translating a UNC string to a file URI:
 3.  Append the sharename:
 
     1.  Transform the sharename to a path segment ({{RFC3986}},
-        Section 3.3) as per Section 2 of {{RFC3986}}.
+        Section 3.3) to conform to the encoding rules of Section 2 of
+        {{RFC3986}}.
 
     2.  Append a delimiting slash character "/" and the transformed
         segment to the URI.
 
 4.  For each objectname:
 
-    1.  Transform the objectname to a path segment ({{RFC3986}},
-        Section 3.3) as per Section 2 of {{RFC3986}}.
+    1.  Transform the objectname to a path segment as above.
 
     2.  Append a delimiting slash character "/" and the transformed
         segment to the URI.
 
 
-Example:
+For example:
 
 ~~~~~~~~~~
    UNC String:   \\host.example.com\Share\path\to\file.txt
@@ -718,14 +636,14 @@ Example:
 ~~~~~~~~~~
 
 
-## UNC Paths  {#ext-unc-path}
+## file URI with UNC Path  {#ext-unc-path}
 
 It is common to encounter file URIs that encode entire UNC strings in
 the path, usually with all backslash "\\" characters replaced with
 slashes "/".
 
-To interpret such URIs, the `auth-path` rule in {{syntax}} is replaced
-with the following:
+To interpret such URIs, the `auth-path` rule in {{syntax}} can be
+replaced with the following:
 
 ~~~~~~~~~~
    auth-path      = [ file-auth ] path-absolute
@@ -763,17 +681,16 @@ Non-local files:
   This representation is notably used by the Firefox web browser.
   See Bugzilla#107540 [Bug107540].
 
-It also further limits the set of file URIs that can be translated to
-a local file path to those with a path that does not encode a UNC
-string.
+It also further limits the definitions of a "local file URI" by
+excluding with a path that encodes a UNC string.
 
 
 ## Backslash as Separator  {#ext-backslash}
 
 Historically some usages have copied entire file paths into the path
-components of file URIs.  Where DOS or Windows file paths were copied
-thus, resulting URI strings contained unencoded backslash "\\"
-characters, which are forbidden by both {{RFC1738}} and {{RFC3986}}.
+components of file URIs.  Where DOS or Windows file paths were thus
+copied the resulting URI strings contained unencoded backslash "\\"
+characters which are forbidden by both {{RFC1738}} and {{RFC3986}}.
 
 It may be possible to translate or update such an invalid file URI by
 replacing all backslashes "\\" with slashes "/", if it can be
