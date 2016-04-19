@@ -760,7 +760,7 @@ scheme, but are not supported by the normative syntax of <xref target="syntax"/>
 
 <section anchor="ext-drives" title="DOS and Windows Drive Letters">
 
-<t>On Windows- or DOS-based file systems a absolute file path can begin
+<t>On Windows- or DOS-based file systems an absolute file path can begin
 with a drive letter.  To facilitate this, the <spanx style="verb">local-path</spanx> rule in
 <xref target="syntax"/> can be replaced with the following:</t>
 
