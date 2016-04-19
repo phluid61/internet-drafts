@@ -656,7 +656,7 @@ replaced with the following:
    inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
 ~~~~~~~~~~
 
-This syntax uses the `userinfo`, `IPv4address, `IPv6address`,
+This syntax uses the `userinfo`, `IPv4address`, `IPv6address`,
 `IPvFuture`, and `reg-name` rules from {{RFC3986}}.
 
 > Note that the `file-host` rule is the same as `host` but with
