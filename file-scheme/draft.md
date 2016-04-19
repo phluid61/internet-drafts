@@ -690,7 +690,7 @@ excluding those with a path that encodes a UNC string.
 Historically some usages have copied entire file paths into the path
 components of file URIs.  Where DOS or Windows file paths were thus
 copied the resulting URI strings contained unencoded backslash "\\"
-characters which are forbidden by both {{RFC1738}} and {{RFC3986}}.
+characters, which are forbidden by both {{RFC1738}} and {{RFC3986}}.
 
 It may be possible to translate or update such an invalid file URI by
 replacing all backslashes "\\" with slashes "/", if it can be
