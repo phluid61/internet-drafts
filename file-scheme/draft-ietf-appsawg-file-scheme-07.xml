@@ -947,7 +947,7 @@ excluding those with a path that encodes a UNC string.</t>
 <t>Historically some usages have copied entire file paths into the path
 components of file URIs.  Where DOS or Windows file paths were thus
 copied the resulting URI strings contained unencoded backslash “\”
-characters which are forbidden by both <xref target="RFC1738"/> and <xref target="RFC3986"/>.</t>
+characters, which are forbidden by both <xref target="RFC1738"/> and <xref target="RFC3986"/>.</t>
 
 <t>It may be possible to translate or update such an invalid file URI by
 replacing all backslashes “\” with slashes “/”, if it can be
