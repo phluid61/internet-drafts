@@ -911,8 +911,8 @@ replaced with the following:</t>
    inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
 ]]></artwork></figure>
 
-<t>This syntax uses the <spanx style="verb">userinfo</spanx>, <spanx style="verb">IPv4address, </spanx>IPv6address<spanx style="verb">,
-</spanx>IPvFuture<spanx style="verb">, and </spanx>reg-name` rules from <xref target="RFC3986"/>.</t>
+<t>This syntax uses the <spanx style="verb">userinfo</spanx>, <spanx style="verb">IPv4address</spanx>, <spanx style="verb">IPv6address</spanx>,
+<spanx style="verb">IPvFuture</spanx>, and <spanx style="verb">reg-name</spanx> rules from <xref target="RFC3986"/>.</t>
 
 <t><list style='empty'>
   <t>Note that the <spanx style="verb">file-host</spanx> rule is the same as <spanx style="verb">host</spanx> but with
