@@ -667,14 +667,14 @@ following forms, in addition to those in {{examples}}:
 
 Non-local files:
 
-* The "traditional" representation of a non-local file, with an empty
-  authority and a complete (transformed) UNC string in the path.  E.g.:
+* The representation of a non-local file, with an empty authority and a
+  complete (transformed) UNC string in the path.  E.g.:
 
   * `file:////host.example.com/path/to/file`
 
 * As above, with an extra slash between the empty authority and the
-  transformed UNC string, conformant with the definition from
-  {{RFC1738}}.  E.g.:
+  transformed UNC string, as per the syntax defined in {{RFC1738}}.
+  E.g.:
 
   * `file://///host.example.com/path/to/file`
 
@@ -682,7 +682,7 @@ Non-local files:
   See Bugzilla#107540 [Bug107540].
 
 It also further limits the definitions of a "local file URI" by
-excluding with a path that encodes a UNC string.
+excluding those with a path that encodes a UNC string.
 
 
 ## Backslash as Separator  {#ext-backslash}
