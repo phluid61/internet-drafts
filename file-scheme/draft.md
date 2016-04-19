@@ -593,8 +593,8 @@ colon ":".
 Some usages of the file URI scheme allow UNC filespace selector strings
 to be translated to and from file URIs, either by mapping the
 equivalent segments of the two schemes (hostname to authority,
-sharename+objects to path), or by mapping the entire UNC string to the
-path segment of a URI.
+sharename+objectnames to path), or by mapping the entire UNC string to
+the path segment of a URI.
 
 ### file URI with Authority  {#ext-unc-map}
 
