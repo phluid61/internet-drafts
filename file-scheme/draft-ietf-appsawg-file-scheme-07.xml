@@ -925,13 +925,13 @@ following forms, in addition to those in <xref target="examples"/>:</t>
 <t>Non-local files:</t>
 
 <t><list style="symbols">
-  <t>The “traditional” representation of a non-local file, with an empty
-authority and a complete (transformed) UNC string in the path.  E.g.:  <list style="symbols">
+  <t>The representation of a non-local file, with an empty authority and a
+complete (transformed) UNC string in the path.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file:////host.example.com/path/to/file</spanx></t>
     </list></t>
   <t>As above, with an extra slash between the empty authority and the
-transformed UNC string, conformant with the definition from
-<xref target="RFC1738"/>.  E.g.:  <list style="symbols">
+transformed UNC string, as per the syntax defined in <xref target="RFC1738"/>.
+E.g.:  <list style="symbols">
       <t><spanx style="verb">file://///host.example.com/path/to/file</spanx></t>
     </list>
 This representation is notably used by the Firefox web browser.
@@ -939,7 +939,7 @@ See Bugzilla#107540 <xref target="Bug107540"></xref>.</t>
 </list></t>
 
 <t>It also further limits the definitions of a “local file URI” by
-excluding with a path that encodes a UNC string.</t>
+excluding those with a path that encodes a UNC string.</t>
 
 </section>
 <section anchor="ext-backslash" title="Backslash as Separator">
