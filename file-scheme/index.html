@@ -895,10 +895,10 @@
 <p/>
 
 <ul>
-  <li>The &#8220;traditional&#8221; representation of a non-local file, with an empty authority and a complete (transformed) UNC string in the path.  E.g.:  <ul><li><samp>file:////host.example.com/path/to/file</samp></li></ul></li>
-  <li>As above, with an extra slash between the empty authority and the transformed UNC string, conformant with the definition from <a href="#RFC1738">[RFC1738]</a>.  E.g.:  <ul><li><samp>file://///host.example.com/path/to/file</samp></li></ul><p> This representation is notably used by the Firefox web browser.  See Bugzilla#107540 </p><a href="#Bug107540">[Bug107540]</a>.</li>
+  <li>The representation of a non-local file, with an empty authority and a complete (transformed) UNC string in the path.  E.g.:  <ul><li><samp>file:////host.example.com/path/to/file</samp></li></ul></li>
+  <li>As above, with an extra slash between the empty authority and the transformed UNC string, as per the syntax defined in <a href="#RFC1738">[RFC1738]</a>.  E.g.:  <ul><li><samp>file://///host.example.com/path/to/file</samp></li></ul><p> This representation is notably used by the Firefox web browser.  See Bugzilla#107540 </p><a href="#Bug107540">[Bug107540]</a>.</li>
 </ul>
-<p id="rfc.section.E.3.p.8">It also further limits the definitions of a &#8220;local file URI&#8221; by excluding with a path that encodes a UNC string.</p>
+<p id="rfc.section.E.3.p.8">It also further limits the definitions of a &#8220;local file URI&#8221; by excluding those with a path that encodes a UNC string.</p>
 <h1 id="rfc.appendix.E.4"><a href="#rfc.appendix.E.4">E.4.</a> <a href="#ext-backslash" id="ext-backslash">Backslash as Separator</a></h1>
 <p id="rfc.section.E.4.p.1">Historically some usages have copied entire file paths into the path components of file URIs.  Where DOS or Windows file paths were thus copied the resulting URI strings contained unencoded backslash &#8220;\&#8221; characters which are forbidden by both <a href="#RFC1738">[RFC1738]</a> and <a href="#RFC3986">[RFC3986]</a>.</p>
 <p id="rfc.section.E.4.p.2">It may be possible to translate or update such an invalid file URI by replacing all backslashes &#8220;\&#8221; with slashes &#8220;/&#8221;, if it can be determined with reasonable certainty that the backslashes are intended as path separators.</p>
