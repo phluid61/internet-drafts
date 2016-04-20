@@ -106,8 +106,8 @@ no authority, or where the authority is the special string
 
 <t>The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 <xref target="RFC5234"/>, including the core ABNF syntax rule <spanx style="verb">ALPHA</spanx> defined by that
-specification, and importing the <spanx style="verb">userinfo</spanx>, <spanx style="verb">host</spanx> and <spanx style="verb">path-absolute</spanx>
-rules from <xref target="RFC3986"/> (as updated by <xref target="RFC6874"/>.)</t>
+specification, and importing the <spanx style="verb">host</spanx> and <spanx style="verb">path-absolute</spanx> rules from
+<xref target="RFC3986"/> (as updated by <xref target="RFC6874"/>.)</t>
 
 <t>The generic syntax in <xref target="RFC3986"/> includes <spanx style="verb">path</spanx> and <spanx style="verb">authority</spanx>
 components, for each of which only a subset is used in the definition
@@ -117,7 +117,8 @@ below.</t>
 
 <t>The syntax definition below is different from those given in
 <xref target="RFC1630"/> and <xref target="RFC1738"/> as it is derived from the generic syntax
-of <xref target="RFC3986"/>, which post-dates the previous file URI specifications.</t>
+of <xref target="RFC3986"/>, which post-dates the previous file URI specifications.
+<xref target="diff"/> enumerates significant differences.</t>
 
 <figure><artwork><![CDATA[
    file-URI       = file-scheme ":" file-hier-part
@@ -132,7 +133,7 @@ of <xref target="RFC3986"/>, which post-dates the previous file URI specificatio
    local-path     = path-absolute
 
    file-auth      = "localhost"
-                  / [ userinfo "@" ] host
+                  / host
 ]]></artwork></figure>
 
 <t>As a special case, the “file-auth” rule can match the string
@@ -241,15 +242,6 @@ restrict the use of data obtained from URI components accordingly.</t>
 Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
 URIs.</t>
-
-<t>Additionally, as discussed in the HP OpenVMS Systems Documentation
-&lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt;
-“access control strings include sufficient information to allow someone
-to break in to the remote account, [therefore] they create serious
-security exposure.” In a similar vein, the presence of a password in a
-“user:password” userinfo field is deprecated by <xref target="RFC3986"/>.  As such,
-the userinfo field of a file URI, if present, MUST NOT contain a
-password.</t>
 
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
@@ -644,15 +636,15 @@ and Dave Thaler for their comments and suggestions.</t>
     </references>
 
 
-<section anchor="differences-from-previous-specifications" title="Differences from Previous Specifications">
+<section anchor="diff" title="Differences from Previous Specifications">
 
 <t>According to the definition in <xref target="RFC1738"/> a file URL always started
 with the token “file://”, followed by an (optionally blank) host name
 and a “/”.  The syntax given in <xref target="syntax"/> makes the entire authority
-component optional.</t>
+component, including the double slashes “//”, optional.</t>
 
 <t>Additionally, the definition in <xref target="RFC1738"/> did not include any user
-information in the authority.</t>
+information in the authority.  <!-- fixme: is this staying? --></t>
 
 </section>
 <section anchor="examples" title="Example URIs">
@@ -746,8 +738,7 @@ so should be percent-encoded if present in the device name.</t>
 <t>If the VMS file path includes a node reference, that is used as the
 authority.  Where the original node reference includes a username and
 password in an access control string, they can be transcribed into the
-userinfo field of the authority (<xref target="RFC3986"/>, Section 3.2.1), security
-considerations (<xref target="security"/>) notwithstanding.</t>
+userinfo field of the authority if present (see <xref target="ext-userinfo"/>).</t>
 
 </section>
 </section>
@@ -758,6 +749,32 @@ scheme, but are not supported by the normative syntax of <xref target="syntax"/>
 
 <t>This appendix is not normative.</t>
 
+<section anchor="ext-userinfo" title="User Information">
+
+<t>It might be necessary to include user information such as a username in
+a file URI, for example when mapping a VMS file path with a node
+reference that includes the username.</t>
+
+<t>To allow user information to be included in a file URI, the <spanx style="verb">file-auth</spanx>
+rule in <xref target="syntax"/> can be replaced with the following:</t>
+
+<figure><artwork><![CDATA[
+   file-auth      = "localhost"
+                  / [ userinfo "@" ] host
+]]></artwork></figure>
+
+<t>This uses the <spanx style="verb">userinfo</spanx> rule from <xref target="RFC3986"/>.</t>
+
+<t>As discussed in the HP OpenVMS Systems Documentation
+&lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt;
+“access control strings include sufficient information to allow someone
+to break in to the remote account, [therefore] they create serious
+security exposure.” In a similar vein, the presence of a password in a
+“user:password” userinfo field is deprecated by <xref target="RFC3986"/>.  As such,
+the userinfo field of a file URI, if present, MUST NOT (?) contain a
+password. <!-- fixme --></t>
+
+</section>
 <section anchor="ext-drives" title="DOS and Windows Drive Letters">
 
 <t>On Windows- or DOS-based file systems an absolute file path can begin
@@ -904,15 +921,15 @@ replaced with the following:</t>
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+   unc-authority  = 2*3"/" file-host
 
    file-host      = inline-IP / IPv4address / reg-name
 
    inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
 ]]></artwork></figure>
 
-<t>This syntax uses the <spanx style="verb">userinfo</spanx>, <spanx style="verb">IPv4address</spanx>, <spanx style="verb">IPv6address</spanx>,
-<spanx style="verb">IPvFuture</spanx>, and <spanx style="verb">reg-name</spanx> rules from <xref target="RFC3986"/>.</t>
+<t>This syntax uses the <spanx style="verb">IPv4address</spanx>, <spanx style="verb">IPv6address</spanx>, <spanx style="verb">IPvFuture</spanx>,
+and <spanx style="verb">reg-name</spanx> rules from <xref target="RFC3986"/>.</t>
 
 <t><list style='empty'>
   <t>Note that the <spanx style="verb">file-host</spanx> rule is the same as <spanx style="verb">host</spanx> but with
@@ -1056,7 +1073,7 @@ presented for convenience.  This collected syntax is not normative.</t>
    file-auth      = "localhost"
                   / [ userinfo "@" ] host
 
-   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+   unc-authority  = 2*3"/" file-host
 
    file-host      = inline-IP / IPv4address / reg-name
 
