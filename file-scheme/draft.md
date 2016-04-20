@@ -705,8 +705,8 @@ Non-local files:
   This representation is notably used by the Firefox web browser.
   See Bugzilla#107540 [Bug107540].
 
-It also further limits the definitions of a "local file URI" by
-excluding those with a path that encodes a UNC string.
+It also further limits the definition of a "local file URI" by
+excluding any with a path that encodes a UNC string.
 
 
 ## Backslash as Separator  {#ext-backslash}
