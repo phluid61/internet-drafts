@@ -615,8 +615,8 @@ colon ":".
 ## UNC Strings  {#ext-unc}
 
 Some usages of the file URI scheme allow UNC filespace selector strings
-to be translated to and from file URIs, either by mapping the
-equivalent segments of the two schemes (hostname to authority,
+{{MS-DTYP}} to be translated to and from file URIs, either by mapping
+the equivalent segments of the two schemes (hostname to authority,
 sharename+objectnames to path), or by mapping the entire UNC string to
 the path segment of a URI.
 
@@ -660,7 +660,7 @@ For example:
 ~~~~~~~~~~
 
 
-## file URI with UNC Path  {#ext-unc-path}
+### file URI with UNC Path  {#ext-unc-path}
 
 It is common to encounter file URIs that encode entire UNC strings in
 the path, usually with all backslash "\\" characters replaced with
