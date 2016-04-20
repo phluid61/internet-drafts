@@ -237,9 +237,12 @@ of {{RFC3986}}, which post-dates the previous file URI specifications.
 
 As a special case, the "file-auth" rule can match the string
 "localhost" which is interpreted as "the machine from which the URI is
-being interpreted," exactly as if no authority were present.  To
-maximise compatibility with previous specifications, users MAY choose
-to include an "auth-path" with no "file-auth" when creating a URI.
+being interpreted," exactly as if no authority were present.
+Some current usages of the scheme incorrectly interpret the string
+"localhost" in the authority of a file URI as non-local.
+To maximise compatibility with previous specifications, users MAY
+choose to include an "auth-path" with no "file-auth" when creating a
+URI.
 
 Some systems have case-sensitive file naming and some do not.  As such
 the file scheme supports case sensitivity, in order to retain the case
@@ -389,8 +392,12 @@ with the token "file://", followed by an (optionally blank) host name
 and a "/".  The syntax given in {{syntax}} makes the entire authority
 component, including the double slashes "//", optional.
 
-Additionally, the definition in {{RFC1738}} did not include any user
-information in the authority.  <!-- fixme: is this staying? -->
+Additionally one interpretation of the definition in {{RFC1738}} would
+mean that a file URI with a `host` that resolves to the local machine
+would be treated as a local file.  However common usages of the scheme
+have treated any value in the `host` (except "localhost") as an
+indiciation that the URI is non-local.  This specification has adopted
+the common usage.
 
 
 # Example URIs  {#examples}
