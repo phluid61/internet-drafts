@@ -743,7 +743,7 @@ so should be percent-encoded if present in the device name.</t>
 <t>If the VMS file path includes a node reference, that is used as the
 authority.  Where the original node reference includes a username and
 password in an access control string, they can be transcribed into the
-userinfo field of the authority if present (see <xref target="ext-userinfo"/>).</t>
+authority using the non-standard syntax extension in <xref target="ext-userinfo"/>.</t>
 
 </section>
 </section>
@@ -758,7 +758,7 @@ scheme, but are not supported by the normative syntax of <xref target="syntax"/>
 
 <t>It might be necessary to include user information such as a username in
 a file URI, for example when mapping a VMS file path with a node
-reference that includes the username.</t>
+reference that includes a username.</t>
 
 <t>To allow user information to be included in a file URI, the <spanx style="verb">file-auth</spanx>
 rule in <xref target="syntax"/> can be replaced with the following:</t>
