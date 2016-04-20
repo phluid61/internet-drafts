@@ -105,8 +105,7 @@ no authority, or where the authority is the special string
 <section anchor="syntax" title="Syntax">
 
 <t>The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
-<xref target="RFC5234"/>, including the core ABNF syntax rule <spanx style="verb">ALPHA</spanx> defined by that
-specification, and importing the <spanx style="verb">host</spanx> and <spanx style="verb">path-absolute</spanx> rules from
+<xref target="RFC5234"/>, importing the <spanx style="verb">host</spanx> and <spanx style="verb">path-absolute</spanx> rules from
 <xref target="RFC3986"/> (as updated by <xref target="RFC6874"/>.)</t>
 
 <t>The generic syntax in <xref target="RFC3986"/> includes <spanx style="verb">path</spanx> and <spanx style="verb">authority</spanx>
@@ -136,13 +135,13 @@ of <xref target="RFC3986"/>, which post-dates the previous file URI specificatio
                   / host
 ]]></artwork></figure>
 
-<t>As a special case, the “file-auth” rule can match the string
+<t>As a special case, the <spanx style="verb">file-auth</spanx> rule can match the string
 “localhost” which is interpreted as “the machine from which the URI is
 being interpreted,” exactly as if no authority were present.
 Some current usages of the scheme incorrectly interpret the string
 “localhost” in the authority of a file URI as non-local.
 To maximise compatibility with previous specifications, users MAY
-choose to include an “auth-path” with no “file-auth” when creating a
+choose to include an <spanx style="verb">auth-path</spanx> with no <spanx style="verb">file-auth</spanx> when creating a
 URI.</t>
 
 <t>Some file systems have case-sensitive file naming and some do not.  As
@@ -173,7 +172,7 @@ standardized operations that can be performed on files.</t>
 
 <t>A file URI can be dependably dereferenced or translated to a local file
 path only if it is local.  A file URI is considered “local” if it has
-no file-auth, or the file-auth is the special string “localhost”.</t>
+no <spanx style="verb">file-auth</spanx>, or the <spanx style="verb">file-auth</spanx> is the special string “localhost”.</t>
 
 <t>This specification neither defines nor forbids any set of operations
 that might be performed on a file identified by a non-local file URI.</t>
@@ -723,9 +722,8 @@ already closely resembles POSIX file paths.</t>
 <t>When mapping a DOS- or Windows-like file path to a file URI, the drive
 letter (e.g. “c:”) is typically mapped into the first path segment.</t>
 
-<t>See <xref target="nonstandard-syntax"/> for some explicit (but non-normative and
-strictly optional) rules for interacting with DOS- or Windows-like file
-paths and URIs.</t>
+<t><xref target="nonstandard-syntax"/> lists some non-standard techniques for
+interacting with DOS- or Windows-like file paths and URIs.</t>
 
 </section>
 <section anchor="sys-osx" title="Mac OS X Systems">
@@ -793,6 +791,8 @@ with a drive letter.  To facilitate this, the <spanx style="verb">local-path</sp
 
    drive-letter   = ALPHA ":"
 ]]></artwork></figure>
+
+<t>The <spanx style="verb">ALPHA</spanx> rule is defined in <xref target="RFC5234"/>.</t>
 
 <t>This is intended to support the minimal representation of a local file
 in a DOS- or Windows-based environment, with no authority field and an
