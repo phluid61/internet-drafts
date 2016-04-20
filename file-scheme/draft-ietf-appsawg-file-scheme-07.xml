@@ -875,8 +875,8 @@ colon “:”.</t>
 <section anchor="ext-unc" title="UNC Strings">
 
 <t>Some usages of the file URI scheme allow UNC filespace selector strings
-to be translated to and from file URIs, either by mapping the
-equivalent segments of the two schemes (hostname to authority,
+<xref target="MS-DTYP"/> to be translated to and from file URIs, either by mapping
+the equivalent segments of the two schemes (hostname to authority,
 sharename+objectnames to path), or by mapping the entire UNC string to
 the path segment of a URI.</t>
 
@@ -913,7 +913,6 @@ segment to the URI.</t>
    URI:          file://host.example.com/Share/path/to/file.txt
 ]]></artwork></figure>
 
-</section>
 </section>
 <section anchor="ext-unc-path" title="file URI with UNC Path">
 
@@ -965,6 +964,7 @@ See Bugzilla#107540 <xref target="Bug107540"></xref>.</t>
 <t>It also further limits the definitions of a “local file URI” by
 excluding those with a path that encodes a UNC string.</t>
 
+</section>
 </section>
 <section anchor="ext-backslash" title="Backslash as Separator">
 
