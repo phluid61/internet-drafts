@@ -467,9 +467,8 @@ already closely resembles POSIX file paths.
 When mapping a DOS- or Windows-like file path to a file URI, the drive
 letter (e.g. "c:") is typically mapped into the first path segment.
 
-See {{nonstandard-syntax}} for some explicit (but non-normative and
-strictly optional) rules for interacting with DOS- or Windows-like file
-paths and URIs.
+{{nonstandard-syntax}} lists some non-standard techniques for
+interacting with DOS- or Windows-like file paths and URIs.
 
 
 ## Mac OS X Systems  {#sys-osx}
