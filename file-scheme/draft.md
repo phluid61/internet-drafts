@@ -396,8 +396,8 @@ Additionally one interpretation of the definition in {{RFC1738}} would
 mean that a file URI with a `host` that resolves to the local machine
 would be treated as a local file.  However common usages of the scheme
 have treated any value in the `host` (except "localhost") as an
-indiciation that the URI is non-local.  This specification has adopted
-the common usage.
+indiciation that the URI is non-local.  This specification has
+explicitly adopted the common usage.
 
 
 # Example URIs  {#examples}
