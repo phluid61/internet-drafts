@@ -542,7 +542,7 @@
    file-auth      = "localhost"
                   / host
 </pre>
-<p id="rfc.section.2.p.4">As a special case, the &#8220;file-auth&#8221; rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  To maximise compatibility with previous specifications, users MAY choose to include an &#8220;auth-path&#8221; with no &#8220;file-auth&#8221; when creating a URI.</p>
+<p id="rfc.section.2.p.4">As a special case, the &#8220;file-auth&#8221; rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret the string &#8220;localhost&#8221; in the authority of a file URI as non-local.  To maximise compatibility with previous specifications, users MAY choose to include an &#8220;auth-path&#8221; with no &#8220;file-auth&#8221; when creating a URI.</p>
 <p id="rfc.section.2.p.5">Some systems have case-sensitive file naming and some do not.  As such the file scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is soley the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
 <p id="rfc.section.2.p.6">Some file systems allow directory objects to be treated as files in some cases.  This can be reflected in a file URI by omitting the trailing slash &#8220;/&#8221; from the path.  Be aware that merging a relative URI reference to such a base URI as per Section 5.2 of <a href="#RFC3986">[RFC3986]</a> could remove the directory name from the resulting target URI.</p>
 <p id="rfc.section.2.p.7">Also see <a href="#nonstandard-syntax">Appendix E</a> that lists some nonstandard syntax variations that can be encountered in practice.</p>
@@ -756,7 +756,7 @@
 </table>
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#diff" id="diff">Differences from Previous Specifications</a></h1>
 <p id="rfc.section.A.p.1">According to the definition in <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) host name and a &#8220;/&#8221;.  The syntax given in <a href="#syntax">Section 2</a> makes the entire authority component, including the double slashes &#8220;//&#8221;, optional.</p>
-<p id="rfc.section.A.p.2">Additionally, the definition in <a href="#RFC1738">[RFC1738]</a> did not include any user information in the authority.  </p>
+<p id="rfc.section.A.p.2">Additionally one interpretation of the definition in <a href="#RFC1738">[RFC1738]</a> would mean that a file URI with a <samp>host</samp> that resolves to the local machine would be treated as a local file.  However common usages of the scheme have treated any value in the <samp>host</samp> (except &#8220;localhost&#8221;) as an indiciation that the URI is non-local.  This specification has adopted the common usage.</p>
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#examples" id="examples">Example URIs</a></h1>
 <p id="rfc.section.B.p.1">The syntax in <a href="#syntax">Section 2</a> is intended to support file URIs that take the following forms:</p>
 <p id="rfc.section.B.p.2">Local files:</p>
