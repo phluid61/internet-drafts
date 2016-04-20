@@ -205,8 +205,8 @@ no authority, or where the authority is the special string
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
 {{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `userinfo`, `host` and `path-absolute`
-rules from {{RFC3986}} (as updated by {{RFC6874}}.)
+specification, and importing the `host` and `path-absolute` rules from
+{{RFC3986}} (as updated by {{RFC6874}}.)
 
 The generic syntax in {{RFC3986}} includes `path` and `authority`
 components, for each of which only a subset is used in the definition
@@ -217,6 +217,7 @@ below.
 The syntax definition below is different from those given in
 {{RFC1630}} and {{RFC1738}} as it is derived from the generic syntax
 of {{RFC3986}}, which post-dates the previous file URI specifications.
+{{diff}} enumerates significant differences.
 
 ~~~~~~~~~~
    file-URI       = file-scheme ":" file-hier-part
@@ -231,7 +232,7 @@ of {{RFC3986}}, which post-dates the previous file URI specifications.
    local-path     = path-absolute
 
    file-auth      = "localhost"
-                  / [ userinfo "@" ] host
+                  / host
 ~~~~~~~~~~
 
 As a special case, the "file-auth" rule can match the string
@@ -339,15 +340,6 @@ Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
 URIs.
 
-Additionally, as discussed in the HP OpenVMS Systems Documentation
-\<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
-"access control strings include sufficient information to allow someone
-to break in to the remote account, \[therefore\] they create serious
-security exposure." In a similar vein, the presence of a password in a
-"user:password" userinfo field is deprecated by {{RFC3986}}.  As such,
-the userinfo field of a file URI, if present, MUST NOT contain a
-password.
-
 
 # IANA Considerations {#iana-considerations}
 
@@ -390,15 +382,15 @@ and Dave Thaler for their comments and suggestions.
 
 --- back
 
-# Differences from Previous Specifications
+# Differences from Previous Specifications  {#diff}
 
 According to the definition in {{RFC1738}} a file URL always started
 with the token "file://", followed by an (optionally blank) host name
 and a "/".  The syntax given in {{syntax}} makes the entire authority
-component optional.
+component, including the double slashes "//", optional.
 
 Additionally, the definition in {{RFC1738}} did not include any user
-information in the authority.
+information in the authority.  <!-- fixme: is this staying? -->
 
 
 # Example URIs  {#examples}
@@ -490,8 +482,7 @@ so should be percent-encoded if present in the device name.
 If the VMS file path includes a node reference, that is used as the
 authority.  Where the original node reference includes a username and
 password in an access control string, they can be transcribed into the
-userinfo field of the authority ({{RFC3986}}, Section 3.2.1), security
-considerations ({{security}}) notwithstanding.
+userinfo field of the authority if present (see {{ext-userinfo}}).
 
 
 # Nonstandard Syntax Variations  {#nonstandard-syntax}
@@ -500,6 +491,32 @@ These variations may be encountered by existing usages of the file URI
 scheme, but are not supported by the normative syntax of {{syntax}}.
 
 This appendix is not normative.
+
+
+## User Information  {#ext-userinfo}
+
+It might be necessary to include user information such as a username in
+a file URI, for example when mapping a VMS file path with a node
+reference that includes the username.
+
+To allow user information to be included in a file URI, the `file-auth`
+rule in {{syntax}} can be replaced with the following:
+
+~~~~~~~~~~
+   file-auth      = "localhost"
+                  / [ userinfo "@" ] host
+~~~~~~~~~~
+
+This uses the `userinfo` rule from {{RFC3986}}.
+
+As discussed in the HP OpenVMS Systems Documentation
+\<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
+"access control strings include sufficient information to allow someone
+to break in to the remote account, \[therefore\] they create serious
+security exposure." In a similar vein, the presence of a password in a
+"user:password" userinfo field is deprecated by {{RFC3986}}.  As such,
+the userinfo field of a file URI, if present, MUST NOT (?) contain a
+password. <!-- fixme -->
 
 
 ## DOS and Windows Drive Letters  {#ext-drives}
@@ -649,15 +666,15 @@ replaced with the following:
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+   unc-authority  = 2*3"/" file-host
 
    file-host      = inline-IP / IPv4address / reg-name
 
    inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
 ~~~~~~~~~~
 
-This syntax uses the `userinfo`, `IPv4address`, `IPv6address`,
-`IPvFuture`, and `reg-name` rules from {{RFC3986}}.
+This syntax uses the `IPv4address`, `IPv6address`, `IPvFuture`,
+and `reg-name` rules from {{RFC3986}}.
 
 > Note that the `file-host` rule is the same as `host` but with
 > percent-encoding applied to "[" and "]" characters.
@@ -795,7 +812,7 @@ presented for convenience.  This collected syntax is not normative.
    file-auth      = "localhost"
                   / [ userinfo "@" ] host
 
-   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+   unc-authority  = 2*3"/" file-host
 
    file-host      = inline-IP / IPv4address / reg-name
 
