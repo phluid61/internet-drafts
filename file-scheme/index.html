@@ -791,12 +791,12 @@
 <p id="rfc.section.D.3.p.1">The HFS+ file system uses a non-standard normalization form, similar to Normalization Form D.  Take care when transforming HFS+ file paths to and from URIs using Normalization Form C (<a href="#encoding">Section 4</a>).</p>
 <h1 id="rfc.appendix.D.4"><a href="#rfc.appendix.D.4">D.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-11 Systems</a></h1>
 <p id="rfc.section.D.4.p.1">When mapping a VMS file path to a file URI, the device name is mapped into the first path segment.  Note that the dollars sign &#8220;$&#8221; is a reserved character per the definition in <a href="#RFC3986">[RFC3986]</a>, Section 2.2, so should be percent-encoded if present in the device name.</p>
-<p id="rfc.section.D.4.p.2">If the VMS file path includes a node reference, that is used as the authority.  Where the original node reference includes a username and password in an access control string, they can be transcribed into the userinfo field of the authority if present (see <a href="#ext-userinfo">Appendix E.1</a>).</p>
+<p id="rfc.section.D.4.p.2">If the VMS file path includes a node reference, that is used as the authority.  Where the original node reference includes a username and password in an access control string, they can be transcribed into the authority using the non-standard syntax extension in <a href="#ext-userinfo">Appendix E.1</a>.</p>
 <h1 id="rfc.appendix.E"><a href="#rfc.appendix.E">Appendix E.</a> <a href="#nonstandard-syntax" id="nonstandard-syntax">Nonstandard Syntax Variations</a></h1>
 <p id="rfc.section.E.p.1">These variations may be encountered by existing usages of the file URI scheme, but are not supported by the normative syntax of <a href="#syntax">Section 2</a>.</p>
 <p id="rfc.section.E.p.2">This appendix is not normative.</p>
 <h1 id="rfc.appendix.E.1"><a href="#rfc.appendix.E.1">E.1.</a> <a href="#ext-userinfo" id="ext-userinfo">User Information</a></h1>
-<p id="rfc.section.E.1.p.1">It might be necessary to include user information such as a username in a file URI, for example when mapping a VMS file path with a node reference that includes the username.</p>
+<p id="rfc.section.E.1.p.1">It might be necessary to include user information such as a username in a file URI, for example when mapping a VMS file path with a node reference that includes a username.</p>
 <p id="rfc.section.E.1.p.2">To allow user information to be included in a file URI, the <samp>file-auth</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
 <pre>
    file-auth      = "localhost"
