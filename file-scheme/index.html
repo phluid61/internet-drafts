@@ -524,7 +524,7 @@
 <p id="rfc.section.1.1.p.2">Throughout this document the term &#8220;local file&#8221; is used to describe files that can be accessed through the local file system API using only the information included in the file path, not relying on other information such as network addresses.  It is important to note that a local file may not be physically located on the local machine, for example if a networked file system is transparently mounted into the local file system.</p>
 <p id="rfc.section.1.1.p.3">The term &#8220;local file URI&#8221; is used to describe file URIs which have no authority, or where the authority is the special string &#8220;localhost&#8221; (<a href="#syntax">Section 2</a>).</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#syntax" id="syntax">Syntax</a></h1>
-<p id="rfc.section.2.p.1">The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF) <a href="#RFC5234">[RFC5234]</a>, including the core ABNF syntax rule <samp>ALPHA</samp> defined by that specification, and importing the <samp>host</samp> and <samp>path-absolute</samp> rules from <a href="#RFC3986">[RFC3986]</a> (as updated by <a href="#RFC6874">[RFC6874]</a>.)</p>
+<p id="rfc.section.2.p.1">The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF) <a href="#RFC5234">[RFC5234]</a>, importing the <samp>host</samp> and <samp>path-absolute</samp> rules from <a href="#RFC3986">[RFC3986]</a> (as updated by <a href="#RFC6874">[RFC6874]</a>.)</p>
 <p id="rfc.section.2.p.2">The generic syntax in <a href="#RFC3986">[RFC3986]</a> includes <samp>path</samp> and <samp>authority</samp> components, for each of which only a subset is used in the definition of the file URI scheme.  The relevant subset of <samp>path</samp> is <samp>path-absolute</samp>, and the subset of <samp>authority</samp> is <samp>file-auth</samp>, given below.</p>
 <p id="rfc.section.2.p.3">The syntax definition below is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates the previous file URI specifications.  <a href="#diff">Appendix A</a> enumerates significant differences.</p>
 <pre>
@@ -542,13 +542,13 @@
    file-auth      = "localhost"
                   / host
 </pre>
-<p id="rfc.section.2.p.4">As a special case, the &#8220;file-auth&#8221; rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret the string &#8220;localhost&#8221; in the authority of a file URI as non-local.  To maximise compatibility with previous specifications, users MAY choose to include an &#8220;auth-path&#8221; with no &#8220;file-auth&#8221; when creating a URI.</p>
+<p id="rfc.section.2.p.4">As a special case, the <samp>file-auth</samp> rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret the string &#8220;localhost&#8221; in the authority of a file URI as non-local.  To maximise compatibility with previous specifications, users MAY choose to include an <samp>auth-path</samp> with no <samp>file-auth</samp> when creating a URI.</p>
 <p id="rfc.section.2.p.5">Some file systems have case-sensitive file naming and some do not.  As such the file URI scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is soley the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
 <p id="rfc.section.2.p.6">Some file systems allow directory objects to be treated as files in some cases.  This can be reflected in a file URI by omitting the trailing slash &#8220;/&#8221; from the path.  Be aware that merging a relative URI reference to such a base URI as per Section 5.2 of <a href="#RFC3986">[RFC3986]</a> could remove the directory name from the resulting target URI.</p>
 <p id="rfc.section.2.p.7">Also see <a href="#nonstandard-syntax">Appendix E</a> that lists some nonstandard syntax variations that can be encountered in practice.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#operations" id="operations">Operations Involving file URIs</a></h1>
 <p id="rfc.section.3.p.1">Implementations that provide dereferencing operations on file URIs SHOULD, at a minimum, provide a read-like operation to return the contents of a file located by a file URI.  Additional operations MAY be provided, such as writing to, creating, and deleting files.  See the POSIX file and directory operations <a href="#POSIX">[POSIX]</a> for examples of standardized operations that can be performed on files.</p>
-<p id="rfc.section.3.p.2">A file URI can be dependably dereferenced or translated to a local file path only if it is local.  A file URI is considered &#8220;local&#8221; if it has no file-auth, or the file-auth is the special string &#8220;localhost&#8221;.</p>
+<p id="rfc.section.3.p.2">A file URI can be dependably dereferenced or translated to a local file path only if it is local.  A file URI is considered &#8220;local&#8221; if it has no <samp>file-auth</samp>, or the <samp>file-auth</samp> is the special string &#8220;localhost&#8221;.</p>
 <p id="rfc.section.3.p.3">This specification neither defines nor forbids any set of operations that might be performed on a file identified by a non-local file URI.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">Encoding</a></h1>
 <p id="rfc.section.4.p.1">The encoding of a file URI depends on the file system that stores the identified file.  If the file system uses a known non-Unicode character encoding, the path SHOULD be converted to a sequence of characters from the Universal Character Set <a href="#ISO10646">[ISO10646]</a> normalized according to Normalization Form C (NFC)  <a href="#UTR15">[UTR15]</a>, before being translated to a file URI, and conversely a file URI SHOULD be converted back to the file system&#8217;s native encoding when dereferencing or translating to a file path.</p>
@@ -786,7 +786,7 @@
 <p id="rfc.section.D.1.p.1">There is little to say about POSIX file systems; the file URI structure already closely resembles POSIX file paths.</p>
 <h1 id="rfc.appendix.D.2"><a href="#rfc.appendix.D.2">D.2.</a> <a href="#sys-dos" id="sys-dos">DOS- and Windows-Like Systems</a></h1>
 <p id="rfc.section.D.2.p.1">When mapping a DOS- or Windows-like file path to a file URI, the drive letter (e.g. &#8220;c:&#8221;) is typically mapped into the first path segment.</p>
-<p id="rfc.section.D.2.p.2">See <a href="#nonstandard-syntax">Appendix E</a> for some explicit (but non-normative and strictly optional) rules for interacting with DOS- or Windows-like file paths and URIs.</p>
+<p><a href="#nonstandard-syntax">Appendix E</a> lists some non-standard techniques for interacting with DOS- or Windows-like file paths and URIs.</p>
 <h1 id="rfc.appendix.D.3"><a href="#rfc.appendix.D.3">D.3.</a> <a href="#sys-osx" id="sys-osx">Mac OS X Systems</a></h1>
 <p id="rfc.section.D.3.p.1">The HFS+ file system uses a non-standard normalization form, similar to Normalization Form D.  Take care when transforming HFS+ file paths to and from URIs using Normalization Form C (<a href="#encoding">Section 4</a>).</p>
 <h1 id="rfc.appendix.D.4"><a href="#rfc.appendix.D.4">D.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-11 Systems</a></h1>
@@ -811,7 +811,8 @@
 
    drive-letter   = ALPHA ":"
 </pre>
-<p id="rfc.section.E.2.p.2">This is intended to support the minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.  E.g.:</p>
+<p id="rfc.section.E.2.p.2">The <samp>ALPHA</samp> rule is defined in <a href="#RFC5234">[RFC5234]</a>.</p>
+<p id="rfc.section.E.2.p.3">This is intended to support the minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.  E.g.:</p>
 <p/>
 
 <ul>
@@ -819,8 +820,8 @@
     <samp>file:c:/path/to/file</samp>
   </li>
 </ul>
-<p id="rfc.section.E.2.p.4">URIs of the form <samp>file:///c:/path/to/file</samp> are already supported by the <samp>path-absolute</samp> rule.</p>
-<p id="rfc.section.E.2.p.5">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive, some usages of file URIs therefore canonicalize drive letters by converting them to uppercase.</p>
+<p id="rfc.section.E.2.p.5">URIs of the form <samp>file:///c:/path/to/file</samp> are already supported by the <samp>path-absolute</samp> rule.</p>
+<p id="rfc.section.E.2.p.6">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive, some usages of file URIs therefore canonicalize drive letters by converting them to uppercase.</p>
 <h1 id="rfc.appendix.E.2.1"><a href="#rfc.appendix.E.2.1">E.2.1.</a> <a href="#ext-relative" id="ext-relative">Relative Paths</a></h1>
 <p id="rfc.section.E.2.1.p.1">To mimic the behaviour of DOS- or Windows-based file systems, relative paths beginning with a slash &#8220;/&#8221; can be resolved relative to the drive letter, when present, and resolution of &#8220;..&#8221; dot segments (per Section 5.2.4 of <a href="#RFC3986">[RFC3986]</a>) can be modified to not ever overwrite the drive letter.</p>
 <p id="rfc.section.E.2.1.p.2">For example:</p>
