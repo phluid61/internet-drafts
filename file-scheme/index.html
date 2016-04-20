@@ -394,13 +394,14 @@
 <link href="#rfc.appendix.D.3" rel="Chapter" title="D.3 Mac OS X Systems"/>
 <link href="#rfc.appendix.D.4" rel="Chapter" title="D.4 OpenVMS Files-11 Systems"/>
 <link href="#rfc.appendix.E" rel="Chapter" title="E Nonstandard Syntax Variations"/>
-<link href="#rfc.appendix.E.1" rel="Chapter" title="E.1 DOS and Windows Drive Letters"/>
-<link href="#rfc.appendix.E.1.1" rel="Chapter" title="E.1.1 Relative Paths"/>
-<link href="#rfc.appendix.E.1.2" rel="Chapter" title="E.1.2 Vertical Bar Character"/>
-<link href="#rfc.appendix.E.2" rel="Chapter" title="E.2 UNC Strings"/>
-<link href="#rfc.appendix.E.2.1" rel="Chapter" title="E.2.1 file URI with Authority"/>
-<link href="#rfc.appendix.E.3" rel="Chapter" title="E.3 file URI with UNC Path"/>
-<link href="#rfc.appendix.E.4" rel="Chapter" title="E.4 Backslash as Separator"/>
+<link href="#rfc.appendix.E.1" rel="Chapter" title="E.1 User Information"/>
+<link href="#rfc.appendix.E.2" rel="Chapter" title="E.2 DOS and Windows Drive Letters"/>
+<link href="#rfc.appendix.E.2.1" rel="Chapter" title="E.2.1 Relative Paths"/>
+<link href="#rfc.appendix.E.2.2" rel="Chapter" title="E.2.2 Vertical Bar Character"/>
+<link href="#rfc.appendix.E.3" rel="Chapter" title="E.3 UNC Strings"/>
+<link href="#rfc.appendix.E.3.1" rel="Chapter" title="E.3.1 file URI with Authority"/>
+<link href="#rfc.appendix.E.4" rel="Chapter" title="E.4 file URI with UNC Path"/>
+<link href="#rfc.appendix.E.5" rel="Chapter" title="E.5 Backslash as Separator"/>
 <link href="#rfc.appendix.F" rel="Chapter" title="F Example of IRI vs Percent-Encoded URI"/>
 <link href="#rfc.appendix.G" rel="Chapter" title="G UNC Syntax"/>
 <link href="#rfc.appendix.H" rel="Chapter" title="H Collected Rules"/>
@@ -412,7 +413,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-4-19" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-4-20" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
 
@@ -433,14 +434,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">April 19, 2016</td>
+  <td class="right">April 20, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: October 21, 2016</td>
+  <td class="left">Expires: October 22, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -466,7 +467,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on October 21, 2016.</p>
+<p>This Internet-Draft will expire on October 22, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -498,13 +499,14 @@
 <li>D.3.   <a href="#rfc.appendix.D.3">Mac OS X Systems</a></li>
 <li>D.4.   <a href="#rfc.appendix.D.4">OpenVMS Files-11 Systems</a></li>
 </ul><li>Appendix E.   <a href="#rfc.appendix.E">Nonstandard Syntax Variations</a></li>
-<ul><li>E.1.   <a href="#rfc.appendix.E.1">DOS and Windows Drive Letters</a></li>
-<ul><li>E.1.1.   <a href="#rfc.appendix.E.1.1">Relative Paths</a></li>
-<li>E.1.2.   <a href="#rfc.appendix.E.1.2">Vertical Bar Character</a></li>
-</ul><li>E.2.   <a href="#rfc.appendix.E.2">UNC Strings</a></li>
-<ul><li>E.2.1.   <a href="#rfc.appendix.E.2.1">file URI with Authority</a></li>
-</ul><li>E.3.   <a href="#rfc.appendix.E.3">file URI with UNC Path</a></li>
-<li>E.4.   <a href="#rfc.appendix.E.4">Backslash as Separator</a></li>
+<ul><li>E.1.   <a href="#rfc.appendix.E.1">User Information</a></li>
+<li>E.2.   <a href="#rfc.appendix.E.2">DOS and Windows Drive Letters</a></li>
+<ul><li>E.2.1.   <a href="#rfc.appendix.E.2.1">Relative Paths</a></li>
+<li>E.2.2.   <a href="#rfc.appendix.E.2.2">Vertical Bar Character</a></li>
+</ul><li>E.3.   <a href="#rfc.appendix.E.3">UNC Strings</a></li>
+<ul><li>E.3.1.   <a href="#rfc.appendix.E.3.1">file URI with Authority</a></li>
+</ul><li>E.4.   <a href="#rfc.appendix.E.4">file URI with UNC Path</a></li>
+<li>E.5.   <a href="#rfc.appendix.E.5">Backslash as Separator</a></li>
 </ul><li>Appendix F.   <a href="#rfc.appendix.F">Example of IRI vs Percent-Encoded URI</a></li>
 <li>Appendix G.   <a href="#rfc.appendix.G">UNC Syntax</a></li>
 <li>Appendix H.   <a href="#rfc.appendix.H">Collected Rules</a></li>
@@ -522,9 +524,9 @@
 <p id="rfc.section.1.1.p.2">Throughout this document the term &#8220;local file&#8221; is used to describe files that can be accessed through the local file system API using only the information included in the file path, not relying on other information such as network addresses.  It is important to note that a local file may not be physically located on the local machine, for example if a networked file system is transparently mounted into the local file system.</p>
 <p id="rfc.section.1.1.p.3">The term &#8220;local file URI&#8221; is used to describe file URIs which have no authority, or where the authority is the special string &#8220;localhost&#8221; (<a href="#syntax">Section 2</a>).</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#syntax" id="syntax">Syntax</a></h1>
-<p id="rfc.section.2.p.1">The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF) <a href="#RFC5234">[RFC5234]</a>, including the core ABNF syntax rule <samp>ALPHA</samp> defined by that specification, and importing the <samp>userinfo</samp>, <samp>host</samp> and <samp>path-absolute</samp> rules from <a href="#RFC3986">[RFC3986]</a> (as updated by <a href="#RFC6874">[RFC6874]</a>.)</p>
+<p id="rfc.section.2.p.1">The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF) <a href="#RFC5234">[RFC5234]</a>, including the core ABNF syntax rule <samp>ALPHA</samp> defined by that specification, and importing the <samp>host</samp> and <samp>path-absolute</samp> rules from <a href="#RFC3986">[RFC3986]</a> (as updated by <a href="#RFC6874">[RFC6874]</a>.)</p>
 <p id="rfc.section.2.p.2">The generic syntax in <a href="#RFC3986">[RFC3986]</a> includes <samp>path</samp> and <samp>authority</samp> components, for each of which only a subset is used in the definition of the file URI scheme.  The relevant subset of <samp>path</samp> is <samp>path-absolute</samp>, and the subset of <samp>authority</samp> is <samp>file-auth</samp>, given below.</p>
-<p id="rfc.section.2.p.3">The syntax definition below is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates the previous file URI specifications.</p>
+<p id="rfc.section.2.p.3">The syntax definition below is different from those given in <a href="#RFC1630">[RFC1630]</a> and <a href="#RFC1738">[RFC1738]</a> as it is derived from the generic syntax of <a href="#RFC3986">[RFC3986]</a>, which post-dates the previous file URI specifications.  <a href="#diff">Appendix A</a> enumerates significant differences.</p>
 <pre>
    file-URI       = file-scheme ":" file-hier-part
 
@@ -538,7 +540,7 @@
    local-path     = path-absolute
 
    file-auth      = "localhost"
-                  / [ userinfo "@" ] host
+                  / host
 </pre>
 <p id="rfc.section.2.p.4">As a special case, the &#8220;file-auth&#8221; rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  To maximise compatibility with previous specifications, users MAY choose to include an &#8220;auth-path&#8221; with no &#8220;file-auth&#8221; when creating a URI.</p>
 <p id="rfc.section.2.p.5">Some systems have case-sensitive file naming and some do not.  As such the file scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is soley the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
@@ -562,7 +564,6 @@
 <p id="rfc.section.5.p.3">Historically, user agents have granted content from the file URI scheme a tremendous amount of privilege.  However, granting all local files such wide privileges can lead to privilege escalation attacks.  Some user agents have had success granting local files directory-based privileges, but this approach has not been widely adopted.  Other user agents use globally unique identifiers as the origin for each file URI <a href="#RFC6454">[RFC6454]</a>, which is the most secure option.</p>
 <p id="rfc.section.5.p.4">File systems typically assign an operational meaning to special characters, such as the &#8220;/&#8221;, &#8220;\&#8221;, &#8220;:&#8221;, &#8220;[&#8221;, and &#8220;]&#8221; characters, and to special device names like &#8220;.&#8221;, &#8220;..&#8221;, &#8220;&#8230;&#8221;, &#8220;aux&#8221;, &#8220;lpt&#8221;, etc.  In some cases, merely testing for the existence of such a name will cause the operating system to pause or invoke unrelated system calls, leading to significant security concerns regarding denial of service and unintended data transfer.  It would be impossible for this specification to list all such significant characters and device names.  Implementers MUST research the reserved names and characters for the types of storage device that may be attached to their application and restrict the use of data obtained from URI components accordingly.</p>
 <p id="rfc.section.5.p.5">Some file systems have case-sensitive file naming and some do not.  Care must (?) be taken to avoid issues resulting from possibly unexpected aliasing from case-only differences between file paths or URIs.</p>
-<p id="rfc.section.5.p.6">Additionally, as discussed in the HP OpenVMS Systems Documentation &lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt; &#8220;access control strings include sufficient information to allow someone to break in to the remote account, [therefore] they create serious security exposure.&#8221; In a similar vein, the presence of a password in a &#8220;user:password&#8221; userinfo field is deprecated by <a href="#RFC3986">[RFC3986]</a>.  As such, the userinfo field of a file URI, if present, MUST NOT contain a password.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.6.p.1">This document defines the following URI scheme, so the &#8220;Permanent URI Schemes&#8221; registry has been updated accordingly.  This registration complies with <a href="#BCP35">[BCP35]</a>.</p>
 <p/>
@@ -753,9 +754,9 @@
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#differences-from-previous-specifications" id="differences-from-previous-specifications">Differences from Previous Specifications</a></h1>
-<p id="rfc.section.A.p.1">According to the definition in <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) host name and a &#8220;/&#8221;.  The syntax given in <a href="#syntax">Section 2</a> makes the entire authority component optional.</p>
-<p id="rfc.section.A.p.2">Additionally, the definition in <a href="#RFC1738">[RFC1738]</a> did not include any user information in the authority.</p>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#diff" id="diff">Differences from Previous Specifications</a></h1>
+<p id="rfc.section.A.p.1">According to the definition in <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) host name and a &#8220;/&#8221;.  The syntax given in <a href="#syntax">Section 2</a> makes the entire authority component, including the double slashes &#8220;//&#8221;, optional.</p>
+<p id="rfc.section.A.p.2">Additionally, the definition in <a href="#RFC1738">[RFC1738]</a> did not include any user information in the authority.  </p>
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#examples" id="examples">Example URIs</a></h1>
 <p id="rfc.section.B.p.1">The syntax in <a href="#syntax">Section 2</a> is intended to support file URIs that take the following forms:</p>
 <p id="rfc.section.B.p.2">Local files:</p>
@@ -776,7 +777,7 @@
 
 <ul>
   <li>The WHATWG defines a living URL standard <a href="#WHATWG-URL">[WHATWG-URL]</a>, which includes algorithms for interpreting file URIs (as URLs).</li>
-  <li>The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files, except that files located by UNC filespace selector strings are typically stored on a remote machine and accessed using a network protocol.  A UNC filespace selector string has three parts: host, share, and path; described for informational purposes in <a href="#unc-syntax">Appendix G</a>.  <a href="#ext-unc">Appendix E.2</a> lists some ways in which UNC filespace selector strings are currently made to interoperate with the file URI scheme.</li>
+  <li>The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files, except that files located by UNC filespace selector strings are typically stored on a remote machine and accessed using a network protocol.  A UNC filespace selector string has three parts: host, share, and path; described for informational purposes in <a href="#unc-syntax">Appendix G</a>.  <a href="#ext-unc">Appendix E.3</a> lists some ways in which UNC filespace selector strings are currently made to interoperate with the file URI scheme.</li>
   <li>The Microsoft Windows API defines Win32 Namespaces <a href="#Win32-Namespaces">[Win32-Namespaces]</a> for interacting with files and devices using Windows API functions.  These namespaced paths are prefixed by &#8220;\\?\&#8221; for Win32 File Namespaces and &#8220;\\.\&#8221; for Win32 Device Namespaces.  There is also a special case for UNC file paths in Win32 File Namespaces, referred to as &#8220;Long UNC&#8221;, using the prefix &#8220;\\?\UNC\&#8221;.  This specification does not define a mechanism for translating namespaced paths to or from file URIs.</li>
 </ul>
 <h1 id="rfc.appendix.D"><a href="#rfc.appendix.D">Appendix D.</a> <a href="#system-specific" id="system-specific">System-specific Operations</a></h1>
@@ -790,18 +791,27 @@
 <p id="rfc.section.D.3.p.1">The HFS+ file system uses a non-standard normalization form, similar to Normalization Form D.  Take care when transforming HFS+ file paths to and from URIs using Normalization Form C (<a href="#encoding">Section 4</a>).</p>
 <h1 id="rfc.appendix.D.4"><a href="#rfc.appendix.D.4">D.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-11 Systems</a></h1>
 <p id="rfc.section.D.4.p.1">When mapping a VMS file path to a file URI, the device name is mapped into the first path segment.  Note that the dollars sign &#8220;$&#8221; is a reserved character per the definition in <a href="#RFC3986">[RFC3986]</a>, Section 2.2, so should be percent-encoded if present in the device name.</p>
-<p id="rfc.section.D.4.p.2">If the VMS file path includes a node reference, that is used as the authority.  Where the original node reference includes a username and password in an access control string, they can be transcribed into the userinfo field of the authority (<a href="#RFC3986">[RFC3986]</a>, Section 3.2.1), security considerations (<a href="#security">Section 5</a>) notwithstanding.</p>
+<p id="rfc.section.D.4.p.2">If the VMS file path includes a node reference, that is used as the authority.  Where the original node reference includes a username and password in an access control string, they can be transcribed into the userinfo field of the authority if present (see <a href="#ext-userinfo">Appendix E.1</a>).</p>
 <h1 id="rfc.appendix.E"><a href="#rfc.appendix.E">Appendix E.</a> <a href="#nonstandard-syntax" id="nonstandard-syntax">Nonstandard Syntax Variations</a></h1>
 <p id="rfc.section.E.p.1">These variations may be encountered by existing usages of the file URI scheme, but are not supported by the normative syntax of <a href="#syntax">Section 2</a>.</p>
 <p id="rfc.section.E.p.2">This appendix is not normative.</p>
-<h1 id="rfc.appendix.E.1"><a href="#rfc.appendix.E.1">E.1.</a> <a href="#ext-drives" id="ext-drives">DOS and Windows Drive Letters</a></h1>
-<p id="rfc.section.E.1.p.1">On Windows- or DOS-based file systems an absolute file path can begin with a drive letter.  To facilitate this, the <samp>local-path</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
+<h1 id="rfc.appendix.E.1"><a href="#rfc.appendix.E.1">E.1.</a> <a href="#ext-userinfo" id="ext-userinfo">User Information</a></h1>
+<p id="rfc.section.E.1.p.1">It might be necessary to include user information such as a username in a file URI, for example when mapping a VMS file path with a node reference that includes the username.</p>
+<p id="rfc.section.E.1.p.2">To allow user information to be included in a file URI, the <samp>file-auth</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
+<pre>
+   file-auth      = "localhost"
+                  / [ userinfo "@" ] host
+</pre>
+<p id="rfc.section.E.1.p.3">This uses the <samp>userinfo</samp> rule from <a href="#RFC3986">[RFC3986]</a>.</p>
+<p id="rfc.section.E.1.p.4">As discussed in the HP OpenVMS Systems Documentation &lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt; &#8220;access control strings include sufficient information to allow someone to break in to the remote account, [therefore] they create serious security exposure.&#8221; In a similar vein, the presence of a password in a &#8220;user:password&#8221; userinfo field is deprecated by <a href="#RFC3986">[RFC3986]</a>.  As such, the userinfo field of a file URI, if present, MUST NOT (?) contain a password. </p>
+<h1 id="rfc.appendix.E.2"><a href="#rfc.appendix.E.2">E.2.</a> <a href="#ext-drives" id="ext-drives">DOS and Windows Drive Letters</a></h1>
+<p id="rfc.section.E.2.p.1">On Windows- or DOS-based file systems an absolute file path can begin with a drive letter.  To facilitate this, the <samp>local-path</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
 <pre>
    local-path     = [ drive-letter ] path-absolute
 
    drive-letter   = ALPHA ":"
 </pre>
-<p id="rfc.section.E.1.p.2">This is intended to support the minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.  E.g.:</p>
+<p id="rfc.section.E.2.p.2">This is intended to support the minimal representation of a local file in a DOS- or Windows-based environment, with no authority field and an absolute path that begins with a drive letter.  E.g.:</p>
 <p/>
 
 <ul>
@@ -809,11 +819,11 @@
     <samp>file:c:/path/to/file</samp>
   </li>
 </ul>
-<p id="rfc.section.E.1.p.4">URIs of the form <samp>file:///c:/path/to/file</samp> are already supported by the <samp>path-absolute</samp> rule.</p>
-<p id="rfc.section.E.1.p.5">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive, some usages of file URIs therefore canonicalize drive letters by converting them to uppercase.</p>
-<h1 id="rfc.appendix.E.1.1"><a href="#rfc.appendix.E.1.1">E.1.1.</a> <a href="#ext-relative" id="ext-relative">Relative Paths</a></h1>
-<p id="rfc.section.E.1.1.p.1">To mimic the behaviour of DOS- or Windows-based file systems, relative paths beginning with a slash &#8220;/&#8221; can be resolved relative to the drive letter, when present, and resolution of &#8220;..&#8221; dot segments (per Section 5.2.4 of <a href="#RFC3986">[RFC3986]</a>) can be modified to not ever overwrite the drive letter.</p>
-<p id="rfc.section.E.1.1.p.2">For example:</p>
+<p id="rfc.section.E.2.p.4">URIs of the form <samp>file:///c:/path/to/file</samp> are already supported by the <samp>path-absolute</samp> rule.</p>
+<p id="rfc.section.E.2.p.5">Note that comparison of drive letters in DOS or Windows file paths is case-insensitive, some usages of file URIs therefore canonicalize drive letters by converting them to uppercase.</p>
+<h1 id="rfc.appendix.E.2.1"><a href="#rfc.appendix.E.2.1">E.2.1.</a> <a href="#ext-relative" id="ext-relative">Relative Paths</a></h1>
+<p id="rfc.section.E.2.1.p.1">To mimic the behaviour of DOS- or Windows-based file systems, relative paths beginning with a slash &#8220;/&#8221; can be resolved relative to the drive letter, when present, and resolution of &#8220;..&#8221; dot segments (per Section 5.2.4 of <a href="#RFC3986">[RFC3986]</a>) can be modified to not ever overwrite the drive letter.</p>
+<p id="rfc.section.E.2.1.p.2">For example:</p>
 <pre>
    base:       file:///c:/path/to/file.txt
    rel. URI:   /some/other/thing.bmp
@@ -823,10 +833,10 @@
    rel. URI:   ../../bar.txt
    resolved:   file:///c:/bar.txt
 </pre>
-<p id="rfc.section.E.1.1.p.3">Relative paths with a drive letter followed by a character other than a slash (e.g. &#8220;c:bar/baz.txt&#8221; or &#8220;c:../foo.txt&#8221;) might not be accepted as dereferenceable URIs in DOS or Windows systems.</p>
-<h1 id="rfc.appendix.E.1.2"><a href="#rfc.appendix.E.1.2">E.1.2.</a> <a href="#ext-pipe" id="ext-pipe">Vertical Bar Character</a></h1>
-<p id="rfc.section.E.1.2.p.1">Historically some usages of file URIs have included a vertical line character &#8220;|&#8221; instead of a colon &#8220;:&#8221; in the drive letter construct.  <a href="#RFC3986">[RFC3986]</a> forbids the use of the vertical line, however it may be necessary to interpret or update old URIs.</p>
-<p id="rfc.section.E.1.2.p.2">For interpreting such URIs, the <samp>auth-path</samp> and <samp>local-path</samp> rules in <a href="#syntax">Section 2</a> and the <samp>drive-letter</samp> rule above can be replaced with the following:</p>
+<p id="rfc.section.E.2.1.p.3">Relative paths with a drive letter followed by a character other than a slash (e.g. &#8220;c:bar/baz.txt&#8221; or &#8220;c:../foo.txt&#8221;) might not be accepted as dereferenceable URIs in DOS or Windows systems.</p>
+<h1 id="rfc.appendix.E.2.2"><a href="#rfc.appendix.E.2.2">E.2.2.</a> <a href="#ext-pipe" id="ext-pipe">Vertical Bar Character</a></h1>
+<p id="rfc.section.E.2.2.p.1">Historically some usages of file URIs have included a vertical line character &#8220;|&#8221; instead of a colon &#8220;:&#8221; in the drive letter construct.  <a href="#RFC3986">[RFC3986]</a> forbids the use of the vertical line, however it may be necessary to interpret or update old URIs.</p>
+<p id="rfc.section.E.2.2.p.2">For interpreting such URIs, the <samp>auth-path</samp> and <samp>local-path</samp> rules in <a href="#syntax">Section 2</a> and the <samp>drive-letter</samp> rule above can be replaced with the following:</p>
 <pre>
    auth-path      = [ file-auth ] path-absolute
                   / [ file-auth ] file-absolute
@@ -839,7 +849,7 @@
    drive-letter   = ALPHA ":"
                   / ALPHA "|"
 </pre>
-<p id="rfc.section.E.1.2.p.3">This is intended to support regular DOS or Windows file URIs with vertical line characters in the drive letter construct.  E.g.:</p>
+<p id="rfc.section.E.2.2.p.3">This is intended to support regular DOS or Windows file URIs with vertical line characters in the drive letter construct.  E.g.:</p>
 <p/>
 
 <ul>
@@ -853,11 +863,11 @@
     <samp>file:c|/path/to/file</samp>
   </li>
 </ul>
-<p id="rfc.section.E.1.2.p.5">To update such an old URI, replace the vertical line &#8220;|&#8221; with a colon &#8220;:&#8221;.</p>
-<h1 id="rfc.appendix.E.2"><a href="#rfc.appendix.E.2">E.2.</a> <a href="#ext-unc" id="ext-unc">UNC Strings</a></h1>
-<p id="rfc.section.E.2.p.1">Some usages of the file URI scheme allow UNC filespace selector strings to be translated to and from file URIs, either by mapping the equivalent segments of the two schemes (hostname to authority, sharename+objectnames to path), or by mapping the entire UNC string to the path segment of a URI.</p>
-<h1 id="rfc.appendix.E.2.1"><a href="#rfc.appendix.E.2.1">E.2.1.</a> <a href="#ext-unc-map" id="ext-unc-map">file URI with Authority</a></h1>
-<p id="rfc.section.E.2.1.p.1">The following is an algorithmic description of the process of translating a UNC filespace selector string to a file URI by mapping the equivalent segments of the two schemes:</p>
+<p id="rfc.section.E.2.2.p.5">To update such an old URI, replace the vertical line &#8220;|&#8221; with a colon &#8220;:&#8221;.</p>
+<h1 id="rfc.appendix.E.3"><a href="#rfc.appendix.E.3">E.3.</a> <a href="#ext-unc" id="ext-unc">UNC Strings</a></h1>
+<p id="rfc.section.E.3.p.1">Some usages of the file URI scheme allow UNC filespace selector strings to be translated to and from file URIs, either by mapping the equivalent segments of the two schemes (hostname to authority, sharename+objectnames to path), or by mapping the entire UNC string to the path segment of a URI.</p>
+<h1 id="rfc.appendix.E.3.1"><a href="#rfc.appendix.E.3.1">E.3.1.</a> <a href="#ext-unc-map" id="ext-unc-map">file URI with Authority</a></h1>
+<p id="rfc.section.E.3.1.p.1">The following is an algorithmic description of the process of translating a UNC filespace selector string to a file URI by mapping the equivalent segments of the two schemes:</p>
 <p/>
 
 <ol>
@@ -866,42 +876,42 @@
   <li>Append the sharename:  <ol><li>Transform the sharename to a path segment (<a href="#RFC3986">[RFC3986]</a>, Section 3.3) to conform to the encoding rules of Section 2 of <a href="#RFC3986">[RFC3986]</a>.</li><li>Append a delimiting slash character &#8220;/&#8221; and the transformed segment to the URI.</li></ol></li>
   <li>For each objectname:  <ol><li>Transform the objectname to a path segment as above.</li><li>Append a delimiting slash character &#8220;/&#8221; and the transformed segment to the URI.</li></ol></li>
 </ol>
-<p id="rfc.section.E.2.1.p.3">For example:</p>
+<p id="rfc.section.E.3.1.p.3">For example:</p>
 <pre>
    UNC String:   \\host.example.com\Share\path\to\file.txt
    URI:          file://host.example.com/Share/path/to/file.txt
 </pre>
-<h1 id="rfc.appendix.E.3"><a href="#rfc.appendix.E.3">E.3.</a> <a href="#ext-unc-path" id="ext-unc-path">file URI with UNC Path</a></h1>
-<p id="rfc.section.E.3.p.1">It is common to encounter file URIs that encode entire UNC strings in the path, usually with all backslash &#8220;\&#8221; characters replaced with slashes &#8220;/&#8221;.</p>
-<p id="rfc.section.E.3.p.2">To interpret such URIs, the <samp>auth-path</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
+<h1 id="rfc.appendix.E.4"><a href="#rfc.appendix.E.4">E.4.</a> <a href="#ext-unc-path" id="ext-unc-path">file URI with UNC Path</a></h1>
+<p id="rfc.section.E.4.p.1">It is common to encounter file URIs that encode entire UNC strings in the path, usually with all backslash &#8220;\&#8221; characters replaced with slashes &#8220;/&#8221;.</p>
+<p id="rfc.section.E.4.p.2">To interpret such URIs, the <samp>auth-path</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
 <pre>
    auth-path      = [ file-auth ] path-absolute
                   / unc-authority path-absolute
 
-   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+   unc-authority  = 2*3"/" file-host
 
    file-host      = inline-IP / IPv4address / reg-name
 
    inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
 </pre>
-<p id="rfc.section.E.3.p.3">This syntax uses the <samp>userinfo</samp>, <samp>IPv4address</samp>, <samp>IPv6address</samp>, <samp>IPvFuture</samp>, and <samp>reg-name</samp> rules from <a href="#RFC3986">[RFC3986]</a>.</p>
+<p id="rfc.section.E.4.p.3">This syntax uses the <samp>IPv4address</samp>, <samp>IPv6address</samp>, <samp>IPvFuture</samp>, and <samp>reg-name</samp> rules from <a href="#RFC3986">[RFC3986]</a>.</p>
 <p/>
 
 <ul class="empty">
   <li>Note that the <samp>file-host</samp> rule is the same as <samp>host</samp> but with percent-encoding applied to &#8220;[&#8221; and &#8220;]&#8221; characters.</li>
 </ul>
-<p id="rfc.section.E.3.p.5">This extended syntax is intended to support URIs that take the following forms, in addition to those in <a href="#examples">Appendix B</a>:</p>
-<p id="rfc.section.E.3.p.6">Non-local files:</p>
+<p id="rfc.section.E.4.p.5">This extended syntax is intended to support URIs that take the following forms, in addition to those in <a href="#examples">Appendix B</a>:</p>
+<p id="rfc.section.E.4.p.6">Non-local files:</p>
 <p/>
 
 <ul>
   <li>The representation of a non-local file, with an empty authority and a complete (transformed) UNC string in the path.  E.g.:  <ul><li><samp>file:////host.example.com/path/to/file</samp></li></ul></li>
   <li>As above, with an extra slash between the empty authority and the transformed UNC string, as per the syntax defined in <a href="#RFC1738">[RFC1738]</a>.  E.g.:  <ul><li><samp>file://///host.example.com/path/to/file</samp></li></ul><p> This representation is notably used by the Firefox web browser.  See Bugzilla#107540 </p><a href="#Bug107540">[Bug107540]</a>.</li>
 </ul>
-<p id="rfc.section.E.3.p.8">It also further limits the definitions of a &#8220;local file URI&#8221; by excluding those with a path that encodes a UNC string.</p>
-<h1 id="rfc.appendix.E.4"><a href="#rfc.appendix.E.4">E.4.</a> <a href="#ext-backslash" id="ext-backslash">Backslash as Separator</a></h1>
-<p id="rfc.section.E.4.p.1">Historically some usages have copied entire file paths into the path components of file URIs.  Where DOS or Windows file paths were thus copied the resulting URI strings contained unencoded backslash &#8220;\&#8221; characters, which are forbidden by both <a href="#RFC1738">[RFC1738]</a> and <a href="#RFC3986">[RFC3986]</a>.</p>
-<p id="rfc.section.E.4.p.2">It may be possible to translate or update such an invalid file URI by replacing all backslashes &#8220;\&#8221; with slashes &#8220;/&#8221;, if it can be determined with reasonable certainty that the backslashes are intended as path separators.</p>
+<p id="rfc.section.E.4.p.8">It also further limits the definitions of a &#8220;local file URI&#8221; by excluding those with a path that encodes a UNC string.</p>
+<h1 id="rfc.appendix.E.5"><a href="#rfc.appendix.E.5">E.5.</a> <a href="#ext-backslash" id="ext-backslash">Backslash as Separator</a></h1>
+<p id="rfc.section.E.5.p.1">Historically some usages have copied entire file paths into the path components of file URIs.  Where DOS or Windows file paths were thus copied the resulting URI strings contained unencoded backslash &#8220;\&#8221; characters, which are forbidden by both <a href="#RFC1738">[RFC1738]</a> and <a href="#RFC3986">[RFC3986]</a>.</p>
+<p id="rfc.section.E.5.p.2">It may be possible to translate or update such an invalid file URI by replacing all backslashes &#8220;\&#8221; with slashes &#8220;/&#8221;, if it can be determined with reasonable certainty that the backslashes are intended as path separators.</p>
 <h1 id="rfc.appendix.F"><a href="#rfc.appendix.F">Appendix F.</a> <a href="#iri-vs-uri" id="iri-vs-uri">Example of IRI vs Percent-Encoded URI</a></h1>
 <p id="rfc.section.F.p.1">The following examples demonstrate the advantage of encoding file URIs as IRIs to avoid ambiguity (see <a href="#encoding">Section 4</a>).</p>
 <p id="rfc.section.F.p.2">Example: file IRI:</p>
@@ -981,7 +991,7 @@
    file-auth      = "localhost"
                   / [ userinfo "@" ] host
 
-   unc-authority  = 2*3"/" [ userinfo "@" ] file-host
+   unc-authority  = 2*3"/" file-host
 
    file-host      = inline-IP / IPv4address / reg-name
 
