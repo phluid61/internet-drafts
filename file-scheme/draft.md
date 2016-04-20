@@ -204,8 +204,7 @@ no authority, or where the authority is the special string
 # Syntax {#syntax}
 
 The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF)
-{{RFC5234}}, including the core ABNF syntax rule `ALPHA` defined by that
-specification, and importing the `host` and `path-absolute` rules from
+{{RFC5234}}, importing the `host` and `path-absolute` rules from
 {{RFC3986}} (as updated by {{RFC6874}}.)
 
 The generic syntax in {{RFC3986}} includes `path` and `authority`
@@ -235,13 +234,13 @@ of {{RFC3986}}, which post-dates the previous file URI specifications.
                   / host
 ~~~~~~~~~~
 
-As a special case, the "file-auth" rule can match the string
+As a special case, the `file-auth` rule can match the string
 "localhost" which is interpreted as "the machine from which the URI is
 being interpreted," exactly as if no authority were present.
 Some current usages of the scheme incorrectly interpret the string
 "localhost" in the authority of a file URI as non-local.
 To maximise compatibility with previous specifications, users MAY
-choose to include an "auth-path" with no "file-auth" when creating a
+choose to include an `auth-path` with no `file-auth` when creating a
 URI.
 
 Some file systems have case-sensitive file naming and some do not.  As
@@ -272,7 +271,7 @@ standardized operations that can be performed on files.
 
 A file URI can be dependably dereferenced or translated to a local file
 path only if it is local.  A file URI is considered "local" if it has
-no file-auth, or the file-auth is the special string "localhost".
+no `file-auth`, or the `file-auth` is the special string "localhost".
 
 This specification neither defines nor forbids any set of operations
 that might be performed on a file identified by a non-local file URI.
@@ -536,6 +535,8 @@ with a drive letter.  To facilitate this, the `local-path` rule in
 
    drive-letter   = ALPHA ":"
 ~~~~~~~~~~
+
+The `ALPHA` rule is defined in {{RFC5234}}.
 
 This is intended to support the minimal representation of a local file
 in a DOS- or Windows-based environment, with no authority field and an
