@@ -961,8 +961,8 @@ This representation is notably used by the Firefox web browser.
 See Bugzilla#107540 <xref target="Bug107540"></xref>.</t>
 </list></t>
 
-<t>It also further limits the definitions of a “local file URI” by
-excluding those with a path that encodes a UNC string.</t>
+<t>It also further limits the definition of a “local file URI” by
+excluding any with a path that encodes a UNC string.</t>
 
 </section>
 </section>
