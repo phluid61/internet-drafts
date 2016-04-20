@@ -487,7 +487,7 @@ so should be percent-encoded if present in the device name.
 If the VMS file path includes a node reference, that is used as the
 authority.  Where the original node reference includes a username and
 password in an access control string, they can be transcribed into the
-userinfo field of the authority if present (see {{ext-userinfo}}).
+authority using the non-standard syntax extension in {{ext-userinfo}}.
 
 
 # Nonstandard Syntax Variations  {#nonstandard-syntax}
@@ -502,7 +502,7 @@ This appendix is not normative.
 
 It might be necessary to include user information such as a username in
 a file URI, for example when mapping a VMS file path with a node
-reference that includes the username.
+reference that includes a username.
 
 To allow user information to be included in a file URI, the `file-auth`
 rule in {{syntax}} can be replaced with the following:
