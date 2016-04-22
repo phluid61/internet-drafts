@@ -98,7 +98,8 @@ local file system.</t>
 
 <t>The term “local file URI” is used to describe file URIs which have
 no authority, or where the authority is the special string
-“localhost” (<xref target="syntax"/>).</t>
+“localhost” or a fully qualified domain name that resolves to the
+machine from which the URI is being interpreted (<xref target="syntax"/>).</t>
 
 </section>
 </section>
@@ -135,11 +136,19 @@ of <xref target="RFC3986"/>, which post-dates the previous file URI specificatio
                   / host
 ]]></artwork></figure>
 
+<t>The <spanx style="verb">host</spanx> is the fully qualified domain name of the system on which
+the file is accessible.  This allows a client on another system to know
+that it cannot access the file system, or perhaps to use some other
+local mecahnism to access the file.
+<!-- fixme: why not just use `reg-name`? --></t>
+
 <t>As a special case, the <spanx style="verb">file-auth</spanx> rule can match the string
 “localhost” which is interpreted as “the machine from which the URI is
 being interpreted,” exactly as if no authority were present.
-Some current usages of the scheme incorrectly interpret the string
-“localhost” in the authority of a file URI as non-local.
+Some current usages of the scheme incorrectly interpret all values in
+the authority of a file URI, including “localhost”, as non-local.
+Yet others interpret any value as local, even if the <spanx style="verb">host</spanx> does not
+resolve to the local machine.
 To maximise compatibility with previous specifications, users MAY
 choose to include an <spanx style="verb">auth-path</spanx> with no <spanx style="verb">file-auth</spanx> when creating a
 URI.</t>
@@ -172,7 +181,9 @@ standardized operations that can be performed on files.</t>
 
 <t>A file URI can be dependably dereferenced or translated to a local file
 path only if it is local.  A file URI is considered “local” if it has
-no <spanx style="verb">file-auth</spanx>, or the <spanx style="verb">file-auth</spanx> is the special string “localhost”.</t>
+no <spanx style="verb">file-auth</spanx>, or the <spanx style="verb">file-auth</spanx> is the special string “localhost” or
+a fully qualified domain name that resolves to the machine from which
+the URI is being interpreted (<xref target="syntax"/>).</t>
 
 <t>This specification neither defines nor forbids any set of operations
 that might be performed on a file identified by a non-local file URI.</t>
@@ -644,13 +655,6 @@ and Dave Thaler for their comments and suggestions.</t>
 with the token “file://”, followed by an (optionally blank) host name
 and a “/”.  The syntax given in <xref target="syntax"/> makes the entire authority
 component, including the double slashes “//”, optional.</t>
-
-<t>Additionally one interpretation of the definition in <xref target="RFC1738"/> would
-mean that a file URI with a <spanx style="verb">host</spanx> that resolves to the local machine
-would be treated as a local file.  However common usages of the scheme
-have treated any value in the <spanx style="verb">host</spanx> (except “localhost”) as an
-indiciation that the URI is non-local.  This specification has
-explicitly adopted the common usage.</t>
 
 </section>
 <section anchor="examples" title="Example URIs">
