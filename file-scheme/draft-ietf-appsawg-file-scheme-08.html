@@ -413,7 +413,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-08" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-4-20" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-4-22" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, obsoleting the definition in RFC 1738." />
 
@@ -434,14 +434,14 @@
 </tr>
 <tr>
   <td class="left">Obsoletes: 1738 (if approved)</td>
-  <td class="right">April 20, 2016</td>
+  <td class="right">April 22, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: October 22, 2016</td>
+  <td class="left">Expires: October 24, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -467,7 +467,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on October 22, 2016.</p>
+<p>This Internet-Draft will expire on October 24, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -522,7 +522,7 @@
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
 <p id="rfc.section.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
 <p id="rfc.section.1.1.p.2">Throughout this document the term &#8220;local file&#8221; is used to describe files that can be accessed through the local file system API using only the information included in the file path, not relying on other information such as network addresses.  It is important to note that a local file may not be physically located on the local machine, for example if a networked file system is transparently mounted into the local file system.</p>
-<p id="rfc.section.1.1.p.3">The term &#8220;local file URI&#8221; is used to describe file URIs which have no authority, or where the authority is the special string &#8220;localhost&#8221; (<a href="#syntax">Section 2</a>).</p>
+<p id="rfc.section.1.1.p.3">The term &#8220;local file URI&#8221; is used to describe file URIs which have no authority, or where the authority is the special string &#8220;localhost&#8221; or a fully qualified domain name that resolves to the machine from which the URI is being interpreted (<a href="#syntax">Section 2</a>).</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#syntax" id="syntax">Syntax</a></h1>
 <p id="rfc.section.2.p.1">The file URI syntax is defined here in Augmented Backus-Naur Form (ABNF) <a href="#RFC5234">[RFC5234]</a>, importing the <samp>host</samp> and <samp>path-absolute</samp> rules from <a href="#RFC3986">[RFC3986]</a> (as updated by <a href="#RFC6874">[RFC6874]</a>.)</p>
 <p id="rfc.section.2.p.2">The generic syntax in <a href="#RFC3986">[RFC3986]</a> includes <samp>path</samp> and <samp>authority</samp> components, for each of which only a subset is used in the definition of the file URI scheme.  The relevant subset of <samp>path</samp> is <samp>path-absolute</samp>, and the subset of <samp>authority</samp> is <samp>file-auth</samp>, given below.</p>
@@ -542,13 +542,14 @@
    file-auth      = "localhost"
                   / host
 </pre>
-<p id="rfc.section.2.p.4">As a special case, the <samp>file-auth</samp> rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret the string &#8220;localhost&#8221; in the authority of a file URI as non-local.  To maximise compatibility with previous specifications, users MAY choose to include an <samp>auth-path</samp> with no <samp>file-auth</samp> when creating a URI.</p>
-<p id="rfc.section.2.p.5">Some file systems have case-sensitive file naming and some do not.  As such the file URI scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is soley the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
-<p id="rfc.section.2.p.6">Some file systems allow directory objects to be treated as files in some cases.  This can be reflected in a file URI by omitting the trailing slash &#8220;/&#8221; from the path.  Be aware that merging a relative URI reference to such a base URI as per Section 5.2 of <a href="#RFC3986">[RFC3986]</a> could remove the directory name from the resulting target URI.</p>
-<p id="rfc.section.2.p.7">Also see <a href="#nonstandard-syntax">Appendix E</a> that lists some nonstandard syntax variations that can be encountered in practice.</p>
+<p id="rfc.section.2.p.4">The <samp>host</samp> is the fully qualified domain name of the system on which the file is accessible.  This allows a client on another system to know that it cannot access the file system, or perhaps to use some other local mecahnism to access the file.  </p>
+<p id="rfc.section.2.p.5">As a special case, the <samp>file-auth</samp> rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret all values in the authority of a file URI, including &#8220;localhost&#8221;, as non-local.  Yet others interpret any value as local, even if the <samp>host</samp> does not resolve to the local machine.  To maximise compatibility with previous specifications, users MAY choose to include an <samp>auth-path</samp> with no <samp>file-auth</samp> when creating a URI.</p>
+<p id="rfc.section.2.p.6">Some file systems have case-sensitive file naming and some do not.  As such the file URI scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is soley the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
+<p id="rfc.section.2.p.7">Some file systems allow directory objects to be treated as files in some cases.  This can be reflected in a file URI by omitting the trailing slash &#8220;/&#8221; from the path.  Be aware that merging a relative URI reference to such a base URI as per Section 5.2 of <a href="#RFC3986">[RFC3986]</a> could remove the directory name from the resulting target URI.</p>
+<p id="rfc.section.2.p.8">Also see <a href="#nonstandard-syntax">Appendix E</a> that lists some nonstandard syntax variations that can be encountered in practice.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#operations" id="operations">Operations Involving file URIs</a></h1>
 <p id="rfc.section.3.p.1">Implementations that provide dereferencing operations on file URIs SHOULD, at a minimum, provide a read-like operation to return the contents of a file located by a file URI.  Additional operations MAY be provided, such as writing to, creating, and deleting files.  See the POSIX file and directory operations <a href="#POSIX">[POSIX]</a> for examples of standardized operations that can be performed on files.</p>
-<p id="rfc.section.3.p.2">A file URI can be dependably dereferenced or translated to a local file path only if it is local.  A file URI is considered &#8220;local&#8221; if it has no <samp>file-auth</samp>, or the <samp>file-auth</samp> is the special string &#8220;localhost&#8221;.</p>
+<p id="rfc.section.3.p.2">A file URI can be dependably dereferenced or translated to a local file path only if it is local.  A file URI is considered &#8220;local&#8221; if it has no <samp>file-auth</samp>, or the <samp>file-auth</samp> is the special string &#8220;localhost&#8221; or a fully qualified domain name that resolves to the machine from which the URI is being interpreted (<a href="#syntax">Section 2</a>).</p>
 <p id="rfc.section.3.p.3">This specification neither defines nor forbids any set of operations that might be performed on a file identified by a non-local file URI.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">Encoding</a></h1>
 <p id="rfc.section.4.p.1">The encoding of a file URI depends on the file system that stores the identified file.  If the file system uses a known non-Unicode character encoding, the path SHOULD be converted to a sequence of characters from the Universal Character Set <a href="#ISO10646">[ISO10646]</a> normalized according to Normalization Form C (NFC)  <a href="#UTR15">[UTR15]</a>, before being translated to a file URI, and conversely a file URI SHOULD be converted back to the file system&#8217;s native encoding when dereferencing or translating to a file path.</p>
@@ -756,7 +757,6 @@
 </table>
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#diff" id="diff">Differences from Previous Specifications</a></h1>
 <p id="rfc.section.A.p.1">According to the definition in <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) host name and a &#8220;/&#8221;.  The syntax given in <a href="#syntax">Section 2</a> makes the entire authority component, including the double slashes &#8220;//&#8221;, optional.</p>
-<p id="rfc.section.A.p.2">Additionally one interpretation of the definition in <a href="#RFC1738">[RFC1738]</a> would mean that a file URI with a <samp>host</samp> that resolves to the local machine would be treated as a local file.  However common usages of the scheme have treated any value in the <samp>host</samp> (except &#8220;localhost&#8221;) as an indiciation that the URI is non-local.  This specification has explicitly adopted the common usage.</p>
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#examples" id="examples">Example URIs</a></h1>
 <p id="rfc.section.B.p.1">The syntax in <a href="#syntax">Section 2</a> is intended to support file URIs that take the following forms:</p>
 <p id="rfc.section.B.p.2">Local files:</p>
