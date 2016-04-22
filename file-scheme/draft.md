@@ -198,7 +198,8 @@ local file system.
 
 The term "local file URI" is used to describe file URIs which have
 no authority, or where the authority is the special string
-"localhost" ({{syntax}}).
+"localhost" or a fully qualified domain name that resolves to the
+machine from which the URI is being interpreted ({{syntax}}).
 
 
 # Syntax {#syntax}
@@ -234,11 +235,18 @@ of {{RFC3986}}, which post-dates the previous file URI specifications.
                   / host
 ~~~~~~~~~~
 
+The `host` is the fully qualified domain name of the system on which
+the file is accessible.  This allows a client on another system to know
+that it cannot access the file system, or perhaps to use some other
+local mecahnism to access the file.
+
 As a special case, the `file-auth` rule can match the string
 "localhost" which is interpreted as "the machine from which the URI is
 being interpreted," exactly as if no authority were present.
-Some current usages of the scheme incorrectly interpret the string
-"localhost" in the authority of a file URI as non-local.
+Some current usages of the scheme incorrectly interpret all values in
+the authority of a file URI, including "localhost", as non-local.
+Yet others interpret any value as local, even if the `host` does not
+resolve to the local machine.
 To maximise compatibility with previous specifications, users MAY
 choose to include an `auth-path` with no `file-auth` when creating a
 URI.
@@ -271,7 +279,9 @@ standardized operations that can be performed on files.
 
 A file URI can be dependably dereferenced or translated to a local file
 path only if it is local.  A file URI is considered "local" if it has
-no `file-auth`, or the `file-auth` is the special string "localhost".
+no `file-auth`, or the `file-auth` is the special string "localhost" or
+a fully qualified domain name that resolves to the machine from which
+the URI is being interpreted ({{syntax}}).
 
 This specification neither defines nor forbids any set of operations
 that might be performed on a file identified by a non-local file URI.
@@ -390,13 +400,6 @@ According to the definition in {{RFC1738}} a file URL always started
 with the token "file://", followed by an (optionally blank) host name
 and a "/".  The syntax given in {{syntax}} makes the entire authority
 component, including the double slashes "//", optional.
-
-Additionally one interpretation of the definition in {{RFC1738}} would
-mean that a file URI with a `host` that resolves to the local machine
-would be treated as a local file.  However common usages of the scheme
-have treated any value in the `host` (except "localhost") as an
-indiciation that the URI is non-local.  This specification has
-explicitly adopted the common usage.
 
 
 # Example URIs  {#examples}
