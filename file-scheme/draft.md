@@ -239,6 +239,7 @@ The `host` is the fully qualified domain name of the system on which
 the file is accessible.  This allows a client on another system to know
 that it cannot access the file system, or perhaps to use some other
 local mecahnism to access the file.
+<!-- fixme: why not just use `reg-name`? -->
 
 As a special case, the `file-auth` rule can match the string
 "localhost" which is interpreted as "the machine from which the URI is
