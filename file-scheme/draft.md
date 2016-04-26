@@ -347,11 +347,13 @@ Implementers MUST research the reserved names and characters for the
 types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.
 
-<!-- fixme: improve this; add encoding security concerns -->
+<!-- fixme: improve this -->
 Some file systems have case-sensitive file naming and some do not.
 Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
-URIs.
+URIs.  Similarly, care must be taken to avoid issues resulting from
+aliasing from mismatched encodings, as well as various Unicode
+equivalences and normalization forms {{UTR15}}.
 
 
 # IANA Considerations {#iana-considerations}
