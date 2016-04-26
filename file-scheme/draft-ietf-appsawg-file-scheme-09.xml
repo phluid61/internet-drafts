@@ -255,8 +255,7 @@ restrict the use of data obtained from URI components accordingly.</t>
 Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
 URIs.  Similarly, care must be taken to avoid issues resulting from
-aliasing from mismatched encodings, as well as various Unicode
-equivalences and normalization forms <xref target="UTR15"/>.</t>
+aliasing from mismatched encodings or Unicode equivalences <xref target="UTR15"/>.</t>
 
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
