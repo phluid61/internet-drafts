@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-08" category="std" obsoletes="1738">
+<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-09" category="std" obsoletes="1738">
 
   <front>
     <title abbrev="file-scheme">The file URI Scheme</title>
@@ -250,11 +250,13 @@ Implementers MUST research the reserved names and characters for the
 types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.</t>
 
-<!-- fixme: improve this; add encoding security concerns -->
+<!-- fixme: improve this -->
 <t>Some file systems have case-sensitive file naming and some do not.
 Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
-URIs.</t>
+URIs.  Similarly, care must be taken to avoid issues resulting from
+aliasing from mismatched encodings, as well as various Unicode
+equivalences and normalization forms <xref target="UTR15"/>.</t>
 
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
