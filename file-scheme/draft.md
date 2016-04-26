@@ -352,8 +352,7 @@ Some file systems have case-sensitive file naming and some do not.
 Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
 URIs.  Similarly, care must be taken to avoid issues resulting from
-aliasing from mismatched encodings, as well as various Unicode
-equivalences and normalization forms {{UTR15}}.
+aliasing from mismatched encodings or Unicode equivalences {{UTR15}}.
 
 
 # IANA Considerations {#iana-considerations}
