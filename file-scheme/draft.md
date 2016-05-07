@@ -292,8 +292,8 @@ that might be performed on a file identified by a non-local file URI.
 The encoding of a file URI depends on the file system that stores the
 identified file.  If the file system uses a known non-Unicode character
 encoding, the path SHOULD be converted to a sequence of characters from
-the Universal Character Set {{ISO10646}} normalized according to
-Normalization Form C (NFC)  {{UTR15}}, before being translated to a
+the Universal Character Set (UCS) {{ISO10646}} normalized according to
+Normalization Form C (NFC) {{UTR15}}, before being translated to a
 file URI, and conversely a file URI SHOULD be converted back to the
 file system's native encoding when dereferencing or translating to a
 file path.
@@ -301,7 +301,7 @@ file path.
 > Note that many modern file systems encode directory and file names
 > as arbitrary sequences of octets.  In those cases, the representation
 > as an encoded string often depends on the user's localization
-> settings, or defaults to UTF-8 {{STD63}}.
+> settings, or defaults to UCS and UTF-8 {{STD63}}.
 
 When the file system's encoding is not known the file URI SHOULD be
 transported as an Internationalized Resource Identifier (IRI)
@@ -347,11 +347,12 @@ types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.
 
 <!-- fixme: improve this -->
-Some file systems have case-sensitive file naming and some do not.
+File systems vary in the way they handle case.
 Care must (?) be taken to avoid issues resulting from possibly
 unexpected aliasing from case-only differences between file paths or
 URIs.  Similarly, care must be taken to avoid issues resulting from
-aliasing from mismatched encodings or Unicode equivalences {{UTR15}}.
+aliasing from mismatched encodings or Unicode equivalences {{UTR15}}
+(see {{encoding}}).
 
 
 # IANA Considerations {#iana-considerations}
