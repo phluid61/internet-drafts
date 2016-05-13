@@ -364,28 +364,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 </reference>
 
 
-<reference anchor="STD63" target="http://www.rfc-editor.org/info/std63">
-  <front>
-    <title>UTF-8, a transformation format of ISO 10646</title>
-    <author initials="F." surname="Yergeau" fullname="F. Yergeau">
-      <organization></organization>
-    </author>
-    <date year="2003" month="November"/>
-  </front>
-  <seriesInfo name="STD" value="63"/>
-  <seriesInfo name="RFC" value="3629"/>
-  <seriesInfo name="DOI" value="10.17487/RFC3629"/>
-</reference>
-<reference anchor="ISO10646" >
-  <front>
-    <title>Information Technology - Universal Multiple-Octet Coded Character Set (UCS)</title>
-    <author >
-      <organization>International Organization for Standardization</organization>
-    </author>
-    <date year="2003" month="December"/>
-  </front>
-  <seriesInfo name="ISO/IEC" value="10646:2003"/>
-</reference>
 <reference anchor="UTR15" target="http://unicode.org/reports/tr15/tr15-18.html">
   <front>
     <title>Unicode Normalization Forms</title>
@@ -541,6 +519,28 @@ and Dave Thaler for their early comments and suggestions.</t>
 </reference>
 
 
+<reference anchor="ISO10646" >
+  <front>
+    <title>Information Technology - Universal Multiple-Octet Coded Character Set (UCS)</title>
+    <author >
+      <organization>International Organization for Standardization</organization>
+    </author>
+    <date year="2003" month="December"/>
+  </front>
+  <seriesInfo name="ISO/IEC" value="10646:2003"/>
+</reference>
+<reference anchor="STD63" target="http://www.rfc-editor.org/info/std63">
+  <front>
+    <title>UTF-8, a transformation format of ISO 10646</title>
+    <author initials="F." surname="Yergeau" fullname="F. Yergeau">
+      <organization></organization>
+    </author>
+    <date year="2003" month="November"/>
+  </front>
+  <seriesInfo name="STD" value="63"/>
+  <seriesInfo name="RFC" value="3629"/>
+  <seriesInfo name="DOI" value="10.17487/RFC3629"/>
+</reference>
 <reference anchor="WHATWG-URL" target="http://url.spec.whatwg.org/">
   <front>
     <title>URL Living Standard</title>
