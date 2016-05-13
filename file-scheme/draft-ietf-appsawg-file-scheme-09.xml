@@ -190,34 +190,16 @@ that might be performed on a file identified by a non-local file URI.</t>
 </section>
 <section anchor="encoding" title="Encoding">
 
-<t>The encoding of a file URI depends on the file system that stores the
-identified file.  If the file system uses a known non-Unicode character
-encoding, the path SHOULD be converted to a sequence of characters from
-the Universal Character Set (UCS) <xref target="ISO10646"/> normalized according to
-Normalization Form C (NFC) <xref target="UTR15"/>, before being translated to a
-file URI, and conversely a file URI SHOULD be converted back to the
-file system’s native encoding when dereferencing or translating to a
-file path.</t>
+<t>File systems use various encoding schemes to store file and directory
+names.  Many modern file systems encode file and directory names as
+arbitrary sequences of octets, in which case the representation as an
+encoded string often depends on the user’s localization settings, or
+defaults to UTF-8 <xref target="STD63"/>.</t>
 
-<t><list style='empty'>
-  <t>Note that many modern file systems encode directory and file names
-as arbitrary sequences of octets.  In those cases, the representation
-as an encoded string often depends on the user’s localization
-settings, or defaults to UCS and UTF-8 <xref target="STD63"/>.</t>
-</list></t>
-
-<t>When the file system’s encoding is not known the file URI SHOULD be
-transported as an Internationalized Resource Identifier (IRI)
-<xref target="RFC3987"/> to avoid ambiguity.  See <xref target="iri-vs-uri"/> for examples.</t>
-
-<!-- fixme: from Dave Crocker:
-
-  I'm inclined to think that this section either needs to be far more
-  complete - and I'm not recommending it do that - or it merely needs to
-  caution implementers to make sure that file scheme URI storage needs to
-  be idempotent with the original, interoperable form.
-
--->
+<t>Without other encoding information, percent-encoded octets in a file
+URI (<xref target="RFC3986"/>, Section 2.1) MAY be interpreted according to the
+preferred or configured encoding of the system on which the URI is
+being interpreted.</t>
 
 </section>
 <section anchor="security" title="Security Considerations">
@@ -290,7 +272,7 @@ those documents still apply.</t>
 
 <t>Additional thanks to Dave Risney, author of the informative
 IE Blog article &lt;http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx&gt;,
-and Dave Thaler for their comments and suggestions.</t>
+and Dave Thaler for their early comments and suggestions.</t>
 
 </section>
 
@@ -349,20 +331,6 @@ and Dave Thaler for their comments and suggestions.</t>
 <seriesInfo name='STD' value='66'/>
 <seriesInfo name='RFC' value='3986'/>
 <seriesInfo name='DOI' value='10.17487/RFC3986'/>
-</reference>
-
-
-
-<reference  anchor='RFC3987' target='http://www.rfc-editor.org/info/rfc3987'>
-<front>
-<title>Internationalized Resource Identifiers (IRIs)</title>
-<author initials='M.' surname='Duerst' fullname='M. Duerst'><organization /></author>
-<author initials='M.' surname='Suignard' fullname='M. Suignard'><organization /></author>
-<date year='2005' month='January' />
-<abstract><t>This document defines a new protocol element, the Internationalized  Resource Identifier (IRI), as a complement of the Uniform Resource  Identifier (URI). An IRI is a sequence of characters from the  Universal Character Set (Unicode/ISO 10646). A mapping from IRIs to   URIs is defined, which means that IRIs can be used instead of URIs,  where appropriate, to identify resources.</t><t> The approach of defining a new protocol element was chosen instead of extending or changing the definition of URIs.  This was done in order  to allow a clear distinction and to avoid incompatibilities with  existing software. Guidelines are provided for the use and deployment of IRIs in various protocols, formats, and software components that currently deal with URIs.</t></abstract>
-</front>
-<seriesInfo name='RFC' value='3987'/>
-<seriesInfo name='DOI' value='10.17487/RFC3987'/>
 </reference>
 
 
@@ -984,56 +952,6 @@ determined with reasonable certainty that the backslashes are intended
 as path separators.</t>
 
 </section>
-</section>
-<section anchor="iri-vs-uri" title="Example of IRI vs Percent-Encoded URI">
-
-<t>The following examples demonstrate the advantage of encoding file
-URIs as IRIs to avoid ambiguity (see <xref target="encoding"/>).</t>
-
-<t>Example: file IRI:</t>
-
-<figure><artwork><![CDATA[
-| Bytes of file IRI in a UTF-8 document:
-|    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
-|    f  i  l  e  :  c  :  /  r  e  ( c ) u  .  t  x  t
-|
-| Interpretation:
-|    A file named "recu.txt" with a cedilla on the "c", in the
-|    directory "C:\" of a DOS or Windows file system.
-|
-| Character value sequences of file paths, for various file system
-| encodings:
-|
-|  o UTF-16 (e.g. NTFS):
-|       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
-|
-|  o Codepage 437 (e.g. MS-DOS):
-|       43   3a   5c   72   65   87   75   2e   74   78   74
-]]></artwork></figure>
-
-<t>Counter-example: ambiguous file URI:</t>
-
-<figure><artwork><![CDATA[
-| Percent-encoded file URI, in any ASCII-compatible document:
-|    "file:///%E3%81%A1"
-|
-| Possible interpretations of the file name, depending on the
-| encoding of the file system:
-|
-|  o UTF-8:
-|       <HIRAGANA LETTER TI (U+3061)>
-|
-|  o Codepage 437:
-|       <GREEK SMALL LETTER PI (U+03C0)> +
-|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)> +
-|       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
-|
-|  o EBCDIC:
-|       "Ta~"
-|
-| etc.
-]]></artwork></figure>
-
 </section>
 <section anchor="unc-syntax" title="UNC Syntax">
 
