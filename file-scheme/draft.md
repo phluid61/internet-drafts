@@ -50,24 +50,6 @@ normative:
   RFC3986:
   RFC5234:
   RFC6874:
-  STD63:
-    title: UTF-8, a transformation format of ISO 10646
-    author:
-    - ins: F. Yergeau
-      name: F. Yergeau
-    date: 2003-11
-    seriesinfo:
-      STD: 63
-      RFC: 3629
-      DOI: 10.17487/RFC3629
-    target: http://www.rfc-editor.org/info/std63
-  ISO10646:
-    title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
-    author:
-    - organization: International Organization for Standardization
-    date: 2003-12
-    seriesinfo:
-      ISO/IEC: 10646:2003
   UTR15:
     title: Unicode Normalization Forms
     author:
@@ -90,6 +72,24 @@ informative:
   RFC6838:
   RFC7530:
   I-D.hoffman-file-uri:
+  ISO10646:
+    title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
+    author:
+    - organization: International Organization for Standardization
+    date: 2003-12
+    seriesinfo:
+      ISO/IEC: 10646:2003
+  STD63:
+    title: UTF-8, a transformation format of ISO 10646
+    author:
+    - ins: F. Yergeau
+      name: F. Yergeau
+    date: 2003-11
+    seriesinfo:
+      STD: 63
+      RFC: 3629
+      DOI: 10.17487/RFC3629
+    target: http://www.rfc-editor.org/info/std63
   WHATWG-URL:
     title: URL Living Standard
     author:
