@@ -48,7 +48,6 @@ normative:
     target: http://www.rfc-editor.org/info/bcp35
   RFC2119:
   RFC3986:
-  RFC3987:
   RFC5234:
   RFC6874:
   STD63:
@@ -289,32 +288,16 @@ that might be performed on a file identified by a non-local file URI.
 
 # Encoding {#encoding}
 
-The encoding of a file URI depends on the file system that stores the
-identified file.  If the file system uses a known non-Unicode character
-encoding, the path SHOULD be converted to a sequence of characters from
-the Universal Character Set (UCS) {{ISO10646}} normalized according to
-Normalization Form C (NFC) {{UTR15}}, before being translated to a
-file URI, and conversely a file URI SHOULD be converted back to the
-file system's native encoding when dereferencing or translating to a
-file path.
+File systems use various encoding schemes to store file and directory
+names.  Many modern file systems encode file and directory names as
+arbitrary sequences of octets, in which case the representation as an
+encoded string often depends on the user's localization settings, or
+defaults to UTF-8 {{STD63}}.
 
-> Note that many modern file systems encode directory and file names
-> as arbitrary sequences of octets.  In those cases, the representation
-> as an encoded string often depends on the user's localization
-> settings, or defaults to UCS and UTF-8 {{STD63}}.
-
-When the file system's encoding is not known the file URI SHOULD be
-transported as an Internationalized Resource Identifier (IRI)
-{{RFC3987}} to avoid ambiguity.  See {{iri-vs-uri}} for examples.
-
-<!-- fixme: from Dave Crocker:
-
-  I'm inclined to think that this section either needs to be far more
-  complete - and I'm not recommending it do that - or it merely needs to
-  caution implementers to make sure that file scheme URI storage needs to
-  be idempotent with the original, interoperable form.
-
--->
+Without other encoding information, percent-encoded octets in a file
+URI ({{RFC3986}}, Section 2.1) MAY be interpreted according to the
+preferred or configured encoding of the system on which the URI is
+being interpreted.
 
 
 # Security Considerations {#security}
@@ -335,7 +318,7 @@ agents use globally unique identifiers as the origin for each file URI
 {{RFC6454}}, which is the most secure option.
 
 File systems typically assign an operational meaning to special
-characters, such as the "/", "\\", ":", "[", and "]" characters, and
+characters, such as the "/", "\\", ":", "\[", and "]" characters, and
 to special device names like ".", "..", "...", "aux", "lpt", etc.
 In some cases, merely testing for the existence of such a name will
 cause the operating system to pause or invoke unrelated system calls,
@@ -391,7 +374,7 @@ those documents still apply.
 
 Additional thanks to Dave Risney, author of the informative
 IE Blog article \<http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx>,
-and Dave Thaler for their comments and suggestions.
+and Dave Thaler for their early comments and suggestions.
 
 
 --- back
@@ -485,7 +468,7 @@ to and from URIs using Normalization Form C ({{encoding}}).
 ## OpenVMS Files-11 Systems  {#sys-vms}
 
 When mapping a VMS file path to a file URI, the device name is mapped
-into the first path segment.  Note that the dollars sign "$" is
+into the first path segment.  Note that the dollars sign "\$" is
 a reserved character per the definition in {{RFC3986}}, Section 2.2,
 so should be percent-encoded if present in the device name.
 
@@ -725,56 +708,6 @@ It may be possible to translate or update such an invalid file URI by
 replacing all backslashes "\\" with slashes "/", if it can be
 determined with reasonable certainty that the backslashes are intended
 as path separators.
-
-
-# Example of IRI vs Percent-Encoded URI  {#iri-vs-uri}
-
-The following examples demonstrate the advantage of encoding file
-URIs as IRIs to avoid ambiguity (see {{encoding}}).
-
-Example: file IRI:
-
-~~~~~~~~~~
-| Bytes of file IRI in a UTF-8 document:
-|    66 69 6c 65 3a 43 3a 2f 72 65 c3 a7 75 2e 74 78 74
-|    f  i  l  e  :  c  :  /  r  e  ( c ) u  .  t  x  t
-|
-| Interpretation:
-|    A file named "recu.txt" with a cedilla on the "c", in the
-|    directory "C:\" of a DOS or Windows file system.
-|
-| Character value sequences of file paths, for various file system
-| encodings:
-|
-|  o UTF-16 (e.g. NTFS):
-|       0043 003a 005c 0072 0065 00e7 0075 002e 0074 0078 0074
-|
-|  o Codepage 437 (e.g. MS-DOS):
-|       43   3a   5c   72   65   87   75   2e   74   78   74
-~~~~~~~~~~
-
-Counter-example: ambiguous file URI:
-
-~~~~~~~~~~
-| Percent-encoded file URI, in any ASCII-compatible document:
-|    "file:///%E3%81%A1"
-|
-| Possible interpretations of the file name, depending on the
-| encoding of the file system:
-|
-|  o UTF-8:
-|       <HIRAGANA LETTER TI (U+3061)>
-|
-|  o Codepage 437:
-|       <GREEK SMALL LETTER PI (U+03C0)> +
-|       <LATIN SMALL LETTER U WITH DIAERESIS (U+00FC)> +
-|       <LATIN SMALL LETTER I WITH ACUTE (U+00ED)>
-|
-|  o EBCDIC:
-|       "Ta~"
-|
-| etc.
-~~~~~~~~~~
 
 
 # UNC Syntax  {#unc-syntax}
