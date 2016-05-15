@@ -63,22 +63,11 @@ normative:
     target: http://unicode.org/reports/tr15/tr15-18.html
 
 informative:
-  RFC1035:
-  RFC1123:
   RFC1630:
   RFC1738:
-  RFC4291:
   RFC6454:
   RFC6838:
-  RFC7530:
   I-D.hoffman-file-uri:
-  ISO10646:
-    title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
-    author:
-    - organization: International Organization for Standardization
-    date: 2003-12
-    seriesinfo:
-      ISO/IEC: 10646:2003
   STD63:
     title: UTF-8, a transformation format of ISO 10646
     author:
@@ -98,33 +87,12 @@ informative:
     date: 2013-05
     target: http://url.spec.whatwg.org/
   MS-DTYP:
-    title: Windows Data Types, 2.2.56 UNC
+    title: Windows Data Types, 2.2.57 UNC
     author:
     - organization: Microsoft Open Specifications
       #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
-    date: 2013-01
+    date: 2015-10-16
     target: http://msdn.microsoft.com/en-us/library/gg465305.aspx
-  MS-NBTE:
-    title: NetBIOS over TCP (NBT) Extensions
-    author:
-    - organization: Microsoft Open Specifications
-      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
-    date: 2014-05
-    target: http://msdn.microsoft.com/en-us/library/dd891412.aspx
-  MS-SMB:
-    title: Server Message Block (SMB) Protocol
-    author:
-    - organization: Microsoft Open Specifications
-      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
-    date: 2013-01
-    target: http://msdn.microsoft.com/en-us/library/cc246231.aspx
-  NOVELL:
-    title: NetWare Core Protocols
-    author:
-    - organization: Novell
-      #url: http://www.novell.com/
-    date: 2013
-    target: http://www.novell.com/developer/ndk/netware_core_protocols.html
   POSIX:
     title: IEEE Std 1003.1, 2013 Edition
     #abbrev: POSIX.1-2008
@@ -421,8 +389,7 @@ Non-local files:
   describing the location of files, except that files located by UNC
   filespace selector strings are typically stored on a remote machine
   and accessed using a network protocol.  A UNC filespace selector
-  string has three parts: host, share, and path; described for
-  informational purposes in {{unc-syntax}}.  {{ext-unc}} lists some
+  string has three parts: host, share, and path.  {{ext-unc}} lists some
   ways in which UNC filespace selector strings are currently made to
   interoperate with the file URI scheme.
 
@@ -436,7 +403,7 @@ Non-local files:
   translating namespaced paths to or from file URIs.
 
 
-# System-specific Operations  {#system-specific}
+# System-Specific Operations  {#system-specific}
 
 This appendix is not normative; it highlights some observed
 behaviours and provides system-specific guidance for interacting
@@ -608,6 +575,7 @@ the equivalent segments of the two schemes (hostname to authority,
 sharename+objectnames to path), or by mapping the entire UNC string to
 the path segment of a URI.
 
+
 ### file URI with Authority  {#ext-unc-map}
 
 The following is an algorithmic description of the process of
@@ -621,20 +589,23 @@ mapping the equivalent segments of the two schemes:
 
     1.  Append the "//" authority sigil to the URI.
 
-    2.  Append the hostname field of the UNC string to the URI.
+    2.  Append the host-name field of the UNC string to the URI.
 
-3.  Append the sharename:
+3.  Append the share-name:
 
-    1.  Transform the sharename to a path segment ({{RFC3986}},
+    1.  Transform the share-name to a path segment ({{RFC3986}},
         Section 3.3) to conform to the encoding rules of Section 2 of
         {{RFC3986}}.
 
     2.  Append a delimiting slash character "/" and the transformed
         segment to the URI.
 
-4.  For each objectname:
+4.  For each object-name:
 
     1.  Transform the objectname to a path segment as above.
+
+        The colon character ":" is allowed as a delimiter before
+        stream-name and stream-type in the file-name, if present.
 
     2.  Append a delimiting slash character "/" and the transformed
         segment to the URI.
@@ -709,30 +680,6 @@ replacing all backslashes "\\" with slashes "/", if it can be
 determined with reasonable certainty that the backslashes are intended
 as path separators.
 
-
-# UNC Syntax  {#unc-syntax}
-
-The UNC filespace selector string is a null-terminated sequence of
-characters from the Universal Character Set {{ISO10646}}.
-
-The syntax of a UNC filespace selector string, as defined by
-{{MS-DTYP}}, is given here in Augmented Backus-Naur Form (ABNF)
-{{RFC5234}} for convenience.  Note that this definition is informative
-only; the normative description is in {{MS-DTYP}}.
-
-~~~~~~~~~~
-   UNC = "\\" hostname "\" sharename *( "\" objectname )
-   hostname   = netbios-name / fqdn / ip-address
-   sharename  = <name of share or resource to be accessed>
-   objectname = <depends on resource being accessed>
-~~~~~~~~~~
-
-* `netbios-name` from {{MS-NBTE}}, Section 2.2.1<!--http://msdn.microsoft.com/en-us/library/dd891456.aspx-->.
-* `fqdn` from {{RFC1035}} or {{RFC1123}}
-* `ip-address` from Section 2.1 of {{RFC1123}}, or Section 2.2 of {{RFC4291}}.
-
-The precise format of `sharename` depends on the protocol;
-see: SMB {{MS-SMB}}, NFS {{RFC7530}}, NCP {{NOVELL}}.
 
 # Collected Rules  {#collected}
 
