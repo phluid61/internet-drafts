@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-09" category="std" obsoletes="1738">
+<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-10" category="std" obsoletes="1738">
 
   <front>
     <title abbrev="file-scheme">The file URI Scheme</title>
@@ -386,34 +386,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 
 
 
-<reference  anchor='RFC1035' target='http://www.rfc-editor.org/info/rfc1035'>
-<front>
-<title>Domain names - implementation and specification</title>
-<author initials='P.V.' surname='Mockapetris' fullname='P.V. Mockapetris'><organization /></author>
-<date year='1987' month='November' />
-<abstract><t>This RFC is the revised specification of the protocol and format used in the implementation of the Domain Name System.  It obsoletes RFC-883. This memo documents the details of the domain name client - server communication.</t></abstract>
-</front>
-<seriesInfo name='STD' value='13'/>
-<seriesInfo name='RFC' value='1035'/>
-<seriesInfo name='DOI' value='10.17487/RFC1035'/>
-</reference>
-
-
-
-<reference  anchor='RFC1123' target='http://www.rfc-editor.org/info/rfc1123'>
-<front>
-<title>Requirements for Internet Hosts - Application and Support</title>
-<author initials='R.' surname='Braden' fullname='R. Braden' role='editor'><organization /></author>
-<date year='1989' month='October' />
-<abstract><t>This RFC is an official specification for the Internet community.  It incorporates by reference, amends, corrects, and supplements the primary protocol standards documents relating to hosts.  [STANDARDS-TRACK]</t></abstract>
-</front>
-<seriesInfo name='STD' value='3'/>
-<seriesInfo name='RFC' value='1123'/>
-<seriesInfo name='DOI' value='10.17487/RFC1123'/>
-</reference>
-
-
-
 <reference  anchor='RFC1630' target='http://www.rfc-editor.org/info/rfc1630'>
 <front>
 <title>Universal Resource Identifiers in WWW: A Unifying Syntax for the Expression of Names and Addresses of Objects on the Network as used in the World-Wide Web</title>
@@ -438,20 +410,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 </front>
 <seriesInfo name='RFC' value='1738'/>
 <seriesInfo name='DOI' value='10.17487/RFC1738'/>
-</reference>
-
-
-
-<reference  anchor='RFC4291' target='http://www.rfc-editor.org/info/rfc4291'>
-<front>
-<title>IP Version 6 Addressing Architecture</title>
-<author initials='R.' surname='Hinden' fullname='R. Hinden'><organization /></author>
-<author initials='S.' surname='Deering' fullname='S. Deering'><organization /></author>
-<date year='2006' month='February' />
-<abstract><t>This specification defines the addressing architecture of the IP Version 6 (IPv6) protocol.  The document includes the IPv6 addressing model, text representations of IPv6 addresses, definition of IPv6 unicast addresses, anycast addresses, and multicast addresses, and an IPv6 node's required addresses.</t><t>This document obsoletes RFC 3513, &quot;IP Version 6 Addressing Architecture&quot;.   [STANDARDS-TRACK]</t></abstract>
-</front>
-<seriesInfo name='RFC' value='4291'/>
-<seriesInfo name='DOI' value='10.17487/RFC4291'/>
 </reference>
 
 
@@ -485,20 +443,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 
 
 
-<reference  anchor='RFC7530' target='http://www.rfc-editor.org/info/rfc7530'>
-<front>
-<title>Network File System (NFS) Version 4 Protocol</title>
-<author initials='T.' surname='Haynes' fullname='T. Haynes' role='editor'><organization /></author>
-<author initials='D.' surname='Noveck' fullname='D. Noveck' role='editor'><organization /></author>
-<date year='2015' month='March' />
-<abstract><t>The Network File System (NFS) version 4 protocol is a distributed file system protocol that builds on the heritage of NFS protocol version 2 (RFC 1094) and version 3 (RFC 1813).  Unlike earlier versions, the NFS version 4 protocol supports traditional file access while integrating support for file locking and the MOUNT protocol. In addition, support for strong security (and its negotiation), COMPOUND operations, client caching, and internationalization has been added.  Of course, attention has been applied to making NFS version 4 operate well in an Internet environment.</t><t>This document, together with the companion External Data Representation (XDR) description document, RFC 7531, obsoletes RFC 3530 as the definition of the NFS version 4 protocol.</t></abstract>
-</front>
-<seriesInfo name='RFC' value='7530'/>
-<seriesInfo name='DOI' value='10.17487/RFC7530'/>
-</reference>
-
-
-
 <reference anchor='I-D.hoffman-file-uri'>
 <front>
 <title>The file URI Scheme</title>
@@ -519,16 +463,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 </reference>
 
 
-<reference anchor="ISO10646" >
-  <front>
-    <title>Information Technology - Universal Multiple-Octet Coded Character Set (UCS)</title>
-    <author >
-      <organization>International Organization for Standardization</organization>
-    </author>
-    <date year="2003" month="December"/>
-  </front>
-  <seriesInfo name="ISO/IEC" value="10646:2003"/>
-</reference>
 <reference anchor="STD63" target="http://www.rfc-editor.org/info/std63">
   <front>
     <title>UTF-8, a transformation format of ISO 10646</title>
@@ -552,38 +486,11 @@ and Dave Thaler for their early comments and suggestions.</t>
 </reference>
 <reference anchor="MS-DTYP" target="http://msdn.microsoft.com/en-us/library/gg465305.aspx">
   <front>
-    <title>Windows Data Types, 2.2.56 UNC</title>
+    <title>Windows Data Types, 2.2.57 UNC</title>
     <author >
       <organization>Microsoft Open Specifications</organization>
     </author>
-    <date year="2013" month="January"/>
-  </front>
-</reference>
-<reference anchor="MS-NBTE" target="http://msdn.microsoft.com/en-us/library/dd891412.aspx">
-  <front>
-    <title>NetBIOS over TCP (NBT) Extensions</title>
-    <author >
-      <organization>Microsoft Open Specifications</organization>
-    </author>
-    <date year="2014" month="May"/>
-  </front>
-</reference>
-<reference anchor="MS-SMB" target="http://msdn.microsoft.com/en-us/library/cc246231.aspx">
-  <front>
-    <title>Server Message Block (SMB) Protocol</title>
-    <author >
-      <organization>Microsoft Open Specifications</organization>
-    </author>
-    <date year="2013" month="January"/>
-  </front>
-</reference>
-<reference anchor="NOVELL" target="http://www.novell.com/developer/ndk/netware_core_protocols.html">
-  <front>
-    <title>NetWare Core Protocols</title>
-    <author >
-      <organization>Novell</organization>
-    </author>
-    <date year="2013"/>
+    <date year="2015" month="October" day="16"/>
   </front>
 </reference>
 <reference anchor="POSIX" >
@@ -663,8 +570,7 @@ format that can perform a similar role to the file URI scheme in
 describing the location of files, except that files located by UNC
 filespace selector strings are typically stored on a remote machine
 and accessed using a network protocol.  A UNC filespace selector
-string has three parts: host, share, and path; described for
-informational purposes in <xref target="unc-syntax"/>.  <xref target="ext-unc"/> lists some
+string has three parts: host, share, and path.  <xref target="ext-unc"/> lists some
 ways in which UNC filespace selector strings are currently made to
 interoperate with the file URI scheme.</t>
   <t>The Microsoft Windows API defines Win32 Namespaces
@@ -678,7 +584,7 @@ translating namespaced paths to or from file URIs.</t>
 </list></t>
 
 </section>
-<section anchor="system-specific" title="System-specific Operations">
+<section anchor="system-specific" title="System-Specific Operations">
 
 <t>This appendix is not normative; it highlights some observed
 behaviours and provides system-specific guidance for interacting
@@ -863,17 +769,19 @@ mapping the equivalent segments of the two schemes:</t>
   <t>Initialise the URI with the “file:” scheme identifier.</t>
   <t>Append the authority:  <list style="numbers">
       <t>Append the “//” authority sigil to the URI.</t>
-      <t>Append the hostname field of the UNC string to the URI.</t>
+      <t>Append the host-name field of the UNC string to the URI.</t>
     </list></t>
-  <t>Append the sharename:  <list style="numbers">
-      <t>Transform the sharename to a path segment (<xref target="RFC3986"/>,
+  <t>Append the share-name:  <list style="numbers">
+      <t>Transform the share-name to a path segment (<xref target="RFC3986"/>,
 Section 3.3) to conform to the encoding rules of Section 2 of
 <xref target="RFC3986"/>.</t>
       <t>Append a delimiting slash character “/” and the transformed
 segment to the URI.</t>
     </list></t>
-  <t>For each objectname:  <list style="numbers">
-      <t>Transform the objectname to a path segment as above.</t>
+  <t>For each object-name:  <list style="numbers">
+      <t>Transform the objectname to a path segment as above.      <vspace blankLines='1'/>
+The colon character “:” is allowed as a delimiter before
+stream-name and stream-type in the file-name, if present.</t>
       <t>Append a delimiting slash character “/” and the transformed
 segment to the URI.</t>
     </list></t>
@@ -952,33 +860,6 @@ determined with reasonable certainty that the backslashes are intended
 as path separators.</t>
 
 </section>
-</section>
-<section anchor="unc-syntax" title="UNC Syntax">
-
-<t>The UNC filespace selector string is a null-terminated sequence of
-characters from the Universal Character Set <xref target="ISO10646"/>.</t>
-
-<t>The syntax of a UNC filespace selector string, as defined by
-<xref target="MS-DTYP"/>, is given here in Augmented Backus-Naur Form (ABNF)
-<xref target="RFC5234"/> for convenience.  Note that this definition is informative
-only; the normative description is in <xref target="MS-DTYP"/>.</t>
-
-<figure><artwork><![CDATA[
-   UNC = "\\" hostname "\" sharename *( "\" objectname )
-   hostname   = netbios-name / fqdn / ip-address
-   sharename  = <name of share or resource to be accessed>
-   objectname = <depends on resource being accessed>
-]]></artwork></figure>
-
-<t><list style="symbols">
-  <t><spanx style="verb">netbios-name</spanx> from <xref target="MS-NBTE"/>, Section 2.2.1<!--http://msdn.microsoft.com/en-us/library/dd891456.aspx-->.</t>
-  <t><spanx style="verb">fqdn</spanx> from <xref target="RFC1035"/> or <xref target="RFC1123"/></t>
-  <t><spanx style="verb">ip-address</spanx> from Section 2.1 of <xref target="RFC1123"/>, or Section 2.2 of <xref target="RFC4291"/>.</t>
-</list></t>
-
-<t>The precise format of <spanx style="verb">sharename</spanx> depends on the protocol;
-see: SMB <xref target="MS-SMB"/>, NFS <xref target="RFC7530"/>, NCP <xref target="NOVELL"/>.</t>
-
 </section>
 <section anchor="collected" title="Collected Rules">
 
