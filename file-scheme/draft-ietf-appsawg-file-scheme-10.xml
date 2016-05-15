@@ -502,7 +502,7 @@ and Dave Thaler for their early comments and suggestions.</t>
     <date year="2013"/>
   </front>
 </reference>
-<reference anchor="Win32-Namespaces" target="https://msdn.microsoft.com/en-au/library/windows/desktop/aa365247(v=vs.85).aspx">
+<reference anchor="Win32-Namespaces" target="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx">
   <front>
     <title>Naming Files, Paths, and Namespaces</title>
     <author >
