@@ -1,7 +1,7 @@
 ---
 title: The file URI Scheme
 abbrev: file-scheme
-docname: draft-ietf-appsawg-file-scheme-09
+docname: draft-ietf-appsawg-file-scheme-10
 date: 2016
 category: std
 
