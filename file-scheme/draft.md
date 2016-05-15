@@ -104,7 +104,7 @@ informative:
     author:
     - organization: Microsoft Developer Network
     date: 2013-06
-    target: https://msdn.microsoft.com/en-au/library/windows/desktop/aa365247(v=vs.85).aspx
+    target: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
 
   Bug107540:
     title: Bug 107540
