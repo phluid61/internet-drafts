@@ -461,8 +461,8 @@ interacting with DOS- or Windows-like file paths and URIs.
 ## Mac OS X Systems  {#sys-osx}
 
 The HFS+ file system uses a non-standard normalization form, similar
-to Normalization Form D.  Take care when transforming HFS+ file paths
-to and from URIs using Normalization Form C ({{encoding}}).
+to Normalization Form D {{UTR15}}.  Take care when transforming HFS+
+file paths to and from URIs ({{encoding}}).
 
 
 ## OpenVMS Files-11 Systems  {#sys-vms}
