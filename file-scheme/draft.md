@@ -257,7 +257,7 @@ that might be performed on a file identified by a non-local file URI.
 # File Name Encoding {#encoding}
 
 File systems use various encoding schemes to store file and directory
-names.  Many modern file systems encode file and directory names as
+names.  Many modern file systems store file and directory names as
 arbitrary sequences of octets, in which case the representation as an
 encoded string often depends on the user's localization settings, or
 defaults to UTF-8 {{STD63}}.
