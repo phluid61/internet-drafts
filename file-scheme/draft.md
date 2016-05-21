@@ -262,6 +262,17 @@ arbitrary sequences of octets, in which case the representation as an
 encoded string often depends on the user's localization settings, or
 defaults to UTF-8 {{STD63}}.
 
+<!--
+When a file URI is produced, characters not allowed by the ABNF MUST be
+percent-encoded as characters using UTF-8 encoding, as per {{RFC3986}},
+Section 2.5.
+
+However, encoding information for file and/or directory names might not
+be available.  In these cases, implementations MAY use heuristics to
+determine the encoding.  If that fails, they SHOULD percent-encode the
+raw bytes of the label directly.
+-->
+
 Without other encoding information, percent-encoded octets in a file
 URI ({{RFC3986}}, Section 2.1) MAY be interpreted according to the
 preferred or configured encoding of the system on which the URI is
