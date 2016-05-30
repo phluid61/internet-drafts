@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 1738 (if approved)                               May 15, 2016
+Obsoletes: 1738 (if approved)                               May 13, 2016
 Intended status: Standards Track
-Expires: November 16, 2016
+Expires: November 14, 2016
 
 
                           The file URI Scheme
@@ -21,7 +21,7 @@ Abstract
    the broad spectrum of existing usages.  At the same time it notes
    some other current practices around the use of file URIs.
 
-Note to Readers (To be removed by the RFC Editor)
+   *Note to Readers (To be removed by the RFC Editor)*
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list <apps-discuss@ietf.org>.
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 16, 2016.
+   This Internet-Draft will expire on November 14, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 1]
+Kerwin                  Expires November 14, 2016               [Page 1]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -72,7 +72,7 @@ Table of Contents
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
    2.  Syntax  . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Operations Involving file URIs  . . . . . . . . . . . . . . .   5
-   4.  File Name Encoding  . . . . . . . . . . . . . . . . . . . . .   5
+   4.  Encoding  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 2]
+Kerwin                  Expires November 14, 2016               [Page 2]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -165,7 +165,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 3]
+Kerwin                  Expires November 14, 2016               [Page 3]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -221,7 +221,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 4]
+Kerwin                  Expires November 14, 2016               [Page 4]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -244,7 +244,7 @@ Internet-Draft                 file-scheme                      May 2016
    This specification neither defines nor forbids any set of operations
    that might be performed on a file identified by a non-local file URI.
 
-4.  File Name Encoding
+4.  Encoding
 
    File systems use various encoding schemes to store file and directory
    names.  Many modern file systems encode file and directory names as
@@ -277,7 +277,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 5]
+Kerwin                  Expires November 14, 2016               [Page 5]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -333,7 +333,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 6]
+Kerwin                  Expires November 14, 2016               [Page 6]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -389,7 +389,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 7]
+Kerwin                  Expires November 14, 2016               [Page 7]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -445,7 +445,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 8]
+Kerwin                  Expires November 14, 2016               [Page 8]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -501,7 +501,7 @@ Appendix B.  Example URIs
 
 
 
-Kerwin                  Expires November 16, 2016               [Page 9]
+Kerwin                  Expires November 14, 2016               [Page 9]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -557,7 +557,7 @@ Appendix D.  System-specific Operations
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 10]
+Kerwin                  Expires November 14, 2016              [Page 10]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -579,8 +579,8 @@ D.2.  DOS- and Windows-Like Systems
 D.3.  Mac OS X Systems
 
    The HFS+ file system uses a non-standard normalization form, similar
-   to Normalization Form D [UTR15].  Take care when transforming HFS+
-   file paths to and from URIs (Section 4).
+   to Normalization Form D.  Take care when transforming HFS+ file paths
+   to and from URIs using Normalization Form C (Section 4).
 
 D.4.  OpenVMS Files-11 Systems
 
@@ -613,7 +613,7 @@ E.1.  User Information
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 11]
+Kerwin                  Expires November 14, 2016              [Page 11]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -669,7 +669,7 @@ E.2.1.  Relative Paths
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 12]
+Kerwin                  Expires November 14, 2016              [Page 12]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -725,7 +725,7 @@ E.2.2.  Vertical Bar Character
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 13]
+Kerwin                  Expires November 14, 2016              [Page 13]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -781,7 +781,7 @@ E.3.1.  file URI with Authority
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 14]
+Kerwin                  Expires November 14, 2016              [Page 14]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -837,7 +837,7 @@ E.3.2.  file URI with UNC Path
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 15]
+Kerwin                  Expires November 14, 2016              [Page 15]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -893,7 +893,7 @@ Appendix G.  Collected Rules
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 16]
+Kerwin                  Expires November 14, 2016              [Page 16]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -949,7 +949,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 17]
+Kerwin                  Expires November 14, 2016              [Page 17]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -1005,4 +1005,4 @@ Author's Address
 
 
 
-Kerwin                  Expires November 16, 2016              [Page 18]
+Kerwin                  Expires November 14, 2016              [Page 18]
