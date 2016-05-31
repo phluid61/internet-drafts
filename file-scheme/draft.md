@@ -10,8 +10,8 @@ area: General
 workgroup: Applications Area Working Group
 keyword: Internet-Draft
 
-#updates: 3986
-obsoletes: 1738
+#obsoletes: 1738
+updates: 1738
 
 stand_alone: yes #_
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
