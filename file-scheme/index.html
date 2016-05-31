@@ -392,7 +392,7 @@
 <link href="#rfc.appendix.D.1" rel="Chapter" title="D.1 POSIX Systems"/>
 <link href="#rfc.appendix.D.2" rel="Chapter" title="D.2 DOS- and Windows-Like Systems"/>
 <link href="#rfc.appendix.D.3" rel="Chapter" title="D.3 Mac OS X Systems"/>
-<link href="#rfc.appendix.D.4" rel="Chapter" title="D.4 OpenVMS Files-11 Systems"/>
+<link href="#rfc.appendix.D.4" rel="Chapter" title="D.4 OpenVMS Files-latest Systems"/>
 <link href="#rfc.appendix.E" rel="Chapter" title="E Nonstandard Syntax Variations"/>
 <link href="#rfc.appendix.E.1" rel="Chapter" title="E.1 User Information"/>
 <link href="#rfc.appendix.E.2" rel="Chapter" title="E.2 DOS and Windows Drive Letters"/>
@@ -495,7 +495,7 @@
 <ul><li>D.1.   <a href="#rfc.appendix.D.1">POSIX Systems</a></li>
 <li>D.2.   <a href="#rfc.appendix.D.2">DOS- and Windows-Like Systems</a></li>
 <li>D.3.   <a href="#rfc.appendix.D.3">Mac OS X Systems</a></li>
-<li>D.4.   <a href="#rfc.appendix.D.4">OpenVMS Files-11 Systems</a></li>
+<li>D.4.   <a href="#rfc.appendix.D.4">OpenVMS Files-latest Systems</a></li>
 </ul><li>Appendix E.   <a href="#rfc.appendix.E">Nonstandard Syntax Variations</a></li>
 <ul><li>E.1.   <a href="#rfc.appendix.E.1">User Information</a></li>
 <li>E.2.   <a href="#rfc.appendix.E.2">DOS and Windows Drive Letters</a></li>
@@ -556,7 +556,7 @@
 <p id="rfc.section.5.p.2">File access and the granting of privileges for specific operations are complex topics, and the use of file URIs can complicate the security model in effect for file privileges.</p>
 <p id="rfc.section.5.p.3">Historically, user agents have granted content from the file URI scheme a tremendous amount of privilege.  However, granting all local files such wide privileges can lead to privilege escalation attacks.  Some user agents have had success granting local files directory-based privileges, but this approach has not been widely adopted.  Other user agents use globally unique identifiers as the origin for each file URI <a href="#RFC6454">[RFC6454]</a>, which is the most secure option.</p>
 <p id="rfc.section.5.p.4">File systems typically assign an operational meaning to special characters, such as the &#8220;/&#8221;, &#8220;\&#8221;, &#8220;:&#8221;, &#8220;[&#8221;, and &#8220;]&#8221; characters, and to special device names like &#8220;.&#8221;, &#8220;..&#8221;, &#8220;&#8230;&#8221;, &#8220;aux&#8221;, &#8220;lpt&#8221;, etc.  In some cases, merely testing for the existence of such a name will cause the operating system to pause or invoke unrelated system calls, leading to significant security concerns regarding denial of service and unintended data transfer.  It would be impossible for this specification to list all such significant characters and device names.  Implementers MUST research the reserved names and characters for the types of storage device that may be attached to their application and restrict the use of data obtained from URI components accordingly.</p>
-<p id="rfc.section.5.p.5">File systems vary in the way they handle case.  Care must (?) be taken to avoid issues resulting from possibly unexpected aliasing from case-only differences between file paths or URIs.  Similarly, care must be taken to avoid issues resulting from aliasing from mismatched encodings or Unicode equivalences <a href="#UTR15">[UTR15]</a> (see <a href="#encoding">Section 4</a>).</p>
+<p id="rfc.section.5.p.5">File systems vary in the way they handle case.  Care MUST be taken to avoid issues resulting from possibly unexpected aliasing from case-only differences between file paths or URIs, or from mismatched encodings or Unicode equivalences <a href="#UTR15">[UTR15]</a> (see <a href="#encoding">Section 4</a>).</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.6.p.1">This document defines the following URI scheme, so the &#8220;Permanent URI Schemes&#8221; registry has been updated accordingly.  This registration complies with <a href="#BCP35">[BCP35]</a>.</p>
 <p/>
@@ -663,6 +663,12 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC2396">[RFC2396]</b>
+      </td>
+      <td class="top"><a>Berners-Lee, T.</a>, <a>Fielding, R.</a> and <a>L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc2396">Uniform Resource Identifiers (URI): Generic Syntax</a>", RFC 2396, DOI 10.17487/RFC2396, August 1998.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC6454">[RFC6454]</b>
       </td>
       <td class="top"><a>Barth, A.</a>, "<a href="http://tools.ietf.org/html/rfc6454">The Web Origin Concept</a>", RFC 6454, DOI 10.17487/RFC6454, December 2011.</td>
@@ -694,7 +700,8 @@
   </tbody>
 </table>
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#diff" id="diff">Differences from Previous Specifications</a></h1>
-<p id="rfc.section.A.p.1">According to the definition in <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) host name and a &#8220;/&#8221;.  The syntax given in <a href="#syntax">Section 2</a> makes the entire authority component, including the double slashes &#8220;//&#8221;, optional.</p>
+<p id="rfc.section.A.p.1">The syntax definition in <a href="#syntax">Section 2</a> inherits incremental differences from the general syntax of <a href="#RFC1738">[RFC1738]</a> made by <a href="#RFC2396">[RFC2396]</a> (<a href="#RFC2396">[RFC2396]</a>, Appendix G) and <a href="#RFC3986">[RFC3986]</a> (<a href="#RFC3986">[RFC3986]</a>, Appendix D).</p>
+<p id="rfc.section.A.p.2">According to the definition in <a href="#RFC1738">[RFC1738]</a> a file URL always started with the token &#8220;file://&#8221;, followed by an (optionally blank) host name and a &#8220;/&#8221;.  The syntax given in <a href="#syntax">Section 2</a> makes the entire authority component, including the double slashes &#8220;//&#8221;, optional.</p>
 <h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#examples" id="examples">Example URIs</a></h1>
 <p id="rfc.section.B.p.1">The syntax in <a href="#syntax">Section 2</a> is intended to support file URIs that take the following forms:</p>
 <p id="rfc.section.B.p.2">Local files:</p>
@@ -715,7 +722,7 @@
 
 <ul>
   <li>The WHATWG defines a living URL standard <a href="#WHATWG-URL">[WHATWG-URL]</a>, which includes algorithms for interpreting file URIs (as URLs).</li>
-  <li>The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files, except that files located by UNC filespace selector strings are typically stored on a remote machine and accessed using a network protocol.  A UNC filespace selector string has three parts: host, share, and path.  <a href="#ext-unc">Appendix E.3</a> lists some ways in which UNC filespace selector strings are currently made to interoperate with the file URI scheme.</li>
+  <li>The Universal Naming Convention (UNC) <a href="#MS-DTYP">[MS-DTYP]</a> defines a string format that can perform a similar role to the file URI scheme in describing the location of files, except that files located by UNC filespace selector strings are typically stored on a remote machine and accessed using a network protocol.  <a href="#ext-unc">Appendix E.3</a> lists some ways in which UNC filespace selector strings are currently made to interoperate with the file URI scheme.</li>
   <li>The Microsoft Windows API defines Win32 Namespaces <a href="#Win32-Namespaces">[Win32-Namespaces]</a> for interacting with files and devices using Windows API functions.  These namespaced paths are prefixed by &#8220;\\?\&#8221; for Win32 File Namespaces and &#8220;\\.\&#8221; for Win32 Device Namespaces.  There is also a special case for UNC file paths in Win32 File Namespaces, referred to as &#8220;Long UNC&#8221;, using the prefix &#8220;\\?\UNC\&#8221;.  This specification does not define a mechanism for translating namespaced paths to or from file URIs.</li>
 </ul>
 <h1 id="rfc.appendix.D"><a href="#rfc.appendix.D">Appendix D.</a> <a href="#system-specific" id="system-specific">System-Specific Operations</a></h1>
@@ -727,7 +734,7 @@
 <p><a href="#nonstandard-syntax">Appendix E</a> lists some non-standard techniques for interacting with DOS- or Windows-like file paths and URIs.</p>
 <h1 id="rfc.appendix.D.3"><a href="#rfc.appendix.D.3">D.3.</a> <a href="#sys-osx" id="sys-osx">Mac OS X Systems</a></h1>
 <p id="rfc.section.D.3.p.1">The HFS+ file system uses a non-standard normalization form, similar to Normalization Form D <a href="#UTR15">[UTR15]</a>.  Take care when transforming HFS+ file paths to and from URIs (<a href="#encoding">Section 4</a>).</p>
-<h1 id="rfc.appendix.D.4"><a href="#rfc.appendix.D.4">D.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-11 Systems</a></h1>
+<h1 id="rfc.appendix.D.4"><a href="#rfc.appendix.D.4">D.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-latest Systems</a></h1>
 <p id="rfc.section.D.4.p.1">When mapping a VMS file path to a file URI, the device name is mapped into the first path segment.  Note that the dollars sign &#8220;$&#8221; is a reserved character per the definition in <a href="#RFC3986">[RFC3986]</a>, Section 2.2, so should be percent-encoded if present in the device name.</p>
 <p id="rfc.section.D.4.p.2">If the VMS file path includes a node reference, that is used as the authority.  Where the original node reference includes a username and password in an access control string, they can be transcribed into the authority using the non-standard syntax extension in <a href="#ext-userinfo">Appendix E.1</a>.</p>
 <h1 id="rfc.appendix.E"><a href="#rfc.appendix.E">Appendix E.</a> <a href="#nonstandard-syntax" id="nonstandard-syntax">Nonstandard Syntax Variations</a></h1>
@@ -741,7 +748,7 @@
                   / [ userinfo "@" ] host
 </pre>
 <p id="rfc.section.E.1.p.3">This uses the <samp>userinfo</samp> rule from <a href="#RFC3986">[RFC3986]</a>.</p>
-<p id="rfc.section.E.1.p.4">As discussed in the HP OpenVMS Systems Documentation &lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt; &#8220;access control strings include sufficient information to allow someone to break in to the remote account, [therefore] they create serious security exposure.&#8221; In a similar vein, the presence of a password in a &#8220;user:password&#8221; userinfo field is deprecated by <a href="#RFC3986">[RFC3986]</a>.  As such, the userinfo field of a file URI, if present, MUST NOT (?) contain a password. </p>
+<p id="rfc.section.E.1.p.4">As discussed in the HP OpenVMS Systems Documentation &lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt; &#8220;access control strings include sufficient information to allow someone to break in to the remote account, [therefore] they create serious security exposure.&#8221;  In a similar vein, the presence of a password in a &#8220;user:password&#8221; userinfo field is deprecated by <a href="#RFC3986">[RFC3986]</a>.</p>
 <h1 id="rfc.appendix.E.2"><a href="#rfc.appendix.E.2">E.2.</a> <a href="#ext-drives" id="ext-drives">DOS and Windows Drive Letters</a></h1>
 <p id="rfc.section.E.2.p.1">On Windows- or DOS-based file systems an absolute file path can begin with a drive letter.  To facilitate this, the <samp>local-path</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
 <pre>
