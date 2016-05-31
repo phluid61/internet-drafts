@@ -4,7 +4,7 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 1738 (if approved)                               May 31, 2016
+Updates: 1738 (if approved)                                 May 31, 2016
 Intended status: Standards Track
 Expires: December 2, 2016
 
