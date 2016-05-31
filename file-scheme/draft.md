@@ -1,7 +1,7 @@
 ---
 title: The file URI Scheme
 abbrev: file-scheme
-docname: draft-ietf-appsawg-file-scheme-10
+docname: draft-ietf-appsawg-file-scheme-11
 date: 2016
 category: std
 
@@ -65,6 +65,7 @@ normative:
 informative:
   RFC1630:
   RFC1738:
+  RFC2396:
   RFC6454:
   RFC6838:
   I-D.hoffman-file-uri:
@@ -301,13 +302,10 @@ Implementers MUST research the reserved names and characters for the
 types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.
 
-<!-- fixme: improve this -->
-File systems vary in the way they handle case.
-Care must (?) be taken to avoid issues resulting from possibly
-unexpected aliasing from case-only differences between file paths or
-URIs.  Similarly, care must be taken to avoid issues resulting from
-aliasing from mismatched encodings or Unicode equivalences {{UTR15}}
-(see {{encoding}}).
+File systems vary in the way they handle case.  Care MUST be taken to
+avoid issues resulting from possibly unexpected aliasing from case-only
+differences between file paths or URIs, or from mismatched encodings or
+Unicode equivalences {{UTR15}} (see {{encoding}}).
 
 
 # IANA Considerations {#iana-considerations}
@@ -353,6 +351,11 @@ and Dave Thaler for their early comments and suggestions.
 
 # Differences from Previous Specifications  {#diff}
 
+The syntax definition in {{syntax}} inherits incremental differences
+from the general syntax of {{RFC1738}} made by {{RFC2396}}
+({{RFC2396}}, Appendix G) and {{RFC3986}} ({{RFC3986}}, Appendix D).
+
+
 According to the definition in {{RFC1738}} a file URL always started
 with the token "file://", followed by an (optionally blank) host name
 and a "/".  The syntax given in {{syntax}} makes the entire authority
@@ -392,9 +395,8 @@ Non-local files:
   format that can perform a similar role to the file URI scheme in
   describing the location of files, except that files located by UNC
   filespace selector strings are typically stored on a remote machine
-  and accessed using a network protocol.  A UNC filespace selector
-  string has three parts: host, share, and path.  {{ext-unc}} lists some
-  ways in which UNC filespace selector strings are currently made to
+  and accessed using a network protocol.  {{ext-unc}} lists some ways
+  in which UNC filespace selector strings are currently made to
   interoperate with the file URI scheme.
 
 * The Microsoft Windows API defines Win32 Namespaces
@@ -477,10 +479,8 @@ As discussed in the HP OpenVMS Systems Documentation
 \<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
 "access control strings include sufficient information to allow someone
 to break in to the remote account, \[therefore\] they create serious
-security exposure." In a similar vein, the presence of a password in a
-"user:password" userinfo field is deprecated by {{RFC3986}}.  As such,
-the userinfo field of a file URI, if present, MUST NOT (?) contain a
-password. <!-- fixme -->
+security exposure."  In a similar vein, the presence of a password in a
+"user:password" userinfo field is deprecated by {{RFC3986}}.
 
 
 ## DOS and Windows Drive Letters  {#ext-drives}
