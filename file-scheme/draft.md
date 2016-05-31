@@ -117,7 +117,7 @@ informative:
 --- abstract
 
 This document specifies the "file" Uniform Resource Identifier (URI)
-scheme, obsoleting the definition in RFC 1738.
+scheme, replacing the definition in RFC 1738.
 
 It defines a common syntax which is intended to interoperate across
 the broad spectrum of existing usages.  At the same time it notes
