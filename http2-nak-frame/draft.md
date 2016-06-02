@@ -36,9 +36,9 @@ allows for non-destructive signalling of unsupported extension frames.
 
 **Note to Readers**
 
-The issues list for this draft can be found at https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20NAK%20Frame
+The issues list for this draft can be found at <https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20NAK%20Frame>
 
-The most recent (often unpublished) draft is at http://phluid61.github.io/internet-drafts/http2-nak-frame/
+The most recent (often unpublished) draft is at <http://phluid61.github.io/internet-drafts/http2-nak-frame/>
 
 --- middle
 
