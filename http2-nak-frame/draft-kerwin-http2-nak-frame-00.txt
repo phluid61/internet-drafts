@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                          January 25, 2016
+Internet-Draft                                              June 2, 2016
 Intended status: Standards Track
-Expires: July 28, 2016
+Expires: December 4, 2016
 
 
                       HTTP/2 "Dropped Frame" Frame
@@ -32,7 +32,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 28, 2016.
+   This Internet-Draft will expire on December 4, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                    Expires July 28, 2016                 [Page 1]
+Kerwin                  Expires December 4, 2016                [Page 1]
 
-Internet-Draft               http2-nak-frame                January 2016
+Internet-Draft               http2-nak-frame                   June 2016
 
 
 Table of Contents
@@ -67,7 +67,7 @@ Table of Contents
    3.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
    4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
      4.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   3
-   5.  Normative References  . . . . . . . . . . . . . . . . . . . .   3
+   5.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Introduction
@@ -102,16 +102,16 @@ Table of Contents
    any time to indicate that a received frame was discarded without any
    action being taken.
 
-   The payload of a DROPPED_FRAME frame contains the Type field from the
-   discarded frame's header.
 
 
 
 
 
-Kerwin                    Expires July 28, 2016                 [Page 2]
+
+
+Kerwin                  Expires December 4, 2016                [Page 2]
 
-Internet-Draft               http2-nak-frame                January 2016
+Internet-Draft               http2-nak-frame                   June 2016
 
 
      +---------------+
@@ -119,6 +119,11 @@ Internet-Draft               http2-nak-frame                January 2016
      +---------------+
 
                         DROPPED_FRAME Frame Payload
+
+   The DROPPED_FRAME frame contains a single 8-bit integer containing
+   the value of the Type field from the discarded frame.
+
+   The DROPPED_FRAME frame does not define any flags.
 
    An endpoint SHOULD send a DROPPED_FRAME frame for an unknown or
    unsupported frame type the first time it discards such a frame.
@@ -129,8 +134,17 @@ Internet-Draft               http2-nak-frame                January 2016
 
    An endpoint that receives a DROPPED_FRAME frame ought to take it as
    an indication that the extension is not supported by the peer, and
-   MAY subsequently choose to not send further frames of that type or to
-   enter into extension negotiations with the peer.
+   MAY subsequently choose to not send further frames of that type to or
+   to enter into extension negotiations with the peer.
+
+   DROPPED_FRAME frames are not associated with any individual stream.
+   If a DROPPED_FRAME frame is received with a stream identifier field
+   value other than 0x0, the recipient MUST respond with a connection
+   error ([RFC7540], Section 5.4.1) of type PROTOCOL_ERROR.
+
+   Receipt of a DROPPED_FRAME frame with a length field value other than
+   1 MUST be treated as a connection error ([RFC7540], Section 5.4.1) of
+   type FRAME_SIZE_ERROR.
 
 3.  Security Considerations
 
@@ -144,6 +158,17 @@ Internet-Draft               http2-nak-frame                January 2016
    This document updates the "HTTP/2 Frame Type" registry ([RFC7540],
    Section 11.2).  The entries in the following table are registered by
    this document.
+
+
+
+
+
+
+
+Kerwin                  Expires December 4, 2016                [Page 3]
+
+Internet-Draft               http2-nak-frame                   June 2016
+
 
                   +---------------+------+-------------+
                   | Frame Type    | Code | Section     |
@@ -162,13 +187,6 @@ Internet-Draft               http2-nak-frame                January 2016
               Transfer Protocol Version 2 (HTTP/2)", RFC 7540,
               DOI 10.17487/RFC7540, May 2015,
               <http://www.rfc-editor.org/info/rfc7540>.
-
-
-
-Kerwin                    Expires July 28, 2016                 [Page 3]
-
-Internet-Draft               http2-nak-frame                January 2016
-
 
 Author's Address
 
@@ -203,22 +221,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kerwin                    Expires July 28, 2016                 [Page 4]
+Kerwin                  Expires December 4, 2016                [Page 4]

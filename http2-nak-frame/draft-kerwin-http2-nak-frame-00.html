@@ -390,7 +390,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-nak-frame-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-1-25" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-6-2" />
   <meta name="dct.abstract" content="This document defines an extension to the Hypertext Transfer Protocol Version 2 (HTTP/2) that allows for non-destructive signalling of unsupported extension frames." />
   <meta name="description" content="This document defines an extension to the Hypertext Transfer Protocol Version 2 (HTTP/2) that allows for non-destructive signalling of unsupported extension frames." />
 
@@ -407,14 +407,14 @@
 </tr>
 <tr>
   <td class="left">Internet-Draft</td>
-  <td class="right">January 25, 2016</td>
+  <td class="right">June 2, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: July 28, 2016</td>
+  <td class="left">Expires: December 4, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -435,7 +435,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on July 28, 2016.</p>
+<p>This Internet-Draft will expire on December 4, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -469,16 +469,19 @@
 <p id="rfc.section.2.p.1">This document introduces a new HTTP/2 frame type (<a href="#RFC7540">[RFC7540]</a>, Section 11.2).</p>
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#dropped-frame" id="dropped-frame">DROPPED_FRAME</a></h1>
 <p id="rfc.section.2.1.p.1">DROPPED_FRAME frames (type code=0xTBA) can be sent on a connection at any time  to indicate that a received frame was discarded without any action being taken.</p>
-<p id="rfc.section.2.1.p.2">The payload of a DROPPED_FRAME frame contains the Type field from the discarded frame&#8217;s header.</p>
 <pre>
   +---------------+
   |   Type (8)    |
   +---------------+
 </pre>
 <p class="figure">DROPPED_FRAME Frame Payload</p>
-<p id="rfc.section.2.1.p.3">An endpoint SHOULD send a DROPPED_FRAME frame for an unknown or unsupported frame type the first time it discards such a frame.</p>
-<p id="rfc.section.2.1.p.4">An endpoint MAY send a DROPPED_FRAME frame for a particular incoming frame type only once, even if it discards multiple frames of that type.</p>
-<p id="rfc.section.2.1.p.5">An endpoint that receives a DROPPED_FRAME frame ought to take it as an indication that the extension is not supported by the peer, and MAY subsequently choose to not send further frames of that type or to enter into extension negotiations with the peer.</p>
+<p id="rfc.section.2.1.p.2">The DROPPED_FRAME frame contains a single 8-bit integer containing the value of the Type field from the discarded frame.</p>
+<p id="rfc.section.2.1.p.3">The DROPPED_FRAME frame does not define any flags.</p>
+<p id="rfc.section.2.1.p.4">An endpoint SHOULD send a DROPPED_FRAME frame for an unknown or unsupported frame type the first time it discards such a frame.</p>
+<p id="rfc.section.2.1.p.5">An endpoint MAY send a DROPPED_FRAME frame for a particular incoming frame type only once, even if it discards multiple frames of that type.</p>
+<p id="rfc.section.2.1.p.6">An endpoint that receives a DROPPED_FRAME frame ought to take it as an indication that the extension is not supported by the peer, and MAY subsequently choose to not send further frames of that type to or to enter into extension negotiations with the peer.</p>
+<p id="rfc.section.2.1.p.7">DROPPED_FRAME frames are not associated with any individual stream.  If a DROPPED_FRAME frame is received with a stream identifier field value other than 0x0, the recipient MUST respond with a connection error (<a href="#RFC7540">[RFC7540]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
+<p id="rfc.section.2.1.p.8">Receipt of a DROPPED_FRAME frame with a length field value other than 1 MUST be treated as a connection error (<a href="#RFC7540">[RFC7540]</a>, Section 5.4.1) of type FRAME_SIZE_ERROR.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
 <p id="rfc.section.4.p.1">This document updates the registriy for frame types in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.</p>
