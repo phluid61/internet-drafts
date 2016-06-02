@@ -119,7 +119,8 @@ TODO:
 </section>
 <section anchor="security-considerations" title="Security Considerations">
 
-<!-- TODO -->
+<!-- FIXME -->
+<t>This specification does not introduce any new security considerations.</t>
 
 </section>
 <section anchor="iana" title="IANA Considerations">
