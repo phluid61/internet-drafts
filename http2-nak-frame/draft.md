@@ -65,14 +65,17 @@ This document introduces a new HTTP/2 frame type ({{RFC7540}}, Section 11.2).
 DROPPED\_FRAME frames (type code=0xTBA) can be sent on a connection at any time <!-- FIXME --> to
 indicate that a received frame was discarded without any action being taken.
 
-The payload of a DROPPED\_FRAME frame contains the Type field from the discarded frame's header.
-
 ~~~~~~~~~~
   +---------------+
   |   Type (8)    |
   +---------------+
 ~~~~~~~~~~
 {: title="DROPPED_FRAME Frame Payload"}
+
+The DROPPED\_FRAME frame contains a single 8-bit integer containing the value of the Type field
+from the discarded frame.
+
+The DROPPED\_FRAME frame does not define any flags.
 
 An endpoint SHOULD send a DROPPED\_FRAME frame for an unknown or unsupported frame type the first
 time it discards such a frame.
@@ -82,7 +85,14 @@ if it discards multiple frames of that type.
 
 An endpoint that receives a DROPPED\_FRAME frame ought to take it as an indication that the
 extension is not supported by the peer, and MAY subsequently choose to not send further frames of
-that type or to enter into extension negotiations with the peer.
+that type to or to enter into extension negotiations with the peer.
+
+DROPPED\_FRAME frames are not associated with any individual stream.  If a DROPPED\_FRAME frame is
+received with a stream identifier field value other than 0x0, the recipient MUST respond with a
+connection error ({{RFC7540}}, Section 5.4.1) of type PROTOCOL\_ERROR.
+
+Receipt of a DROPPED\_FRAME frame with a length field value other than 1 MUST be treated as a
+connection error ({{RFC7540}}, Section 5.4.1) of type FRAME\_SIZE\_ERROR.
 
 <!--
 
