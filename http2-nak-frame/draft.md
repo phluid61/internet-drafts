@@ -105,7 +105,8 @@ TODO:
 
 # Security Considerations
 
-<!-- TODO -->
+<!-- FIXME -->
+This specification does not introduce any new security considerations.
 
 # IANA Considerations  {#iana}
 
