@@ -148,6 +148,9 @@ Internet-Draft               http2-nak-frame                   June 2016
 
 3.  Security Considerations
 
+   This specification does not introduce any new security
+   considerations.
+
 4.  IANA Considerations
 
    This document updates the registriy for frame types in the "Hypertext
@@ -158,9 +161,6 @@ Internet-Draft               http2-nak-frame                   June 2016
    This document updates the "HTTP/2 Frame Type" registry ([RFC7540],
    Section 11.2).  The entries in the following table are registered by
    this document.
-
-
-
 
 
 
