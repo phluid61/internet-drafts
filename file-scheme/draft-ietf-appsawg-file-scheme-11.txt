@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Updates: 1738 (if approved)                                 May 31, 2016
+Updates: 1738 (if approved)                                June 11, 2016
 Intended status: Standards Track
-Expires: December 2, 2016
+Expires: December 13, 2016
 
 
                           The file URI Scheme
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 2, 2016.
+   This Internet-Draft will expire on December 13, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 1]
+Kerwin                  Expires December 13, 2016               [Page 1]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
    (http://trustee.ietf.org/license-info) in effect on the date of
@@ -72,7 +72,7 @@ Table of Contents
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
    2.  Syntax  . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Operations Involving file URIs  . . . . . . . . . . . . . . .   5
-   4.  File Name Encoding  . . . . . . . . . . . . . . . . . . . . .   5
+   4.  File System Name Encoding . . . . . . . . . . . . . . . . . .   5
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 2]
+Kerwin                  Expires December 13, 2016               [Page 2]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
    This document specifies a syntax based on the generic syntax of
@@ -165,9 +165,9 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 3]
+Kerwin                  Expires December 13, 2016               [Page 3]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
       file-URI       = file-scheme ":" file-hier-part
@@ -199,6 +199,10 @@ Internet-Draft                 file-scheme                      May 2016
    previous specifications, users MAY choose to include an "auth-path"
    with no "file-auth" when creating a URI.
 
+   The path component represents the absolute path to the file in the
+   file system.  See Appendix D for some discussion of system-specific
+   concerns including absolute file paths and file system roots.
+
    Some file systems have case-sensitive file naming and some do not.
    As such the file URI scheme supports case sensitivity, in order to
    retain the case as given.  Any transport-related handling of the file
@@ -213,18 +217,17 @@ Internet-Draft                 file-scheme                      May 2016
    URI reference to such a base URI as per Section 5.2 of [RFC3986]
    could remove the directory name from the resulting target URI.
 
+
+
+
+
+Kerwin                  Expires December 13, 2016               [Page 4]
+
+Internet-Draft                 file-scheme                     June 2016
+
+
    Also see Appendix E that lists some nonstandard syntax variations
    that can be encountered in practice.
-
-
-
-
-
-
-Kerwin                  Expires December 2, 2016                [Page 4]
-
-Internet-Draft                 file-scheme                      May 2016
-
 
 3.  Operations Involving file URIs
 
@@ -244,7 +247,7 @@ Internet-Draft                 file-scheme                      May 2016
    This specification neither defines nor forbids any set of operations
    that might be performed on a file identified by a non-local file URI.
 
-4.  File Name Encoding
+4.  File System Name Encoding
 
    File systems use various encoding schemes to store file and directory
    names.  Many modern file systems store file and directory names as
@@ -270,18 +273,19 @@ Internet-Draft                 file-scheme                      May 2016
    are complex topics, and the use of file URIs can complicate the
    security model in effect for file privileges.
 
+
+
+
+
+Kerwin                  Expires December 13, 2016               [Page 5]
+
+Internet-Draft                 file-scheme                     June 2016
+
+
    Historically, user agents have granted content from the file URI
    scheme a tremendous amount of privilege.  However, granting all local
    files such wide privileges can lead to privilege escalation attacks.
    Some user agents have had success granting local files directory-
-
-
-
-Kerwin                  Expires December 2, 2016                [Page 5]
-
-Internet-Draft                 file-scheme                      May 2016
-
-
    based privileges, but this approach has not been widely adopted.
    Other user agents use globally unique identifiers as the origin for
    each file URI [RFC6454], which is the most secure option.
@@ -327,16 +331,16 @@ Internet-Draft                 file-scheme                      May 2016
    Contact:
       Matthew Kerwin <matthew.kerwin@qut.edu.au>
 
+
+
+Kerwin                  Expires December 13, 2016               [Page 6]
+
+Internet-Draft                 file-scheme                     June 2016
+
+
    Change Controller:
       This scheme is registered under the IETF tree.  As such, the IETF
       maintains change control.
-
-
-
-Kerwin                  Expires December 2, 2016                [Page 6]
-
-Internet-Draft                 file-scheme                      May 2016
-
 
 7.  Acknowledgements
 
@@ -385,13 +389,9 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-
-
-
-
-Kerwin                  Expires December 2, 2016                [Page 7]
+Kerwin                  Expires December 13, 2016               [Page 7]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
 8.2.  Informative References
@@ -445,9 +445,9 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 8]
+Kerwin                  Expires December 13, 2016               [Page 8]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
    [Win32-Namespaces]
@@ -501,9 +501,9 @@ Appendix C.  Similar Technologies
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 9]
+Kerwin                  Expires December 13, 2016               [Page 9]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
       machine and accessed using a network protocol.  Appendix E.3 lists
@@ -527,8 +527,10 @@ Appendix D.  System-Specific Operations
 
 D.1.  POSIX Systems
 
-   There is little to say about POSIX file systems; the file URI
-   structure already closely resembles POSIX file paths.
+   In a POSIX file system the root of the file system is represented by
+   a directory with a zero-length name, usually written as "/"; the
+   presence of this root can be taken as given by the initial slash in
+   the "path-absolute" rule.
 
 D.2.  DOS- and Windows-Like Systems
 
@@ -552,16 +554,16 @@ D.4.  OpenVMS Files-11 Systems
    reserved character per the definition in [RFC3986], Section 2.2, so
    should be percent-encoded if present in the device name.
 
+
+
+
+Kerwin                  Expires December 13, 2016              [Page 10]
+
+Internet-Draft                 file-scheme                     June 2016
+
+
    If the VMS file path includes a node reference, that is used as the
    authority.  Where the original node reference includes a username and
-
-
-
-Kerwin                  Expires December 2, 2016               [Page 10]
-
-Internet-Draft                 file-scheme                      May 2016
-
-
    password in an access control string, they can be transcribed into
    the authority using the non-standard syntax extension in
    Appendix E.1.
@@ -611,11 +613,9 @@ E.2.  DOS and Windows Drive Letters
 
 
 
-
-
-Kerwin                  Expires December 2, 2016               [Page 11]
+Kerwin                  Expires December 13, 2016              [Page 11]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
    This is intended to support the minimal representation of a local
@@ -669,9 +669,9 @@ E.2.2.  Vertical Bar Character
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 12]
+Kerwin                  Expires December 13, 2016              [Page 12]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
       auth-path      = [ file-auth ] path-absolute
@@ -725,9 +725,9 @@ E.3.1.  file URI with Authority
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 13]
+Kerwin                  Expires December 13, 2016              [Page 13]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
        1.  Transform the share-name to a path segment ([RFC3986],
@@ -781,9 +781,9 @@ E.3.2.  file URI with UNC Path
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 14]
+Kerwin                  Expires December 13, 2016              [Page 14]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
    Non-local files:
@@ -837,9 +837,9 @@ Appendix F.  Collected Rules
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 15]
+Kerwin                  Expires December 13, 2016              [Page 15]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
       file-URI       = file-scheme ":" file-hier-part
@@ -893,9 +893,9 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 16]
+Kerwin                  Expires December 13, 2016              [Page 16]
 
-Internet-Draft                 file-scheme                      May 2016
+Internet-Draft                 file-scheme                     June 2016
 
 
    o  Regular DOS or Windows file URIs, with vertical line characters in
@@ -949,4 +949,4 @@ Author's Address
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 17]
+Kerwin                  Expires December 13, 2016              [Page 17]
