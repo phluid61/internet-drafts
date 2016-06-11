@@ -259,7 +259,7 @@ This specification neither defines nor forbids any set of operations
 that might be performed on a file identified by a non-local file URI.
 
 
-# File Name Encoding {#encoding}
+# File System Name Encoding {#encoding}
 
 File systems use various encoding schemes to store file and directory
 names.  Many modern file systems store file and directory names as
