@@ -219,6 +219,10 @@ To maximise compatibility with previous specifications, users MAY
 choose to include an `auth-path` with no `file-auth` when creating a
 URI.
 
+The path component represents the absolute path to the file in the file
+system.  See {{system-specific}} for some discussion of system-specific
+concerns including absolute file paths and file system roots.
+
 Some file systems have case-sensitive file naming and some do not.  As
 such the file URI scheme supports case sensitivity, in order to retain
 the case as given.  Any transport-related handling of the file URI
@@ -418,8 +422,10 @@ with file URIs and paths.
 
 ## POSIX Systems  {#sys-unix}
 
-There is little to say about POSIX file systems; the file URI structure
-already closely resembles POSIX file paths.
+In a POSIX file system the root of the file system is represented by a
+directory with a zero-length name, usually written as "/";  the
+presence of this root can be taken as given by the initial slash in the
+`path-absolute` rule.
 
 
 ## DOS- and Windows-Like Systems  {#sys-dos}
