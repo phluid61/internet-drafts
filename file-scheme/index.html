@@ -378,7 +378,7 @@
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Notational Conventions"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Syntax"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Operations Involving file URIs"/>
-<link href="#rfc.section.4" rel="Chapter" title="4 File Name Encoding"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 File System Name Encoding"/>
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations"/>
 <link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgements"/>
@@ -411,7 +411,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-5-31" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-6-latest" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
 
@@ -432,14 +432,14 @@
 </tr>
 <tr>
   <td class="left">Updates: 1738 (if approved)</td>
-  <td class="right">May 31, 2016</td>
+  <td class="right">June 11, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: December 2, 2016</td>
+  <td class="left">Expires: December 13, 2016</td>
   <td class="right"></td>
 </tr>
 
@@ -465,7 +465,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on December 2, 2016.</p>
+<p>This Internet-Draft will expire on December 13, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -481,7 +481,7 @@
 <ul><li>1.1.   <a href="#rfc.section.1.1">Notational Conventions</a></li>
 </ul><li>2.   <a href="#rfc.section.2">Syntax</a></li>
 <li>3.   <a href="#rfc.section.3">Operations Involving file URIs</a></li>
-<li>4.   <a href="#rfc.section.4">File Name Encoding</a></li>
+<li>4.   <a href="#rfc.section.4">File System Name Encoding</a></li>
 <li>5.   <a href="#rfc.section.5">Security Considerations</a></li>
 <li>6.   <a href="#rfc.section.6">IANA Considerations</a></li>
 <li>7.   <a href="#rfc.section.7">Acknowledgements</a></li>
@@ -540,14 +540,15 @@
 </pre>
 <p id="rfc.section.2.p.4">The <samp>host</samp> is the fully qualified domain name of the system on which the file is accessible.  This allows a client on another system to know that it cannot access the file system, or perhaps to use some other local mecahnism to access the file.</p>
 <p id="rfc.section.2.p.5">As a special case, the <samp>file-auth</samp> rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret all values in the authority of a file URI, including &#8220;localhost&#8221;, as non-local.  Yet others interpret any value as local, even if the <samp>host</samp> does not resolve to the local machine.  To maximise compatibility with previous specifications, users MAY choose to include an <samp>auth-path</samp> with no <samp>file-auth</samp> when creating a URI.</p>
-<p id="rfc.section.2.p.6">Some file systems have case-sensitive file naming and some do not.  As such the file URI scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is soley the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
-<p id="rfc.section.2.p.7">Some file systems allow directory objects to be treated as files in some cases.  This can be reflected in a file URI by omitting the trailing slash &#8220;/&#8221; from the path.  Be aware that merging a relative URI reference to such a base URI as per Section 5.2 of <a href="#RFC3986">[RFC3986]</a> could remove the directory name from the resulting target URI.</p>
-<p id="rfc.section.2.p.8">Also see <a href="#nonstandard-syntax">Appendix E</a> that lists some nonstandard syntax variations that can be encountered in practice.</p>
+<p id="rfc.section.2.p.6">The path component represents the absolute path to the file in the file system.  See <a href="#system-specific">Appendix D</a> for some discussion of system-specific concerns including absolute file paths and file system roots.</p>
+<p id="rfc.section.2.p.7">Some file systems have case-sensitive file naming and some do not.  As such the file URI scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is soley the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
+<p id="rfc.section.2.p.8">Some file systems allow directory objects to be treated as files in some cases.  This can be reflected in a file URI by omitting the trailing slash &#8220;/&#8221; from the path.  Be aware that merging a relative URI reference to such a base URI as per Section 5.2 of <a href="#RFC3986">[RFC3986]</a> could remove the directory name from the resulting target URI.</p>
+<p id="rfc.section.2.p.9">Also see <a href="#nonstandard-syntax">Appendix E</a> that lists some nonstandard syntax variations that can be encountered in practice.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#operations" id="operations">Operations Involving file URIs</a></h1>
 <p id="rfc.section.3.p.1">Implementations that provide dereferencing operations on file URIs SHOULD, at a minimum, provide a read-like operation to return the contents of a file located by a file URI.  Additional operations MAY be provided, such as writing to, creating, and deleting files.  See the POSIX file and directory operations <a href="#POSIX">[POSIX]</a> for examples of standardized operations that can be performed on files.</p>
 <p id="rfc.section.3.p.2">A file URI can be dependably dereferenced or translated to a local file path only if it is local.  A file URI is considered &#8220;local&#8221; if it has no <samp>file-auth</samp>, or the <samp>file-auth</samp> is the special string &#8220;localhost&#8221; or a fully qualified domain name that resolves to the machine from which the URI is being interpreted (<a href="#syntax">Section 2</a>).</p>
 <p id="rfc.section.3.p.3">This specification neither defines nor forbids any set of operations that might be performed on a file identified by a non-local file URI.</p>
-<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">File Name Encoding</a></h1>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">File System Name Encoding</a></h1>
 <p id="rfc.section.4.p.1">File systems use various encoding schemes to store file and directory names.  Many modern file systems store file and directory names as arbitrary sequences of octets, in which case the representation as an encoded string often depends on the user&#8217;s localization settings, or defaults to UTF-8 <a href="#STD63">[STD63]</a>.</p>
 <p id="rfc.section.4.p.2">When a file URI is produced, characters not allowed by the syntax in <a href="#syntax">Section 2</a> SHOULD be percent-encoded as characters using UTF-8 encoding, as per <a href="#RFC3986">[RFC3986]</a>, Section 2.5.</p>
 <p id="rfc.section.4.p.3">However, encoding information for file and/or directory names might not be available.  In these cases, implementations MAY use heuristics to determine the encoding.  If that fails, they SHOULD percent-encode the raw bytes of the label directly.</p>
@@ -728,7 +729,7 @@
 <h1 id="rfc.appendix.D"><a href="#rfc.appendix.D">Appendix D.</a> <a href="#system-specific" id="system-specific">System-Specific Operations</a></h1>
 <p id="rfc.section.D.p.1">This appendix is not normative; it highlights some observed behaviours and provides system-specific guidance for interacting with file URIs and paths.</p>
 <h1 id="rfc.appendix.D.1"><a href="#rfc.appendix.D.1">D.1.</a> <a href="#sys-unix" id="sys-unix">POSIX Systems</a></h1>
-<p id="rfc.section.D.1.p.1">There is little to say about POSIX file systems; the file URI structure already closely resembles POSIX file paths.</p>
+<p id="rfc.section.D.1.p.1">In a POSIX file system the root of the file system is represented by a directory with a zero-length name, usually written as &#8220;/&#8221;;  the presence of this root can be taken as given by the initial slash in the <samp>path-absolute</samp> rule.</p>
 <h1 id="rfc.appendix.D.2"><a href="#rfc.appendix.D.2">D.2.</a> <a href="#sys-dos" id="sys-dos">DOS- and Windows-Like Systems</a></h1>
 <p id="rfc.section.D.2.p.1">When mapping a DOS- or Windows-like file path to a file URI, the drive letter (e.g. &#8220;c:&#8221;) is typically mapped into the first path segment.</p>
 <p><a href="#nonstandard-syntax">Appendix E</a> lists some non-standard techniques for interacting with DOS- or Windows-like file paths and URIs.</p>

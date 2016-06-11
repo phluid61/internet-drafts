@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Updates: 1738 (if approved)                                 May 31, 2016
+Obsoletes: 1738 (if approved)                               May 15, 2016
 Intended status: Standards Track
-Expires: December 2, 2016
+Expires: November 16, 2016
 
 
                           The file URI Scheme
@@ -15,13 +15,13 @@ Expires: December 2, 2016
 Abstract
 
    This document specifies the "file" Uniform Resource Identifier (URI)
-   scheme, replacing the definition in RFC 1738.
+   scheme, obsoleting the definition in RFC 1738.
 
    It defines a common syntax which is intended to interoperate across
    the broad spectrum of existing usages.  At the same time it notes
    some other current practices around the use of file URIs.
 
-Note to Readers (To be removed by the RFC Editor)
+   *Note to Readers (To be removed by the RFC Editor)*
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list <apps-discuss@ietf.org>.
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 2, 2016.
+   This Internet-Draft will expire on November 16, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 1]
+Kerwin                  Expires November 16, 2016               [Page 1]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 2]
+Kerwin                  Expires November 16, 2016               [Page 2]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -165,7 +165,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 3]
+Kerwin                  Expires November 16, 2016               [Page 3]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -221,7 +221,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 4]
+Kerwin                  Expires November 16, 2016               [Page 4]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -247,19 +247,15 @@ Internet-Draft                 file-scheme                      May 2016
 4.  File Name Encoding
 
    File systems use various encoding schemes to store file and directory
-   names.  Many modern file systems store file and directory names as
+   names.  Many modern file systems encode file and directory names as
    arbitrary sequences of octets, in which case the representation as an
    encoded string often depends on the user's localization settings, or
    defaults to UTF-8 [STD63].
 
-   When a file URI is produced, characters not allowed by the syntax in
-   Section 2 SHOULD be percent-encoded as characters using UTF-8
-   encoding, as per [RFC3986], Section 2.5.
-
-   However, encoding information for file and/or directory names might
-   not be available.  In these cases, implementations MAY use heuristics
-   to determine the encoding.  If that fails, they SHOULD percent-encode
-   the raw bytes of the label directly.
+   Without other encoding information, percent-encoded octets in a file
+   URI ([RFC3986], Section 2.1) MAY be interpreted according to the
+   preferred or configured encoding of the system on which the URI is
+   being interpreted.
 
 5.  Security Considerations
 
@@ -274,17 +270,17 @@ Internet-Draft                 file-scheme                      May 2016
    scheme a tremendous amount of privilege.  However, granting all local
    files such wide privileges can lead to privilege escalation attacks.
    Some user agents have had success granting local files directory-
-
-
-
-Kerwin                  Expires December 2, 2016                [Page 5]
-
-Internet-Draft                 file-scheme                      May 2016
-
-
    based privileges, but this approach has not been widely adopted.
    Other user agents use globally unique identifiers as the origin for
    each file URI [RFC6454], which is the most secure option.
+
+
+
+
+Kerwin                  Expires November 16, 2016               [Page 5]
+
+Internet-Draft                 file-scheme                      May 2016
+
 
    File systems typically assign an operational meaning to special
    characters, such as the "/", "\", ":", "[", and "]" characters, and
@@ -329,17 +325,18 @@ Internet-Draft                 file-scheme                      May 2016
       Matthew Kerwin <matthew.kerwin@qut.edu.au>
 
    Change Controller:
+      This scheme is registered under the IETF tree.  As such, the IETF
+      maintains change control.
 
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 6]
+
+
+Kerwin                  Expires November 16, 2016               [Page 6]
 
 Internet-Draft                 file-scheme                      May 2016
 
-
-      This scheme is registered under the IETF tree.  As such, the IETF
-      maintains change control.
 
 7.  Acknowledgements
 
@@ -389,7 +386,10 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 7]
+
+
+
+Kerwin                  Expires November 16, 2016               [Page 7]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -445,7 +445,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 8]
+Kerwin                  Expires November 16, 2016               [Page 8]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -501,7 +501,7 @@ Appendix C.  Similar Technologies
 
 
 
-Kerwin                  Expires December 2, 2016                [Page 9]
+Kerwin                  Expires November 16, 2016               [Page 9]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -557,7 +557,7 @@ D.4.  OpenVMS Files-11 Systems
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 10]
+Kerwin                  Expires November 16, 2016              [Page 10]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -613,7 +613,7 @@ E.2.  DOS and Windows Drive Letters
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 11]
+Kerwin                  Expires November 16, 2016              [Page 11]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -669,7 +669,7 @@ E.2.2.  Vertical Bar Character
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 12]
+Kerwin                  Expires November 16, 2016              [Page 12]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -725,7 +725,7 @@ E.3.1.  file URI with Authority
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 13]
+Kerwin                  Expires November 16, 2016              [Page 13]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -781,7 +781,7 @@ E.3.2.  file URI with UNC Path
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 14]
+Kerwin                  Expires November 16, 2016              [Page 14]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -837,7 +837,7 @@ Appendix F.  Collected Rules
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 15]
+Kerwin                  Expires November 16, 2016              [Page 15]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -893,7 +893,7 @@ Internet-Draft                 file-scheme                      May 2016
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 16]
+Kerwin                  Expires November 16, 2016              [Page 16]
 
 Internet-Draft                 file-scheme                      May 2016
 
@@ -949,4 +949,4 @@ Author's Address
 
 
 
-Kerwin                  Expires December 2, 2016               [Page 17]
+Kerwin                  Expires November 16, 2016              [Page 17]
