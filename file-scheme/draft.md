@@ -80,6 +80,12 @@ informative:
       RFC: 3629
       DOI: 10.17487/RFC3629
     target: http://www.rfc-editor.org/info/std63
+  Bash-Tilde:
+    title: "Bash Reference Manual: Tilde Expansion"
+    author:
+    - organization: Free Software Foundation, Inc
+    date: 2014-02-02
+    target: http://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html
   WHATWG-URL:
     title: URL Living Standard
     author:
@@ -106,6 +112,12 @@ informative:
     - organization: Microsoft Developer Network
     date: 2013-06
     target: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
+  Zsh-Tilde:
+    title: "zsh: 14.7 Filename Expansion"
+    #author:
+    #- organization: Zsh Web Page Maintainers
+    date: 2015-12-08
+    target: http://zsh.sourceforge.net/Doc/Release/Expansion.html#Filename-Expansion
 
   Bug107540:
     title: Bug 107540
@@ -426,6 +438,13 @@ In a POSIX file system the root of the file system is represented by a
 directory with a zero-length name, usually written as "/";  the
 presence of this root can be taken as given by the initial slash in the
 `path-absolute` rule.
+
+Common UNIX shells such as the Bourne-Again SHell (bash) and Z Shell
+(zsh) provide a function known as "tilde expansion" {{Bash-Tilde}} or
+"filename expansion" {{Zsh-Tilde}}, where a
+path that begins with a tilde character "~" can be expanded out to a
+special directory name.  No such facility exists using the file URI
+scheme;  a tilde in a file URI is always just a tilde.
 
 
 ## DOS- and Windows-Like Systems  {#sys-dos}
