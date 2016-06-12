@@ -434,7 +434,7 @@ with file URIs and paths.
 
 ## POSIX Systems  {#sys-unix}
 
-In a POSIX file system the root of the file system is represented by a
+In a POSIX file system the root of the file system is represented as a
 directory with a zero-length name, usually written as "/";  the
 presence of this root can be taken as given by the initial slash in the
 `path-absolute` rule.
