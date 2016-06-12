@@ -177,7 +177,7 @@ example if a networked file system is transparently mounted into the
 local file system.
 
 The term "local file URI" is used to describe file URIs which have
-no authority, or where the authority is the special string
+no authority component, or where the authority is the special string
 "localhost" or a fully qualified domain name that resolves to the
 machine from which the URI is being interpreted ({{syntax}}).
 
