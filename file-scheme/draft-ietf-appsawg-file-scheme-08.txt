@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 1738 (if approved)                             April 22, 2016
+Obsoletes: 1738 (if approved)                               May 15, 2016
 Intended status: Standards Track
-Expires: October 24, 2016
+Expires: November 16, 2016
 
 
                           The file URI Scheme
@@ -21,7 +21,7 @@ Abstract
    the broad spectrum of existing usages.  At the same time it notes
    some other current practices around the use of file URIs.
 
-Note to Readers (To be removed by the RFC Editor)
+   *Note to Readers (To be removed by the RFC Editor)*
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list <apps-discuss@ietf.org>.
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 24, 2016.
+   This Internet-Draft will expire on November 16, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 1]
+Kerwin                  Expires November 16, 2016               [Page 1]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    (http://trustee.ietf.org/license-info) in effect on the date of
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 2]
+Kerwin                  Expires November 16, 2016               [Page 2]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    conditions are met it can be dereferenced to directly access the
@@ -165,9 +165,9 @@ Internet-Draft                 file-scheme                    April 2016
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 3]
+Kerwin                  Expires November 16, 2016               [Page 3]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
       file-URI       = file-scheme ":" file-hier-part
@@ -221,9 +221,9 @@ Internet-Draft                 file-scheme                    April 2016
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 4]
+Kerwin                  Expires November 16, 2016               [Page 4]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
 3.  Operations Involving file URIs
@@ -277,9 +277,9 @@ Internet-Draft                 file-scheme                    April 2016
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 5]
+Kerwin                  Expires November 16, 2016               [Page 5]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    Historically, user agents have granted content from the file URI
@@ -333,9 +333,9 @@ Internet-Draft                 file-scheme                    April 2016
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 6]
+Kerwin                  Expires November 16, 2016               [Page 6]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    Change Controller:
@@ -389,9 +389,9 @@ Internet-Draft                 file-scheme                    April 2016
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 7]
+Kerwin                  Expires November 16, 2016               [Page 7]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
@@ -445,9 +445,9 @@ Internet-Draft                 file-scheme                    April 2016
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 8]
+Kerwin                  Expires November 16, 2016               [Page 8]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    [RFC1123]  Braden, R., Ed., "Requirements for Internet Hosts -
@@ -501,9 +501,9 @@ Appendix A.  Differences from Previous Specifications
 
 
 
-Kerwin                  Expires October 24, 2016                [Page 9]
+Kerwin                  Expires November 16, 2016               [Page 9]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
 Appendix B.  Example URIs
@@ -557,9 +557,9 @@ Appendix C.  Similar Technologies
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 10]
+Kerwin                  Expires November 16, 2016              [Page 10]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
 Appendix D.  System-specific Operations
@@ -613,9 +613,9 @@ Appendix E.  Nonstandard Syntax Variations
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 11]
+Kerwin                  Expires November 16, 2016              [Page 11]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
 E.1.  User Information
@@ -669,9 +669,9 @@ E.2.  DOS and Windows Drive Letters
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 12]
+Kerwin                  Expires November 16, 2016              [Page 12]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
 E.2.1.  Relative Paths
@@ -725,9 +725,9 @@ E.2.2.  Vertical Bar Character
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 13]
+Kerwin                  Expires November 16, 2016              [Page 13]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    o  "file:/c|/path/to/file"
@@ -781,9 +781,9 @@ E.3.1.  file URI with Authority
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 14]
+Kerwin                  Expires November 16, 2016              [Page 14]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
       UNC String:   \\host.example.com\Share\path\to\file.txt
@@ -837,9 +837,9 @@ E.3.2.  file URI with UNC Path
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 15]
+Kerwin                  Expires November 16, 2016              [Page 15]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
 E.4.  Backslash as Separator
@@ -893,9 +893,9 @@ Appendix F.  Example of IRI vs Percent-Encoded URI
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 16]
+Kerwin                  Expires November 16, 2016              [Page 16]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    | Percent-encoded file URI, in any ASCII-compatible document:
@@ -949,9 +949,9 @@ Appendix G.  UNC Syntax
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 17]
+Kerwin                  Expires November 16, 2016              [Page 17]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
 Appendix H.  Collected Rules
@@ -1005,9 +1005,9 @@ Appendix H.  Collected Rules
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 18]
+Kerwin                  Expires November 16, 2016              [Page 18]
 
-Internet-Draft                 file-scheme                    April 2016
+Internet-Draft                 file-scheme                      May 2016
 
 
    o  The minimal representation of a local file in a DOS- or Windows-
@@ -1061,4 +1061,4 @@ Author's Address
 
 
 
-Kerwin                  Expires October 24, 2016               [Page 19]
+Kerwin                  Expires November 16, 2016              [Page 19]
