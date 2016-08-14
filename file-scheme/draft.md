@@ -177,7 +177,7 @@ example if a networked file system is transparently mounted into the
 local file system.
 
 The term "local file URI" is used to describe file URIs which have
-no authority component, or where the authority is the special string
+no `authority` component, or where the authority is the special string
 "localhost" or a fully qualified domain name that resolves to the
 machine from which the URI is being interpreted ({{syntax}}).
 
@@ -217,8 +217,8 @@ of {{RFC3986}}, which post-dates the previous file URI specifications.
 
 The `host` is the fully qualified domain name of the system on which
 the file is accessible.  This allows a client on another system to know
-that it cannot access the file system, or perhaps to use some other
-local mecahnism to access the file.
+that it cannot access the file system, or perhaps that it needs to use
+some other local mechanism to access the file.
 
 As a special case, the `file-auth` rule can match the string
 "localhost" which is interpreted as "the machine from which the URI is
@@ -239,14 +239,8 @@ Some file systems have case-sensitive file naming and some do not.  As
 such the file URI scheme supports case sensitivity, in order to retain
 the case as given.  Any transport-related handling of the file URI
 scheme MUST retain the case as given.  Any mapping to or from a
-case-insensitive form is soley the responsibility of the implementation
+case-insensitive form is solely the responsibility of the implementation
 processing the file URI on behalf of the referenced file system.
-
-Some file systems allow directory objects to be treated as files
-in some cases.  This can be reflected in a file URI by omitting the
-trailing slash "/" from the path.  Be aware that merging a relative URI
-reference to such a base URI as per Section 5.2 of {{RFC3986}} could
-remove the directory name from the resulting target URI.
 
 Also see {{nonstandard-syntax}} that lists some nonstandard syntax
 variations that can be encountered in practice.
@@ -254,11 +248,7 @@ variations that can be encountered in practice.
 
 # Operations Involving file URIs  {#operations}
 
-Implementations that provide dereferencing operations on file URIs
-SHOULD, at a minimum, provide a read-like operation to return the
-contents of a file located by a file URI.  Additional operations MAY be
-provided, such as writing to, creating, and deleting files.  See the
-POSIX file and directory operations {{POSIX}} for examples of
+See the POSIX file and directory operations {{POSIX}} for examples of
 standardized operations that can be performed on files.
 
 A file URI can be dependably dereferenced or translated to a local file
@@ -283,10 +273,9 @@ When a file URI is produced, characters not allowed by the syntax in
 {{syntax}} SHOULD be percent-encoded as characters using UTF-8
 encoding, as per {{RFC3986}}, Section 2.5.
 
-However, encoding information for file and/or directory names might not
-be available.  In these cases, implementations MAY use heuristics to
-determine the encoding.  If that fails, they SHOULD percent-encode the
-raw bytes of the label directly.
+A decision not to use percent-encoded UTF-8 is outside the scope of
+this specification.  It will typically require the use of heuristics or
+explicit knowledge about the way the string will be processed.
 
 
 # Security Considerations {#security}
