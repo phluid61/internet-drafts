@@ -21,7 +21,7 @@ Abstract
    the broad spectrum of existing usages.  At the same time it notes
    some other current practices around the use of file URIs.
 
-Note to Readers (To be removed by the RFC Editor)
+   *Note to Readers (To be removed by the RFC Editor)*
 
    This draft should be discussed on the IETF Applications Area Working
    Group discussion list <apps-discuss@ietf.org>.
@@ -195,7 +195,7 @@ Internet-Draft                 file-scheme                  October 2016
    current usages of the scheme incorrectly interpret all values in the
    authority of a file URI, including "localhost", as non-local.  Yet
    others interpret any value as local, even if the "host" does not
-   resolve to the local machine.  To maximise compatibility with
+   resolve to the local machine.  To maximize compatibility with
    previous specifications, users MAY choose to include an "auth-path"
    with no "file-auth" when creating a URI.
 
@@ -600,7 +600,7 @@ Appendix E.  Nonstandard Syntax Variations
 
 E.1.  User Information
 
-   It might be necessary to include user information such as a username
+   It might be necessary to include user information such as a user name
    in a file URI, for example when mapping a VMS file path with a node
    reference that includes an access control string.
 
@@ -744,7 +744,7 @@ E.3.1.  file URI with Authority
    translating a UNC filespace selector string to a file URI by mapping
    the equivalent segments of the two schemes:
 
-   1.  Initialise the URI with the "file:" scheme identifier.
+   1.  Initialize the URI with the "file:" scheme identifier.
 
    2.  Append the authority:
 
