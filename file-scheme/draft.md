@@ -480,7 +480,7 @@ This appendix is not normative.
 
 It might be necessary to include user information such as a username in
 a file URI, for example when mapping a VMS file path with a node
-reference that includes a username.
+reference that includes an access control string.
 
 To allow user information to be included in a file URI, the `file-auth`
 rule in {{syntax}} can be replaced with the following:
@@ -497,7 +497,9 @@ As discussed in the HP OpenVMS Systems Documentation
 "access control strings include sufficient information to allow someone
 to break in to the remote account, \[therefore\] they create serious
 security exposure."  In a similar vein, the presence of a password in a
-"user:password" userinfo field is deprecated by {{RFC3986}}.
+"user:password" userinfo field is deprecated by {{RFC3986}}.  Take care
+when dealing with information that can be used to identify a user or
+grant access to a system.
 
 
 ## DOS and Windows Drive Letters  {#ext-drives}
