@@ -1,7 +1,7 @@
 ---
 title: HTTP/2 Gzipped Data
 abbrev: http2-encoded-data
-docname: draft-kerwin-http2-encoded-data-09
+docname: draft-kerwin-http2-encoded-data-10
 date: 2016
 category: exp
 
