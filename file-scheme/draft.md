@@ -556,7 +556,7 @@ a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") might not be
 accepted as dereferenceable URIs in DOS- or Windows-like systems.
 
 
-### Vertical Bar Character  {#ext-pipe}
+### Vertical Line Character  {#ext-pipe}
 
 Historically some usages of file URIs have included a vertical line
 character "\|" instead of a colon ":" in the drive letter construct.
