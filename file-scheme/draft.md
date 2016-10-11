@@ -443,13 +443,13 @@ URI is always just a tilde.
 When mapping a DOS- or Windows-like file path to a file URI, the drive
 letter (e.g. "c:") is typically mapped into the first path segment.
 
-{{nonstandard-syntax}} lists some non-standard techniques for
+{{nonstandard-syntax}} lists some nonstandard techniques for
 interacting with DOS- or Windows-like file paths and URIs.
 
 
 ## Mac OS X Systems  {#sys-osx}
 
-The HFS+ file system uses a non-standard normalization form, similar
+The HFS+ file system uses a nonstandard normalization form, similar
 to Normalization Form D {{UTR15}}.  Take care when transforming HFS+
 file paths to and from URIs ({{encoding}}).
 
@@ -464,7 +464,7 @@ so should be percent-encoded if present in the device name.
 If the VMS file path includes a node reference, that reference is used
 as the authority.  Where the original node reference includes a user
 name and password in an access control string, they can be transcribed
-into the authority using the non-standard syntax extension in
+into the authority using the nonstandard syntax extension in
 {{ext-userinfo}}.
 
 
