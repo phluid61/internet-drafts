@@ -667,7 +667,7 @@ This syntax uses the `IPv4address`, `IPv6address`, `IPvFuture`,
 and `reg-name` rules from {{RFC3986}}.
 
 > Note that the `file-host` rule is the same as `host` but with
-> percent-encoding applied to "[" and "]" characters.
+> percent-encoding applied to "\[" and "]" characters.
 
 This extended syntax is intended to support URIs that take the
 following forms, in addition to those in {{examples}}:
