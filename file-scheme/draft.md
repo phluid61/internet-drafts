@@ -692,7 +692,7 @@ Non-local files:
   See Bugzilla#107540 [Bug107540].
 
 It also further limits the definition of a "local file URI" by
-excluding any with a path that encodes a UNC string.
+excluding any file URI with a path that encodes a UNC string.
 
 
 ## Backslash as Separator  {#ext-backslash}
