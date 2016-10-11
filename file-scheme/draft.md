@@ -229,7 +229,7 @@ Some current usages of the scheme incorrectly interpret all values in
 the authority of a file URI, including "localhost", as non-local.
 Yet others interpret any value as local, even if the `host` does not
 resolve to the local machine.
-To maximise compatibility with previous specifications, users MAY
+To maximize compatibility with previous specifications, users MAY
 choose to include an `auth-path` with no `file-auth` when creating a
 URI.
 
@@ -607,7 +607,7 @@ translating a UNC filespace selector string to a file URI by
 mapping the equivalent segments of the two schemes:
 
 
-1.  Initialise the URI with the "file:" scheme identifier.
+1.  Initialize the URI with the "file:" scheme identifier.
 
 2.  Append the authority:
 
