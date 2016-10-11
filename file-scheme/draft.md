@@ -171,8 +171,8 @@ document are to be interpreted as described in {{RFC2119}}.
 Throughout this document the term "local file" is used to describe
 files that can be accessed through the local file system API using only
 the information included in the file path, not relying on other
-information such as network addresses.  It is important to note that a
-local file may not be physically located on the local machine, for
+information (such as network addresses.)  It is important to note that
+a local file may not be physically located on the local machine, for
 example if a networked file system is transparently mounted into the
 local file system.
 
