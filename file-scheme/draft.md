@@ -642,6 +642,9 @@ For example:
    URI:          file://host.example.com/Share/path/to/file.txt
 ~~~~~~~~~~
 
+The inverse algorithm, for translating a file URI to a UNC filespace
+selector string, is left as an exercise for the reader.
+
 
 ### file URI with UNC Path  {#ext-unc-path}
 
