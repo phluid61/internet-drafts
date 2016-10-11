@@ -539,7 +539,7 @@
                   / host
 </pre>
 <p id="rfc.section.2.p.4">The <samp>host</samp> is the fully qualified domain name of the system on which the file is accessible.  This allows a client on another system to know that it cannot access the file system, or perhaps that it needs to use some other local mechanism to access the file.</p>
-<p id="rfc.section.2.p.5">As a special case, the <samp>file-auth</samp> rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret all values in the authority of a file URI, including &#8220;localhost&#8221;, as non-local.  Yet others interpret any value as local, even if the <samp>host</samp> does not resolve to the local machine.  To maximise compatibility with previous specifications, users MAY choose to include an <samp>auth-path</samp> with no <samp>file-auth</samp> when creating a URI.</p>
+<p id="rfc.section.2.p.5">As a special case, the <samp>file-auth</samp> rule can match the string &#8220;localhost&#8221; which is interpreted as &#8220;the machine from which the URI is being interpreted,&#8221; exactly as if no authority were present.  Some current usages of the scheme incorrectly interpret all values in the authority of a file URI, including &#8220;localhost&#8221;, as non-local.  Yet others interpret any value as local, even if the <samp>host</samp> does not resolve to the local machine.  To maximize compatibility with previous specifications, users MAY choose to include an <samp>auth-path</samp> with no <samp>file-auth</samp> when creating a URI.</p>
 <p id="rfc.section.2.p.6">The path component represents the absolute path to the file in the file system.  See <a href="#system-specific">Appendix D</a> for some discussion of system-specific concerns including absolute file paths and file system roots.</p>
 <p id="rfc.section.2.p.7">Some file systems have case-sensitive file naming and some do not.  As such the file URI scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is solely the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
 <p id="rfc.section.2.p.8">Also see <a href="#nonstandard-syntax">Appendix E</a> that lists some nonstandard syntax variations that can be encountered in practice.</p>
@@ -749,7 +749,7 @@
 <p id="rfc.section.E.p.1">These variations may be encountered by existing usages of the file URI scheme, but are not supported by the normative syntax of <a href="#syntax">Section 2</a>.</p>
 <p id="rfc.section.E.p.2">This appendix is not normative.</p>
 <h1 id="rfc.appendix.E.1"><a href="#rfc.appendix.E.1">E.1.</a> <a href="#ext-userinfo" id="ext-userinfo">User Information</a></h1>
-<p id="rfc.section.E.1.p.1">It might be necessary to include user information such as a username in a file URI, for example when mapping a VMS file path with a node reference that includes an access control string.</p>
+<p id="rfc.section.E.1.p.1">It might be necessary to include user information such as a user name in a file URI, for example when mapping a VMS file path with a node reference that includes an access control string.</p>
 <p id="rfc.section.E.1.p.2">To allow user information to be included in a file URI, the <samp>file-auth</samp> rule in <a href="#syntax">Section 2</a> can be replaced with the following:</p>
 <pre>
    file-auth      = "localhost"
@@ -825,7 +825,7 @@
 <p/>
 
 <ol>
-  <li>Initialise the URI with the &#8220;file:&#8221; scheme identifier.</li>
+  <li>Initialize the URI with the &#8220;file:&#8221; scheme identifier.</li>
   <li>Append the authority:  <ol><li>Append the &#8220;//&#8221; authority sigil to the URI.</li><li>Append the host-name field of the UNC string to the URI.</li></ol></li>
   <li>Append the share-name:  <ol><li>Transform the share-name to a path segment (<a href="#RFC3986">[RFC3986]</a>, Section 3.3) to conform to the encoding rules of Section 2 of <a href="#RFC3986">[RFC3986]</a>.</li><li>Append a delimiting slash character &#8220;/&#8221; and the transformed segment to the URI.</li></ol></li>
   <li>For each object-name:  <ol><li>Transform the objectname to a path segment as above.      <br/><br/> The colon character &#8220;:&#8221; is allowed as a delimiter before stream-name and stream-type in the file-name, if present.</li><li>Append a delimiting slash character &#8220;/&#8221; and the transformed segment to the URI.</li></ol></li>
