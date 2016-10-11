@@ -425,15 +425,15 @@ with file URIs and paths.
 
 In a POSIX file system the root of the file system is represented as a
 directory with a zero-length name, usually written as "/";  the
-presence of this root can be taken as given by the initial slash in the
-`path-absolute` rule.
+presence of this root in a file URI can be taken as given by the
+initial slash in the `path-absolute` rule.
 
 Common UNIX shells such as the Bourne-Again SHell (bash) and Z Shell
 (zsh) provide a function known as "tilde expansion" {{Bash-Tilde}} or
-"filename expansion" {{Zsh-Tilde}}, where a
-path that begins with a tilde character "~" can be expanded out to a
-special directory name.  No such facility exists using the file URI
-scheme;  a tilde in a file URI is always just a tilde.
+"filename expansion" {{Zsh-Tilde}}, where a path that begins with a
+tilde character "~" can be expanded out to a special directory name.
+No such facility exists using the file URI scheme;  a tilde in a file
+URI is always just a tilde.
 
 
 ## DOS- and Windows-Like Systems  {#sys-dos}
@@ -459,10 +459,11 @@ into the first path segment.  Note that the dollars sign "\$" is
 a reserved character per the definition in {{RFC3986}}, Section 2.2,
 so should be percent-encoded if present in the device name.
 
-If the VMS file path includes a node reference, that is used as the
-authority.  Where the original node reference includes a username and
-password in an access control string, they can be transcribed into the
-authority using the non-standard syntax extension in {{ext-userinfo}}.
+If the VMS file path includes a node reference, that reference is used
+as the authority.  Where the original node reference includes a user
+name and password in an access control string, they can be transcribed
+into the authority using the non-standard syntax extension in
+{{ext-userinfo}}.
 
 
 # Nonstandard Syntax Variations  {#nonstandard-syntax}
