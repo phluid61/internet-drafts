@@ -708,7 +708,7 @@ determined with reasonable certainty that the backslashes are intended
 as path separators.
 
 
-# Collected Rules  {#collected}
+# Collected Nonstandard Rules  {#collected}
 
 Here are the collected syntax rules for all optional appendices,
 presented for convenience.  This collected syntax is not normative.
