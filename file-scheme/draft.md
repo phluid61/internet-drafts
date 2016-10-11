@@ -504,7 +504,7 @@ grant access to a system.
 
 ## DOS and Windows Drive Letters  {#ext-drives}
 
-On Windows- or DOS-based file systems an absolute file path can begin
+On Windows- or DOS-like file systems an absolute file path can begin
 with a drive letter.  To facilitate this, the `local-path` rule in
 {{syntax}} can be replaced with the following:
 
@@ -517,7 +517,7 @@ with a drive letter.  To facilitate this, the `local-path` rule in
 The `ALPHA` rule is defined in {{RFC5234}}.
 
 This is intended to support the minimal representation of a local file
-in a DOS- or Windows-based environment, with no authority field and an
+in a DOS- or Windows-like environment, with no authority field and an
 absolute path that begins with a drive letter.  E.g.:
 
 * `file:c:/path/to/file`
@@ -533,7 +533,7 @@ URIs that differ only in the case of the drive letter as identical.
 
 ### Relative Paths  {#ext-relative}
 
-To mimic the behaviour of DOS- or Windows-based file systems, relative
+To mimic the behaviour of DOS- or Windows-like file systems, relative
 paths beginning with a slash "/" can be resolved relative to the drive
 letter, when present, and resolution of ".." dot segments (per Section
 5.2.4 of {{RFC3986}}) can be modified to not ever overwrite the drive
@@ -553,7 +553,7 @@ For example:
 
 Relative paths with a drive letter followed by a character other than
 a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") might not be
-accepted as dereferenceable URIs in DOS or Windows systems.
+accepted as dereferenceable URIs in DOS- or Windows-like systems.
 
 
 ### Vertical Bar Character  {#ext-pipe}
