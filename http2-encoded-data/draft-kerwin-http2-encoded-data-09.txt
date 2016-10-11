@@ -18,14 +18,14 @@ Abstract
    2 (HTTP/2), and an associated error code for handling invalid
    encoding.
 
-Note to Readers
+   *Note to Readers*
 
    The issues list for this draft can be found at
-   <https://github.com/phluid61/internet-drafts/labels/
-   HTTP%2F2%20Gzipped%20Data>
+   https://github.com/phluid61/internet-drafts/labels/
+   HTTP%2F2%20Gzipped%20Data
 
    The most recent (often unpublished) draft is at
-   <http://phluid61.github.io/internet-drafts/http2-encoded-data/>
+   http://phluid61.github.io/internet-drafts/http2-encoded-data/
 
 Status of This Memo
 
@@ -409,6 +409,8 @@ Appendix A.  Changelog
 
    Since -08:
 
+   o  use experimental values for frame/setting/error codes
+
    Since -07:
 
    o  define "reliable" in the 'experimental' section, and provide
@@ -441,14 +443,14 @@ Appendix A.  Changelog
 
    o  updated HTTP/2 reference from I-D to (freshly published) RFC7230
 
-   Since -03:
-
 
 
 Kerwin                   Expires April 14, 2017                 [Page 8]
 
 Internet-Draft             http2-encoded-data               October 2016
 
+
+   Since -03:
 
    o  added 'identity' encoding; removed 'compress' and 'zlib'
       (suggested by PHK)
@@ -482,8 +484,6 @@ Author's Address
 
    Email: matthew@kerwin.net.au
    URI:   http://matthew.kerwin.net.au/
-
-
 
 
 

@@ -393,6 +393,10 @@ following table are registered by this document.</t>
 
 <t>Since -08:</t>
 
+<t><list style="symbols">
+  <t>use experimental values for frame/setting/error codes</t>
+</list></t>
+
 <t>Since -07:</t>
 
 <t><list style="symbols">
