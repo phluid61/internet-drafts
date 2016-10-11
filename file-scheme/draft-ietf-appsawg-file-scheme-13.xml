@@ -150,7 +150,7 @@ Some current usages of the scheme incorrectly interpret all values in
 the authority of a file URI, including “localhost”, as non-local.
 Yet others interpret any value as local, even if the <spanx style="verb">host</spanx> does not
 resolve to the local machine.
-To maximise compatibility with previous specifications, users MAY
+To maximize compatibility with previous specifications, users MAY
 choose to include an <spanx style="verb">auth-path</spanx> with no <spanx style="verb">file-auth</spanx> when creating a
 URI.</t>
 
@@ -677,7 +677,7 @@ scheme, but are not supported by the normative syntax of <xref target="syntax"/>
 
 <section anchor="ext-userinfo" title="User Information">
 
-<t>It might be necessary to include user information such as a username in
+<t>It might be necessary to include user information such as a user name in
 a file URI, for example when mapping a VMS file path with a node
 reference that includes an access control string.</t>
 
@@ -809,7 +809,7 @@ translating a UNC filespace selector string to a file URI by
 mapping the equivalent segments of the two schemes:</t>
 
 <t><list style="numbers">
-  <t>Initialise the URI with the “file:” scheme identifier.</t>
+  <t>Initialize the URI with the “file:” scheme identifier.</t>
   <t>Append the authority:  <list style="numbers">
       <t>Append the “//” authority sigil to the URI.</t>
       <t>Append the host-name field of the UNC string to the URI.</t>
