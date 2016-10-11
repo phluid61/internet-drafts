@@ -166,7 +166,9 @@ URI.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in {{RFC2119}}.
+document are to be interpreted as described in {{RFC2119}} when they
+appear in all upper case.  They may also appear in lower or mixed case
+as English words, without normative meaning.
 
 Throughout this document the term "local file" is used to describe
 files that can be accessed through the local file system API using only
