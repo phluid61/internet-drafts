@@ -478,7 +478,7 @@ This appendix is not normative.
 
 ## User Information  {#ext-userinfo}
 
-It might be necessary to include user information such as a username in
+It might be necessary to include user information such as a user name in
 a file URI, for example when mapping a VMS file path with a node
 reference that includes an access control string.
 
