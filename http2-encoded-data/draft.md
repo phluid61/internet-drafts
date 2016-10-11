@@ -77,7 +77,9 @@ malformed messages ({{RFC7540}}, Section 8.1.2.6).
 
 ## SETTINGS\_ACCEPT\_GZIPPED\_DATA  {#accept-gzipped-data}
 
-SETTINGS\_ACCEPT\_GZIPPED\_DATA (0xTBA) is used to indicate the sender's ability and
+**NOTE**: This is an experimental value; if standardised, a permanent value will be assigned.
+
+SETTINGS\_ACCEPT\_GZIPPED\_DATA (0xf000) is used to indicate the sender's ability and
 willingness to receive GZIPPED\_DATA frames. An endpoint MUST NOT send a GZIPPED\_DATA
 frame unless it receives this setting with a value of 1.
 
@@ -93,7 +95,9 @@ frames that may already be in flight.
 
 ## GZIPPED\_DATA  {#gzipped-data}
 
-GZIPPED\_DATA frames (type code=0xTBA) are semantically identical to DATA frames
+**NOTE**: This is an experimental value; if standardised, a permanent value will be assigned.
+
+GZIPPED\_DATA frames (type code=0xf000) are semantically identical to DATA frames
 ({{RFC7540}}, Section 6.1), but their payload is encoded using gzip compression.
 Significantly: the order of DATA and GZIPPED\_DATA frames is semantically significant; and
 GZIPPED\_DATA frames are subject to flow control ({{RFC7540}}, Section 5.2).
@@ -179,8 +183,10 @@ for DATA frames ({{RFC7540}}, Section 6.1).
 
 The following new error code is defined:
 
-* `DATA_ENCODING_ERROR` (0xTBA):
+* `DATA_ENCODING_ERROR` (0xf0000000):
   The endpoint detected that its peer sent a GZIPPED\_DATA frame with an invalid encoding.
+
+  **NOTE**: This is an experimental value; if standardised, a permanent value will be assigned.
 
 
 # Experimental Status  {#experiment}
