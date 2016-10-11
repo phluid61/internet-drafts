@@ -526,8 +526,9 @@ URIs of the form `file:///c:/path/to/file` are already supported by the
 `path-absolute` rule.
 
 Note that comparison of drive letters in DOS or Windows file paths
-is case-insensitive, some usages of file URIs therefore canonicalize
-drive letters by converting them to uppercase.
+is case-insensitive.  In some usages of file URIs drive letters are
+canonicalized by converting them to uppercase, and others usages treat
+URIs that differ only in the case of the drive letter as identical.
 
 
 ### Relative Paths  {#ext-relative}
