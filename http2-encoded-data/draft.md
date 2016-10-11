@@ -277,6 +277,8 @@ Thanks to Keith Morgan for his advice, input, and editorial contributions.
 
 Since -08:
 
+ * use experimental values for frame/setting/error codes
+
 Since -07:
 
  * define "reliable" in the 'experimental' section, and provide pointers
