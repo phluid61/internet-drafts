@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-12" category="std" updates="1738">
+<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-13" category="std" updates="1738">
 
   <front>
     <title abbrev="file-scheme">The file URI Scheme</title>
@@ -86,13 +86,15 @@ URI.</t>
 
 <t>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”,
 “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this
-document are to be interpreted as described in <xref target="RFC2119"/>.</t>
+document are to be interpreted as described in <xref target="RFC2119"/> when they
+appear in all upper case.  They may also appear in lower or mixed case
+as English words, without normative meaning.</t>
 
 <t>Throughout this document the term “local file” is used to describe
 files that can be accessed through the local file system API using only
 the information included in the file path, not relying on other
-information such as network addresses.  It is important to note that a
-local file may not be physically located on the local machine, for
+information (such as network addresses.)  It is important to note that
+a local file may not be physically located on the local machine, for
 example if a networked file system is transparently mounted into the
 local file system.</t>
 
@@ -624,15 +626,15 @@ with file URIs and paths.</t>
 
 <t>In a POSIX file system the root of the file system is represented as a
 directory with a zero-length name, usually written as “/”;  the
-presence of this root can be taken as given by the initial slash in the
-<spanx style="verb">path-absolute</spanx> rule.</t>
+presence of this root in a file URI can be taken as given by the
+initial slash in the <spanx style="verb">path-absolute</spanx> rule.</t>
 
 <t>Common UNIX shells such as the Bourne-Again SHell (bash) and Z Shell
 (zsh) provide a function known as “tilde expansion” <xref target="Bash-Tilde"/> or
-“filename expansion” <xref target="Zsh-Tilde"/>, where a
-path that begins with a tilde character “~” can be expanded out to a
-special directory name.  No such facility exists using the file URI
-scheme;  a tilde in a file URI is always just a tilde.</t>
+“filename expansion” <xref target="Zsh-Tilde"/>, where a path that begins with a
+tilde character “~” can be expanded out to a special directory name.
+No such facility exists using the file URI scheme;  a tilde in a file
+URI is always just a tilde.</t>
 
 </section>
 <section anchor="sys-dos" title="DOS- and Windows-Like Systems">
@@ -640,13 +642,13 @@ scheme;  a tilde in a file URI is always just a tilde.</t>
 <t>When mapping a DOS- or Windows-like file path to a file URI, the drive
 letter (e.g. “c:”) is typically mapped into the first path segment.</t>
 
-<t><xref target="nonstandard-syntax"/> lists some non-standard techniques for
+<t><xref target="nonstandard-syntax"/> lists some nonstandard techniques for
 interacting with DOS- or Windows-like file paths and URIs.</t>
 
 </section>
 <section anchor="sys-osx" title="Mac OS X Systems">
 
-<t>The HFS+ file system uses a non-standard normalization form, similar
+<t>The HFS+ file system uses a nonstandard normalization form, similar
 to Normalization Form D <xref target="UTR15"/>.  Take care when transforming HFS+
 file paths to and from URIs (<xref target="encoding"/>).</t>
 
@@ -658,10 +660,11 @@ into the first path segment.  Note that the dollars sign “$” is
 a reserved character per the definition in <xref target="RFC3986"/>, Section 2.2,
 so should be percent-encoded if present in the device name.</t>
 
-<t>If the VMS file path includes a node reference, that is used as the
-authority.  Where the original node reference includes a username and
-password in an access control string, they can be transcribed into the
-authority using the non-standard syntax extension in <xref target="ext-userinfo"/>.</t>
+<t>If the VMS file path includes a node reference, that reference is used
+as the authority.  Where the original node reference includes a user
+name and password in an access control string, they can be transcribed
+into the authority using the nonstandard syntax extension in
+<xref target="ext-userinfo"/>.</t>
 
 </section>
 </section>
@@ -676,7 +679,7 @@ scheme, but are not supported by the normative syntax of <xref target="syntax"/>
 
 <t>It might be necessary to include user information such as a username in
 a file URI, for example when mapping a VMS file path with a node
-reference that includes a username.</t>
+reference that includes an access control string.</t>
 
 <t>To allow user information to be included in a file URI, the <spanx style="verb">file-auth</spanx>
 rule in <xref target="syntax"/> can be replaced with the following:</t>
@@ -693,12 +696,14 @@ rule in <xref target="syntax"/> can be replaced with the following:</t>
 “access control strings include sufficient information to allow someone
 to break in to the remote account, [therefore] they create serious
 security exposure.”  In a similar vein, the presence of a password in a
-“user:password” userinfo field is deprecated by <xref target="RFC3986"/>.</t>
+“user:password” userinfo field is deprecated by <xref target="RFC3986"/>.  Take care
+when dealing with information that can be used to identify a user or
+grant access to a system.</t>
 
 </section>
 <section anchor="ext-drives" title="DOS and Windows Drive Letters">
 
-<t>On Windows- or DOS-based file systems an absolute file path can begin
+<t>On Windows- or DOS-like file systems an absolute file path can begin
 with a drive letter.  To facilitate this, the <spanx style="verb">local-path</spanx> rule in
 <xref target="syntax"/> can be replaced with the following:</t>
 
@@ -711,7 +716,7 @@ with a drive letter.  To facilitate this, the <spanx style="verb">local-path</sp
 <t>The <spanx style="verb">ALPHA</spanx> rule is defined in <xref target="RFC5234"/>.</t>
 
 <t>This is intended to support the minimal representation of a local file
-in a DOS- or Windows-based environment, with no authority field and an
+in a DOS- or Windows-like environment, with no authority field and an
 absolute path that begins with a drive letter.  E.g.:</t>
 
 <t><list style="symbols">
@@ -722,12 +727,13 @@ absolute path that begins with a drive letter.  E.g.:</t>
 <spanx style="verb">path-absolute</spanx> rule.</t>
 
 <t>Note that comparison of drive letters in DOS or Windows file paths
-is case-insensitive, some usages of file URIs therefore canonicalize
-drive letters by converting them to uppercase.</t>
+is case-insensitive.  In some usages of file URIs drive letters are
+canonicalized by converting them to uppercase, and others usages treat
+URIs that differ only in the case of the drive letter as identical.</t>
 
 <section anchor="ext-relative" title="Relative Paths">
 
-<t>To mimic the behaviour of DOS- or Windows-based file systems, relative
+<t>To mimic the behaviour of DOS- or Windows-like file systems, relative
 paths beginning with a slash “/” can be resolved relative to the drive
 letter, when present, and resolution of “..” dot segments (per Section
 5.2.4 of <xref target="RFC3986"/>) can be modified to not ever overwrite the drive
@@ -747,10 +753,10 @@ letter.</t>
 
 <t>Relative paths with a drive letter followed by a character other than
 a slash (e.g. “c:bar/baz.txt” or “c:../foo.txt”) might not be
-accepted as dereferenceable URIs in DOS or Windows systems.</t>
+accepted as dereferenceable URIs in DOS- or Windows-like systems.</t>
 
 </section>
-<section anchor="ext-pipe" title="Vertical Bar Character">
+<section anchor="ext-pipe" title="Vertical Line Character">
 
 <t>Historically some usages of file URIs have included a vertical line
 character “|” instead of a colon “:” in the drive letter construct.
@@ -831,6 +837,9 @@ segment to the URI.</t>
    URI:          file://host.example.com/Share/path/to/file.txt
 ]]></artwork></figure>
 
+<t>The inverse algorithm, for translating a file URI to a UNC filespace
+selector string, is left as an exercise for the reader.</t>
+
 </section>
 <section anchor="ext-unc-path" title="file URI with UNC Path">
 
@@ -880,7 +889,7 @@ See Bugzilla#107540 <xref target="Bug107540"></xref>.</t>
 </list></t>
 
 <t>It also further limits the definition of a “local file URI” by
-excluding any with a path that encodes a UNC string.</t>
+excluding any file URI with a path that encodes a UNC string.</t>
 
 </section>
 </section>
@@ -898,7 +907,7 @@ as path separators.</t>
 
 </section>
 </section>
-<section anchor="collected" title="Collected Rules">
+<section anchor="collected" title="Collected Nonstandard Rules">
 
 <t>Here are the collected syntax rules for all optional appendices,
 presented for convenience.  This collected syntax is not normative.</t>
