@@ -130,8 +130,8 @@ Internet-Draft             http2-encoded-data              November 2016
 
 2.1.  SETTINGS_ACCEPT_GZIPPED_DATA
 
-   [[CREF1: This is an experimental value; if standardised, a permanent
-   value will be assigned.]]
+   [[NOTE-1: This is an experimental value; if standardised, a permanent
+   value will be assigned. --MK]]
 
    SETTINGS_ACCEPT_GZIPPED_DATA (0xf000) is used to indicate the
    sender's ability and willingness to receive GZIPPED_DATA frames.  An
@@ -150,8 +150,8 @@ Internet-Draft             http2-encoded-data              November 2016
 
 2.2.  GZIPPED_DATA
 
-   [[CREF2: This is an experimental value; if standardised, a permanent
-   value will be assigned.]]
+   [[NOTE-2: This is an experimental value; if standardised, a permanent
+   value will be assigned. --MK]]
 
    GZIPPED_DATA frames (type code=0xf000) are semantically identical to
    DATA frames ([RFC7540], Section 6.1), but their payload is encoded
@@ -262,8 +262,8 @@ Internet-Draft             http2-encoded-data              November 2016
    o  "DATA_ENCODING_ERROR" (0xf0000000): The endpoint detected that its
       peer sent a GZIPPED_DATA frame with an invalid encoding.
 
-      [[CREF3: This is an experimental value; if standardised, a
-      permanent value will be assigned.]]
+      [[NOTE-3: This is an experimental value; if standardised, a
+      permanent value will be assigned. --MK]]
 
 3.  Experimental Status
 
