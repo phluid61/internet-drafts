@@ -3,13 +3,13 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                          October 11, 2016
+Internet-Draft                                         November 23, 2016
 Intended status: Experimental
-Expires: April 14, 2017
+Expires: May 27, 2017
 
 
                           HTTP/2 Gzipped Data
-                   draft-kerwin-http2-encoded-data-09
+                   draft-kerwin-http2-encoded-data-10
 
 Abstract
 
@@ -18,14 +18,14 @@ Abstract
    2 (HTTP/2), and an associated error code for handling invalid
    encoding.
 
-Note to Readers
+   *Note to Readers*
 
    The issues list for this draft can be found at
-   <https://github.com/phluid61/internet-drafts/labels/
-   HTTP%2F2%20Gzipped%20Data>
+   https://github.com/phluid61/internet-drafts/labels/
+   HTTP%2F2%20Gzipped%20Data
 
    The most recent (often unpublished) draft is at
-   <http://phluid61.github.io/internet-drafts/http2-encoded-data/>
+   http://phluid61.github.io/internet-drafts/http2-encoded-data/
 
 Status of This Memo
 
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 14, 2017.
+   This Internet-Draft will expire on May 27, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Kerwin                   Expires April 14, 2017                 [Page 1]
+Kerwin                    Expires May 27, 2017                  [Page 1]
 
-Internet-Draft             http2-encoded-data               October 2016
+Internet-Draft             http2-encoded-data              November 2016
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kerwin                   Expires April 14, 2017                 [Page 2]
+Kerwin                    Expires May 27, 2017                  [Page 2]
 
-Internet-Draft             http2-encoded-data               October 2016
+Internet-Draft             http2-encoded-data              November 2016
 
 
 2.  Additions to HTTP/2
@@ -130,8 +130,8 @@ Internet-Draft             http2-encoded-data               October 2016
 
 2.1.  SETTINGS_ACCEPT_GZIPPED_DATA
 
-   *NOTE*: This is an experimental value; if standardised, a permanent
-   value will be assigned.
+   [[CREF1: This is an experimental value; if standardised, a permanent
+   value will be assigned.]]
 
    SETTINGS_ACCEPT_GZIPPED_DATA (0xf000) is used to indicate the
    sender's ability and willingness to receive GZIPPED_DATA frames.  An
@@ -150,8 +150,8 @@ Internet-Draft             http2-encoded-data               October 2016
 
 2.2.  GZIPPED_DATA
 
-   *NOTE*: This is an experimental value; if standardised, a permanent
-   value will be assigned.
+   [[CREF2: This is an experimental value; if standardised, a permanent
+   value will be assigned.]]
 
    GZIPPED_DATA frames (type code=0xf000) are semantically identical to
    DATA frames ([RFC7540], Section 6.1), but their payload is encoded
@@ -165,9 +165,9 @@ Internet-Draft             http2-encoded-data               October 2016
 
 
 
-Kerwin                   Expires April 14, 2017                 [Page 3]
+Kerwin                    Expires May 27, 2017                  [Page 3]
 
-Internet-Draft             http2-encoded-data               October 2016
+Internet-Draft             http2-encoded-data              November 2016
 
 
    Any compression or decompression context for a GZIPPED_DATA frame is
@@ -221,9 +221,9 @@ Internet-Draft             http2-encoded-data               October 2016
 
 
 
-Kerwin                   Expires April 14, 2017                 [Page 4]
+Kerwin                    Expires May 27, 2017                  [Page 4]
 
-Internet-Draft             http2-encoded-data               October 2016
+Internet-Draft             http2-encoded-data              November 2016
 
 
    If an endpoint detects that the payload of a GZIPPED_DATA frame is
@@ -262,8 +262,8 @@ Internet-Draft             http2-encoded-data               October 2016
    o  "DATA_ENCODING_ERROR" (0xf0000000): The endpoint detected that its
       peer sent a GZIPPED_DATA frame with an invalid encoding.
 
-      *NOTE*: This is an experimental value; if standardised, a
-      permanent value will be assigned.
+      [[CREF3: This is an experimental value; if standardised, a
+      permanent value will be assigned.]]
 
 3.  Experimental Status
 
@@ -277,9 +277,9 @@ Internet-Draft             http2-encoded-data               October 2016
 
 
 
-Kerwin                   Expires April 14, 2017                 [Page 5]
+Kerwin                    Expires May 27, 2017                  [Page 5]
 
-Internet-Draft             http2-encoded-data               October 2016
+Internet-Draft             http2-encoded-data              November 2016
 
 
    intermediary mishandles GZIPPED_DATA frames, for example by
@@ -333,9 +333,9 @@ Internet-Draft             http2-encoded-data               October 2016
 
 
 
-Kerwin                   Expires April 14, 2017                 [Page 6]
+Kerwin                    Expires May 27, 2017                  [Page 6]
 
-Internet-Draft             http2-encoded-data               October 2016
+Internet-Draft             http2-encoded-data              November 2016
 
 
 5.2.  HTTP/2 Settings Registry Update
@@ -389,9 +389,9 @@ Internet-Draft             http2-encoded-data               October 2016
 
 
 
-Kerwin                   Expires April 14, 2017                 [Page 7]
+Kerwin                    Expires May 27, 2017                  [Page 7]
 
-Internet-Draft             http2-encoded-data               October 2016
+Internet-Draft             http2-encoded-data              November 2016
 
 
 7.2.  Informative References
@@ -406,6 +406,10 @@ Internet-Draft             http2-encoded-data               October 2016
               <http://www.rfc-editor.org/info/rfc7230>.
 
 Appendix A.  Changelog
+
+   Since -09:
+
+   o  (editorial) use 'cref' elements for notes
 
    Since -08:
 
@@ -438,17 +442,18 @@ Appendix A.  Changelog
    o  reduced encoding options to only gzip (suggested by Martin
       Thomson)
 
+
+
+
+Kerwin                    Expires May 27, 2017                  [Page 8]
+
+Internet-Draft             http2-encoded-data              November 2016
+
+
    o  remove fragmentation and segment stuff, including reference to
       'http2-segments' I-D
 
    o  updated HTTP/2 reference from I-D to (freshly published) RFC7230
-
-
-
-Kerwin                   Expires April 14, 2017                 [Page 8]
-
-Internet-Draft             http2-encoded-data               October 2016
-
 
    Since -03:
 
@@ -496,9 +501,4 @@ Author's Address
 
 
 
-
-
-
-
-
-Kerwin                   Expires April 14, 2017                 [Page 9]
+Kerwin                    Expires May 27, 2017                  [Page 9]

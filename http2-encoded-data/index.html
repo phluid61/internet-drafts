@@ -398,8 +398,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Kerwin, M." />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-encoded-data-09" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-latest-11" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-http2-encoded-data-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-23" />
   <meta name="dct.abstract" content="This document introduces a new frame type for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
   <meta name="description" content="This document introduces a new frame type for transporting gzip-encoded data between peers in the Hypertext Transfer Protocol Version 2 (HTTP/2), and an associated error code for handling invalid encoding." />
 
@@ -416,14 +416,14 @@
 </tr>
 <tr>
   <td class="left">Internet-Draft</td>
-  <td class="right">October 11, 2016</td>
+  <td class="right">November 23, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Experimental</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: April 14, 2017</td>
+  <td class="left">Expires: May 27, 2017</td>
   <td class="right"></td>
 </tr>
 
@@ -432,7 +432,7 @@
   </table>
 
   <p class="title">HTTP/2 Gzipped Data<br />
-  <span class="filename">draft-kerwin-http2-encoded-data-09</span></p>
+  <span class="filename">draft-kerwin-http2-encoded-data-latest</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -449,7 +449,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on April 14, 2017.</p>
+<p>This Internet-Draft will expire on May 27, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -491,12 +491,16 @@
 <p id="rfc.section.2.p.1">This document introduces a new HTTP/2 frame type (<a href="#RFC7540">[RFC7540]</a>, Section 11.2), a new HTTP/2 setting (<a href="#RFC7540">[RFC7540]</a>, Section 11.3), and a new HTTP/2 error code (<a href="#RFC7540">[RFC7540]</a>, Section 7), to allow the compression of data.</p>
 <p id="rfc.section.2.p.2">Note that while compressing some or all data in a stream might affect the total length of the corresponding HTTP message body, the <samp>content-length</samp> header, if present, should continue to reflect the total length of the <em>uncompressed</em> data. This is particularly relevant when detecting malformed messages (<a href="#RFC7540">[RFC7540]</a>, Section 8.1.2.6).</p>
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> <a href="#accept-gzipped-data" id="accept-gzipped-data">SETTINGS_ACCEPT_GZIPPED_DATA</a></h1>
-<p><strong>NOTE</strong>: This is an experimental value; if standardised, a permanent value will be assigned.</p>
+<p>
+  <a id="CREF1" class="info">[CREF1]<span class="info">This is an experimental value; if standardised, a permanent value will be assigned.</span></a>
+</p>
 <p id="rfc.section.2.1.p.2">SETTINGS_ACCEPT_GZIPPED_DATA (0xf000) is used to indicate the sender&#8217;s ability and willingness to receive GZIPPED_DATA frames. An endpoint MUST NOT send a GZIPPED_DATA frame unless it receives this setting with a value of 1.</p>
 <p id="rfc.section.2.1.p.3">The initial value is 0, which indicates that GZIPPED_DATA frames are not supported. Any value other than 0 or 1 MUST be treated as a connection error (<a href="#RFC7540">[RFC7540]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
 <p id="rfc.section.2.1.p.4">An endpoint may advertise support for GZIPPED_DATA frames and later decide that it no longer supports them.  After sending an ACCEPT_GZIPPED_DATA setting with the value 0, the endpoint SHOULD continue to accept GZIPPED_DATA frames for a reasonable amount of time to account for frames that may already be in flight.</p>
 <h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> <a href="#gzipped-data" id="gzipped-data">GZIPPED_DATA</a></h1>
-<p><strong>NOTE</strong>: This is an experimental value; if standardised, a permanent value will be assigned.</p>
+<p>
+  <a id="CREF2" class="info">[CREF2]<span class="info">This is an experimental value; if standardised, a permanent value will be assigned.</span></a>
+</p>
 <p id="rfc.section.2.2.p.2">GZIPPED_DATA frames (type code=0xf000) are semantically identical to DATA frames (<a href="#RFC7540">[RFC7540]</a>, Section 6.1), but their payload is encoded using gzip compression.  Significantly: the order of DATA and GZIPPED_DATA frames is semantically significant; and GZIPPED_DATA frames are subject to flow control (<a href="#RFC7540">[RFC7540]</a>, Section 5.2).  Gzip compression is an LZ77 coding with a 32 bit CRC that is commonly produced by the gzip file compression program <a href="#RFC1952">[RFC1952]</a>.</p>
 <p id="rfc.section.2.2.p.3">Any compression or decompression context for a GZIPPED_DATA frame is unique to that frame.  An endpoint MAY interleave DATA and GZIPPED_DATA frames on a single stream.</p>
 <pre>
@@ -536,7 +540,7 @@
 <p/>
 
 <ul>
-  <li><samp>DATA_ENCODING_ERROR</samp> (0xf0000000): The endpoint detected that its peer sent a GZIPPED_DATA frame with an invalid encoding.  <br/><br/> <strong>NOTE</strong>: This is an experimental value; if standardised, a permanent value will be assigned.</li>
+  <li><samp>DATA_ENCODING_ERROR</samp> (0xf0000000): The endpoint detected that its peer sent a GZIPPED_DATA frame with an invalid encoding.  <br/><br/> <a id="CREF3" class="info">[CREF3]<span class="info">This is an experimental value; if standardised, a permanent value will be assigned.</span></a></li>
 </ul>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#experiment" id="experiment">Experimental Status</a></h1>
 <p id="rfc.section.3.p.1">This extension is classified as an experiment because it alters the base semantics of HTTP/2; a change that, if specified insufficiently or implemented incorrectly, could result in data loss that is hard to detect or diagnose.</p>
@@ -661,20 +665,26 @@
   </tbody>
 </table>
 <h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#changelog" id="changelog">Changelog</a></h1>
-<p id="rfc.section.A.p.1">Since -08:</p>
+<p id="rfc.section.A.p.1">Since -09:</p>
+<p/>
+
+<ul>
+  <li>(editorial) use &#8216;cref&#8217; elements for notes</li>
+</ul>
+<p id="rfc.section.A.p.3">Since -08:</p>
 <p/>
 
 <ul>
   <li>use experimental values for frame/setting/error codes</li>
 </ul>
-<p id="rfc.section.A.p.3">Since -07:</p>
+<p id="rfc.section.A.p.5">Since -07:</p>
 <p/>
 
 <ul>
   <li>define &#8220;reliable&#8221; in the &#8216;experimental&#8217; section, and provide pointers to potential workarounds</li>
   <li>remove fragmentation, since the text added no value</li>
 </ul>
-<p id="rfc.section.A.p.5">Since -06:</p>
+<p id="rfc.section.A.p.7">Since -06:</p>
 <p/>
 
 <ul>
@@ -683,13 +693,13 @@
   <li>clarify that GZIPPED_DATA and DATA can be interleaved</li>
   <li>explain experimental status and risks of broken implementations</li>
 </ul>
-<p id="rfc.section.A.p.7">Since -05:</p>
+<p id="rfc.section.A.p.9">Since -05:</p>
 <p/>
 
 <ul>
   <li>changed ACCEPT_ENCODED_DATA back from a frame to a setting, since it carries a single scalar value now</li>
 </ul>
-<p id="rfc.section.A.p.9">Since -04:</p>
+<p id="rfc.section.A.p.11">Since -04:</p>
 <p/>
 
 <ul>
@@ -697,7 +707,7 @@
   <li>remove fragmentation and segment stuff, including reference to &#8216;http2-segments&#8217; I-D</li>
   <li>updated HTTP/2 reference from I-D to (freshly published) RFC7230</li>
 </ul>
-<p id="rfc.section.A.p.11">Since -03:</p>
+<p id="rfc.section.A.p.13">Since -03:</p>
 <p/>
 
 <ul>
@@ -706,19 +716,19 @@
   <li>clarified that ACCEPT is for a connection, and ENCODED_DATA is for a stream</li>
   <li>copied &#8220;padding&#8221; text from HTTP/2 draft</li>
 </ul>
-<p id="rfc.section.A.p.13">Since -02:</p>
+<p id="rfc.section.A.p.15">Since -02:</p>
 <p/>
 
 <ul>
   <li>moved all discussion of fragmentation and segments to its own section</li>
 </ul>
-<p id="rfc.section.A.p.15">Since -01:</p>
+<p id="rfc.section.A.p.17">Since -01:</p>
 <p/>
 
 <ul>
   <li>referenced new draft-kerwin-http2-segments to handle fragmentation</li>
 </ul>
-<p id="rfc.section.A.p.17">Since -00:</p>
+<p id="rfc.section.A.p.19">Since -00:</p>
 <p/>
 
 <ul>
