@@ -340,6 +340,9 @@ Contact:
 Change Controller:
 :  This scheme is registered under the IETF tree.  As such, the IETF
    maintains change control.
+
+References:
+:  See Section 8 of this document.
 {: vspace="0"}
 
 
