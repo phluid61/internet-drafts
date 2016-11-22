@@ -77,7 +77,7 @@ malformed messages ({{RFC7540}}, Section 8.1.2.6).
 
 ## SETTINGS\_ACCEPT\_GZIPPED\_DATA  {#accept-gzipped-data}
 
-**NOTE**: This is an experimental value; if standardised, a permanent value will be assigned.
+<cref>This is an experimental value; if standardised, a permanent value will be assigned.</cref>
 
 SETTINGS\_ACCEPT\_GZIPPED\_DATA (0xf000) is used to indicate the sender's ability and
 willingness to receive GZIPPED\_DATA frames. An endpoint MUST NOT send a GZIPPED\_DATA
@@ -95,7 +95,7 @@ frames that may already be in flight.
 
 ## GZIPPED\_DATA  {#gzipped-data}
 
-**NOTE**: This is an experimental value; if standardised, a permanent value will be assigned.
+<cref>This is an experimental value; if standardised, a permanent value will be assigned.</cref>
 
 GZIPPED\_DATA frames (type code=0xf000) are semantically identical to DATA frames
 ({{RFC7540}}, Section 6.1), but their payload is encoded using gzip compression.
@@ -186,7 +186,7 @@ The following new error code is defined:
 * `DATA_ENCODING_ERROR` (0xf0000000):
   The endpoint detected that its peer sent a GZIPPED\_DATA frame with an invalid encoding.
 
-  **NOTE**: This is an experimental value; if standardised, a permanent value will be assigned.
+  <cref>This is an experimental value; if standardised, a permanent value will be assigned.</cref>
 
 
 # Experimental Status  {#experiment}
@@ -277,6 +277,7 @@ Thanks to Keith Morgan for his advice, input, and editorial contributions.
 
 Since -09:
 
+ * (editorial) use 'cref' elements for notes
 
 Since -08:
 
