@@ -272,8 +272,8 @@ encoded string often depends on the user's localization settings, or
 defaults to UTF-8 {{STD63}}.
 
 When a file URI is produced, characters not allowed by the syntax in
-{{syntax}} SHOULD be percent-encoded as characters using UTF-8
-encoding, as per {{RFC3986}}, Section 2.5.
+{{syntax}} SHOULD be encoded using UTF-8 and then percent-encoded,
+as per {{RFC3986}}, Section 2.5.
 
 A decision not to use percent-encoded UTF-8 is outside the scope of
 this specification.  It will typically require the use of heuristics or
