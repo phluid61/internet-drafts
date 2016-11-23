@@ -34,7 +34,7 @@ informative:
 This document defines an extension to the Hypertext Transfer Protocol Version 2 (HTTP/2) that
 allows for non-destructive signalling of unsupported extension frames.
 
-**Note to Readers**
+--- note_Note_to_Readers
 
 The issues list for this draft can be found at <https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20NAK%20Frame>
 
