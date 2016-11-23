@@ -143,7 +143,7 @@ It defines a common syntax which is intended to interoperate across
 the broad spectrum of existing usages.  At the same time it notes
 some other current practices around the use of file URIs.
 
-**Note to Readers (To be removed by the RFC Editor)**
+--- note_Note_to_Readers
 
 This draft should be discussed on the IETF Applications Area Working
 Group discussion list \<apps-discuss@ietf.org>.
