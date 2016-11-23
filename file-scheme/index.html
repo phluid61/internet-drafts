@@ -549,7 +549,7 @@
 <p id="rfc.section.3.p.3">This specification neither defines nor forbids any set of operations that might be performed on a file identified by a non-local file URI.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">File System Name Encoding</a></h1>
 <p id="rfc.section.4.p.1">File systems use various encoding schemes to store file and directory names.  Many modern file systems store file and directory names as arbitrary sequences of octets, in which case the representation as an encoded string often depends on the user&#8217;s localization settings, or defaults to UTF-8 <a href="#STD63">[STD63]</a>.</p>
-<p id="rfc.section.4.p.2">When a file URI is produced, characters not allowed by the syntax in <a href="#syntax">Section 2</a> SHOULD be percent-encoded as characters using UTF-8 encoding, as per <a href="#RFC3986">[RFC3986]</a>, Section 2.5.</p>
+<p id="rfc.section.4.p.2">When a file URI is produced, characters not allowed by the syntax in <a href="#syntax">Section 2</a> SHOULD be encoded using UTF-8 and then percent-encoded, as per <a href="#RFC3986">[RFC3986]</a>, Section 2.5.</p>
 <p id="rfc.section.4.p.3">A decision not to use percent-encoded UTF-8 is outside the scope of this specification.  It will typically require the use of heuristics or explicit knowledge about the way the string will be processed.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security" id="security">Security Considerations</a></h1>
 <p id="rfc.section.5.p.1">There are many security considerations for URI schemes discussed in <a href="#RFC3986">[RFC3986]</a>.</p>
