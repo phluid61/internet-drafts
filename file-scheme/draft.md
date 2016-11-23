@@ -50,6 +50,24 @@ normative:
   RFC3986:
   RFC5234:
   RFC6874:
+  STD63:
+    title: UTF-8, a transformation format of ISO 10646
+    author:
+    - ins: F. Yergeau
+      name: F. Yergeau
+    date: 2003-11
+    seriesinfo:
+      STD: 63
+      RFC: 3629
+      DOI: 10.17487/RFC3629
+    target: http://www.rfc-editor.org/info/std63
+  UCS:
+    title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
+    author:
+    - organization: International Organization for Standardization
+    date: 2003-12
+    seriesinfo:
+      ISO/IEC: 10646:2003
   UTR15:
     title: Unicode Normalization Forms
     author:
@@ -69,17 +87,6 @@ informative:
   RFC6454:
   RFC6838:
   I-D.hoffman-file-uri:
-  STD63:
-    title: UTF-8, a transformation format of ISO 10646
-    author:
-    - ins: F. Yergeau
-      name: F. Yergeau
-    date: 2003-11
-    seriesinfo:
-      STD: 63
-      RFC: 3629
-      DOI: 10.17487/RFC3629
-    target: http://www.rfc-editor.org/info/std63
   Bash-Tilde:
     title: "Bash Reference Manual: Tilde Expansion"
     author:
@@ -271,9 +278,17 @@ arbitrary sequences of octets, in which case the representation as an
 encoded string often depends on the user's localization settings, or
 defaults to UTF-8 {{STD63}}.
 
+<!--
 When a file URI is produced, characters not allowed by the syntax in
 {{syntax}} SHOULD be encoded using UTF-8 and then percent-encoded,
 as per {{RFC3986}}, Section 2.5.
+-->
+When a file URI is produced that represents textual data consisting of
+characters from the Universal Character Set {{UCS}}, the data SHOULD
+first be encoded as octets according to the UTF-8 character encoding
+{{STD63}}, then any octets that do not correspond to characters allowed
+by the syntax in {{syntax}} MUST be percent-encoded; as per
+{{RFC3986}}, Section 2.5.
 
 A decision not to use percent-encoded UTF-8 is outside the scope of
 this specification.  It will typically require the use of heuristics or
