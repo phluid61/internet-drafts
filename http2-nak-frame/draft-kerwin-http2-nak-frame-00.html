@@ -429,11 +429,6 @@
   <a href="#rfc.abstract">Abstract</a>
 </h1>
 <p>This document defines an extension to the Hypertext Transfer Protocol Version 2 (HTTP/2) that allows for non-destructive signalling of unsupported extension frames.</p>
-<p>
-  <strong>Note to Readers</strong>
-</p>
-<p>The issues list for this draft can be found at <a href="https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20NAK%20Frame">https://github.com/phluid61/internet-drafts/labels/HTTP%2F2%20NAK%20Frame</a></p>
-<p>The most recent (often unpublished) draft is at <a href="http://phluid61.github.io/internet-drafts/http2-nak-frame/">http://phluid61.github.io/internet-drafts/http2-nak-frame/</a></p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
@@ -488,7 +483,6 @@
 <p id="rfc.section.2.1.p.7">DROPPED_FRAME frames are not associated with any individual stream.  If a DROPPED_FRAME frame is received with a stream identifier field value other than 0x0, the recipient MUST respond with a connection error (<a href="#RFC7540">[RFC7540]</a>, Section 5.4.1) of type PROTOCOL_ERROR.</p>
 <p id="rfc.section.2.1.p.8">Receipt of a DROPPED_FRAME frame with a length field value other than 1 MUST be treated as a connection error (<a href="#RFC7540">[RFC7540]</a>, Section 5.4.1) of type FRAME_SIZE_ERROR.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
-<p id="rfc.section.3.p.1">This specification does not introduce any new security considerations.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
 <p id="rfc.section.4.p.1">This document updates the registriy for frame types in the &#8220;Hypertext Transfer Protocol (HTTP) 2 Parameters&#8221; section.</p>
 <h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#http2-frame-type-registry-update" id="http2-frame-type-registry-update">HTTP/2 Frame Type Registry Update</a></h1>

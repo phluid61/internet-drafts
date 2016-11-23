@@ -17,15 +17,6 @@ Abstract
    Version 2 (HTTP/2) that allows for non-destructive signalling of
    unsupported extension frames.
 
-Note to Readers
-
-   The issues list for this draft can be found at
-   <https://github.com/phluid61/internet-drafts/labels/
-   HTTP%2F2%20NAK%20Frame>
-
-   The most recent (often unpublished) draft is at
-   <http://phluid61.github.io/internet-drafts/http2-nak-frame/>
-
 Status of This Memo
 
    This Internet-Draft is submitted in full conformance with the
@@ -50,14 +41,6 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-
-
-
-Kerwin                  Expires December 4, 2016                [Page 1]
-
-Internet-Draft               http2-nak-frame                   June 2016
-
-
    (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
@@ -66,15 +49,24 @@ Internet-Draft               http2-nak-frame                   June 2016
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
 
+
+
+
+
+Kerwin                  Expires December 4, 2016                [Page 1]
+
+Internet-Draft               http2-nak-frame                   June 2016
+
+
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
    2.  Additions to HTTP/2 . . . . . . . . . . . . . . . . . . . . .   2
-     2.1.  DROPPED_FRAME . . . . . . . . . . . . . . . . . . . . . .   3
+     2.1.  DROPPED_FRAME . . . . . . . . . . . . . . . . . . . . . .   2
    3.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
    4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
-     4.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   4
+     4.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   3
    5.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   4
 
@@ -104,6 +96,14 @@ Table of Contents
    This document introduces a new HTTP/2 frame type ([RFC7540],
    Section 11.2).
 
+2.1.  DROPPED_FRAME
+
+   DROPPED_FRAME frames (type code=0xTBA) can be sent on a connection at
+   any time to indicate that a received frame was discarded without any
+   action being taken.
+
+
+
 
 
 
@@ -113,12 +113,6 @@ Kerwin                  Expires December 4, 2016                [Page 2]
 
 Internet-Draft               http2-nak-frame                   June 2016
 
-
-2.1.  DROPPED_FRAME
-
-   DROPPED_FRAME frames (type code=0xTBA) can be sent on a connection at
-   any time to indicate that a received frame was discarded without any
-   action being taken.
 
      +---------------+
      |   Type (8)    |
@@ -154,13 +148,19 @@ Internet-Draft               http2-nak-frame                   June 2016
 
 3.  Security Considerations
 
-   This specification does not introduce any new security
-   considerations.
-
 4.  IANA Considerations
 
    This document updates the registriy for frame types in the "Hypertext
    Transfer Protocol (HTTP) 2 Parameters" section.
+
+4.1.  HTTP/2 Frame Type Registry Update
+
+   This document updates the "HTTP/2 Frame Type" registry ([RFC7540],
+   Section 11.2).  The entries in the following table are registered by
+   this document.
+
+
+
 
 
 
@@ -169,12 +169,6 @@ Kerwin                  Expires December 4, 2016                [Page 3]
 
 Internet-Draft               http2-nak-frame                   June 2016
 
-
-4.1.  HTTP/2 Frame Type Registry Update
-
-   This document updates the "HTTP/2 Frame Type" registry ([RFC7540],
-   Section 11.2).  The entries in the following table are registered by
-   this document.
 
                   +---------------+------+-------------+
                   | Frame Type    | Code | Section     |
@@ -200,6 +194,12 @@ Author's Address
 
    Email: matthew@kerwin.net.au
    URI:   http://matthew.kerwin.net.au/
+
+
+
+
+
+
 
 
 
