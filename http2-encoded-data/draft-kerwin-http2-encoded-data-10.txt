@@ -18,7 +18,7 @@ Abstract
    2 (HTTP/2), and an associated error code for handling invalid
    encoding.
 
-   *Note to Readers*
+Note to Readers
 
    The issues list for this draft can be found at
    https://github.com/phluid61/internet-drafts/labels/
