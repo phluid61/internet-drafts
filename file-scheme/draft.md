@@ -61,24 +61,29 @@ normative:
       RFC: 3629
       DOI: 10.17487/RFC3629
     target: http://www.rfc-editor.org/info/std63
-  UCS:
-    title: Information Technology - Universal Multiple-Octet Coded Character Set (UCS)
+  UNICODE:
+    title: The Unicode Standard, Version 9.0.0
     author:
-    - organization: International Organization for Standardization
-    date: 2003-12
+    - organization: The Unicode Consortium
+      city: Mountain View
+      region: CA
+    date: 2016-06-21
     seriesinfo:
-      ISO/IEC: 10646:2003
-  UTR15:
-    title: Unicode Normalization Forms
+      ISBN: 978-1-936213-13-9
+    target: http://www.unicode.org/versions/Unicode9.0.0/
+  UAX15:
+    title: Unicode Standard Annex #15: Unicode Normalization Forms
     author:
     - ins: M. Davis
       name: Mark Davis
       #email: markdavis@google.com
+      role: editor
     - ins: K. Whistler
       name: Ken Whistler
       #email: ken@unicode.org
-    date: 2012-08-31
-    target: http://unicode.org/reports/tr15/tr15-18.html
+      role: editor
+    date: 2016-02-24
+    target: http://www.unicode.org/reports/tr15/tr15-44.html
 
 informative:
   RFC1630:
@@ -278,16 +283,10 @@ arbitrary sequences of octets, in which case the representation as an
 encoded string often depends on the user's localization settings, or
 defaults to UTF-8 {{STD63}}.
 
-<!--
-When a file URI is produced, characters not allowed by the syntax in
-{{syntax}} SHOULD be encoded using UTF-8 and then percent-encoded,
-as per {{RFC3986}}, Section 2.5.
--->
 When a file URI is produced that represents textual data consisting of
-characters from the Universal Character Set {{UCS}}, the data SHOULD
-first be encoded as octets according to the UTF-8 character encoding
-{{STD63}}, then any octets that do not correspond to characters allowed
-by the syntax in {{syntax}} MUST be percent-encoded; as per
+characters from the Unicode Standard coded character set {{UNICODE}},
+the data SHOULD be encoded as octets according to the UTF-8 character
+encoding scheme {{STD63}} before percent-encoding is applied; as per
 {{RFC3986}}, Section 2.5.
 
 A decision not to use percent-encoded UTF-8 is outside the scope of
@@ -327,7 +326,7 @@ restrict the use of data obtained from URI components accordingly.
 File systems vary in the way they handle case.  Care MUST be taken to
 avoid issues resulting from possibly unexpected aliasing from case-only
 differences between file paths or URIs, or from mismatched encodings or
-Unicode equivalences {{UTR15}} (see {{encoding}}).
+Unicode equivalences {{UAX15}} (see {{encoding}}).
 
 
 # IANA Considerations {#iana-considerations}
@@ -468,7 +467,7 @@ interacting with DOS- or Windows-like file paths and URIs.
 ## Mac OS X Systems  {#sys-osx}
 
 The HFS+ file system uses a nonstandard normalization form, similar
-to Normalization Form D {{UTR15}}.  Take care when transforming HFS+
+to Normalization Form D {{UAX15}}.  Take care when transforming HFS+
 file paths to and from URIs ({{encoding}}).
 
 
