@@ -411,7 +411,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-11-24" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-25" />
   <meta name="dct.abstract" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
   <meta name="description" content="This document specifies the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the definition in RFC 1738." />
 
@@ -432,14 +432,14 @@
 </tr>
 <tr>
   <td class="left">Updates: 1738 (if approved)</td>
-  <td class="right">November 24, 2016</td>
+  <td class="right">November 25, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: May 28, 2017</td>
+  <td class="left">Expires: May 29, 2017</td>
   <td class="right"></td>
 </tr>
 
@@ -465,7 +465,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 28, 2017.</p>
+<p>This Internet-Draft will expire on May 29, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -549,14 +549,14 @@
 <p id="rfc.section.3.p.3">This specification neither defines nor forbids any set of operations that might be performed on a file identified by a non-local file URI.</p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#encoding" id="encoding">File System Name Encoding</a></h1>
 <p id="rfc.section.4.p.1">File systems use various encoding schemes to store file and directory names.  Many modern file systems store file and directory names as arbitrary sequences of octets, in which case the representation as an encoded string often depends on the user&#8217;s localization settings, or defaults to UTF-8 <a href="#STD63">[STD63]</a>.</p>
-<p id="rfc.section.4.p.2">When a file URI is produced that represents textual data consisting of characters from the Universal Character Set <a href="#UCS">[UCS]</a>, the data SHOULD first be encoded as octets according to the UTF-8 character encoding <a href="#STD63">[STD63]</a>, then any octets that do not correspond to characters allowed by the syntax in <a href="#syntax">Section 2</a> MUST be percent-encoded; as per <a href="#RFC3986">[RFC3986]</a>, Section 2.5.</p>
+<p id="rfc.section.4.p.2">When a file URI is produced that represents textual data consisting of characters from the Unicode Standard coded character set <a href="#UNICODE">[UNICODE]</a>, the data SHOULD be encoded as octets according to the UTF-8 character encoding scheme <a href="#STD63">[STD63]</a> before percent-encoding is applied; as per <a href="#RFC3986">[RFC3986]</a>, Section 2.5.</p>
 <p id="rfc.section.4.p.3">A decision not to use percent-encoded UTF-8 is outside the scope of this specification.  It will typically require the use of heuristics or explicit knowledge about the way the string will be processed.</p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#security" id="security">Security Considerations</a></h1>
 <p id="rfc.section.5.p.1">There are many security considerations for URI schemes discussed in <a href="#RFC3986">[RFC3986]</a>.</p>
 <p id="rfc.section.5.p.2">File access and the granting of privileges for specific operations are complex topics, and the use of file URIs can complicate the security model in effect for file privileges.</p>
 <p id="rfc.section.5.p.3">Historically, user agents have granted content from the file URI scheme a tremendous amount of privilege.  However, granting all local files such wide privileges can lead to privilege escalation attacks.  Some user agents have had success granting local files directory-based privileges, but this approach has not been widely adopted.  Other user agents use globally unique identifiers as the origin for each file URI <a href="#RFC6454">[RFC6454]</a>, which is the most secure option.</p>
 <p id="rfc.section.5.p.4">File systems typically assign an operational meaning to special characters, such as the &#8220;/&#8221;, &#8220;\&#8221;, &#8220;:&#8221;, &#8220;[&#8221;, and &#8220;]&#8221; characters, and to special device names like &#8220;.&#8221;, &#8220;..&#8221;, &#8220;&#8230;&#8221;, &#8220;aux&#8221;, &#8220;lpt&#8221;, etc.  In some cases, merely testing for the existence of such a name will cause the operating system to pause or invoke unrelated system calls, leading to significant security concerns regarding denial of service and unintended data transfer.  It would be impossible for this specification to list all such significant characters and device names.  Implementers MUST research the reserved names and characters for the types of storage device that may be attached to their application and restrict the use of data obtained from URI components accordingly.</p>
-<p id="rfc.section.5.p.5">File systems vary in the way they handle case.  Care MUST be taken to avoid issues resulting from possibly unexpected aliasing from case-only differences between file paths or URIs, or from mismatched encodings or Unicode equivalences <a href="#UTR15">[UTR15]</a> (see <a href="#encoding">Section 4</a>).</p>
+<p id="rfc.section.5.p.5">File systems vary in the way they handle case.  Care MUST be taken to avoid issues resulting from possibly unexpected aliasing from case-only differences between file paths or URIs, or from mismatched encodings or Unicode equivalences <a href="#UAX15">[UAX15]</a> (see <a href="#encoding">Section 4</a>).</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.6.p.1">This document defines the following URI scheme, so the &#8220;Permanent URI Schemes&#8221; registry has been updated accordingly.  This registration complies with <a href="#BCP35">[BCP35]</a>.</p>
 <p/>
@@ -624,15 +624,15 @@
     </tr>
     <tr>
       <td class="reference">
-        <b id="UCS">[UCS]</b>
+        <b id="UAX15">[UAX15]</b>
       </td>
-      <td class="top"><a>International Organization for Standardization</a>, "<a>Information Technology - Universal Multiple-Octet Coded Character Set (UCS)</a>", ISO/IEC 10646:2003, December 2003.</td>
+      <td class="top"><a>Davis, M.</a> and <a>K. Whistler</a>, "<a href="http://www.unicode.org/reports/tr15/tr15-44.html">Unicode Standard Annex #15: Unicode Normalization Forms</a>", February 2016.</td>
     </tr>
     <tr>
       <td class="reference">
-        <b id="UTR15">[UTR15]</b>
+        <b id="UNICODE">[UNICODE]</b>
       </td>
-      <td class="top"><a>Davis, M.</a> and <a>K. Whistler</a>, "<a href="http://unicode.org/reports/tr15/tr15-18.html">Unicode Normalization Forms</a>", August 2012.</td>
+      <td class="top"><a>The Unicode Consortium</a>, "<a href="http://www.unicode.org/versions/Unicode9.0.0/">The Unicode Standard, Version 9.0.0</a>", ISBN 978-1-936213-13-9, June 2016.</td>
     </tr>
   </tbody>
 </table>
@@ -749,7 +749,7 @@
 <p id="rfc.section.D.2.p.1">When mapping a DOS- or Windows-like file path to a file URI, the drive letter (e.g. &#8220;c:&#8221;) is typically mapped into the first path segment.</p>
 <p><a href="#nonstandard-syntax">Appendix E</a> lists some nonstandard techniques for interacting with DOS- or Windows-like file paths and URIs.</p>
 <h1 id="rfc.appendix.D.3"><a href="#rfc.appendix.D.3">D.3.</a> <a href="#sys-osx" id="sys-osx">Mac OS X Systems</a></h1>
-<p id="rfc.section.D.3.p.1">The HFS+ file system uses a nonstandard normalization form, similar to Normalization Form D <a href="#UTR15">[UTR15]</a>.  Take care when transforming HFS+ file paths to and from URIs (<a href="#encoding">Section 4</a>).</p>
+<p id="rfc.section.D.3.p.1">The HFS+ file system uses a nonstandard normalization form, similar to Normalization Form D <a href="#UAX15">[UAX15]</a>.  Take care when transforming HFS+ file paths to and from URIs (<a href="#encoding">Section 4</a>).</p>
 <h1 id="rfc.appendix.D.4"><a href="#rfc.appendix.D.4">D.4.</a> <a href="#sys-vms" id="sys-vms">OpenVMS Files-11 Systems</a></h1>
 <p id="rfc.section.D.4.p.1">When mapping a VMS file path to a file URI, the device name is mapped into the first path segment.  Note that the dollars sign &#8220;$&#8221; is a reserved character per the definition in <a href="#RFC3986">[RFC3986]</a>, Section 2.2, so should be percent-encoded if present in the device name.</p>
 <p id="rfc.section.D.4.p.2">If the VMS file path includes a node reference, that reference is used as the authority.  Where the original node reference includes a user name and password in an access control string, they can be transcribed into the authority using the nonstandard syntax extension in <a href="#ext-userinfo">Appendix E.1</a>.</p>

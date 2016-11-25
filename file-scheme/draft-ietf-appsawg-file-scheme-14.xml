@@ -197,16 +197,10 @@ arbitrary sequences of octets, in which case the representation as an
 encoded string often depends on the user’s localization settings, or
 defaults to UTF-8 <xref target="STD63"/>.</t>
 
-<!--
-When a file URI is produced, characters not allowed by the syntax in
-{{syntax}} SHOULD be encoded using UTF-8 and then percent-encoded,
-as per {{RFC3986}}, Section 2.5.
--->
 <t>When a file URI is produced that represents textual data consisting of
-characters from the Universal Character Set <xref target="UCS"/>, the data SHOULD
-first be encoded as octets according to the UTF-8 character encoding
-<xref target="STD63"/>, then any octets that do not correspond to characters allowed
-by the syntax in <xref target="syntax"/> MUST be percent-encoded; as per
+characters from the Unicode Standard coded character set <xref target="UNICODE"/>,
+the data SHOULD be encoded as octets according to the UTF-8 character
+encoding scheme <xref target="STD63"/> before percent-encoding is applied; as per
 <xref target="RFC3986"/>, Section 2.5.</t>
 
 <t>A decision not to use percent-encoded UTF-8 is outside the scope of
@@ -246,7 +240,7 @@ restrict the use of data obtained from URI components accordingly.</t>
 <t>File systems vary in the way they handle case.  Care MUST be taken to
 avoid issues resulting from possibly unexpected aliasing from case-only
 differences between file paths or URIs, or from mismatched encodings or
-Unicode equivalences <xref target="UTR15"/> (see <xref target="encoding"/>).</t>
+Unicode equivalences <xref target="UAX15"/> (see <xref target="encoding"/>).</t>
 
 </section>
 <section anchor="iana-considerations" title="IANA Considerations">
@@ -387,26 +381,26 @@ and Dave Thaler for their early comments and suggestions.</t>
   <seriesInfo name="RFC" value="3629"/>
   <seriesInfo name="DOI" value="10.17487/RFC3629"/>
 </reference>
-<reference anchor="UCS" >
+<reference anchor="UNICODE" target="http://www.unicode.org/versions/Unicode9.0.0/">
   <front>
-    <title>Information Technology - Universal Multiple-Octet Coded Character Set (UCS)</title>
+    <title>The Unicode Standard, Version 9.0.0</title>
     <author >
-      <organization>International Organization for Standardization</organization>
+      <organization>The Unicode Consortium</organization>
     </author>
-    <date year="2003" month="December"/>
+    <date year="2016" month="June" day="21"/>
   </front>
-  <seriesInfo name="ISO/IEC" value="10646:2003"/>
+  <seriesInfo name="ISBN" value="978-1-936213-13-9"/>
 </reference>
-<reference anchor="UTR15" target="http://unicode.org/reports/tr15/tr15-18.html">
+<reference anchor="UAX15" target="http://www.unicode.org/reports/tr15/tr15-44.html">
   <front>
-    <title>Unicode Normalization Forms</title>
-    <author initials="M." surname="Davis" fullname="Mark Davis">
+    <title>Unicode Standard Annex #15: Unicode Normalization Forms</title>
+    <author initials="M." surname="Davis" fullname="Mark Davis" role="editor">
       <organization></organization>
     </author>
-    <author initials="K." surname="Whistler" fullname="Ken Whistler">
+    <author initials="K." surname="Whistler" fullname="Ken Whistler" role="editor">
       <organization></organization>
     </author>
-    <date year="2012" month="August" day="31"/>
+    <date year="2016" month="February" day="24"/>
   </front>
 </reference>
 
@@ -674,7 +668,7 @@ interacting with DOS- or Windows-like file paths and URIs.</t>
 <section anchor="sys-osx" title="Mac OS X Systems">
 
 <t>The HFS+ file system uses a nonstandard normalization form, similar
-to Normalization Form D <xref target="UTR15"/>.  Take care when transforming HFS+
+to Normalization Form D <xref target="UAX15"/>.  Take care when transforming HFS+
 file paths to and from URIs (<xref target="encoding"/>).</t>
 
 </section>

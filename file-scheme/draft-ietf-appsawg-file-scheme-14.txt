@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Updates: 1738 (if approved)                            November 24, 2016
+Updates: 1738 (if approved)                            November 25, 2016
 Intended status: Standards Track
-Expires: May 28, 2017
+Expires: May 29, 2017
 
 
                           The file URI Scheme
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 28, 2017.
+   This Internet-Draft will expire on May 29, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 1]
+Kerwin                    Expires May 29, 2017                  [Page 1]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 2]
+Kerwin                    Expires May 29, 2017                  [Page 2]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -165,7 +165,7 @@ Internet-Draft                 file-scheme                 November 2016
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 3]
+Kerwin                    Expires May 29, 2017                  [Page 3]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -221,7 +221,7 @@ Internet-Draft                 file-scheme                 November 2016
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 4]
+Kerwin                    Expires May 29, 2017                  [Page 4]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -249,11 +249,10 @@ Internet-Draft                 file-scheme                 November 2016
    defaults to UTF-8 [STD63].
 
    When a file URI is produced that represents textual data consisting
-   of characters from the Universal Character Set [UCS], the data SHOULD
-   first be encoded as octets according to the UTF-8 character encoding
-   [STD63], then any octets that do not correspond to characters allowed
-   by the syntax in Section 2 MUST be percent-encoded; as per [RFC3986],
-   Section 2.5.
+   of characters from the Unicode Standard coded character set
+   [UNICODE], the data SHOULD be encoded as octets according to the
+   UTF-8 character encoding scheme [STD63] before percent-encoding is
+   applied; as per [RFC3986], Section 2.5.
 
    A decision not to use percent-encoded UTF-8 is outside the scope of
    this specification.  It will typically require the use of heuristics
@@ -273,17 +272,15 @@ Internet-Draft                 file-scheme                 November 2016
    files such wide privileges can lead to privilege escalation attacks.
    Some user agents have had success granting local files directory-
    based privileges, but this approach has not been widely adopted.
+   Other user agents use globally unique identifiers as the origin for
+   each file URI [RFC6454], which is the most secure option.
 
 
 
-
-Kerwin                    Expires May 28, 2017                  [Page 5]
+Kerwin                    Expires May 29, 2017                  [Page 5]
 
 Internet-Draft                 file-scheme                 November 2016
 
-
-   Other user agents use globally unique identifiers as the origin for
-   each file URI [RFC6454], which is the most secure option.
 
    File systems typically assign an operational meaning to special
    characters, such as the "/", "\", ":", "[", and "]" characters, and
@@ -301,7 +298,7 @@ Internet-Draft                 file-scheme                 November 2016
    File systems vary in the way they handle case.  Care MUST be taken to
    avoid issues resulting from possibly unexpected aliasing from case-
    only differences between file paths or URIs, or from mismatched
-   encodings or Unicode equivalences [UTR15] (see Section 4).
+   encodings or Unicode equivalences [UAX15] (see Section 4).
 
 6.  IANA Considerations
 
@@ -330,16 +327,16 @@ Internet-Draft                 file-scheme                 November 2016
       This scheme is registered under the IETF tree.  As such, the IETF
       maintains change control.
 
+   References:
+      See Section 8 of this document.
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 6]
+
+Kerwin                    Expires May 29, 2017                  [Page 6]
 
 Internet-Draft                 file-scheme                 November 2016
 
-
-   References:
-      See Section 8 of this document.
 
 7.  Acknowledgements
 
@@ -385,22 +382,21 @@ Internet-Draft                 file-scheme                 November 2016
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
               2003, <http://www.rfc-editor.org/info/std63>.
 
+   [UAX15]    Davis, M., Ed. and K. Whistler, Ed., "Unicode Standard
+              Annex #15: Unicode Normalization Forms", February 2016,
+              <http://www.unicode.org/reports/tr15/tr15-44.html>.
 
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 7]
+Kerwin                    Expires May 29, 2017                  [Page 7]
 
 Internet-Draft                 file-scheme                 November 2016
 
 
-   [UCS]      International Organization for Standardization,
-              "Information Technology - Universal Multiple-Octet Coded
-              Character Set (UCS)", ISO/IEC 10646:2003, December 2003.
-
-   [UTR15]    Davis, M. and K. Whistler, "Unicode Normalization Forms",
-              August 2012,
-              <http://unicode.org/reports/tr15/tr15-18.html>.
+   [UNICODE]  The Unicode Consortium, "The Unicode Standard, Version
+              9.0.0", ISBN 978-1-936213-13-9, June 2016,
+              <http://www.unicode.org/versions/Unicode9.0.0/>.
 
 8.2.  Informative References
 
@@ -445,7 +441,11 @@ Internet-Draft                 file-scheme                 November 2016
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 8]
+
+
+
+
+Kerwin                    Expires May 29, 2017                  [Page 8]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -501,7 +501,7 @@ Appendix B.  Example URIs
 
 
 
-Kerwin                    Expires May 28, 2017                  [Page 9]
+Kerwin                    Expires May 29, 2017                  [Page 9]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -557,7 +557,7 @@ D.1.  POSIX Systems
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 10]
+Kerwin                    Expires May 29, 2017                 [Page 10]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -574,7 +574,7 @@ D.2.  DOS- and Windows-Like Systems
 D.3.  Mac OS X Systems
 
    The HFS+ file system uses a nonstandard normalization form, similar
-   to Normalization Form D [UTR15].  Take care when transforming HFS+
+   to Normalization Form D [UAX15].  Take care when transforming HFS+
    file paths to and from URIs (Section 4).
 
 D.4.  OpenVMS Files-11 Systems
@@ -613,7 +613,7 @@ E.1.  User Information
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 11]
+Kerwin                    Expires May 29, 2017                 [Page 11]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -669,7 +669,7 @@ E.2.1.  Relative Paths
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 12]
+Kerwin                    Expires May 29, 2017                 [Page 12]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -725,7 +725,7 @@ E.2.2.  Vertical Line Character
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 13]
+Kerwin                    Expires May 29, 2017                 [Page 13]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -781,7 +781,7 @@ E.3.1.  file URI with Authority
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 14]
+Kerwin                    Expires May 29, 2017                 [Page 14]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -837,7 +837,7 @@ E.3.2.  file URI with UNC Path
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 15]
+Kerwin                    Expires May 29, 2017                 [Page 15]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -893,7 +893,7 @@ Appendix F.  Collected Nonstandard Rules
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 16]
+Kerwin                    Expires May 29, 2017                 [Page 16]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -949,7 +949,7 @@ Internet-Draft                 file-scheme                 November 2016
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 17]
+Kerwin                    Expires May 29, 2017                 [Page 17]
 
 Internet-Draft                 file-scheme                 November 2016
 
@@ -1005,4 +1005,4 @@ Author's Address
 
 
 
-Kerwin                    Expires May 28, 2017                 [Page 18]
+Kerwin                    Expires May 29, 2017                 [Page 18]
