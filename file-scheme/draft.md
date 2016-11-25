@@ -65,14 +65,14 @@ normative:
     title: The Unicode Standard, Version 9.0.0
     author:
     - organization: The Unicode Consortium
-      city: Mountain View
-      region: CA
+      #city: Mountain View
+      #region: CA
     date: 2016-06-21
     seriesinfo:
       ISBN: 978-1-936213-13-9
     target: http://www.unicode.org/versions/Unicode9.0.0/
   UAX15:
-    title: Unicode Standard Annex #15: Unicode Normalization Forms
+    title: "Unicode Standard Annex #15: Unicode Normalization Forms"
     author:
     - ins: M. Davis
       name: Mark Davis
