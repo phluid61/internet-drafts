@@ -30,6 +30,24 @@ author:
     email: matthew.kerwin@qut.edu.au
 
 normative:
+  RFC2119:
+  RFC3986:
+  RFC5234:
+  RFC6454:
+  RFC6874:
+  STD63:
+    title: UTF-8, a transformation format of ISO 10646
+    author:
+    - ins: F. Yergeau
+      name: F. Yergeau
+    date: 2003-11
+    seriesinfo:
+      STD: 63
+      RFC: 3629
+      DOI: 10.17487/RFC3629
+    target: http://www.rfc-editor.org/info/std63
+
+informative:
   BCP35:
     title: Guidelines and Registration Procedures for URI Schemes
     author:
@@ -46,52 +64,10 @@ normative:
       RFC: 7595
       DOI: 10.17487/RFC7595
     target: http://www.rfc-editor.org/info/bcp35
-  RFC2119:
-  RFC3986:
-  RFC5234:
-  RFC6874:
-  STD63:
-    title: UTF-8, a transformation format of ISO 10646
-    author:
-    - ins: F. Yergeau
-      name: F. Yergeau
-    date: 2003-11
-    seriesinfo:
-      STD: 63
-      RFC: 3629
-      DOI: 10.17487/RFC3629
-    target: http://www.rfc-editor.org/info/std63
-  UNICODE:
-    title: The Unicode Standard, Version 9.0.0
-    author:
-    - organization: The Unicode Consortium
-      #city: Mountain View
-      #region: CA
-    date: 2016-06-21
-    seriesinfo:
-      ISBN: 978-1-936213-13-9
-    target: http://www.unicode.org/versions/Unicode9.0.0/
-  UAX15:
-    title: "Unicode Standard Annex #15: Unicode Normalization Forms"
-    author:
-    - ins: M. Davis
-      name: Mark Davis
-      #email: markdavis@google.com
-      role: editor
-    - ins: K. Whistler
-      name: Ken Whistler
-      #email: ken@unicode.org
-      role: editor
-    date: 2016-02-24
-    target: http://www.unicode.org/reports/tr15/tr15-44.html
-
-informative:
   RFC1630:
   RFC1738:
   RFC2396:
-  RFC6454:
   RFC6838:
-  I-D.hoffman-file-uri:
   Bash-Tilde:
     title: "Bash Reference Manual: Tilde Expansion"
     author:
@@ -118,6 +94,29 @@ informative:
     author:
     - organization: IEEE
     date: 2013
+  UAX15:
+    title: "Unicode Standard Annex #15: Unicode Normalization Forms"
+    author:
+    - ins: M. Davis
+      name: Mark Davis
+      #email: markdavis@google.com
+      role: editor
+    - ins: K. Whistler
+      name: Ken Whistler
+      #email: ken@unicode.org
+      role: editor
+    date: 2016-02-24
+    target: http://www.unicode.org/reports/tr15/tr15-44.html
+  UNICODE:
+    title: The Unicode Standard, Version 9.0.0
+    author:
+    - organization: The Unicode Consortium
+      #city: Mountain View
+      #region: CA
+    date: 2016-06-21
+    seriesinfo:
+      ISBN: 978-1-936213-13-9
+    target: http://www.unicode.org/versions/Unicode9.0.0/
   Win32-Namespaces:
     title: Naming Files, Paths, and Namespaces
     author:
@@ -141,8 +140,9 @@ informative:
 
 --- abstract
 
-This document specifies the "file" Uniform Resource Identifier (URI)
-scheme, replacing the definition in RFC 1738.
+This document provides a full specification of the "file" Uniform
+Resource Identifier (URI) scheme, replacing the very brief definition
+in RFC 1738.
 
 It defines a common syntax which is intended to interoperate across
 the broad spectrum of existing usages.  At the same time it notes
@@ -167,6 +167,11 @@ This document specifies a syntax based on the generic syntax of
 extensions to the syntax which might be encountered in practice are
 listed in appendices;  these extensions are listed for informational
 purposes only.
+<!-- Gen-ART review:
+Q4: Related to Q3, the text says that things are backward compatible
+in “most situations”. I think a little more text is needed, and e.g.,
+examples of non-backward compatibility.
+-->
 
 The file URI scheme is not coupled with a specific protocol, nor with a
 specific media type {{RFC6838}}.  See {{operations}} for a discussion
@@ -311,6 +316,11 @@ privileges, but this approach has not been widely adopted.  Other user
 agents use globally unique identifiers as the origin for each file URI
 {{RFC6454}}, which is the most secure option.
 
+Treating a non-local file URI as local or otherwise attempting to
+perform local operations on a non-local URI can result in security
+problems.
+<!-- Barry Lieba - 2016-11-30 -->
+
 File systems typically assign an operational meaning to special
 characters, such as the "/", "\\", ":", "\[", and "]" characters, and
 to special device names like ".", "..", "...", "aux", "lpt", etc.
@@ -345,29 +355,28 @@ Status:
 Applications/protocols that use this scheme name:
 :  Commonly used in hypertext documents to refer to files without
    depending on network access.  Supported by major browsers.
-:  Windows API (PathCreateFromUrl, UrlCreateFromPath).
-:  Perl LWP.
+:  Used in development libraries, such as:
+
+   * Windows Shell (PathCreateFromUrl, UrlCreateFromPath).
+
+   * libwww-perl - The World-Wide Wed library for Perl.
 
 Contact:
-:  Matthew Kerwin \<matthew.kerwin@qut.edu.au>
+:  Applications and Real-Time Area \<art@ietf.org>
 
 Change Controller:
 :  This scheme is registered under the IETF tree.  As such, the IETF
    maintains change control.
 
 References:
-:  See Section 8 of this document.
+:  This RFC.
 {: vspace="0"}
 
 
 # Acknowledgements
 
-This specification is derived from {{RFC1738}}, {{RFC3986}}, and
-{{I-D.hoffman-file-uri}} (expired); the acknowledgements in
-those documents still apply.
-
-Additional thanks to Dave Risney, author of the informative
-IE Blog article \<http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx>,
+Thanks to Dave Risney, author of the informative IE Blog article
+\<http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx>,
 and Dave Thaler for their early comments and suggestions.
 
 
