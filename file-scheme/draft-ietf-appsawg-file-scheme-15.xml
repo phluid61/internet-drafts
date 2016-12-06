@@ -14,7 +14,7 @@
 <?rfc comments="yes"?>
 <?rfc inline="yes"?>
 
-<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-14" category="std" updates="1738">
+<rfc ipr="trust200902" docName="draft-ietf-appsawg-file-scheme-15" category="std" updates="1738">
 
   <front>
     <title abbrev="file-scheme">The file URI Scheme</title>
@@ -42,8 +42,9 @@
     <abstract>
 
 
-<t>This document specifies the “file” Uniform Resource Identifier (URI)
-scheme, replacing the definition in RFC 1738.</t>
+<t>This document provides a full specification of the “file” Uniform
+Resource Identifier (URI) scheme, replacing the very brief definition
+in RFC 1738.</t>
 
 <t>It defines a common syntax which is intended to interoperate across
 the broad spectrum of existing usages.  At the same time it notes
@@ -80,7 +81,12 @@ conditions are met it can be dereferenced to directly access the file.</t>
 <xref target="RFC3986"/> that is compatible with most existing usages.  Optional
 extensions to the syntax which might be encountered in practice are
 listed in appendices;  these extensions are listed for informational
-purposes only.</t>
+purposes only.
+<!-- Gen-ART review:
+Q4: Related to Q3, the text says that things are backward compatible
+in “most situations”. I think a little more text is needed, and e.g.,
+examples of non-backward compatibility.
+--></t>
 
 <t>The file URI scheme is not coupled with a specific protocol, nor with a
 specific media type <xref target="RFC6838"/>.  See <xref target="operations"/> for a discussion
@@ -225,6 +231,11 @@ privileges, but this approach has not been widely adopted.  Other user
 agents use globally unique identifiers as the origin for each file URI
 <xref target="RFC6454"/>, which is the most secure option.</t>
 
+<t>Treating a non-local file URI as local or otherwise attempting to
+perform local operations on a non-local URI can result in security
+problems.
+<!-- Barry Lieba - 2016-11-30 --></t>
+
 <t>File systems typically assign an operational meaning to special
 characters, such as the “/”, “\”, “:”, “[”, and “]” characters, and
 to special device names like “.”, “..”, “…”, “aux”, “lpt”, etc.
@@ -257,26 +268,27 @@ complies with <xref target="BCP35"/>.</t>
   <t hangText='Applications/protocols that use this scheme name:'><vspace blankLines='0'/>
   Commonly used in hypertext documents to refer to files without
 depending on network access.  Supported by major browsers.</t>
-  <t>Windows API (PathCreateFromUrl, UrlCreateFromPath).</t>
-  <t>Perl LWP.</t>
+  <t>Used in development libraries, such as:
+
+      <list style="symbols">
+        <t>Windows Shell (PathCreateFromUrl, UrlCreateFromPath).</t>
+        <t>libwww-perl - The World-Wide Wed library for Perl.</t>
+      </list>
+  </t>
   <t hangText='Contact:'><vspace blankLines='0'/>
-  Matthew Kerwin &lt;matthew.kerwin@qut.edu.au&gt;</t>
+  Applications and Real-Time Area &lt;art@ietf.org&gt;</t>
   <t hangText='Change Controller:'><vspace blankLines='0'/>
   This scheme is registered under the IETF tree.  As such, the IETF
 maintains change control.</t>
   <t hangText='References:'><vspace blankLines='0'/>
-  See Section 8 of this document.</t>
+  This RFC.</t>
 </list></t>
 
 </section>
 <section anchor="acknowledgements" title="Acknowledgements">
 
-<t>This specification is derived from <xref target="RFC1738"/>, <xref target="RFC3986"/>, and
-<xref target="I-D.hoffman-file-uri"/> (expired); the acknowledgements in
-those documents still apply.</t>
-
-<t>Additional thanks to Dave Risney, author of the informative
-IE Blog article &lt;http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx&gt;,
+<t>Thanks to Dave Risney, author of the informative IE Blog article
+&lt;http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx&gt;,
 and Dave Thaler for their early comments and suggestions.</t>
 
 </section>
@@ -288,24 +300,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 
     <references title='Normative References'>
 
-<reference anchor="BCP35" target="http://www.rfc-editor.org/info/bcp35">
-  <front>
-    <title>Guidelines and Registration Procedures for URI Schemes</title>
-    <author initials="D." surname="Thaler" fullname="D. Thaler" role="editor">
-      <organization></organization>
-    </author>
-    <author initials="T." surname="Hansen" fullname="T. Hansen">
-      <organization></organization>
-    </author>
-    <author initials="T." surname="Hardie" fullname="T. Hardie">
-      <organization></organization>
-    </author>
-    <date year="2015" month="June"/>
-  </front>
-  <seriesInfo name="BCP" value="35"/>
-  <seriesInfo name="RFC" value="7595"/>
-  <seriesInfo name="DOI" value="10.17487/RFC7595"/>
-</reference>
 
 
 
@@ -355,6 +349,19 @@ and Dave Thaler for their early comments and suggestions.</t>
 
 
 
+<reference  anchor='RFC6454' target='http://www.rfc-editor.org/info/rfc6454'>
+<front>
+<title>The Web Origin Concept</title>
+<author initials='A.' surname='Barth' fullname='A. Barth'><organization /></author>
+<date year='2011' month='December' />
+<abstract><t>This document defines the concept of an &quot;origin&quot;, which is often used as the scope of authority or privilege by user agents.  Typically, user agents isolate content retrieved from different origins to prevent malicious web site operators from interfering with the operation of benign web sites.  In addition to outlining the principles that underlie the concept of origin, this document details how to determine the origin of a URI and how to serialize an origin into a string.  It also defines an HTTP header field, named &quot;Origin&quot;, that indicates which origins are associated with an HTTP request.   [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='RFC' value='6454'/>
+<seriesInfo name='DOI' value='10.17487/RFC6454'/>
+</reference>
+
+
+
 <reference  anchor='RFC6874' target='http://www.rfc-editor.org/info/rfc6874'>
 <front>
 <title>Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers</title>
@@ -381,34 +388,30 @@ and Dave Thaler for their early comments and suggestions.</t>
   <seriesInfo name="RFC" value="3629"/>
   <seriesInfo name="DOI" value="10.17487/RFC3629"/>
 </reference>
-<reference anchor="UNICODE" target="http://www.unicode.org/versions/Unicode9.0.0/">
-  <front>
-    <title>The Unicode Standard, Version 9.0.0</title>
-    <author >
-      <organization>The Unicode Consortium</organization>
-    </author>
-    <date year="2016" month="June" day="21"/>
-  </front>
-  <seriesInfo name="ISBN" value="978-1-936213-13-9"/>
-</reference>
-<reference anchor="UAX15" target="http://www.unicode.org/reports/tr15/tr15-44.html">
-  <front>
-    <title>Unicode Standard Annex #15: Unicode Normalization Forms</title>
-    <author initials="M." surname="Davis" fullname="Mark Davis" role="editor">
-      <organization></organization>
-    </author>
-    <author initials="K." surname="Whistler" fullname="Ken Whistler" role="editor">
-      <organization></organization>
-    </author>
-    <date year="2016" month="February" day="24"/>
-  </front>
-</reference>
 
 
     </references>
 
     <references title='Informative References'>
 
+<reference anchor="BCP35" target="http://www.rfc-editor.org/info/bcp35">
+  <front>
+    <title>Guidelines and Registration Procedures for URI Schemes</title>
+    <author initials="D." surname="Thaler" fullname="D. Thaler" role="editor">
+      <organization></organization>
+    </author>
+    <author initials="T." surname="Hansen" fullname="T. Hansen">
+      <organization></organization>
+    </author>
+    <author initials="T." surname="Hardie" fullname="T. Hardie">
+      <organization></organization>
+    </author>
+    <date year="2015" month="June"/>
+  </front>
+  <seriesInfo name="BCP" value="35"/>
+  <seriesInfo name="RFC" value="7595"/>
+  <seriesInfo name="DOI" value="10.17487/RFC7595"/>
+</reference>
 
 
 
@@ -456,19 +459,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 
 
 
-<reference  anchor='RFC6454' target='http://www.rfc-editor.org/info/rfc6454'>
-<front>
-<title>The Web Origin Concept</title>
-<author initials='A.' surname='Barth' fullname='A. Barth'><organization /></author>
-<date year='2011' month='December' />
-<abstract><t>This document defines the concept of an &quot;origin&quot;, which is often used as the scope of authority or privilege by user agents.  Typically, user agents isolate content retrieved from different origins to prevent malicious web site operators from interfering with the operation of benign web sites.  In addition to outlining the principles that underlie the concept of origin, this document details how to determine the origin of a URI and how to serialize an origin into a string.  It also defines an HTTP header field, named &quot;Origin&quot;, that indicates which origins are associated with an HTTP request.   [STANDARDS-TRACK]</t></abstract>
-</front>
-<seriesInfo name='RFC' value='6454'/>
-<seriesInfo name='DOI' value='10.17487/RFC6454'/>
-</reference>
-
-
-
 <reference  anchor='RFC6838' target='http://www.rfc-editor.org/info/rfc6838'>
 <front>
 <title>Media Type Specifications and Registration Procedures</title>
@@ -481,27 +471,6 @@ and Dave Thaler for their early comments and suggestions.</t>
 <seriesInfo name='BCP' value='13'/>
 <seriesInfo name='RFC' value='6838'/>
 <seriesInfo name='DOI' value='10.17487/RFC6838'/>
-</reference>
-
-
-
-<reference anchor='I-D.hoffman-file-uri'>
-<front>
-<title>The file URI Scheme</title>
-
-<author initials='P' surname='Hoffman' fullname='Paul Hoffman'>
-    <organization />
-</author>
-
-<date month='January' day='3' year='2005' />
-
-<abstract><t>This document specifies the file: Uniform Resource Identifier (URI) scheme that was originally specified in RFC 1738. The purpose of this document is to allow RFC 1738 to be moved to historic while keeping the information about the scheme on standards track.</t></abstract>
-
-</front>
-
-<seriesInfo name='Internet-Draft' value='draft-hoffman-file-uri-03' />
-<format type='TXT'
-        target='http://www.ietf.org/internet-drafts/draft-hoffman-file-uri-03.txt' />
 </reference>
 
 
@@ -540,6 +509,28 @@ and Dave Thaler for their early comments and suggestions.</t>
     </author>
     <date year="2013"/>
   </front>
+</reference>
+<reference anchor="UAX15" target="http://www.unicode.org/reports/tr15/tr15-44.html">
+  <front>
+    <title>Unicode Standard Annex #15: Unicode Normalization Forms</title>
+    <author initials="M." surname="Davis" fullname="Mark Davis" role="editor">
+      <organization></organization>
+    </author>
+    <author initials="K." surname="Whistler" fullname="Ken Whistler" role="editor">
+      <organization></organization>
+    </author>
+    <date year="2016" month="February" day="24"/>
+  </front>
+</reference>
+<reference anchor="UNICODE" target="http://www.unicode.org/versions/Unicode9.0.0/">
+  <front>
+    <title>The Unicode Standard, Version 9.0.0</title>
+    <author >
+      <organization>The Unicode Consortium</organization>
+    </author>
+    <date year="2016" month="June" day="21"/>
+  </front>
+  <seriesInfo name="ISBN" value="978-1-936213-13-9"/>
 </reference>
 <reference anchor="Win32-Namespaces" target="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx">
   <front>
