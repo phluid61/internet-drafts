@@ -42,9 +42,9 @@
     <abstract>
 
 
-<t>This document provides a full specification of the “file” Uniform
-Resource Identifier (URI) scheme, replacing the very brief definition
-in RFC 1738.</t>
+<t>This document provides a more complete specification of the “file”
+Uniform Resource Identifier (URI) scheme, replacing the very brief
+definition in Section 3.10 of RFC 1738.</t>
 
 <t>It defines a common syntax which is intended to interoperate across
 the broad spectrum of existing usages.  At the same time it notes
@@ -78,15 +78,13 @@ The URI can be used in discussions about the file, and if other
 conditions are met it can be dereferenced to directly access the file.</t>
 
 <t>This document specifies a syntax based on the generic syntax of
-<xref target="RFC3986"/> that is compatible with most existing usages.  Optional
+<xref target="RFC3986"/> that is compatible with most existing usages.  Where
+incompatibilities arise they are usually because of liberties taken
+with gaps in earlier definitions of the scheme that have since been
+tightened up by more recent specifications.  Optional
 extensions to the syntax which might be encountered in practice are
 listed in appendices;  these extensions are listed for informational
-purposes only.
-<!-- Gen-ART review:
-Q4: Related to Q3, the text says that things are backward compatible
-in “most situations”. I think a little more text is needed, and e.g.,
-examples of non-backward compatibility.
---></t>
+purposes and are not a requirement of implementation.</t>
 
 <t>The file URI scheme is not coupled with a specific protocol, nor with a
 specific media type <xref target="RFC6838"/>.  See <xref target="operations"/> for a discussion
@@ -272,7 +270,7 @@ depending on network access.  Supported by major browsers.</t>
 
       <list style="symbols">
         <t>Windows Shell (PathCreateFromUrl, UrlCreateFromPath).</t>
-        <t>libwww-perl - The World-Wide Wed library for Perl.</t>
+        <t>libwww-perl - The World-Wide Web library for Perl.</t>
       </list>
   </t>
   <t hangText='Contact:'><vspace blankLines='0'/>
@@ -287,9 +285,14 @@ maintains change control.</t>
 </section>
 <section anchor="acknowledgements" title="Acknowledgements">
 
-<t>Thanks to Dave Risney, author of the informative IE Blog article
+<t>Contributions from many members of the IETF and W3C communities –
+notably Dave Crocker, Graham Klyne, Tom Petch, and John Klensin – are
+greatly appreciated.</t>
+
+<t>Additional thanks to Dave Risney, author of the informative IE Blog article
 &lt;http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx&gt;,
-and Dave Thaler for their early comments and suggestions.</t>
+and Dave Thaler for their early comments and suggestions; and to Paul
+Hoffman, whose early work served as an inspiration for this undertaking.</t>
 
 </section>
 
@@ -628,9 +631,11 @@ translating namespaced paths to or from file URIs.</t>
 </section>
 <section anchor="system-specific" title="System-Specific Operations">
 
-<t>This appendix is not normative; it highlights some observed
+<t>This appendix is not normative.  It highlights some observed
 behaviours and provides system-specific guidance for interacting
-with file URIs and paths.</t>
+with file URIs and paths.  This is not an exhaustive list of operating
+or file systems;  rather it is intended to illustrate certain types
+of interactions that might be encountered.</t>
 
 <section anchor="sys-unix" title="POSIX Systems">
 
@@ -738,32 +743,35 @@ absolute path that begins with a drive letter.  E.g.:</t>
 
 <t>Note that comparison of drive letters in DOS or Windows file paths
 is case-insensitive.  In some usages of file URIs drive letters are
-canonicalized by converting them to uppercase, and others usages treat
+canonicalized by converting them to uppercase, and other usages treat
 URIs that differ only in the case of the drive letter as identical.</t>
 
-<section anchor="ext-relative" title="Relative Paths">
+<section anchor="ext-relative" title="Relative Resolution">
 
 <t>To mimic the behaviour of DOS- or Windows-like file systems, relative
-paths beginning with a slash “/” can be resolved relative to the drive
-letter, when present, and resolution of “..” dot segments (per Section
-5.2.4 of <xref target="RFC3986"/>) can be modified to not ever overwrite the drive
-letter.</t>
+references beginning with a slash “/” can be resolved relative to the
+drive letter, when present;  and resolution of “..” dot segments (per
+Section 5.2.4 of <xref target="RFC3986"/>) can be modified to not ever overwrite the
+drive letter.</t>
 
 <t>For example:</t>
 
 <figure><artwork><![CDATA[
-   base:       file:///c:/path/to/file.txt
-   rel. URI:   /some/other/thing.bmp
+   base URI:   file:///c:/path/to/file.txt
+   rel. ref.:  /some/other/thing.bmp
    resolved:   file:///c:/some/other/thing.bmp
 
-   base:       file:///c:/foo.txt
-   rel. URI:   ../../bar.txt
+   base URI:   file:///c:/foo.txt
+   rel. ref.:  ../bar.txt
    resolved:   file:///c:/bar.txt
 ]]></artwork></figure>
 
-<t>Relative paths with a drive letter followed by a character other than
-a slash (e.g. “c:bar/baz.txt” or “c:../foo.txt”) might not be
+<t>Relative references with a drive letter followed by a character other
+than a slash (e.g. “c:bar/baz.txt” or “c:../foo.txt”) might not be
 accepted as dereferenceable URIs in DOS- or Windows-like systems.</t>
+
+<t>A relative reference starting with a drive letter would be interpreted
+by a generic URI parser as a URI with the drive letter as its scheme.</t>
 
 </section>
 <section anchor="ext-pipe" title="Vertical Line Character">
