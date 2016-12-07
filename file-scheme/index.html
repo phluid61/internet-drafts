@@ -411,7 +411,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-appsawg-file-scheme-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-12-7" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-12-8" />
   <meta name="dct.abstract" content="This document provides a more complete specification of the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the very brief definition in Section 3.10 of RFC 1738." />
   <meta name="description" content="This document provides a more complete specification of the &#8220;file&#8221; Uniform Resource Identifier (URI) scheme, replacing the very brief definition in Section 3.10 of RFC 1738." />
 
@@ -432,14 +432,14 @@
 </tr>
 <tr>
   <td class="left">Updates: 1738 (if approved)</td>
-  <td class="right">December 7, 2016</td>
+  <td class="right">December 8, 2016</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
   <td class="right"></td>
 </tr>
 <tr>
-  <td class="left">Expires: June 10, 2017</td>
+  <td class="left">Expires: June 11, 2017</td>
   <td class="right"></td>
 </tr>
 
@@ -465,7 +465,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 10, 2017.</p>
+<p>This Internet-Draft will expire on June 11, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -513,8 +513,9 @@
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
 <p id="rfc.section.1.p.1">A file URI identifies an object (a &#8220;file&#8221;) stored in a structured object naming and accessing environment on a host (a &#8220;file system.&#8221;) The URI can be used in discussions about the file, and if other conditions are met it can be dereferenced to directly access the file.</p>
-<p id="rfc.section.1.p.2">This document specifies a syntax based on the generic syntax of <a href="#RFC3986">[RFC3986]</a> that is compatible with most existing usages.  Where incompatibilities arise they are usually because of liberties taken with gaps in earlier definitions of the scheme that have since been tightened up by more recent specifications.  Optional extensions to the syntax which might be encountered in practice are listed in appendices;  these extensions are listed for informational purposes and are not a requirement of implementation.</p>
-<p id="rfc.section.1.p.3">The file URI scheme is not coupled with a specific protocol, nor with a specific media type <a href="#RFC6838">[RFC6838]</a>.  See <a href="#operations">Section 3</a> for a discussion of operations that can be performed on the object identified by a file URI.</p>
+<p id="rfc.section.1.p.2">This document specifies a syntax based on the generic syntax of <a href="#RFC3986">[RFC3986]</a> that is compatible with most existing usages.  Where incompatibilities arise they are usually in parts of the scheme that were underspecified in earlier definitions and have been tightened up by more recent specifications.  <a href="#diff">Appendix A</a> lists significant changes to syntax.</p>
+<p id="rfc.section.1.p.3">Extensions to the syntax which might be encountered in practice are listed in <a href="#nonstandard-syntax">Appendix E</a>;  these extensions are listed for informational purposes and are not a requirement of implementation.</p>
+<p id="rfc.section.1.p.4">The file URI scheme is not coupled with a specific protocol, nor with a specific media type <a href="#RFC6838">[RFC6838]</a>.  See <a href="#operations">Section 3</a> for a discussion of operations that can be performed on the object identified by a file URI.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
 <p id="rfc.section.1.1.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a> when they appear in all upper case.  They may also appear in lower or mixed case as English words, without normative meaning.</p>
 <p id="rfc.section.1.1.p.2">Throughout this document the term &#8220;local file&#8221; is used to describe files that can be accessed through the local file system API using only the information included in the file path, not relying on other information (such as network addresses.)  It is important to note that a local file may not be physically located on the local machine, for example if a networked file system is transparently mounted into the local file system.</p>
@@ -788,8 +789,8 @@
    rel. ref.:  ../bar.txt
    resolved:   file:///c:/bar.txt
 </pre>
-<p id="rfc.section.E.2.1.p.3">Relative references with a drive letter followed by a character other than a slash (e.g. &#8220;c:bar/baz.txt&#8221; or &#8220;c:../foo.txt&#8221;) might not be accepted as dereferenceable URIs in DOS- or Windows-like systems.</p>
-<p id="rfc.section.E.2.1.p.4">A relative reference starting with a drive letter would be interpreted by a generic URI parser as a URI with the drive letter as its scheme.</p>
+<p id="rfc.section.E.2.1.p.3">A relative reference starting with a drive letter would be interpreted by a generic URI parser as a URI with the drive letter as its scheme.  Instead such a reference ought to be constructed with a leading slash &#8220;/&#8221; character (e.g. &#8220;/c:/foo.txt&#8221;).</p>
+<p id="rfc.section.E.2.1.p.4">Relative references with a drive letter followed by a character other than a slash (e.g. &#8220;/c:bar/baz.txt&#8221; or &#8220;/c:../foo.txt&#8221;) might not be accepted as dereferenceable URIs in DOS- or Windows-like systems.</p>
 <h1 id="rfc.appendix.E.2.2"><a href="#rfc.appendix.E.2.2">E.2.2.</a> <a href="#ext-pipe" id="ext-pipe">Vertical Line Character</a></h1>
 <p id="rfc.section.E.2.2.p.1">Historically some usages of file URIs have included a vertical line character &#8220;|&#8221; instead of a colon &#8220;:&#8221; in the drive letter construct.  <a href="#RFC3986">[RFC3986]</a> forbids the use of the vertical line, however it may be necessary to interpret or update old URIs.</p>
 <p id="rfc.section.E.2.2.p.2">For interpreting such URIs, the <samp>auth-path</samp> and <samp>local-path</samp> rules in <a href="#syntax">Section 2</a> and the <samp>drive-letter</samp> rule above can be replaced with the following:</p>
