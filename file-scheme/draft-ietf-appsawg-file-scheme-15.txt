@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Updates: 1738 (if approved)                             December 6, 2016
+Updates: 1738 (if approved)                             December 7, 2016
 Intended status: Standards Track
-Expires: June 9, 2017
+Expires: June 10, 2017
 
 
                           The file URI Scheme
@@ -14,9 +14,9 @@ Expires: June 9, 2017
 
 Abstract
 
-   This document provides a full specification of the "file" Uniform
-   Resource Identifier (URI) scheme, replacing the very brief definition
-   in RFC 1738.
+   This document provides a more complete specification of the "file"
+   Uniform Resource Identifier (URI) scheme, replacing the very brief
+   definition in Section 3.10 of RFC 1738.
 
    It defines a common syntax which is intended to interoperate across
    the broad spectrum of existing usages.  At the same time it notes
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 9, 2017.
+   This Internet-Draft will expire on June 10, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                    Expires June 9, 2017                  [Page 1]
+Kerwin                    Expires June 10, 2017                 [Page 1]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -92,7 +92,7 @@ Table of Contents
    Appendix E.  Nonstandard Syntax Variations  . . . . . . . . . . .  11
      E.1.  User Information  . . . . . . . . . . . . . . . . . . . .  11
      E.2.  DOS and Windows Drive Letters . . . . . . . . . . . . . .  12
-       E.2.1.  Relative Paths  . . . . . . . . . . . . . . . . . . .  12
+       E.2.1.  Relative Resolution . . . . . . . . . . . . . . . . .  12
        E.2.2.  Vertical Line Character . . . . . . . . . . . . . . .  13
      E.3.  UNC Strings . . . . . . . . . . . . . . . . . . . . . . .  14
        E.3.1.  file URI with Authority . . . . . . . . . . . . . . .  14
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                    Expires June 9, 2017                  [Page 2]
+Kerwin                    Expires June 10, 2017                 [Page 2]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -118,10 +118,13 @@ Internet-Draft                 file-scheme                 December 2016
    file.
 
    This document specifies a syntax based on the generic syntax of
-   [RFC3986] that is compatible with most existing usages.  Optional
-   extensions to the syntax which might be encountered in practice are
-   listed in appendices; these extensions are listed for informational
-   purposes only.
+   [RFC3986] that is compatible with most existing usages.  Where
+   incompatibilities arise they are usually because of liberties taken
+   with gaps in earlier definitions of the scheme that have since been
+   tightened up by more recent specifications.  Optional extensions to
+   the syntax which might be encountered in practice are listed in
+   appendices; these extensions are listed for informational purposes
+   and are not a requirement of implementation.
 
    The file URI scheme is not coupled with a specific protocol, nor with
    a specific media type [RFC6838].  See Section 3 for a discussion of
@@ -160,16 +163,15 @@ Internet-Draft                 file-scheme                 December 2016
    of the file URI scheme.  The relevant subset of "path" is "path-
    absolute", and the subset of "authority" is "file-auth", given below.
 
-   The syntax definition below is different from those given in
-   [RFC1630] and [RFC1738] as it is derived from the generic syntax of
 
 
-
-Kerwin                    Expires June 9, 2017                  [Page 3]
+Kerwin                    Expires June 10, 2017                 [Page 3]
 
 Internet-Draft                 file-scheme                 December 2016
 
 
+   The syntax definition below is different from those given in
+   [RFC1630] and [RFC1738] as it is derived from the generic syntax of
    [RFC3986], which post-dates the previous file URI specifications.
    Appendix A enumerates significant differences.
 
@@ -219,9 +221,7 @@ Internet-Draft                 file-scheme                 December 2016
 
 
 
-
-
-Kerwin                    Expires June 9, 2017                  [Page 4]
+Kerwin                    Expires June 10, 2017                 [Page 4]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -277,7 +277,7 @@ Internet-Draft                 file-scheme                 December 2016
 
 
 
-Kerwin                    Expires June 9, 2017                  [Page 5]
+Kerwin                    Expires June 10, 2017                 [Page 5]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -324,7 +324,7 @@ Internet-Draft                 file-scheme                 December 2016
 
       *  Windows Shell (PathCreateFromUrl, UrlCreateFromPath).
 
-      *  libwww-perl - The World-Wide Wed library for Perl.
+      *  libwww-perl - The World-Wide Web library for Perl.
 
    Contact:
       Applications and Real-Time Area <art@ietf.org>
@@ -333,7 +333,7 @@ Internet-Draft                 file-scheme                 December 2016
 
 
 
-Kerwin                    Expires June 9, 2017                  [Page 6]
+Kerwin                    Expires June 10, 2017                 [Page 6]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -346,10 +346,15 @@ Internet-Draft                 file-scheme                 December 2016
 
 7.  Acknowledgements
 
-   Thanks to Dave Risney, author of the informative IE Blog article
-   <http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-
+   Contributions from many members of the IETF and W3C communities -
+   notably Dave Crocker, Graham Klyne, Tom Petch, and John Klensin - are
+   greatly appreciated.
+
+   Additional thanks to Dave Risney, author of the informative IE Blog
+   article <http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-
    windows.aspx>, and Dave Thaler for their early comments and
-   suggestions.
+   suggestions; and to Paul Hoffman, whose early work served as an
+   inspiration for this undertaking.
 
 8.  References
 
@@ -379,20 +384,19 @@ Internet-Draft                 file-scheme                 December 2016
               Resource Identifiers", RFC 6874, DOI 10.17487/RFC6874,
               February 2013, <http://www.rfc-editor.org/info/rfc6874>.
 
-   [STD63]    Yergeau, F., "UTF-8, a transformation format of ISO
-              10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
-              2003, <http://www.rfc-editor.org/info/std63>.
 
 
 
 
 
-
-
-Kerwin                    Expires June 9, 2017                  [Page 7]
+Kerwin                    Expires June 10, 2017                 [Page 7]
 
 Internet-Draft                 file-scheme                 December 2016
 
+
+   [STD63]    Yergeau, F., "UTF-8, a transformation format of ISO
+              10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
+              2003, <http://www.rfc-editor.org/info/std63>.
 
 8.2.  Informative References
 
@@ -437,18 +441,18 @@ Internet-Draft                 file-scheme                 December 2016
               RFC 6838, DOI 10.17487/RFC6838, January 2013,
               <http://www.rfc-editor.org/info/rfc6838>.
 
-   [UAX15]    Davis, M., Ed. and K. Whistler, Ed., "Unicode Standard
-              Annex #15: Unicode Normalization Forms", February 2016,
-              <http://www.unicode.org/reports/tr15/tr15-44.html>.
 
 
 
 
-
-Kerwin                    Expires June 9, 2017                  [Page 8]
+Kerwin                    Expires June 10, 2017                 [Page 8]
 
 Internet-Draft                 file-scheme                 December 2016
 
+
+   [UAX15]    Davis, M., Ed. and K. Whistler, Ed., "Unicode Standard
+              Annex #15: Unicode Normalization Forms", February 2016,
+              <http://www.unicode.org/reports/tr15/tr15-44.html>.
 
    [UNICODE]  The Unicode Consortium, "The Unicode Standard, Version
               9.0.0", ISBN 978-1-936213-13-9, June 2016,
@@ -494,17 +498,17 @@ Appendix B.  Example URIs
    o  The minimal representation of a local file, with no authority
       field and an absolute path that begins with a slash "/".  E.g.:
 
-      *  "file:/path/to/file"
-
-   Non-local files:
 
 
 
-
-Kerwin                    Expires June 9, 2017                  [Page 9]
+Kerwin                    Expires June 10, 2017                 [Page 9]
 
 Internet-Draft                 file-scheme                 December 2016
 
+
+      *  "file:/path/to/file"
+
+   Non-local files:
 
    o  A non-local file, with an explicit authority.  E.g.:
 
@@ -534,9 +538,11 @@ Appendix C.  Similar Technologies
 
 Appendix D.  System-Specific Operations
 
-   This appendix is not normative; it highlights some observed
+   This appendix is not normative.  It highlights some observed
    behaviours and provides system-specific guidance for interacting with
-   file URIs and paths.
+   file URIs and paths.  This is not an exhaustive list of operating or
+   file systems; rather it is intended to illustrate certain types of
+   interactions that might be encountered.
 
 D.1.  POSIX Systems
 
@@ -548,19 +554,17 @@ D.1.  POSIX Systems
    Common UNIX shells such as the Bourne-Again SHell (bash) and Z Shell
    (zsh) provide a function known as "tilde expansion" [Bash-Tilde] or
    "filename expansion" [Zsh-Tilde], where a path that begins with a
-   tilde character "~" can be expanded out to a special directory name.
-   No such facility exists using the file URI scheme; a tilde in a file
-   URI is always just a tilde.
 
 
 
-
-
-
-Kerwin                    Expires June 9, 2017                 [Page 10]
+Kerwin                    Expires June 10, 2017                [Page 10]
 
 Internet-Draft                 file-scheme                 December 2016
 
+
+   tilde character "~" can be expanded out to a special directory name.
+   No such facility exists using the file URI scheme; a tilde in a file
+   URI is always just a tilde.
 
 D.2.  DOS- and Windows-Like Systems
 
@@ -607,16 +611,15 @@ E.1.  User Information
    To allow user information to be included in a file URI, the "file-
    auth" rule in Section 2 can be replaced with the following:
 
-      file-auth      = "localhost"
-                     / [ userinfo "@" ] host
 
 
-
-
-Kerwin                    Expires June 9, 2017                 [Page 11]
+Kerwin                    Expires June 10, 2017                [Page 11]
 
 Internet-Draft                 file-scheme                 December 2016
 
+
+      file-auth      = "localhost"
+                     / [ userinfo "@" ] host
 
    This uses the "userinfo" rule from [RFC3986].
 
@@ -652,39 +655,42 @@ E.2.  DOS and Windows Drive Letters
 
    Note that comparison of drive letters in DOS or Windows file paths is
    case-insensitive.  In some usages of file URIs drive letters are
-   canonicalized by converting them to uppercase, and others usages
-   treat URIs that differ only in the case of the drive letter as
-   identical.
+   canonicalized by converting them to uppercase, and other usages treat
+   URIs that differ only in the case of the drive letter as identical.
 
-E.2.1.  Relative Paths
+E.2.1.  Relative Resolution
 
    To mimic the behaviour of DOS- or Windows-like file systems, relative
-   paths beginning with a slash "/" can be resolved relative to the
-   drive letter, when present, and resolution of ".." dot segments (per
+   references beginning with a slash "/" can be resolved relative to the
+   drive letter, when present; and resolution of ".." dot segments (per
    Section 5.2.4 of [RFC3986]) can be modified to not ever overwrite the
    drive letter.
 
-   For example:
 
 
 
-
-Kerwin                    Expires June 9, 2017                 [Page 12]
+Kerwin                    Expires June 10, 2017                [Page 12]
 
 Internet-Draft                 file-scheme                 December 2016
 
 
-      base:       file:///c:/path/to/file.txt
-      rel. URI:   /some/other/thing.bmp
+   For example:
+
+      base URI:   file:///c:/path/to/file.txt
+      rel. ref.:  /some/other/thing.bmp
       resolved:   file:///c:/some/other/thing.bmp
 
-      base:       file:///c:/foo.txt
-      rel. URI:   ../../bar.txt
+      base URI:   file:///c:/foo.txt
+      rel. ref.:  ../bar.txt
       resolved:   file:///c:/bar.txt
 
-   Relative paths with a drive letter followed by a character other than
-   a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") might not be
+   Relative references with a drive letter followed by a character other
+   than a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") might not be
    accepted as dereferenceable URIs in DOS- or Windows-like systems.
+
+   A relative reference starting with a drive letter would be
+   interpreted by a generic URI parser as a URI with the drive letter as
+   its scheme.
 
 E.2.2.  Vertical Line Character
 
@@ -717,18 +723,15 @@ E.2.2.  Vertical Line Character
 
    o  "file:c|/path/to/file"
 
-   To update such an old URI, replace the vertical line "|" with a colon
-   ":".
 
 
-
-
-
-
-Kerwin                    Expires June 9, 2017                 [Page 13]
+Kerwin                    Expires June 10, 2017                [Page 13]
 
 Internet-Draft                 file-scheme                 December 2016
 
+
+   To update such an old URI, replace the vertical line "|" with a colon
+   ":".
 
 E.3.  UNC Strings
 
@@ -776,15 +779,15 @@ E.3.1.  file URI with Authority
       UNC String:   \\host.example.com\Share\path\to\file.txt
       URI:          file://host.example.com/Share/path/to/file.txt
 
-   The inverse algorithm, for translating a file URI to a UNC filespace
-   selector string, is left as an exercise for the reader.
 
 
-
-Kerwin                    Expires June 9, 2017                 [Page 14]
+Kerwin                    Expires June 10, 2017                [Page 14]
 
 Internet-Draft                 file-scheme                 December 2016
 
+
+   The inverse algorithm, for translating a file URI to a UNC filespace
+   selector string, is left as an exercise for the reader.
 
 E.3.2.  file URI with UNC Path
 
@@ -834,10 +837,7 @@ E.3.2.  file URI with UNC Path
 
 
 
-
-
-
-Kerwin                    Expires June 9, 2017                 [Page 15]
+Kerwin                    Expires June 10, 2017                [Page 15]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -893,7 +893,7 @@ Appendix F.  Collected Nonstandard Rules
 
 
 
-Kerwin                    Expires June 9, 2017                 [Page 16]
+Kerwin                    Expires June 10, 2017                [Page 16]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -949,7 +949,7 @@ Internet-Draft                 file-scheme                 December 2016
 
 
 
-Kerwin                    Expires June 9, 2017                 [Page 17]
+Kerwin                    Expires June 10, 2017                [Page 17]
 
 Internet-Draft                 file-scheme                 December 2016
 
@@ -1005,4 +1005,4 @@ Author's Address
 
 
 
-Kerwin                    Expires June 9, 2017                 [Page 18]
+Kerwin                    Expires June 10, 2017                [Page 18]
