@@ -164,12 +164,14 @@ conditions are met it can be dereferenced to directly access the file.
 
 This document specifies a syntax based on the generic syntax of
 {{RFC3986}} that is compatible with most existing usages.  Where
-incompatibilities arise they are usually because of liberties taken
-with gaps in earlier definitions of the scheme that have since been
-tightened up by more recent specifications.  Optional
-extensions to the syntax which might be encountered in practice are
-listed in appendices;  these extensions are listed for informational
-purposes and are not a requirement of implementation.
+incompatibilities arise they are usually in parts of the scheme that
+were underspecified in earlier definitions and have been tightened up
+by more recent specifications.  {{diff}} lists significant changes to
+syntax.
+
+Extensions to the syntax which might be encountered in practice are
+listed in {{nonstandard-syntax}};  these extensions are listed for
+informational purposes and are not a requirement of implementation.
 
 The file URI scheme is not coupled with a specific protocol, nor with a
 specific media type {{RFC6838}}.  See {{operations}} for a discussion
@@ -582,12 +584,14 @@ For example:
    resolved:   file:///c:/bar.txt
 ~~~~~~~~~~
 
-Relative references with a drive letter followed by a character other
-than a slash (e.g. "c:bar/baz.txt" or "c:../foo.txt") might not be
-accepted as dereferenceable URIs in DOS- or Windows-like systems.
-
 A relative reference starting with a drive letter would be interpreted
 by a generic URI parser as a URI with the drive letter as its scheme.
+Instead such a reference ought to be constructed with a leading slash
+"/" character (e.g. "/c:/foo.txt").
+
+Relative references with a drive letter followed by a character other
+than a slash (e.g. "/c:bar/baz.txt" or "/c:../foo.txt") might not be
+accepted as dereferenceable URIs in DOS- or Windows-like systems.
 
 
 ### Vertical Line Character  {#ext-pipe}
