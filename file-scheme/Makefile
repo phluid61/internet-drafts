@@ -34,7 +34,8 @@ idnits: $(target).txt
 
 %.xml: draft.md
 	$(kramdown-rfc2629) $< > $@
-	
+	sed -i -e"s/Note to Readers/Note to Readers (To be removed by the RFC Editor)/" $@
+
 %.html: %.xml
 	$(xml2rfc) --html $< $@
 
