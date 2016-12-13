@@ -7,6 +7,8 @@ xml2rfc ?= xml2rfc
 kramdown-rfc2629 ?= kramdown-rfc2629
 idnits ?= idnits
 
+kramdown-env = HAVE_WGET=1 KRAMDOWN_NO_SOURCE=1
+
 title = $(author)-$(shell basename "${CURDIR}")
 latest = $(shell (ls draft-${title}-*.xml || echo "draft-${title}-00.xml") | sort | tail -1)
 version = $(shell basename ${latest} .xml | awk -F- '{print $$NF}')
@@ -33,7 +35,7 @@ idnits: $(target).txt
 	$(idnits) $<
 
 %.xml: draft.md
-	$(kramdown-rfc2629) $< > $@
+	$(kramdown-env) $(kramdown-rfc2629) $< > $@
 	sed -i -e"s/Note to Readers/Note to Readers (To be removed by the RFC Editor)/" $@
 
 %.html: %.xml
