@@ -382,7 +382,7 @@ greatly appreciated.
 Additional thanks to Dave Risney, author of the informative IE Blog article
 \<http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx>,
 and Dave Thaler for their early comments and suggestions; and to Paul
-Hoffman, whose early work served as an inspiration for this undertaking.
+Hoffman, whose earlier work served as an inspiration for this undertaking.
 
 
 --- back
