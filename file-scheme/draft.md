@@ -426,8 +426,13 @@ Non-local files:
 
 # Similar Technologies
 
-* The WHATWG defines a living URL standard {{WHATWG-URL}}, which
-  includes algorithms for interpreting file URIs (as URLs).
+* The WHATWG URL specification {{WHATWG-URL}} defines browser behavior
+  for a variety of inputs, including file URIs.  As a living document,
+  it changes to reflect updates in browser behavior.  As a result, its
+  algorithms and syntax definitions may or may not be consistent with
+  this specification.  Implementors should be aware of this possible
+  discrepancy if they expect to share file URIs with browsers that
+  follow the WHATWG specification.
 
 * The Universal Naming Convention (UNC) {{MS-DTYP}} defines a string
   format that can perform a similar role to the file URI scheme in
