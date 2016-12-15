@@ -464,7 +464,7 @@ Internet-Draft                 file-scheme                 December 2016
               <http://www.unicode.org/versions/Unicode9.0.0/>.
 
    [WHATWG-URL]
-              WHATWG, "URL Living Standard", December 2016,
+              WHATWG, "URL Standard", December 2016,
               <https://url.spec.whatwg.org/>.
 
    [Win32-Namespaces]
