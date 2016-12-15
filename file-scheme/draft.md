@@ -79,8 +79,8 @@ informative:
     author:
     - organization: WHATWG
       #url: http://www.whatwg.org/
-    date: 2013-05
-    target: http://url.spec.whatwg.org/
+    date: 2016-12-09
+    target: https://url.spec.whatwg.org/
   MS-DTYP:
     title: Windows Data Types, 2.2.57 UNC
     author:
