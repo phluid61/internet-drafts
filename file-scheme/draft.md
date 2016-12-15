@@ -75,7 +75,7 @@ informative:
     date: 2014-02-02
     target: http://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html
   WHATWG-URL:
-    title: URL Living Standard
+    title: URL Standard
     author:
     - organization: WHATWG
       #url: http://www.whatwg.org/
