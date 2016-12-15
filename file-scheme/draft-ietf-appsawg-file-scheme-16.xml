@@ -488,13 +488,13 @@ Hoffman, whose earlier work served as an inspiration for this undertaking.</t>
     <date year="2014" month="February" day="02"/>
   </front>
 </reference>
-<reference anchor="WHATWG-URL" target="http://url.spec.whatwg.org/">
+<reference anchor="WHATWG-URL" target="https://url.spec.whatwg.org/">
   <front>
     <title>URL Living Standard</title>
     <author >
       <organization>WHATWG</organization>
     </author>
-    <date year="2013" month="May"/>
+    <date year="2016" month="December" day="09"/>
   </front>
 </reference>
 <reference anchor="MS-DTYP" target="http://msdn.microsoft.com/en-us/library/gg465305.aspx">
