@@ -611,8 +611,13 @@ and an absolute path that begins with a slash “/”. E.g.:  <list style="symbo
 <section anchor="similar-technologies" title="Similar Technologies">
 
 <t><list style="symbols">
-  <t>The WHATWG defines a living URL standard <xref target="WHATWG-URL"/>, which
-includes algorithms for interpreting file URIs (as URLs).</t>
+  <t>The WHATWG URL specification <xref target="WHATWG-URL"/> defines browser behavior
+for a variety of inputs, including file URIs.  As a living document,
+it changes to reflect updates in browser behavior.  As a result, its
+algorithms and syntax definitions may or may not be consistent with
+this specification.  Implementors should be aware of this possible
+discrepancy if they expect to share file URIs with browsers that
+follow the WHATWG specification.</t>
   <t>The Universal Naming Convention (UNC) <xref target="MS-DTYP"/> defines a string
 format that can perform a similar role to the file URI scheme in
 describing the location of files, except that files located by UNC
