@@ -329,11 +329,11 @@ cause the operating system to pause or invoke unrelated system calls,
 leading to significant security concerns regarding denial of service
 and unintended data transfer.  It would not be possible for this
 specification to list all such significant characters and device names.
-Implementers MUST research the reserved names and characters for the
+Implementers should research the reserved names and characters for the
 types of storage device that may be attached to their application and
 restrict the use of data obtained from URI components accordingly.
 
-File systems vary in the way they handle case.  Care MUST be taken to
+File systems vary in the way they handle case.  Care must be taken to
 avoid issues resulting from possibly unexpected aliasing from case-only
 differences between file paths or URIs, or from mismatched encodings or
 Unicode equivalences {{UAX15}} (see {{encoding}}).
