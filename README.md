@@ -21,7 +21,7 @@ documents.
 
 Further to the standards, guidelines, and expectations of the IETF,
 this particular repository is subject to its own
-[Contributor Code of Conduct][6]
+[Contributor Code of Conduct](code_of_conduct.md)
 
 
 Tool Chain
@@ -53,5 +53,4 @@ Notes to self
 [3]: https://github.com/cabo/kramdown-rfc2629
 [4]: https://tools.ietf.org/html/rfc2629
 [5]: http://xml2rfc.ietf.org/
-[6]: code_of_conduct.md
 
