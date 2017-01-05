@@ -6,6 +6,7 @@ the provisions of [BCP 78][1] and [BCP 79][2].
 [1]: <http://tools.ietf.org/html/bcp78>
 [2]: <http://tools.ietf.org/html/bcp79>
 
+See the [LICENSE](LICENSE) file.
 
 Contributing
 ------------
