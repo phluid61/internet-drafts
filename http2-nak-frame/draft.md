@@ -20,7 +20,7 @@ author:
    name: Matthew Kerwin
    organization: 
    email: matthew@kerwin.net.au
-   uri: http://matthew.kerwin.net.au/
+   uri: https://matthew.kerwin.net.au/
 
 normative:
   RFC2119:
