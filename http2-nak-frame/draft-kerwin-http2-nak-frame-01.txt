@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                          October 11, 2017
+Internet-Draft                                          October 12, 2017
 Intended status: Standards Track
-Expires: April 14, 2018
+Expires: April 15, 2018
 
 
                       HTTP/2 "Dropped Frame" Frame
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 14, 2018.
+   This Internet-Draft will expire on April 15, 2018.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                   Expires April 14, 2018                 [Page 1]
+Kerwin                   Expires April 15, 2018                 [Page 1]
 
 Internet-Draft               http2-nak-frame                October 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kerwin                   Expires April 14, 2018                 [Page 2]
+Kerwin                   Expires April 15, 2018                 [Page 2]
 
 Internet-Draft               http2-nak-frame                October 2017
 
@@ -151,7 +151,8 @@ Internet-Draft               http2-nak-frame                October 2017
    new HTTP/2 frame types MAY specify behaviours in response to
    DROPPED_FRAME frames with those types, keeping in mind that
    extensions that "change the semantics of existing protocol components
-   MUST be negotiated before being used" ([RFC7540], Section 5.5).
+   [including those defined in this document] MUST be negotiated before
+   being used" ([RFC7540], Section 5.5).
 
    Receipt of a DROPPED_FRAME frame does not necessarily mean that all
    frames on that connection with the discarded type will be discarded
@@ -160,16 +161,17 @@ Internet-Draft               http2-nak-frame                October 2017
    other direction MUST NOT intercept future frames of that type and
    preemptively reply with a DROPPED_FRAME frame.
 
-   DROPPED_FRAME frames are not associated with any individual stream.
-   If a DROPPED_FRAME frame is received with a stream identifier field
 
 
 
-Kerwin                   Expires April 14, 2018                 [Page 3]
+
+Kerwin                   Expires April 15, 2018                 [Page 3]
 
 Internet-Draft               http2-nak-frame                October 2017
 
 
+   DROPPED_FRAME frames are not associated with any individual stream.
+   If a DROPPED_FRAME frame is received with a stream identifier field
    value other than 0x0, the recipient MUST respond with a connection
    error ([RFC7540], Section 5.4.1) of type PROTOCOL_ERROR.
 
@@ -219,9 +221,7 @@ Internet-Draft               http2-nak-frame                October 2017
 
 
 
-
-
-Kerwin                   Expires April 14, 2018                 [Page 4]
+Kerwin                   Expires April 15, 2018                 [Page 4]
 
 Internet-Draft               http2-nak-frame                October 2017
 
@@ -277,4 +277,4 @@ Author's Address
 
 
 
-Kerwin                   Expires April 14, 2018                 [Page 5]
+Kerwin                   Expires April 15, 2018                 [Page 5]
