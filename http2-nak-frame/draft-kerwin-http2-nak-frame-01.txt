@@ -149,10 +149,10 @@ Internet-Draft               http2-nak-frame                October 2017
    MAY subsequently choose not to send further frames of that type or to
    attempt extension negotiation with the peer.  Extensions that define
    new HTTP/2 frame types MAY specify behaviours in response to
-   DROPPED_FRAME frames with those types, keeping in mind that
-   extensions that "change the semantics of existing protocol components
-   [including those defined in this document] MUST be negotiated before
-   being used" ([RFC7540], Section 5.5).
+   DROPPED_FRAME frames with those types, however extensions that change
+   the semantics of existing protocol components, including those
+   defined in this document, MUST be negotiated before being used
+   ([RFC7540], Section 5.5).
 
    Receipt of a DROPPED_FRAME frame does not necessarily mean that all
    frames on that connection with the discarded type will be discarded
