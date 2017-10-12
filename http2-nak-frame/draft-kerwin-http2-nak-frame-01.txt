@@ -20,11 +20,11 @@ Abstract
 Note to Readers
 
    The issues list for this draft can be found at
-   https://github.com/phluid61/internet-drafts/labels/
-   HTTP%2F2%20NAK%20Frame [1]
+   <https://github.com/phluid61/internet-drafts/labels/
+   HTTP%2F2%20NAK%20Frame>
 
    The most recent (often unpublished) draft is at
-   http://phluid61.github.io/internet-drafts/http2-nak-frame/ [2]
+   <http://phluid61.github.io/internet-drafts/http2-nak-frame/>
 
 Status of This Memo
 
@@ -77,7 +77,6 @@ Table of Contents
      4.1.  HTTP/2 Frame Type Registry Update . . . . . . . . . . . .   4
    5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      5.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     5.2.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
@@ -102,6 +101,7 @@ Table of Contents
    "OPTIONAL" in this document are to be interpreted as described in BCP
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
+
 
 
 
@@ -235,19 +235,19 @@ Internet-Draft               http2-nak-frame                October 2017
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-5.2.  URIs
-
-   [1] https://github.com/phluid61/internet-drafts/labels/
-       HTTP%2F2%20NAK%20Frame
-
-   [2] http://phluid61.github.io/internet-drafts/http2-nak-frame/
-
 Author's Address
 
    Matthew Kerwin
 
    Email: matthew@kerwin.net.au
    URI:   https://matthew.kerwin.net.au/
+
+
+
+
+
+
+
 
 
 
