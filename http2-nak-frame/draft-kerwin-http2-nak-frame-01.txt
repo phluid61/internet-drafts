@@ -147,12 +147,7 @@ Internet-Draft               http2-nak-frame                October 2017
    An endpoint that receives a DROPPED_FRAME frame ought to take it as
    an indication that the extension is not supported by the peer, and
    MAY subsequently choose not to send further frames of that type or to
-   attempt extension negotiation with the peer.  Extensions that define
-   new HTTP/2 frame types MAY specify behaviours in response to
-   DROPPED_FRAME frames with those types, however extensions that change
-   the semantics of existing protocol components, including those
-   defined in this document, MUST be negotiated before being used
-   ([RFC7540], Section 5.5).
+   attempt extension negotiation with the peer.
 
    Receipt of a DROPPED_FRAME frame does not necessarily mean that all
    frames on that connection with the discarded type will be discarded
@@ -160,6 +155,11 @@ Internet-Draft               http2-nak-frame                October 2017
    frame in one direction and a corresponding DROPPED_FRAME frame in the
    other direction MUST NOT intercept future frames of that type and
    preemptively reply with a DROPPED_FRAME frame.
+
+   DROPPED_FRAME frames are not associated with any individual stream.
+   If a DROPPED_FRAME frame is received with a stream identifier field
+   value other than 0x0, the recipient MUST respond with a connection
+   error ([RFC7540], Section 5.4.1) of type PROTOCOL_ERROR.
 
 
 
@@ -170,11 +170,6 @@ Kerwin                   Expires April 15, 2018                 [Page 3]
 Internet-Draft               http2-nak-frame                October 2017
 
 
-   DROPPED_FRAME frames are not associated with any individual stream.
-   If a DROPPED_FRAME frame is received with a stream identifier field
-   value other than 0x0, the recipient MUST respond with a connection
-   error ([RFC7540], Section 5.4.1) of type PROTOCOL_ERROR.
-
    Receipt of a DROPPED_FRAME frame with a length field value other than
    1 MUST be treated as a connection error ([RFC7540], Section 5.4.1) of
    type FRAME_SIZE_ERROR.
@@ -183,6 +178,12 @@ Internet-Draft               http2-nak-frame                October 2017
    DROPPED_FRAME (0xTBA).  If a DROPPED_FRAME frame is received with a
    Type field value of 0xTBA, the recipient MUST respond with a
    connection error ([RFC7540], Section 5.4.1) of type PROTOCOL_ERROR.
+
+   Extensions that define new HTTP/2 frame types MAY specify behaviours
+   in response to DROPPED_FRAME frames with those types, however
+   extensions that change the semantics of existing protocol components,
+   including those defined in this document, MUST be negotiated before
+   being used ([RFC7540], Section 5.5).
 
 3.  Security Considerations
 
@@ -217,7 +218,6 @@ Internet-Draft               http2-nak-frame                October 2017
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
-
 
 
 
