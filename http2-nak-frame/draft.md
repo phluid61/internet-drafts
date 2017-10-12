@@ -96,9 +96,9 @@ discards multiple frames of that type.
 An endpoint that receives a DROPPED\_FRAME frame ought to take it as an indication that the
 extension is not supported by the peer, and MAY subsequently choose not to send further frames of
 that type or to attempt extension negotiation with the peer.  Extensions that define new HTTP/2
-frame types MAY specify behaviours in response to DROPPED\_FRAME frames with those types, keeping
-in mind that extensions that "change the semantics of existing protocol components \[including
-those defined in this document\] MUST be negotiated before being used" ({{RFC7540}}, Section 5.5).
+frame types MAY specify behaviours in response to DROPPED\_FRAME frames with those types, however
+extensions that change the semantics of existing protocol components, including those defined in
+this document, MUST be negotiated before being used ({{RFC7540}}, Section 5.5).
 
 Receipt of a DROPPED\_FRAME frame does not necessarily mean that all frames on that connection with
 the discarded type will be discarded in future.  A transparent intermediary that forwards an
