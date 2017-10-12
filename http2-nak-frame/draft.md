@@ -1,7 +1,7 @@
 ---
 title: HTTP/2 "Dropped Frame" Frame
 abbrev: http2-nak-frame
-docname: draft-kerwin-http2-nak-frame-01
+docname: draft-kerwin-http2-nak-frame-02
 date: 2017
 category: std
 
