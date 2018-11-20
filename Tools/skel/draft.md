@@ -2,7 +2,7 @@
 title: 
 abbrev: 
 docname: draft-kerwin--00
-date: 2015
+date: 2018
 category: info
 
 ipr: trust200902
@@ -23,6 +23,7 @@ author:
 
 normative:
   RFC2119:
+  RFC8174:
 
 informative:
 
@@ -37,8 +38,11 @@ informative:
 ## Notational Conventions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in {{RFC2119}}.
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in
+BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in
+all capitals, as shown here.
+
 
 # Security Considerations
 
