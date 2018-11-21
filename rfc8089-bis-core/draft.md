@@ -154,8 +154,8 @@ This document specifies a syntax based on the generic syntax of
 {{!RFC3986}} that is compatible with most existing usages.  Where
 incompatibilities arise they are usually in parts of the scheme that
 were underspecified in earlier definitions and have been tightened up
-by more recent specifications.  {{diff}} lists significant changes to
-syntax.
+by more recent specifications.  {{diff}} lists significant changes
+from historical syntax definitions.
 
 Extensions to the syntax which might be encountered in practice are
 listed in {{draft-kerwin-rfc8089-bis-info}};  those extensions are
@@ -464,7 +464,7 @@ Non-local files:
 This appendix is not normative, and does not include requirements for
 conformance or interoperability.  It highlights some observed
 behaviours and provides system-specific guidance for interacting
-with file URIs and paths.
+with file URIs and file system paths.
 
 This is not an exhaustive list of operating or file systems;  rather,
 it is intended to illustrate certain types of interactions that
