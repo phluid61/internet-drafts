@@ -59,20 +59,19 @@ specification.</t>
 <section anchor="introduction" title="Introduction">
 
 <t>The file URI scheme is specified in <xref target="draft-kerwin-rfc8089-bis-core"/>.
-That specification defines the core syntax and briefly describes
-operations that can be performed on a subset of URIs required for
-basic interoperability.  However in the real world there are many
-uses of file URIs that do not fit within the bounds of the core
-specification, and are not strictly necessary for conformance, but
-do exhibit common traits and behaviours.  This document describes
-those cases, to provide a means for interoperability beyond the
-core specification.</t>
+That specification defines the syntax and describes operations that
+can be performed on a core subset of file URIs, necessary for basic
+interoperability.  However in the real world there are many uses of
+file URIs that do not conform with the core specification, but do
+nevertheless exhibit common traits and behaviours.  This document
+describes those cases, to provide a pathway for interoperability
+beyond the core specification.</t>
 
 <section anchor="notational-conventions" title="Notational Conventions">
 
 <t>This is not a standard, so any prescriptive or normative language is
-intended to provide interoperability, but does not describe an
-actual requirement.</t>
+intended to provide interoperability and/or security, but does not
+describe an actual standard requirement.</t>
 
 <t>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”,
 “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “NOT RECOMMENDED”, “MAY”, and
@@ -80,38 +79,45 @@ actual requirement.</t>
 BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in
 all capitals, as shown here.</t>
 
+<t>Syntax elements are defined in Augmented Backus-Naur Form (ABNF)
+<xref target="RFC5234"/>, where possible using incremental alternative syntax to
+extend the core syntax rather than replacing existing definitions.</t>
+
 </section>
 </section>
 <section anchor="extensions" title="Nonstandard Extensions">
 
-<t>These extensions may be encountered by existing usages of the file URI
-scheme, but are not supported by the core syntax defined in
+<t>These extensions might be encountered by existing usages of the file URI
+scheme, but are not supported by the core specification
 <xref target="draft-kerwin-rfc8089-bis-core"/>.</t>
 
 <section anchor="userinfo" title="User Information">
 
 <t>It might be necessary to include user information such as a user name in
-a file URI, for example when mapping a VMS file path with a node
+a file URI, for example when representing a VMS file path with a node
 reference that includes an access control string.</t>
 
-<t>To allow user information to be included in a file URI, the core <spanx style="verb">file-auth</spanx>
-rule can be replaced with the following:</t>
+<t>To allow user information to be included in a file URI the core <spanx style="verb">file-auth</spanx>
+rule can be extended with the following definition:</t>
 
 <figure><artwork><![CDATA[
-   file-auth      = "localhost"
-                  / [ userinfo "@" ] host
+   file-auth      =/ userinfo "@" host
 ]]></artwork></figure>
 
 <t>This uses the <spanx style="verb">userinfo</spanx> rule from <xref target="RFC3986"/>.</t>
 
-<t>As discussed in the HP OpenVMS Systems Documentation
-&lt;http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html&gt;
-“access control strings include sufficient information to allow someone
-to break in to the remote account, [therefore] they create serious
-security exposure.”  In a similar vein, the presence of a password in a
-“user:password” userinfo field is deprecated by <xref target="RFC3986"/>.  Take care
-when dealing with information that can be used to identify a user or
-grant access to a system.</t>
+<!--
+As discussed in the HP OpenVMS Guide to System Security
+\<https://support.hpe.com/hpsc/doc/public/display?docId=emr_na-c04621379>
+"access control strings include sufficient information to allow someone
+to break in to the remote account, \[therefore\] they create serious
+security exposure."
+-->
+<t>The presence of a password in a “user:password” userinfo field is
+deprecated by <xref target="RFC3986"/>, Section 3.2.1.  Implementers MUST take
+care when dealing with information that can be used to identify a
+user or grant access to a system, including generation, transmission,
+and storage of said information.</t>
 
 </section>
 <section anchor="drives" title="MS-DOS and Windows Drive Letters">
@@ -131,18 +137,18 @@ several ways:</t>
 <t><list style="symbols">
   <t>Encoding the drive letter in the URI’s authority component.</t>
   <t>Omitting the colon “:” from the drive letter, or replacing it with
-a vertical line character “|”.</t>
+a vertical line “|” character.</t>
   <t>A combination of the two.</t>
 </list></t>
 
 <section anchor="drive-authority" title="Drive Letter Authority">
 
 <t>To accommodate historical file URIs that have a drive letter encoded
-in the authority, the core <spanx style="verb">file-auth</spanx> rule case be expanded with
-the following definition:</t>
+in the authority, the core <spanx style="verb">file-auth</spanx> rule case be extended with the
+following definition:</t>
 
 <figure><artwork><![CDATA[
-   file-auth      /= drive-letter
+   file-auth      =/ drive-letter
 ]]></artwork></figure>
 
 <t>For example:</t>
@@ -154,20 +160,21 @@ the following definition:</t>
 </section>
 <section anchor="pipe" title="Vertical Line Character">
 
-<t><xref target="RFC3986"/> forbids the use of the vertical line, however it may be
-necessary to interpret or update old URIs that include it.</t>
+<t><xref target="RFC3986"/> forbids the vertical line “|” character from appearing
+unescaped in any portion of a URI, however it might be necessary to
+interpret or update old file URIs that include it.</t>
 
-<t>To accommodate historical file URIs that have a vertical line
-character “|” instead of a colon “:” in the drive letter construct
-the <spanx style="verb">auth-path</spanx>, <spanx style="verb">local-path</spanx>, and <spanx style="verb">drive-letter</spanx> rules in the core
-specification can be expanded with the following definitions:</t>
+<t>To accommodate historical file URIs that have a vertical line “|”
+character instead of a colon “:” in the drive letter construct the
+<spanx style="verb">auth-path</spanx>, <spanx style="verb">local-path</spanx>, and <spanx style="verb">drive-letter</spanx> rules in the core
+specification can be extended with the following definitions:</t>
 
 <figure><artwork><![CDATA[
-   auth-path      /= [ file-auth ] file-absolute
+   auth-path      =/ [ file-auth ] file-absolute
 
-   local-path     /= file-absolute
+   local-path     =/ file-absolute
 
-   drive-letter   /= ALPHA "|"
+   drive-letter   =/ ALPHA "|"
 
    file-absolute  = "/" drive-letter path-absolute
 ]]></artwork></figure>
@@ -181,9 +188,6 @@ line characters in the drive letter construct.  For example:</t>
   <t><spanx style="verb">file:c|/path/to/file</spanx></t>
 </list></t>
 
-<t>To update such an old URI, replace the vertical line “|” with a
-colon “:”.</t>
-
 <t>It can also be paired with the expansion in <xref target="drive-authority"/>.  For
 example:</t>
 
@@ -191,16 +195,19 @@ example:</t>
   <t><spanx style="verb">file://c|/path/to/file</spanx></t>
 </list></t>
 
+<t>To update such an old URI, replace the vertical line “|” character
+with a colon “:”.</t>
+
 </section>
 <section anchor="letter-only" title="Letter-Only Drive Letter">
 
-<t>To accommodate historical file URIs that don’t use a colon “:” or
-vertical line character “|” in the drive letter construct the
+<t>To accommodate historical file URIs that don’t use either a colon “:”
+or vertical line “|” character in the drive letter construct the
 core <spanx style="verb">drive-letter</spanx> rule can be expanded with the following
 definition:</t>
 
 <figure><artwork><![CDATA[
-   drive-letter   /= ALPHA
+   drive-letter   =/ ALPHA
 ]]></artwork></figure>
 
 <t>For example:</t>
@@ -211,8 +218,15 @@ definition:</t>
   <t><spanx style="verb">file:c/path/to/file</spanx></t>
 </list></t>
 
-<t>Care MUST be taken when interpreting such file URIs, as this
-interpretation only be applied if it can be determined with
+<t>It can also be paired with the expansion in <xref target="drive-authority"/>.  For
+example:</t>
+
+<t><list style="symbols">
+  <t><spanx style="verb">file://c/path/to/file</spanx></t>
+</list></t>
+
+<t>Care MUST be taken when interpreting all such file URIs, as this
+interpretation can only be applied if it can be determined with
 reasonable certainty that the drive letters are intended as such.</t>
 
 </section>
@@ -220,10 +234,10 @@ reasonable certainty that the drive letters are intended as such.</t>
 <section anchor="dos-relative" title="MS-DOS and Windows Relative Resolution">
 
 <t>To mimic the behaviour of MS-DOS or Windows file systems, relative
-references beginning with a slash “/” SHOULD be resolved relative to the
-drive letter, when present;  and resolution of “..” dot segments (per
-Section 5.2.4 of <xref target="RFC3986"/>) SHOULD be modified to not ever overwrite the
-drive letter.</t>
+references beginning with a slash “/” SHOULD be resolved relative to
+the drive letter, when present;  and resolution of “..” dot segments
+(per Section 5.2.4 of <xref target="RFC3986"/>) SHOULD be modified to not ever
+overwrite the drive letter.</t>
 
 <t>For example:</t>
 
@@ -239,19 +253,7 @@ drive letter.</t>
 
 <t>However given that this behaviour is not supported by the core
 specification nor the generic URI specification in <xref target="RFC3986"/>,
-implementations MUST take care when creating and/or interpreting such
-file URIs.</t>
-
-<t>A relative reference starting with a drive letter would be interpreted
-by a generic URI parser as a URI with the drive letter as its scheme.
-Instead such a reference MUST be constructed with a leading slash
-“/” character (e.g. “/c:/foo.txt”).</t>
-
-<t>URIs and relative references with a drive letter followed by a
-character other than a slash (e.g. “file:c:bar/baz.txt” or
-“/c:../foo.txt”) represent relative file paths and SHOULD NOT be
-accepted as dereferenceable URIs in MS-DOS or Windows systems and
-SHOULD NOT be created.</t>
+implementations MUST take care when implementing this extension.</t>
 
 </section>
 <section anchor="unc" title="UNC Strings">
@@ -262,18 +264,24 @@ the entire UNC string to the path segment of a URI, or by mapping the
 equivalent segments of the two schemes (hostname &lt;=&gt; authority,
 sharename+objectnames &lt;=&gt; path),</t>
 
+<t>In either case it is not uncommon to encounter a dollar sign “$” in
+the sharename segment of a UNC filespace selector string, for example
+“\\localhost\c$\foo.txt”, or the equivalent position in a file URI.
+The dollar sign symbol is a reserved character (<xref target="RFC3986"/>, Section
+2.2) but does not carry special meaning when it appears in these
+positions without percent-encoding (<xref target="RFC3986"/>, Section 2.1).</t>
+
 <section anchor="unc-path" title="file URI with UNC Path">
 
 <t>It is common to encounter file URIs that encode entire UNC strings in
 the path, usually with all backslash “\” characters replaced with
 slashes “/”.</t>
 
-<t>To interpret such URIs, the core <spanx style="verb">auth-path</spanx> rule can be replaced
-with the following:</t>
+<t>To interpret such URIs, the core <spanx style="verb">auth-path</spanx> rule can be extended
+with the following definitions:</t>
 
 <figure><artwork><![CDATA[
-   auth-path      = [ file-auth ] path-absolute
-                  / unc-authority path-absolute
+   auth-path      =/ unc-authority path-absolute
 
    unc-authority  = 2*3"/" file-host
 
@@ -294,13 +302,13 @@ percent-encoding applied to “[” and “]” characters.</t>
 following forms:</t>
 
 <t><list style="symbols">
-  <t>The representation of a non-local file, with an empty authority and a
-complete (transformed) UNC string in the path.  E.g.:  <list style="symbols">
+  <t>The representation of a non-local file, with an empty authority and
+a complete (transformed) UNC string in the path.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file:////host.example.com/path/to/file</spanx></t>
     </list></t>
   <t>As above, with an extra slash between the empty authority and the
-transformed UNC string, as per the syntax defined in <xref target="RFC1738"/>.
-E.g.:  <list style="symbols">
+two slashes of the transformed UNC string, as per the syntax
+defined in <xref target="RFC1738"/>.  E.g.:  <list style="symbols">
       <t><spanx style="verb">file://///host.example.com/path/to/file</spanx></t>
     </list>
 This representation is notably used by the Firefox web browser.
@@ -316,10 +324,11 @@ file URI with a path that encodes a UNC string.</t>
 
 <t>It is less common, but not unheard of, to encounter implementations
 that transform UNC filespace selector strings into file URIs and
-vice versa by mapping the equivalent segements of the two schemes.</t>
+vice versa by mapping the equivalent segments of the two schemes.</t>
 
 <t>The following is an algorithmic description of the process of
-translating a UNC filespace selector string to a file URI:</t>
+translating a UNC filespace selector string to a file URI.  It
+uses the syntactic elements defined in <xref target="MS-DTYP"/>.</t>
 
 <t><list style="numbers">
   <t>Initialize a new URI with the “file:” scheme identifier.</t>
@@ -328,7 +337,7 @@ translating a UNC filespace selector string to a file URI:</t>
       <t>Append the host-name field of the UNC string to the URI
 as its <spanx style="verb">host</spanx> component.  If the host-name field is the
 string “localhost” this can produce an ambiguous file URI,
-and the field should be replaced with a fully qualified
+and the field SHOULD be replaced with a fully qualified
 domain name or address.</t>
     </list></t>
   <t>Append the share-name:  <list style="numbers">
@@ -396,6 +405,15 @@ as path separators.</t>
     <date year="2018"/>
   </front>
 </reference>
+<reference anchor="MS-DTYP" target="https://msdn.microsoft.com/en-us/library/gg465305.aspx">
+  <front>
+    <title>Windows Data Types, 2.2.57 UNC</title>
+    <author >
+      <organization>Microsoft Open Specifications</organization>
+    </author>
+    <date year="2015" month="October" day="16"/>
+  </front>
+</reference>
 
 
 
@@ -424,6 +442,21 @@ as path separators.</t>
 <seriesInfo name='BCP' value='14'/>
 <seriesInfo name='RFC' value='8174'/>
 <seriesInfo name='DOI' value='10.17487/RFC8174'/>
+</reference>
+
+
+
+<reference  anchor="RFC5234" target='https://www.rfc-editor.org/info/rfc5234'>
+<front>
+<title>Augmented BNF for Syntax Specifications: ABNF</title>
+<author initials='D.' surname='Crocker' fullname='D. Crocker' role='editor'><organization /></author>
+<author initials='P.' surname='Overell' fullname='P. Overell'><organization /></author>
+<date year='2008' month='January' />
+<abstract><t>Internet technical specifications often need to define a formal syntax.  Over the years, a modified version of Backus-Naur Form (BNF), called Augmented BNF (ABNF), has been popular among many Internet specifications.  The current specification documents ABNF. It balances compactness and simplicity with reasonable representational power.  The differences between standard BNF and ABNF involve naming rules, repetition, alternatives, order-independence, and value ranges.  This specification also supplies additional rule definitions and encoding for a core lexical analyzer of the type common to several Internet specifications.  [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='STD' value='68'/>
+<seriesInfo name='RFC' value='5234'/>
+<seriesInfo name='DOI' value='10.17487/RFC5234'/>
 </reference>
 
 
@@ -458,15 +491,6 @@ as path separators.</t>
     <date year="2007" month="October"/>
   </front>
 </reference>
-<reference anchor="MS-DTYP" target="https://msdn.microsoft.com/en-us/library/gg465305.aspx">
-  <front>
-    <title>Windows Data Types, 2.2.57 UNC</title>
-    <author >
-      <organization>Microsoft Open Specifications</organization>
-    </author>
-    <date year="2015" month="October" day="16"/>
-  </front>
-</reference>
 
 
 
@@ -494,105 +518,108 @@ as path separators.</t>
   </back>
 
 <!-- ##markdown-source:
-H4sIAEku/1sAA71aa3Mbt5L9jl+BpWrr2llyKMlSbHNvcqPIzrVqLUuxpKRu
-Wa4InAFJXA9nJgOMKCbx/vY93cC8KEpOvqwq5ZAzeDS6T59+gKPRSDjjUj2R
-V9Zkc+kWWs5MquXV+xN5ES/0Ugs1nZb6diLLWfxi98XL0dTYkclmuUjyOFNL
-zE1KNXOjT7pcmWy0OWy0uysS5TBsf3fvhYjxcZ6X64nkNYQpyol0ZWXd/u7u
-y919oUqtJvKfOtOlSsUqLz/Ny7wqJvKoKFKD6SbPrDzCKPkzXpLU/6QB4pNe
-Y3QykSeZ02Wm3egVySVEPrV5qp22E0mSCWGdypJfVJpnkGqtrdz5RRRmIj+4
-PB5K/GOyRGduKG1eulLPLD6tl+GDK02MV3G+LFT4sMRgvDJZajL9UQhVuUVe
-ToQcCYk/k2Hn00j+DyuIH3m9nSoHha+6L/JyPpE/VlpnNoWQ8iozt7q0xq1l
-PpOXOl5keZrP1zy4tsyPV5f8HbJp7SbyJ0iYl0bJc1V+ku9zlfDrGKtMsFl6
-azLS2a3mx6WeQ6VY5e0rPyxPINvB7uHL8LXKHNnrCDaCSYzix3qpTDqRS3+E
-yBv/u18rF+mkilQlRJaXeAvxoYiHIRLnJQ+QMgDxcgsE+bC1UvE32qbTRqu9
-px3oCUJcR6bvq/ne7vPDg93e/ngq/eMt28I8KjO/MQh56G8mTdV3pzn/v7fh
-7vPRnl/CqXJOZlk4V9jJeDwN06KlnxZh1bFd5Ktf8CaK5+YfJvmmEeH0YvTq
-8l/nPRl/BkDzlZWvlFPycl1ooG8/2o8On8urd8dflPvUxGVu85mTZ4XO5EWh
-YzOrXSvocqcq01bk1WoVLetZESA/zjHT9iaOdTau7DjRM1WlLlK2uOtb4BAK
-Ge19vVUnS5tkGzvobITlUjMtVbkez+cHXx8+2z306woxGo2Af0JkDBe/XBgr
-wUcVuaJMtI1LM4Vjk3PmmaysmuMbPKhGFhQ21escHgY1WS2KMsxJJC2M5/AR
-my+1jJXFVH0LRak0zVd+BN4SVxJ6RU8NUZBtaZIk1ULsEB2VeVLF9JYk7cDb
-MrwlZA9raN73998fdZfPnyMso5zsbYxTz0A/tpELnJU5dceHmZZGz9J1qxkB
-+5WBSx2tFasMGpF4Sj4CObCikraaWu1IcaQzUMWvlSnxEmPEVFkTQ1yQLS82
-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
+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
+EjODNYdgCFLSxOv97ft0A7xGIzl536pVpeIhCQKNPp5+usHBYCAKUyR6LN87
+k85lsdByZhIt3787lGfRQi+1UNNpri/HMp9Fj7cfPxlMjRuYdGZFbKNULfFu
+nKtZMfik8yuTDtaHDba3RawKDNvd3nksIvyc23w1ljyHMFk+lkVeumJ3e/vJ
+9q5QuVZj+YNOda4ScWXzT/PcltlYHmRZYvC6samTBxglf8ZDkvoHGiA+6RVG
+x2N5mBY6T3UxeElyCWGnzia60G4sSTIhXKHS+BeV2BRSrbSTW7+IzIzlh8JG
+fYn/mTTWadGXzuZFrmcOv1bL8KPITYRHkV1mKvxYYjAemTQxqf4ohCqLhc3H
+Qg6ExJ9JsfLRUP6DFcS3vN6OVAGFX7Uf2Hw+lj+WWqcugZDyfWoude5MsZJ2
+Js91tEhtYucrHlxZ5sf353wN2bQuxvInSGhzo+Spyj/Jd1bF/DjCLGMsllya
+lHR2qfl2rudQKWZ5+9IPszFk299+8CRclmlB9jqAjWASo/i2XiqTjOXSb2Ho
+jf/9r2Ux1HE5VKUQqc3xFOJDEbe7SGRzHiBlcMTzDS7Im62Uir/BJp3WWu3c
+bbmelEdng5fn/zztrPczjG2vnHypCiXPV5mGJXeHu8MHj+T74xcbloaJVGp+
+Y0fEaibKrbOzQp5kOpVnmY7MrHLTINdWmUNVi6LI3Hg0urq6Gi6rt4Zwn5HF
+m67z4kino9KNYj1TZVIMlcuuu7t5MNjZHuw89BtR+ZzMXi2wdHG6toJOB5gu
+MdNc5avRfL7/8MHe9gM/r6BAbJnqeTnf2X70YH+7oybclf72V1WCob+ZJFHf
+H1n+tyP59iNIvlHsaXhtuPSvDTHryC3s1S94Mozm5jsTPw0iCDEYDOD/5JER
+Qvx8YZwEHpUUijLWLsrNFIFNwWlTWTo1xxUiqPIsGHmqVxYRhn04LbI8vBNL
+mhj3ESPOLrWMlMOr+hLGVUlir/wIPCWsJO8VHdMNg2xLE8eJFmKL4Ci3cRnR
+U5K05d6O3VtC9jCH5nU/f74zXL58GWIaVcjOwtj1DPDjWC63Sgt1zftolAE3
+ywN8FngdUJxCCRJ3yf5YGpMo3pJ05dTpYk1hqY60c3AgifFyqpyJ4DvAWp54
+ahLgy1DKN9ARMKtSEYA6kQDmhFStMTcAHrCRrmAVtomol2CxYEaZ2gJysFvK
+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
+abNQoi8AAA==
 
 -->
 
