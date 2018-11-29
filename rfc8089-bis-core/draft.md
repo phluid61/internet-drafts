@@ -39,7 +39,7 @@ normative:
       STD: 63
       RFC: 3629
       DOI: 10.17487/RFC3629
-    target: http://www.rfc-editor.org/info/std63
+    target: https://www.rfc-editor.org/info/std63
 
 informative:
   Bash-Tilde:
@@ -47,7 +47,7 @@ informative:
     author:
     - organization: Free Software Foundation, Inc
     date: 2014-02-02
-    target: http://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html
+    target: https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html
   BCP35:
     title: Guidelines and Registration Procedures for URI Schemes
     author:
@@ -63,7 +63,7 @@ informative:
       BCP: 35
       RFC: 7595
       DOI: 10.17487/RFC7595
-    target: http://www.rfc-editor.org/info/bcp35
+    target: https://www.rfc-editor.org/info/bcp35
   MS-DTYP:
     title: Windows Data Types, 2.2.57 UNC
     author:
@@ -88,23 +88,23 @@ informative:
       name: Ken Whistler
       #email: ken@unicode.org
       role: editor
-    date: 2016-02-24
-    target: http://www.unicode.org/reports/tr15/tr15-44.html
+    date: 2018-05-10
+    target: https://www.unicode.org/reports/tr15/tr15-47.html
   UNICODE:
-    title: The Unicode Standard, Version 9.0.0
+    title: The Unicode Standard, Version 11.0.0
     author:
     - organization: The Unicode Consortium
       #city: Mountain View
       #region: CA
-    date: 2016-06-21
+    date: 2018-06-05
     seriesinfo:
-      ISBN: 978-1-936213-13-9
-    target: http://www.unicode.org/versions/Unicode9.0.0/
+      ISBN: 978-1-936213-19-1
+    target: https://www.unicode.org/versions/Unicode11.0.0/
   WHATWG-URL:
     title: URL Standard
     author:
     - organization: WHATWG
-      #url: http://www.whatwg.org/
+      #url: https://www.whatwg.org/
     date: 2016-12-09
     target: https://url.spec.whatwg.org/
   Win32-Namespaces:
@@ -118,7 +118,7 @@ informative:
     #author:
     #- organization: Zsh Web Page Maintainers
     date: 2015-12-08
-    target: http://zsh.sourceforge.net/Doc/Release/Expansion.html#Filename-Expansion
+    target: "http://zsh.sourceforge.net/Doc/Release/Expansion.html#Filename-Expansion"
   draft-kerwin-rfc8089-bis-info:
     title: Using the file URI Scheme
     author:

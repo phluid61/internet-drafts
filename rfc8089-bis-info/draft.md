@@ -47,9 +47,9 @@ informative:
     title: Windows Data Types, 2.2.57 UNC
     author:
     - organization: Microsoft Open Specifications
-      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
+      #url: https://www.microsoft.com/openspecifications/en/us/default.aspx
     date: 2015-10-16
-    target: http://msdn.microsoft.com/en-us/library/gg465305.aspx
+    target: https://msdn.microsoft.com/en-us/library/gg465305.aspx
 
 
 --- abstract
@@ -87,9 +87,9 @@ BCP 14 {{!RFC2119}} {{!RFC8174}} when, and only when, they appear in
 all capitals, as shown here.
 
 
-# Nonstandard Syntax Variations  {#nonstandard-syntax}
+# Nonstandard Extensions  {#extensions}
 
-These variations may be encountered by existing usages of the file URI
+These extensions may be encountered by existing usages of the file URI
 scheme, but are not supported by the core syntax defined in
 {{draft-kerwin-rfc8089-bis-core}}.
 
