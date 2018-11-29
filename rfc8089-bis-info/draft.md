@@ -64,21 +64,20 @@ specification.
 # Introduction
 
 The file URI scheme is specified in {{draft-kerwin-rfc8089-bis-core}}.
-That specification defines the core syntax and briefly describes
-operations that can be performed on a subset of URIs necessary for
-basic interoperability.  However in the real world there are many
-uses of file URIs that do not fit within the bounds of the core
-specification, and are not strictly necessary for conformance, but
-do exhibit common traits and behaviours.  This document describes
-those cases, to provide a means for interoperability beyond the
-core specification.
+That specification defines the syntax and describes operations that
+can be performed on a core subset of file URIs, necessary for basic
+interoperability.  However in the real world there are many uses of
+file URIs that do not conform with the core specification, but do
+nevertheless exhibit common traits and behaviours.  This document
+describes those cases, to provide a pathway for interoperability
+beyond the core specification.
 
 
 ## Notational Conventions
 
 This is not a standard, so any prescriptive or normative language is
-intended to provide interoperability, but does not describe an
-actual requirement.
+intended to provide interoperability and/or security, but does not
+describe an actual standard requirement.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -86,38 +85,45 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 BCP 14 {{!RFC2119}} {{!RFC8174}} when, and only when, they appear in
 all capitals, as shown here.
 
+Syntax elements are defined in Augmented Backus-Naur Form (ABNF)
+{{!RFC5234}}, where possible using incremental alternative syntax to
+extend the core syntax rather than replacing existing definitions.
+
 
 # Nonstandard Extensions  {#extensions}
 
 These extensions might be encountered by existing usages of the file URI
-scheme, but are not supported by the core syntax defined in
+scheme, but are not supported by the core specification
 {{draft-kerwin-rfc8089-bis-core}}.
 
 
 ## User Information  {#userinfo}
 
 It might be necessary to include user information such as a user name in
-a file URI, for example when mapping a VMS file path with a node
+a file URI, for example when representing a VMS file path with a node
 reference that includes an access control string.
 
-To allow user information to be included in a file URI, the core `file-auth`
-rule can be replaced with the following:
+To allow user information to be included in a file URI the core `file-auth`
+rule can be extended with the following definition:
 
 ~~~~~~~~~~
-   file-auth      = "localhost"
-                  / [ userinfo "@" ] host
+   file-auth      =/ userinfo "@" host
 ~~~~~~~~~~
 
 This uses the `userinfo` rule from {{!RFC3986}}.
 
-As discussed in the HP OpenVMS Systems Documentation
-\<http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
+<!--
+As discussed in the HP OpenVMS Guide to System Security
+\<https://support.hpe.com/hpsc/doc/public/display?docId=emr_na-c04621379>
 "access control strings include sufficient information to allow someone
 to break in to the remote account, \[therefore\] they create serious
-security exposure."  In a similar vein, the presence of a password in a
-"user:password" userinfo field is deprecated by {{!RFC3986}}.  Take care
-when dealing with information that can be used to identify a user or
-grant access to a system.
+security exposure."
+-->
+The presence of a password in a "user:password" userinfo field is
+deprecated by {{!RFC3986}}, Section 3.2.1.  Implementers MUST take
+care when dealing with information that can be used to identify a
+user or grant access to a system, including generation, transmission,
+and storage of said information.
 
 
 ## MS-DOS and Windows Drive Letters  {#drives}
@@ -137,7 +143,7 @@ several ways:
 * Encoding the drive letter in the URI's authority component.
 
 * Omitting the colon ":" from the drive letter, or replacing it with
-  a vertical line character "\|".
+  a vertical line "\|" character.
 
 * A combination of the two.
 
@@ -145,11 +151,11 @@ several ways:
 ### Drive Letter Authority  {#drive-authority}
 
 To accommodate historical file URIs that have a drive letter encoded
-in the authority, the core `file-auth` rule case be expanded with
-the following definition:
+in the authority, the core `file-auth` rule case be extended with the
+following definition:
 
 ~~~~~~~~~~
-   file-auth      /= drive-letter
+   file-auth      =/ drive-letter
 ~~~~~~~~~~
 
 For example:
@@ -159,20 +165,21 @@ For example:
 
 ### Vertical Line Character  {#pipe}
 
-{{!RFC3986}} forbids the use of the vertical line, however it might be
-necessary to interpret or update old URIs that include it.
+{{!RFC3986}} forbids the vertical line "\|" character from appearing
+unescaped in any portion of a URI, however it might be necessary to
+interpret or update old file URIs that include it.
 
-To accommodate historical file URIs that have a vertical line
-character "\|" instead of a colon ":" in the drive letter construct
-the `auth-path`, `local-path`, and `drive-letter` rules in the core
-specification can be expanded with the following definitions:
+To accommodate historical file URIs that have a vertical line "\|"
+character instead of a colon ":" in the drive letter construct the
+`auth-path`, `local-path`, and `drive-letter` rules in the core
+specification can be extended with the following definitions:
 
 ~~~~~~~~~~
-   auth-path      /= [ file-auth ] file-absolute
+   auth-path      =/ [ file-auth ] file-absolute
 
-   local-path     /= file-absolute
+   local-path     =/ file-absolute
 
-   drive-letter   /= ALPHA "|"
+   drive-letter   =/ ALPHA "|"
 
    file-absolute  = "/" drive-letter path-absolute
 ~~~~~~~~~~
@@ -189,19 +196,19 @@ example:
 
 * `file://c|/path/to/file`
 
-To update such an old URI, replace the vertical line "\|" with a
-colon ":".
+To update such an old URI, replace the vertical line "\|" character
+with a colon ":".
 
 
 ### Letter-Only Drive Letter {#letter-only}
 
-To accommodate historical file URIs that don't use a colon ":" or
-vertical line character "\|" in the drive letter construct the
+To accommodate historical file URIs that don't use either a colon ":"
+or vertical line "\|" character in the drive letter construct the
 core `drive-letter` rule can be expanded with the following
 definition:
 
 ~~~~~~~~~~
-   drive-letter   /= ALPHA
+   drive-letter   =/ ALPHA
 ~~~~~~~~~~
 
 For example:
@@ -210,18 +217,23 @@ For example:
 * `file:/c/path/to/file`
 * `file:c/path/to/file`
 
-Care MUST be taken when interpreting such file URIs, as this
-interpretation only be applied if it can be determined with
+It can also be paired with the expansion in {{drive-authority}}.  For
+example:
+
+* `file://c/path/to/file`
+
+Care MUST be taken when interpreting all such file URIs, as this
+interpretation can only be applied if it can be determined with
 reasonable certainty that the drive letters are intended as such.
 
 
 ## MS-DOS and Windows Relative Resolution  {#dos-relative}
 
 To mimic the behaviour of MS-DOS or Windows file systems, relative
-references beginning with a slash "/" SHOULD be resolved relative to the
-drive letter, when present;  and resolution of ".." dot segments (per
-Section 5.2.4 of {{!RFC3986}}) SHOULD be modified to not ever overwrite the
-drive letter.
+references beginning with a slash "/" SHOULD be resolved relative to
+the drive letter, when present;  and resolution of ".." dot segments
+(per Section 5.2.4 of {{!RFC3986}}) SHOULD be modified to not ever
+overwrite the drive letter.
 
 For example:
 
@@ -237,19 +249,7 @@ For example:
 
 However given that this behaviour is not supported by the core
 specification nor the generic URI specification in {{!RFC3986}},
-implementations MUST take care when creating and/or interpreting such
-file URIs.
-
-A relative reference starting with a drive letter would be interpreted
-by a generic URI parser as a URI with the drive letter as its scheme.
-Instead such a reference MUST be constructed with a leading slash
-"/" character (e.g. "/c:/foo.txt").
-
-URIs and relative references with a drive letter followed by a
-character other than a slash (e.g. "file:c:bar/baz.txt" or
-"/c:../foo.txt") represent relative file paths and SHOULD NOT be
-accepted as dereferenceable URIs in MS-DOS or Windows systems and
-SHOULD NOT be created.
+implementations MUST take care when implementing this extension.
 
 
 ## UNC Strings  {#unc}
@@ -260,6 +260,13 @@ the entire UNC string to the path segment of a URI, or by mapping the
 equivalent segments of the two schemes (hostname \<=> authority,
 sharename+objectnames \<=> path),
 
+In either case it is not uncommon to encounter a dollar sign "$" in
+the sharename segment of a UNC filespace selector string, for example
+"\\\\localhost\\c$\\foo.txt", or the equivalent position in a file URI.
+The dollar sign symbol is a reserved character ({{!RFC3986}}, Section
+2.2) but does not carry special meaning when it appears in these
+positions without percent-encoding ({{!RFC3986}}, Section 2.1).
+
 
 ### file URI with UNC Path  {#unc-path}
 
@@ -267,12 +274,11 @@ It is common to encounter file URIs that encode entire UNC strings in
 the path, usually with all backslash "\\" characters replaced with
 slashes "/".
 
-To interpret such URIs, the core `auth-path` rule can be replaced
-with the following:
+To interpret such URIs, the core `auth-path` rule can be extended
+with the following definitions:
 
 ~~~~~~~~~~
-   auth-path      = [ file-auth ] path-absolute
-                  / unc-authority path-absolute
+   auth-path      =/ unc-authority path-absolute
 
    unc-authority  = 2*3"/" file-host
 
@@ -290,14 +296,14 @@ and `reg-name` rules from {{!RFC3986}}.
 This extended syntax is intended to support URIs that take the
 following forms:
 
-* The representation of a non-local file, with an empty authority and a
-  complete (transformed) UNC string in the path.  E.g.:
+* The representation of a non-local file, with an empty authority and
+  a complete (transformed) UNC string in the path.  E.g.:
 
   * `file:////host.example.com/path/to/file`
 
 * As above, with an extra slash between the empty authority and the
-  transformed UNC string, as per the syntax defined in {{?RFC1738}}.
-  E.g.:
+  two slashes of the transformed UNC string, as per the syntax
+  defined in {{?RFC1738}}.  E.g.:
 
   * `file://///host.example.com/path/to/file`
 
