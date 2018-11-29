@@ -65,7 +65,7 @@ specification.
 
 The file URI scheme is specified in {{draft-kerwin-rfc8089-bis-core}}.
 That specification defines the core syntax and briefly describes
-operations that can be performed on a subset of URIs required for
+operations that can be performed on a subset of URIs necessary for
 basic interoperability.  However in the real world there are many
 uses of file URIs that do not fit within the bounds of the core
 specification, and are not strictly necessary for conformance, but
@@ -89,7 +89,7 @@ all capitals, as shown here.
 
 # Nonstandard Extensions  {#extensions}
 
-These extensions may be encountered by existing usages of the file URI
+These extensions might be encountered by existing usages of the file URI
 scheme, but are not supported by the core syntax defined in
 {{draft-kerwin-rfc8089-bis-core}}.
 
@@ -159,7 +159,7 @@ For example:
 
 ### Vertical Line Character  {#pipe}
 
-{{!RFC3986}} forbids the use of the vertical line, however it may be
+{{!RFC3986}} forbids the use of the vertical line, however it might be
 necessary to interpret or update old URIs that include it.
 
 To accommodate historical file URIs that have a vertical line
@@ -329,7 +329,7 @@ uses the syntactic elements defined in {{MS-DTYP}}.
     2.  Append the host-name field of the UNC string to the URI
         as its `host` component.  If the host-name field is the
         string "localhost" this can produce an ambiguous file URI,
-        and the field should be replaced with a fully qualified
+        and the field SHOULD be replaced with a fully qualified
         domain name or address.
 
 3.  Append the share-name:
