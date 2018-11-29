@@ -35,6 +35,13 @@ normative:
     - ins: M. Kerwin
       name: M. Kerwin
     date: 2018
+  MS-DTYP:
+    title: Windows Data Types, 2.2.57 UNC
+    author:
+    - organization: Microsoft Open Specifications
+      #url: https://www.microsoft.com/openspecifications/en/us/default.aspx
+    date: 2015-10-16
+    target: https://msdn.microsoft.com/en-us/library/gg465305.aspx
 
 informative:
   Bug107540:
@@ -43,13 +50,6 @@ informative:
     - organization: Bugzilla@Mozilla
     date: 2007-10
     target: https://bugzilla.mozilla.org/show_bug.cgi?id=107540
-  MS-DTYP:
-    title: Windows Data Types, 2.2.57 UNC
-    author:
-    - organization: Microsoft Open Specifications
-      #url: https://www.microsoft.com/openspecifications/en/us/default.aspx
-    date: 2015-10-16
-    target: https://msdn.microsoft.com/en-us/library/gg465305.aspx
 
 
 --- abstract
@@ -316,7 +316,8 @@ that transform UNC filespace selector strings into file URIs and
 vice versa by mapping the equivalent segments of the two schemes.
 
 The following is an algorithmic description of the process of
-translating a UNC filespace selector string to a file URI:
+translating a UNC filespace selector string to a file URI.  It
+uses the syntactic elements defined in {{MS-DTYP}}.
 
 
 1.  Initialize a new URI with the "file:" scheme identifier.

@@ -68,9 +68,9 @@ informative:
     title: Windows Data Types, 2.2.57 UNC
     author:
     - organization: Microsoft Open Specifications
-      #url: http://www.microsoft.com/openspecifications/en/us/default.aspx
+      #url: https://www.microsoft.com/openspecifications/en/us/default.aspx
     date: 2015-10-16
-    target: http://msdn.microsoft.com/en-us/library/gg465305.aspx
+    target: https://msdn.microsoft.com/en-us/library/gg465305.aspx
   POSIX:
     title: IEEE 1003.1-2017 - IEEE Standard for Information Technology--Portable Operating System Interface (POSIX(R)) Base Specifications, Issue 7
     #abbrev: POSIX.1-2017
