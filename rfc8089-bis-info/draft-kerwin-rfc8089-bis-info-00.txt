@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 8089 (if approved)                          November 20, 2018
+Obsoletes: 8089 (if approved)                          November 29, 2018
 Intended status: Informational
-Expires: May 24, 2019
+Expires: June 2, 2019
 
 
                        Using the file URI Scheme
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 24, 2019.
+   This Internet-Draft will expire on June 2, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                    Expires May 24, 2019                  [Page 1]
+Kerwin                    Expires June 2, 2019                  [Page 1]
 
 Internet-Draft              rfc8089-bis-info               November 2018
 
@@ -62,7 +62,7 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
-   2.  Nonstandard Syntax Variations . . . . . . . . . . . . . . . .   3
+   2.  Nonstandard Extensions  . . . . . . . . . . . . . . . . . . .   3
      2.1.  User Information  . . . . . . . . . . . . . . . . . . . .   3
      2.2.  MS-DOS and Windows Drive Letters  . . . . . . . . . . . .   3
        2.2.1.  Drive Letter Authority  . . . . . . . . . . . . . . .   4
@@ -82,20 +82,19 @@ Table of Contents
 1.  Introduction
 
    The file URI scheme is specified in [draft-kerwin-rfc8089-bis-core].
-   That specification defines the core syntax and briefly describes
-   operations that can be performed on a subset of URIs required for
-   basic interoperability.  However in the real world there are many
-   uses of file URIs that do not fit within the bounds of the core
-   specification, and are not strictly necessary for conformance, but do
-   exhibit common traits and behaviours.  This document describes those
-   cases, to provide a means for interoperability beyond the core
-   specification.
+   That specification defines the syntax and describes operations that
+   can be performed on a core subset of file URIs, necessary for basic
+   interoperability.  However in the real world there are many uses of
+   file URIs that do not conform with the core specification, but do
+   nevertheless exhibit common traits and behaviours.  This document
+   describes those cases, to provide a pathway for interoperability
+   beyond the core specification.
 
 1.1.  Notational Conventions
 
    This is not a standard, so any prescriptive or normative language is
-   intended to provide interoperability, but does not describe an actual
-   requirement.
+   intended to provide interoperability and/or security, but does not
+   describe an actual standard requirement.
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -103,45 +102,42 @@ Table of Contents
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
+   Syntax elements are defined in Augmented Backus-Naur Form (ABNF)
+   [RFC5234], where possible using incremental alternative syntax to
+   extend the core syntax rather than replacing existing definitions.
 
 
 
 
-
-
-Kerwin                    Expires May 24, 2019                  [Page 2]
+Kerwin                    Expires June 2, 2019                  [Page 2]
 
 Internet-Draft              rfc8089-bis-info               November 2018
 
 
-2.  Nonstandard Syntax Variations
+2.  Nonstandard Extensions
 
-   These variations may be encountered by existing usages of the file
-   URI scheme, but are not supported by the core syntax defined in
+   These extensions might be encountered by existing usages of the file
+   URI scheme, but are not supported by the core specification
    [draft-kerwin-rfc8089-bis-core].
 
 2.1.  User Information
 
    It might be necessary to include user information such as a user name
-   in a file URI, for example when mapping a VMS file path with a node
-   reference that includes an access control string.
+   in a file URI, for example when representing a VMS file path with a
+   node reference that includes an access control string.
 
-   To allow user information to be included in a file URI, the core
-   "file-auth" rule can be replaced with the following:
+   To allow user information to be included in a file URI the core
+   "file-auth" rule can be extended with the following definition:
 
-      file-auth      = "localhost"
-                     / [ userinfo "@" ] host
+      file-auth      =/ userinfo "@" host
 
    This uses the "userinfo" rule from [RFC3986].
 
-   As discussed in the HP OpenVMS Systems Documentation
-   <http://h71000.www7.hp.com/doc/84final/ba554_90015/ch03s09.html>
-   "access control strings include sufficient information to allow
-   someone to break in to the remote account, [therefore] they create
-   serious security exposure."  In a similar vein, the presence of a
-   password in a "user:password" userinfo field is deprecated by
-   [RFC3986].  Take care when dealing with information that can be used
-   to identify a user or grant access to a system.
+   The presence of a password in a "user:password" userinfo field is
+   deprecated by [RFC3986], Section 3.2.1.  Implementers MUST take care
+   when dealing with information that can be used to identify a user or
+   grant access to a system, including generation, transmission, and
+   storage of said information.
 
 2.2.  MS-DOS and Windows Drive Letters
 
@@ -160,25 +156,27 @@ Internet-Draft              rfc8089-bis-info               November 2018
    o  Encoding the drive letter in the URI's authority component.
 
    o  Omitting the colon ":" from the drive letter, or replacing it with
-      a vertical line character "|".
+      a vertical line "|" character.
+
+   o  A combination of the two.
 
 
 
 
-Kerwin                    Expires May 24, 2019                  [Page 3]
+
+
+Kerwin                    Expires June 2, 2019                  [Page 3]
 
 Internet-Draft              rfc8089-bis-info               November 2018
 
 
-   o  A combination of the two.
-
 2.2.1.  Drive Letter Authority
 
    To accommodate historical file URIs that have a drive letter encoded
-   in the authority, the core "file-auth" rule case be expanded with the
+   in the authority, the core "file-auth" rule case be extended with the
    following definition:
 
-      file-auth      /= drive-letter
+      file-auth      =/ drive-letter
 
    For example:
 
@@ -186,19 +184,20 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
 2.2.2.  Vertical Line Character
 
-   [RFC3986] forbids the use of the vertical line, however it may be
-   necessary to interpret or update old URIs that include it.
+   [RFC3986] forbids the vertical line "|" character from appearing
+   unescaped in any portion of a URI, however it might be necessary to
+   interpret or update old file URIs that include it.
 
-   To accommodate historical file URIs that have a vertical line
-   character "|" instead of a colon ":" in the drive letter construct
-   the "auth-path", "local-path", and "drive-letter" rules in the core
-   specification can be expanded with the following definitions:
+   To accommodate historical file URIs that have a vertical line "|"
+   character instead of a colon ":" in the drive letter construct the
+   "auth-path", "local-path", and "drive-letter" rules in the core
+   specification can be extended with the following definitions:
 
-      auth-path      /= [ file-auth ] file-absolute
+      auth-path      =/ [ file-auth ] file-absolute
 
-      local-path     /= file-absolute
+      local-path     =/ file-absolute
 
-      drive-letter   /= ALPHA "|"
+      drive-letter   =/ ALPHA "|"
 
       file-absolute  = "/" drive-letter path-absolute
 
@@ -211,28 +210,29 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
    o  "file:c|/path/to/file"
 
-   To update such an old URI, replace the vertical line "|" with a colon
-   ":".
-
    It can also be paired with the expansion in Section 2.2.1.  For
    example:
 
    o  "file://c|/path/to/file"
 
+   To update such an old URI, replace the vertical line "|" character
+   with a colon ":".
 
 
-Kerwin                    Expires May 24, 2019                  [Page 4]
+
+
+Kerwin                    Expires June 2, 2019                  [Page 4]
 
 Internet-Draft              rfc8089-bis-info               November 2018
 
 
 2.2.3.  Letter-Only Drive Letter
 
-   To accommodate historical file URIs that don't use a colon ":" or
-   vertical line character "|" in the drive letter construct the core
+   To accommodate historical file URIs that don't use either a colon ":"
+   or vertical line "|" character in the drive letter construct the core
    "drive-letter" rule can be expanded with the following definition:
 
-      drive-letter   /= ALPHA
+      drive-letter   =/ ALPHA
 
    For example:
 
@@ -242,8 +242,13 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
    o  "file:c/path/to/file"
 
-   Care MUST be taken when interpreting such file URIs, as this
-   interpretation only be applied if it can be determined with
+   It can also be paired with the expansion in Section 2.2.1.  For
+   example:
+
+   o  "file://c/path/to/file"
+
+   Care MUST be taken when interpreting all such file URIs, as this
+   interpretation can only be applied if it can be determined with
    reasonable certainty that the drive letters are intended as such.
 
 2.3.  MS-DOS and Windows Relative Resolution
@@ -266,27 +271,16 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
    However given that this behaviour is not supported by the core
    specification nor the generic URI specification in [RFC3986],
-   implementations MUST take care when creating and/or interpreting such
-   file URIs.
-
-   A relative reference starting with a drive letter would be
-   interpreted by a generic URI parser as a URI with the drive letter as
-   its scheme.  Instead such a reference MUST be constructed with a
-   leading slash "/" character (e.g. "/c:/foo.txt").
+   implementations MUST take care when implementing this extension.
 
 
 
 
-Kerwin                    Expires May 24, 2019                  [Page 5]
+
+Kerwin                    Expires June 2, 2019                  [Page 5]
 
 Internet-Draft              rfc8089-bis-info               November 2018
 
-
-   URIs and relative references with a drive letter followed by a
-   character other than a slash (e.g. "file:c:bar/baz.txt" or
-   "/c:../foo.txt") represent relative file paths and SHOULD NOT be
-   accepted as dereferenceable URIs in MS-DOS or Windows systems and
-   SHOULD NOT be created.
 
 2.4.  UNC Strings
 
@@ -296,17 +290,23 @@ Internet-Draft              rfc8089-bis-info               November 2018
    mapping the equivalent segments of the two schemes (hostname <=>
    authority, sharename+objectnames <=> path),
 
+   In either case it is not uncommon to encounter a dollar sign "$" in
+   the sharename segment of a UNC filespace selector string, for example
+   "\\localhost\c$\foo.txt", or the equivalent position in a file URI.
+   The dollar sign symbol is a reserved character ([RFC3986],
+   Section 2.2) but does not carry special meaning when it appears in
+   these positions without percent-encoding ([RFC3986], Section 2.1).
+
 2.4.1.  file URI with UNC Path
 
    It is common to encounter file URIs that encode entire UNC strings in
    the path, usually with all backslash "\" characters replaced with
    slashes "/".
 
-   To interpret such URIs, the core "auth-path" rule can be replaced
-   with the following:
+   To interpret such URIs, the core "auth-path" rule can be extended
+   with the following definitions:
 
-      auth-path      = [ file-auth ] path-absolute
-                     / unc-authority path-absolute
+      auth-path      =/ unc-authority path-absolute
 
       unc-authority  = 2*3"/" file-host
 
@@ -333,14 +333,14 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
 
 
-Kerwin                    Expires May 24, 2019                  [Page 6]
+Kerwin                    Expires June 2, 2019                  [Page 6]
 
 Internet-Draft              rfc8089-bis-info               November 2018
 
 
    o  As above, with an extra slash between the empty authority and the
-      transformed UNC string, as per the syntax defined in [RFC1738].
-      E.g.:
+      two slashes of the transformed UNC string, as per the syntax
+      defined in [RFC1738].  E.g.:
 
       *  "file://///host.example.com/path/to/file"
 
@@ -355,10 +355,11 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
    It is less common, but not unheard of, to encounter implementations
    that transform UNC filespace selector strings into file URIs and vice
-   versa by mapping the equivalent segements of the two schemes.
+   versa by mapping the equivalent segments of the two schemes.
 
    The following is an algorithmic description of the process of
-   translating a UNC filespace selector string to a file URI:
+   translating a UNC filespace selector string to a file URI.  It uses
+   the syntactic elements defined in [MS-DTYP].
 
    1.  Initialize a new URI with the "file:" scheme identifier.
 
@@ -369,7 +370,7 @@ Internet-Draft              rfc8089-bis-info               November 2018
        2.  Append the host-name field of the UNC string to the URI as
            its "host" component.  If the host-name field is the string
            "localhost" this can produce an ambiguous file URI, and the
-           field should be replaced with a fully qualified domain name
+           field SHOULD be replaced with a fully qualified domain name
            or address.
 
    3.  Append the share-name:
@@ -388,8 +389,7 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
 
 
-
-Kerwin                    Expires May 24, 2019                  [Page 7]
+Kerwin                    Expires June 2, 2019                  [Page 7]
 
 Internet-Draft              rfc8089-bis-info               November 2018
 
@@ -432,23 +432,33 @@ Internet-Draft              rfc8089-bis-info               November 2018
    [draft-kerwin-rfc8089-bis-core]
               Kerwin, M., "The file URI Scheme", 2018.
 
+   [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.57
+              UNC", October 2015,
+              <https://msdn.microsoft.com/en-us/library/gg465305.aspx>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+
+
+
+
+Kerwin                    Expires June 2, 2019                  [Page 8]
+
+Internet-Draft              rfc8089-bis-info               November 2018
+
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, DOI 10.17487/RFC3986, January 2005,
               <https://www.rfc-editor.org/info/rfc3986>.
 
-
-
-
-Kerwin                    Expires May 24, 2019                  [Page 8]
-
-Internet-Draft              rfc8089-bis-info               November 2018
-
+   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234,
+              DOI 10.17487/RFC5234, January 2008,
+              <https://www.rfc-editor.org/info/rfc5234>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -459,10 +469,6 @@ Internet-Draft              rfc8089-bis-info               November 2018
    [Bug107540]
               Bugzilla@Mozilla, "Bug 107540", October 2007,
               <https://bugzilla.mozilla.org/show_bug.cgi?id=107540>.
-
-   [MS-DTYP]  Microsoft Open Specifications, "Windows Data Types, 2.2.57
-              UNC", October 2015,
-              <http://msdn.microsoft.com/en-us/library/gg465305.aspx>.
 
    [RFC1738]  Berners-Lee, T., Masinter, L., and M. McCahill, "Uniform
               Resource Locators (URL)", RFC 1738, DOI 10.17487/RFC1738,
@@ -495,10 +501,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-Kerwin                    Expires May 24, 2019                  [Page 9]
+Kerwin                    Expires June 2, 2019                  [Page 9]
