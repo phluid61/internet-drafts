@@ -481,7 +481,7 @@ initial slash in the `path-absolute` rule.
 Common UNIX shells such as the Bourne-Again SHell (bash) and Z Shell
 (zsh) provide a function known as "tilde expansion" {{Bash-Tilde}} or
 "filename expansion" {{Zsh-Tilde}}, where a path that begins with a
-tilde character "~" can be expanded out to a special directory name.
+tilde "~" character can be expanded out to a special directory name.
 No such facility exists using the file URI scheme;  a tilde in a file
 URI is always just a tilde.
 
@@ -491,7 +491,22 @@ URI is always just a tilde.
 When mapping a MS-DOS or Windows file path to a file URI, the drive
 letter (e.g. "c:") is typically mapped into the first path segment.
 
-{{draft-kerwin-rfc8089-bis-info}} lists some nonstandard techniques
+A relative reference starting with a drive letter (e.g. "c:/foo.txt")
+would be interpreted by a generic URI parser as a URI with the drive
+letter as its scheme.  Instead such a reference would be constructed
+with a leading slash "/" character (e.g. "/c:/foo.txt").
+
+Absolute file URIs without a drive letter are resolved relative to
+the current context (i.e. with the same drive letter as the base
+URL, or the current working environment if there is no base URL.)
+
+URIs and relative references with a drive letter followed by a
+character other than a slash (e.g. "file:c:bar/baz.txt" or
+"/c:../foo.txt") represent relative file paths and should not be
+accepted as dereferenceable URIs in MS-DOS or Windows systems and
+should not be created.
+
+{{draft-kerwin-rfc8089-bis-info}} lists some nonstandard mechanisms
 for interacting with MS-DOS or Windows file paths and URIs.
 
 
@@ -512,6 +527,6 @@ so should be percent-encoded if present in the device name.
 If the VMS file path includes a node reference, that reference is used
 as the authority.  Where the original node reference includes a user
 name and password in an access control string, they can be transcribed
-into the authority using a nonstandard syntax extension described in
+into the authority using a nonstandard extension described in
 {{draft-kerwin-rfc8089-bis-info}}.
 
