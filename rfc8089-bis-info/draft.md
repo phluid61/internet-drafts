@@ -184,13 +184,13 @@ line characters in the drive letter construct.  For example:
 * `file:/c|/path/to/file`
 * `file:c|/path/to/file`
 
-To update such an old URI, replace the vertical line "\|" with a
-colon ":".
-
 It can also be paired with the expansion in {{drive-authority}}.  For
 example:
 
 * `file://c|/path/to/file`
+
+To update such an old URI, replace the vertical line "\|" with a
+colon ":".
 
 
 ### Letter-Only Drive Letter {#letter-only}
@@ -313,7 +313,7 @@ file URI with a path that encodes a UNC string.
 
 It is less common, but not unheard of, to encounter implementations
 that transform UNC filespace selector strings into file URIs and
-vice versa by mapping the equivalent segements of the two schemes.
+vice versa by mapping the equivalent segments of the two schemes.
 
 The following is an algorithmic description of the process of
 translating a UNC filespace selector string to a file URI:
