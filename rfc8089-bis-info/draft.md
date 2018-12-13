@@ -59,6 +59,12 @@ prescribed -- and in some cases even allowed -- in the core
 specification.
 
 
+--- note_Note_to_Readers
+
+This draft should be discussed on the GitHub repository
+\<https://github.com/phluid61/internet-drafts/labels/rfc8089-bis-info>.
+
+
 --- middle
 
 # Introduction

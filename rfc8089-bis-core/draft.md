@@ -137,8 +137,8 @@ usages.  It obsoletes RFC 8089.
 
 --- note_Note_to_Readers
 
-This draft should be discussed on the IETF Applications Area Working
-Group discussion list \<apps-discuss@ietf.org>.
+This draft should be discussed on the GitHub repository
+\<https://github.com/phluid61/internet-drafts/labels/rfc8089-bis-core>.
 
 
 --- middle
