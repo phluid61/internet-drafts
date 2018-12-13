@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 8089 (if approved)                          November 29, 2018
+Obsoletes: 8089 (if approved)                          December 13, 2018
 Intended status: Standards Track
-Expires: June 2, 2019
+Expires: June 16, 2019
 
 
                           The file URI Scheme
@@ -21,8 +21,9 @@ Abstract
 
 Note to Readers
 
-   This draft should be discussed on the IETF Applications Area Working
-   Group discussion list <apps-discuss@ietf.org>.
+   This draft should be discussed on the GitHub repository
+   <https://github.com/phluid61/internet-drafts/labels/rfc8089-bis-
+   core>.
 
 Status of This Memo
 
@@ -39,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 2, 2019.
+   This Internet-Draft will expire on June 16, 2019.
 
 Copyright Notice
 
@@ -49,15 +50,15 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (https://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 1]
+Kerwin                    Expires June 16, 2019                 [Page 1]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
+   publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
@@ -104,15 +105,17 @@ Table of Contents
 
    Extensions to the syntax which might be encountered in practice are
    listed in [draft-kerwin-rfc8089-bis-info]; those extensions are given
+
+
+
+
+Kerwin                    Expires June 16, 2019                 [Page 2]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
    for informational purposes and are not a requirement of
    implementation.
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 2]
-
-Internet-Draft              rfc8089-bis-core               November 2018
-
 
    The file URI scheme is not coupled with a specific protocol, nor with
    a specific media type [RFC6838].  See Section 3 for a discussion of
@@ -162,12 +165,9 @@ Internet-Draft              rfc8089-bis-core               November 2018
 
 
 
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 3]
+Kerwin                    Expires June 16, 2019                 [Page 3]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
       file-URI       = file-scheme ":" file-hier-part
@@ -221,9 +221,9 @@ Internet-Draft              rfc8089-bis-core               November 2018
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 4]
+Kerwin                    Expires June 16, 2019                 [Page 4]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
    convention, and MAY be omitted before the drive letter when
@@ -277,9 +277,9 @@ Internet-Draft              rfc8089-bis-core               November 2018
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 5]
+Kerwin                    Expires June 16, 2019                 [Page 5]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
    File access and the granting of privileges for specific operations
@@ -333,9 +333,9 @@ Internet-Draft              rfc8089-bis-core               November 2018
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 6]
+Kerwin                    Expires June 16, 2019                 [Page 6]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
       Commonly used in hypertext documents to refer to files without
@@ -389,9 +389,9 @@ Internet-Draft              rfc8089-bis-core               November 2018
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 7]
+Kerwin                    Expires June 16, 2019                 [Page 7]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
@@ -445,9 +445,9 @@ Internet-Draft              rfc8089-bis-core               November 2018
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 8]
+Kerwin                    Expires June 16, 2019                 [Page 8]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
    [RFC6838]  Freed, N., Klensin, J., and T. Hansen, "Media Type
@@ -501,9 +501,9 @@ Appendix A.  Differences from Previous Specifications
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 9]
+Kerwin                    Expires June 16, 2019                 [Page 9]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
    The definition specified in [RFC8089] did not allow for file URIs
@@ -557,9 +557,9 @@ Appendix C.  Similar Technologies
 
 
 
-Kerwin                    Expires June 2, 2019                 [Page 10]
+Kerwin                    Expires June 16, 2019                [Page 10]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
    o  The Microsoft Windows API defines Win32 Namespaces
@@ -613,9 +613,9 @@ D.2.  MS-DOS and Windows Systems
 
 
 
-Kerwin                    Expires June 2, 2019                 [Page 11]
+Kerwin                    Expires June 16, 2019                [Page 11]
 
-Internet-Draft              rfc8089-bis-core               November 2018
+Internet-Draft              rfc8089-bis-core               December 2018
 
 
    URIs and relative references with a drive letter followed by a
@@ -669,4 +669,4 @@ Author's Address
 
 
 
-Kerwin                    Expires June 2, 2019                 [Page 12]
+Kerwin                    Expires June 16, 2019                [Page 12]

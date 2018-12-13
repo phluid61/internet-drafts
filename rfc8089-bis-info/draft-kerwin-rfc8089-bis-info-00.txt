@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 8089 (if approved)                          November 29, 2018
+Obsoletes: 8089 (if approved)                          December 13, 2018
 Intended status: Informational
-Expires: June 2, 2019
+Expires: June 16, 2019
 
 
                        Using the file URI Scheme
@@ -17,6 +17,12 @@ Abstract
    This document describes common usages of file URIs, beyond those
    prescribed - and in some cases even allowed - in the core
    specification.
+
+Note to Readers
+
+   This draft should be discussed on the GitHub repository
+   <https://github.com/phluid61/internet-drafts/labels/rfc8089-bis-
+   info>.
 
 Status of This Memo
 
@@ -33,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 2, 2019.
+   This Internet-Draft will expire on June 16, 2019.
 
 Copyright Notice
 
@@ -44,19 +50,19 @@ Copyright Notice
    Provisions Relating to IETF Documents
    (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
+
+
+
+Kerwin                    Expires June 16, 2019                 [Page 1]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
-
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 1]
-
-Internet-Draft              rfc8089-bis-info               November 2018
-
 
 Table of Contents
 
@@ -99,20 +105,21 @@ Table of Contents
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in BCP
+
+
+
+
+Kerwin                    Expires June 16, 2019                 [Page 2]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
    Syntax elements are defined in Augmented Backus-Naur Form (ABNF)
    [RFC5234], where possible using incremental alternative syntax to
    extend the core syntax rather than replacing existing definitions.
-
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 2]
-
-Internet-Draft              rfc8089-bis-info               November 2018
-
 
 2.  Nonstandard Extensions
 
@@ -155,20 +162,18 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
    o  Encoding the drive letter in the URI's authority component.
 
+
+
+
+Kerwin                    Expires June 16, 2019                 [Page 3]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    o  Omitting the colon ":" from the drive letter, or replacing it with
       a vertical line "|" character.
 
    o  A combination of the two.
-
-
-
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 3]
-
-Internet-Draft              rfc8089-bis-info               November 2018
-
 
 2.2.1.  Drive Letter Authority
 
@@ -213,18 +218,18 @@ Internet-Draft              rfc8089-bis-info               November 2018
    It can also be paired with the expansion in Section 2.2.1.  For
    example:
 
+
+
+
+Kerwin                    Expires June 16, 2019                 [Page 4]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    o  "file://c|/path/to/file"
 
    To update such an old URI, replace the vertical line "|" character
    with a colon ":".
-
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 4]
-
-Internet-Draft              rfc8089-bis-info               November 2018
-
 
 2.2.3.  Letter-Only Drive Letter
 
@@ -269,18 +274,17 @@ Internet-Draft              rfc8089-bis-info               November 2018
       rel. ref.:  ../bar.txt
       resolved:   file:///c:/bar.txt
 
+
+
+
+Kerwin                    Expires June 16, 2019                 [Page 5]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    However given that this behaviour is not supported by the core
    specification nor the generic URI specification in [RFC3986],
    implementations MUST take care when implementing this extension.
-
-
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 5]
-
-Internet-Draft              rfc8089-bis-info               November 2018
-
 
 2.4.  UNC Strings
 
@@ -326,17 +330,15 @@ Internet-Draft              rfc8089-bis-info               November 2018
    o  The representation of a non-local file, with an empty authority
       and a complete (transformed) UNC string in the path.  E.g.:
 
-      *  "file:////host.example.com/path/to/file"
 
 
 
-
-
-
-Kerwin                    Expires June 2, 2019                  [Page 6]
+Kerwin                    Expires June 16, 2019                 [Page 6]
 
-Internet-Draft              rfc8089-bis-info               November 2018
+Internet-Draft              rfc8089-bis-info               December 2018
 
+
+      *  "file:////host.example.com/path/to/file"
 
    o  As above, with an extra slash between the empty authority and the
       two slashes of the transformed UNC string, as per the syntax
@@ -384,15 +386,15 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
    4.  For each object-name:
 
-       1.  Transform the object-name to a path segment as above.
 
 
 
-
-Kerwin                    Expires June 2, 2019                  [Page 7]
+Kerwin                    Expires June 16, 2019                 [Page 7]
 
-Internet-Draft              rfc8089-bis-info               November 2018
+Internet-Draft              rfc8089-bis-info               December 2018
 
+
+       1.  Transform the object-name to a path segment as above.
 
            The colon character ":" is allowed as a delimiter before
            stream-name and stream-type in the file-name, if present.
@@ -443,11 +445,9 @@ Internet-Draft              rfc8089-bis-info               November 2018
 
 
 
-
-
-Kerwin                    Expires June 2, 2019                  [Page 8]
+Kerwin                    Expires June 16, 2019                 [Page 8]
 
-Internet-Draft              rfc8089-bis-info               November 2018
+Internet-Draft              rfc8089-bis-info               December 2018
 
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
@@ -501,4 +501,4 @@ Author's Address
 
 
 
-Kerwin                    Expires June 2, 2019                  [Page 9]
+Kerwin                    Expires June 16, 2019                 [Page 9]
