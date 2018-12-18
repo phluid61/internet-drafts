@@ -112,7 +112,7 @@ scheme, but are not supported by the core specification
 ## Query and Fragment Components  {#query-fragment}
 
 Some resources include active scripts that interact with the resource's
-URI, for example JavaScript inspecting the Location interface
+URI, for example JavaScript accessing the Location interface
 {{HTML5.Location}} in a HTML document.  These scripts often inspect
 and/or modify the query or fragment components ({{RFC3986}}, Sections
 3.4 and 3.5) of the URI.  To support this behaviour for resources with
