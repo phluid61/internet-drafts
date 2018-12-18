@@ -50,6 +50,12 @@ informative:
     - organization: Bugzilla@Mozilla
     date: 2007-10
     target: https://bugzilla.mozilla.org/show_bug.cgi?id=107540
+  HTML5.Location:
+    title: HTML5
+    author:
+    - organization: The World Wide Web Consortium
+    date: 2014-10-28
+    target: "https://www.w3.org/TR/html50/browsers.html#the-location-interface"
 
 
 --- abstract
@@ -101,6 +107,43 @@ extend the core syntax rather than replacing existing definitions.
 These extensions might be encountered by existing usages of the file URI
 scheme, but are not supported by the core specification
 {{draft-kerwin-rfc8089-bis-core}}.
+
+
+## Query and Fragment Components  {#query-fragment}
+
+Some resources include active scripts that interact with the resource's
+URI, for example JavaScript inspecting the Location interface
+{{HTML5.Location}} in a HTML document.  These scripts often inspect
+and/or modify the query or fragment components ({{RFC3986}}, Sections
+3.4 and 3.5) of the URI.  To support this behaviour for resources with
+a file URI, query and fragment components may be handled thus.
+\[\[FIXME\]\]
+
+
+### Query  {#query-component}
+
+\[\[The query component should not be used when dereferencing a file
+URI.  This is a security risk, because multiple URIs can point at the
+same file.  It also breaks equivalence.\]\]
+
+To allow a query component to be included in a file URI the core `file-URI`
+rule can be extended with the following definition:
+
+~~~~~~~~~~
+   file-URI       =/ file-scheme ":" file-hier-part "?" query
+~~~~~~~~~~
+
+This uses the `query` rule from {{!RFC3986}}.
+
+
+### Fragment  {#fragment-component}
+
+Fragment components are already syntactically supported by
+{{!RFC3986}}, however the semantics of a fragment depend on the content
+type of the resource representation.  The file URI scheme does not
+have a mechanism for detecting or communicating the content type of
+resources, but file and operating systems often do.
+\[\[TODO: expand, add security concerns\]\]
 
 
 ## User Information  {#userinfo}
