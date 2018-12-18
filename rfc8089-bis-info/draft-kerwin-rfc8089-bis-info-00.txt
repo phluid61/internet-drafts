@@ -133,7 +133,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
 2.1.  Query and Fragment Components
 
    Some resources include active scripts that interact with the
-   resource's URI, for example JavaScript inspecting the Location
+   resource's URI, for example JavaScript accessing the Location
    interface [HTML5.Location] in a HTML document.  These scripts often
    inspect and/or modify the query or fragment components ([RFC3986],
    Sections 3.4 and 3.5) of the URI.  To support this behaviour for
