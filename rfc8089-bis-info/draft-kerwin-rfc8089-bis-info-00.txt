@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 8089 (if approved)                          December 13, 2018
+Obsoletes: 8089 (if approved)                          December 18, 2018
 Intended status: Informational
-Expires: June 16, 2019
+Expires: June 21, 2019
 
 
                        Using the file URI Scheme
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 16, 2019.
+   This Internet-Draft will expire on June 21, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                    Expires June 16, 2019                 [Page 1]
+Kerwin                    Expires June 21, 2019                 [Page 1]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
@@ -69,21 +69,24 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
    2.  Nonstandard Extensions  . . . . . . . . . . . . . . . . . . .   3
-     2.1.  User Information  . . . . . . . . . . . . . . . . . . . .   3
-     2.2.  MS-DOS and Windows Drive Letters  . . . . . . . . . . . .   3
-       2.2.1.  Drive Letter Authority  . . . . . . . . . . . . . . .   4
-       2.2.2.  Vertical Line Character . . . . . . . . . . . . . . .   4
-       2.2.3.  Letter-Only Drive Letter  . . . . . . . . . . . . . .   5
-     2.3.  MS-DOS and Windows Relative Resolution  . . . . . . . . .   5
-     2.4.  UNC Strings . . . . . . . . . . . . . . . . . . . . . . .   6
-       2.4.1.  file URI with UNC Path  . . . . . . . . . . . . . . .   6
-       2.4.2.  file URI with Authority . . . . . . . . . . . . . . .   7
-     2.5.  Backslash as Separator  . . . . . . . . . . . . . . . . .   8
-   3.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   4.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     4.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
-     4.2.  Informative References  . . . . . . . . . . . . . . . . .   9
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
+     2.1.  Query and Fragment Components . . . . . . . . . . . . . .   3
+       2.1.1.  Query . . . . . . . . . . . . . . . . . . . . . . . .   3
+       2.1.2.  Fragment  . . . . . . . . . . . . . . . . . . . . . .   3
+     2.2.  User Information  . . . . . . . . . . . . . . . . . . . .   4
+     2.3.  MS-DOS and Windows Drive Letters  . . . . . . . . . . . .   4
+       2.3.1.  Drive Letter Authority  . . . . . . . . . . . . . . .   4
+       2.3.2.  Vertical Line Character . . . . . . . . . . . . . . .   5
+       2.3.3.  Letter-Only Drive Letter  . . . . . . . . . . . . . .   5
+     2.4.  MS-DOS and Windows Relative Resolution  . . . . . . . . .   6
+     2.5.  UNC Strings . . . . . . . . . . . . . . . . . . . . . . .   6
+       2.5.1.  file URI with UNC Path  . . . . . . . . . . . . . . .   7
+       2.5.2.  file URI with Authority . . . . . . . . . . . . . . .   8
+     2.6.  Backslash as Separator  . . . . . . . . . . . . . . . . .   9
+   3.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   4.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     4.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
+     4.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -102,18 +105,18 @@ Table of Contents
    intended to provide interoperability and/or security, but does not
    describe an actual standard requirement.
 
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
 
 
 
 
-Kerwin                    Expires June 16, 2019                 [Page 2]
+Kerwin                    Expires June 21, 2019                 [Page 2]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
 
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
@@ -127,7 +130,47 @@ Internet-Draft              rfc8089-bis-info               December 2018
    URI scheme, but are not supported by the core specification
    [draft-kerwin-rfc8089-bis-core].
 
-2.1.  User Information
+2.1.  Query and Fragment Components
+
+   Some resources include active scripts that interact with the
+   resource's URI, for example JavaScript inspecting the Location
+   interface [HTML5.Location] in a HTML document.  These scripts often
+   inspect and/or modify the query or fragment components ([RFC3986],
+   Sections 3.4 and 3.5) of the URI.  To support this behaviour for
+   resources with a file URI, query and fragment components may be
+   handled thus.  [[FIXME]]
+
+2.1.1.  Query
+
+   [[The query component should not be used when dereferencing a file
+   URI.  This is a security risk, because multiple URIs can point at the
+   same file.  It also breaks equivalence.]]
+
+   To allow a query component to be included in a file URI the core
+   "file-URI" rule can be extended with the following definition:
+
+      file-URI       =/ file-scheme ":" file-hier-part "?" query
+
+   This uses the "query" rule from [RFC3986].
+
+2.1.2.  Fragment
+
+   Fragment components are already syntactically supported by [RFC3986],
+   however the semantics of a fragment depend on the content type of the
+   resource representation.  The file URI scheme does not have a
+   mechanism for detecting or communicating the content type of
+   resources, but file and operating systems often do.  [[TODO: expand,
+   add security concerns]]
+
+
+
+
+Kerwin                    Expires June 21, 2019                 [Page 3]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
+2.2.  User Information
 
    It might be necessary to include user information such as a user name
    in a file URI, for example when representing a VMS file path with a
@@ -146,7 +189,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
    grant access to a system, including generation, transmission, and
    storage of said information.
 
-2.2.  MS-DOS and Windows Drive Letters
+2.3.  MS-DOS and Windows Drive Letters
 
    On MS-DOS or Windows file systems an absolute file path can begin
    with a drive letter.  This is supported by the core syntax explicitly
@@ -162,20 +205,12 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
    o  Encoding the drive letter in the URI's authority component.
 
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 3]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    o  Omitting the colon ":" from the drive letter, or replacing it with
       a vertical line "|" character.
 
    o  A combination of the two.
 
-2.2.1.  Drive Letter Authority
+2.3.1.  Drive Letter Authority
 
    To accommodate historical file URIs that have a drive letter encoded
    in the authority, the core "file-auth" rule case be extended with the
@@ -183,11 +218,19 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
       file-auth      =/ drive-letter
 
+
+
+
+Kerwin                    Expires June 21, 2019                 [Page 4]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    For example:
 
    o  "file://c:/file/to/path"
 
-2.2.2.  Vertical Line Character
+2.3.2.  Vertical Line Character
 
    [RFC3986] forbids the vertical line "|" character from appearing
    unescaped in any portion of a URI, however it might be necessary to
@@ -215,29 +258,29 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
    o  "file:c|/path/to/file"
 
-   It can also be paired with the expansion in Section 2.2.1.  For
+   It can also be paired with the expansion in Section 2.3.1.  For
    example:
-
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 4]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
 
    o  "file://c|/path/to/file"
 
    To update such an old URI, replace the vertical line "|" character
    with a colon ":".
 
-2.2.3.  Letter-Only Drive Letter
+2.3.3.  Letter-Only Drive Letter
 
    To accommodate historical file URIs that don't use either a colon ":"
    or vertical line "|" character in the drive letter construct the core
    "drive-letter" rule can be expanded with the following definition:
 
       drive-letter   =/ ALPHA
+
+
+
+
+Kerwin                    Expires June 21, 2019                 [Page 5]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
    For example:
 
@@ -247,7 +290,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
    o  "file:c/path/to/file"
 
-   It can also be paired with the expansion in Section 2.2.1.  For
+   It can also be paired with the expansion in Section 2.3.1.  For
    example:
 
    o  "file://c/path/to/file"
@@ -256,7 +299,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
    interpretation can only be applied if it can be determined with
    reasonable certainty that the drive letters are intended as such.
 
-2.3.  MS-DOS and Windows Relative Resolution
+2.4.  MS-DOS and Windows Relative Resolution
 
    To mimic the behaviour of MS-DOS or Windows file systems, relative
    references beginning with a slash "/" SHOULD be resolved relative to
@@ -274,25 +317,26 @@ Internet-Draft              rfc8089-bis-info               December 2018
       rel. ref.:  ../bar.txt
       resolved:   file:///c:/bar.txt
 
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 5]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    However given that this behaviour is not supported by the core
    specification nor the generic URI specification in [RFC3986],
    implementations MUST take care when implementing this extension.
 
-2.4.  UNC Strings
+2.5.  UNC Strings
 
    Some usages of the file URI scheme allow UNC filespace selector
    strings [MS-DTYP] to be translated to and from file URIs, either by
    mapping the entire UNC string to the path segment of a URI, or by
    mapping the equivalent segments of the two schemes (hostname <=>
    authority, sharename+objectnames <=> path),
+
+
+
+
+
+Kerwin                    Expires June 21, 2019                 [Page 6]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
    In either case it is not uncommon to encounter a dollar sign "$" in
    the sharename segment of a UNC filespace selector string, for example
@@ -301,7 +345,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
    Section 2.2) but does not carry special meaning when it appears in
    these positions without percent-encoding ([RFC3986], Section 2.1).
 
-2.4.1.  file URI with UNC Path
+2.5.1.  file URI with UNC Path
 
    It is common to encounter file URIs that encode entire UNC strings in
    the path, usually with all backslash "\" characters replaced with
@@ -330,14 +374,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
    o  The representation of a non-local file, with an empty authority
       and a complete (transformed) UNC string in the path.  E.g.:
 
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 6]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
       *  "file:////host.example.com/path/to/file"
 
    o  As above, with an extra slash between the empty authority and the
@@ -349,11 +385,20 @@ Internet-Draft              rfc8089-bis-info               December 2018
       This representation is notably used by the Firefox web browser.
       See Bugzilla#107540 [Bug107540].
 
+
+
+
+
+Kerwin                    Expires June 21, 2019                 [Page 7]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    It also further limits the definition of a "local file URI"
    ([draft-kerwin-rfc8089-bis-core], Section 1.1) by excluding any file
    URI with a path that encodes a UNC string.
 
-2.4.2.  file URI with Authority
+2.5.2.  file URI with Authority
 
    It is less common, but not unheard of, to encounter implementations
    that transform UNC filespace selector strings into file URIs and vice
@@ -386,14 +431,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
    4.  For each object-name:
 
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 7]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
        1.  Transform the object-name to a path segment as above.
 
            The colon character ":" is allowed as a delimiter before
@@ -404,13 +441,22 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
    For example:
 
+
+
+
+
+Kerwin                    Expires June 21, 2019                 [Page 8]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
       UNC String:   \\host.example.com\Share\path\to\file.txt
       URI:          file://host.example.com/Share/path/to/file.txt
 
    The inverse algorithm, for translating a file URI to a UNC filespace
    selector string, is left as an exercise for the reader.
 
-2.5.  Backslash as Separator
+2.6.  Backslash as Separator
 
    Historically some usages of file URIs have naively copied entire file
    paths into the path components of file URIs.  Where MS-DOS or Windows
@@ -443,13 +489,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-
-
-Kerwin                    Expires June 16, 2019                 [Page 8]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, DOI 10.17487/RFC3986, January 2005,
@@ -460,6 +499,13 @@ Internet-Draft              rfc8089-bis-info               December 2018
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
 
+
+
+Kerwin                    Expires June 21, 2019                 [Page 9]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
@@ -469,6 +515,11 @@ Internet-Draft              rfc8089-bis-info               December 2018
    [Bug107540]
               Bugzilla@Mozilla, "Bug 107540", October 2007,
               <https://bugzilla.mozilla.org/show_bug.cgi?id=107540>.
+
+   [HTML5.Location]
+              The World Wide Web Consortium, "HTML5", October 2014,
+              <https://www.w3.org/TR/html50/
+              browsers.html#the-location-interface>.
 
    [RFC1738]  Berners-Lee, T., Masinter, L., and M. McCahill, "Uniform
               Resource Locators (URL)", RFC 1738, DOI 10.17487/RFC1738,
@@ -501,4 +552,9 @@ Author's Address
 
 
 
-Kerwin                    Expires June 16, 2019                 [Page 9]
+
+
+
+
+
+Kerwin                    Expires June 21, 2019                [Page 10]
