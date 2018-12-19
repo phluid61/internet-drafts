@@ -259,7 +259,7 @@ file system.  In `local-path` it solely represents the {{POSIX}}
 convention, and MAY be omitted before the drive letter when
 representing an absolute path in a MS-DOS or Windows file system.
 
-## Case Sensitivity {#syntax.case}
+## Case Sensitivity {#syntax-case}
 
 Some file systems have case-sensitive file naming and some do not.  As
 such the file URI scheme supports case sensitivity, in order to retain
@@ -268,7 +268,7 @@ scheme MUST retain the case as given.  Any mapping to or from a
 case-insensitive form is solely the responsibility of the implementation
 processing the file URI on behalf of the referenced file system.
 
-## Fragment {#syntax.fragment}
+## Fragment {#syntax-fragment}
 
 Fragment components ({{RFC3986}}, Section 3.5) are supported according
 to {{RFC3986}}, however the specific syntax and semantics of a fragment
