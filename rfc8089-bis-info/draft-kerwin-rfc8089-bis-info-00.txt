@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 8089 (if approved)                          December 18, 2018
+Obsoletes: 8089 (if approved)                          December 19, 2018
 Intended status: Informational
-Expires: June 21, 2019
+Expires: June 22, 2019
 
 
                        Using the file URI Scheme
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 21, 2019.
+   This Internet-Draft will expire on June 22, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                    Expires June 21, 2019                 [Page 1]
+Kerwin                    Expires June 22, 2019                 [Page 1]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
@@ -69,23 +69,21 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
    2.  Nonstandard Extensions  . . . . . . . . . . . . . . . . . . .   3
-     2.1.  Query and Fragment Components . . . . . . . . . . . . . .   3
-       2.1.1.  Query . . . . . . . . . . . . . . . . . . . . . . . .   3
-       2.1.2.  Fragment  . . . . . . . . . . . . . . . . . . . . . .   3
-     2.2.  User Information  . . . . . . . . . . . . . . . . . . . .   4
+     2.1.  Query Components  . . . . . . . . . . . . . . . . . . . .   3
+     2.2.  User Information  . . . . . . . . . . . . . . . . . . . .   3
      2.3.  MS-DOS and Windows Drive Letters  . . . . . . . . . . . .   4
        2.3.1.  Drive Letter Authority  . . . . . . . . . . . . . . .   4
-       2.3.2.  Vertical Line Character . . . . . . . . . . . . . . .   5
+       2.3.2.  Vertical Line Character . . . . . . . . . . . . . . .   4
        2.3.3.  Letter-Only Drive Letter  . . . . . . . . . . . . . .   5
      2.4.  MS-DOS and Windows Relative Resolution  . . . . . . . . .   6
      2.5.  UNC Strings . . . . . . . . . . . . . . . . . . . . . . .   6
-       2.5.1.  file URI with UNC Path  . . . . . . . . . . . . . . .   7
-       2.5.2.  file URI with Authority . . . . . . . . . . . . . . .   8
-     2.6.  Backslash as Separator  . . . . . . . . . . . . . . . . .   9
+       2.5.1.  file URI with UNC Path  . . . . . . . . . . . . . . .   6
+       2.5.2.  file URI with Authority . . . . . . . . . . . . . . .   7
+     2.6.  Backslash as Separator  . . . . . . . . . . . . . . . . .   8
    3.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
    4.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      4.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     4.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+     4.2.  Informative References  . . . . . . . . . . . . . . . . .   9
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
@@ -105,18 +103,17 @@ Table of Contents
    intended to provide interoperability and/or security, but does not
    describe an actual standard requirement.
 
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
 
 
 
-
-Kerwin                    Expires June 21, 2019                 [Page 2]
+Kerwin                    Expires June 22, 2019                 [Page 2]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
 
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
@@ -130,17 +127,14 @@ Internet-Draft              rfc8089-bis-info               December 2018
    URI scheme, but are not supported by the core specification
    [draft-kerwin-rfc8089-bis-core].
 
-2.1.  Query and Fragment Components
+2.1.  Query Components
 
    Some resources include active scripts that interact with the
    resource's URI, for example JavaScript accessing the Location
-   interface [HTML5.Location] in a HTML document.  These scripts often
-   inspect and/or modify the query or fragment components ([RFC3986],
-   Sections 3.4 and 3.5) of the URI.  To support this behaviour for
-   resources with a file URI, query and fragment components may be
-   handled thus.  [[FIXME]]
-
-2.1.1.  Query
+   interface [HTML5.Location] in a HTML document.  These scripts can
+   inspect and/or modify the query component ([RFC3986], Section 3.4) of
+   the URI.  To support this behaviour, the file URI scheme may be
+   extended to include a query component.
 
    [[The query component should not be used when dereferencing a file
    URI.  This is a security risk, because multiple URIs can point at the
@@ -152,23 +146,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
       file-URI       =/ file-scheme ":" file-hier-part "?" query
 
    This uses the "query" rule from [RFC3986].
-
-2.1.2.  Fragment
-
-   Fragment components are already syntactically supported by [RFC3986],
-   however the semantics of a fragment depend on the content type of the
-   resource representation.  The file URI scheme does not have a
-   mechanism for detecting or communicating the content type of
-   resources, but file and operating systems often do.  [[TODO: expand,
-   add security concerns]]
-
-
-
-
-Kerwin                    Expires June 21, 2019                 [Page 3]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
 
 2.2.  User Information
 
@@ -185,6 +162,14 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
    The presence of a password in a "user:password" userinfo field is
    deprecated by [RFC3986], Section 3.2.1.  Implementers MUST take care
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 3]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    when dealing with information that can be used to identify a user or
    grant access to a system, including generation, transmission, and
    storage of said information.
@@ -218,14 +203,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
       file-auth      =/ drive-letter
 
-
-
-
-Kerwin                    Expires June 21, 2019                 [Page 4]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    For example:
 
    o  "file://c:/file/to/path"
@@ -240,6 +217,14 @@ Internet-Draft              rfc8089-bis-info               December 2018
    character instead of a colon ":" in the drive letter construct the
    "auth-path", "local-path", and "drive-letter" rules in the core
    specification can be extended with the following definitions:
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 4]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
       auth-path      =/ [ file-auth ] file-absolute
 
@@ -274,14 +259,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
       drive-letter   =/ ALPHA
 
-
-
-
-Kerwin                    Expires June 21, 2019                 [Page 5]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    For example:
 
    o  "file:///c/path/to/file"
@@ -294,6 +271,16 @@ Internet-Draft              rfc8089-bis-info               December 2018
    example:
 
    o  "file://c/path/to/file"
+
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 5]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
    Care MUST be taken when interpreting all such file URIs, as this
    interpretation can only be applied if it can be determined with
@@ -329,15 +316,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
    mapping the equivalent segments of the two schemes (hostname <=>
    authority, sharename+objectnames <=> path),
 
-
-
-
-
-Kerwin                    Expires June 21, 2019                 [Page 6]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    In either case it is not uncommon to encounter a dollar sign "$" in
    the sharename segment of a UNC filespace selector string, for example
    "\\localhost\c$\foo.txt", or the equivalent position in a file URI.
@@ -350,6 +328,15 @@ Internet-Draft              rfc8089-bis-info               December 2018
    It is common to encounter file URIs that encode entire UNC strings in
    the path, usually with all backslash "\" characters replaced with
    slashes "/".
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 6]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
    To interpret such URIs, the core "auth-path" rule can be extended
    with the following definitions:
@@ -385,15 +372,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
       This representation is notably used by the Firefox web browser.
       See Bugzilla#107540 [Bug107540].
 
-
-
-
-
-Kerwin                    Expires June 21, 2019                 [Page 7]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    It also further limits the definition of a "local file URI"
    ([draft-kerwin-rfc8089-bis-core], Section 1.1) by excluding any file
    URI with a path that encodes a UNC string.
@@ -407,6 +385,14 @@ Internet-Draft              rfc8089-bis-info               December 2018
    The following is an algorithmic description of the process of
    translating a UNC filespace selector string to a file URI.  It uses
    the syntactic elements defined in [MS-DTYP].
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 7]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
    1.  Initialize a new URI with the "file:" scheme identifier.
 
@@ -441,15 +427,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
    For example:
 
-
-
-
-
-Kerwin                    Expires June 21, 2019                 [Page 8]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
       UNC String:   \\host.example.com\Share\path\to\file.txt
       URI:          file://host.example.com/Share/path/to/file.txt
 
@@ -463,6 +440,15 @@ Internet-Draft              rfc8089-bis-info               December 2018
    file paths were thus copied the resulting URI strings contained
    unencoded backslash "\" characters, which are forbidden by both
    [RFC1738] and [RFC3986].
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 8]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
    It might be possible to translate or update such an invalid file URI
    by replacing all backslashes "\" with slashes "/", if it can be
@@ -499,13 +485,6 @@ Internet-Draft              rfc8089-bis-info               December 2018
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
 
-
-
-Kerwin                    Expires June 21, 2019                 [Page 9]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
@@ -515,6 +494,17 @@ Internet-Draft              rfc8089-bis-info               December 2018
    [Bug107540]
               Bugzilla@Mozilla, "Bug 107540", October 2007,
               <https://bugzilla.mozilla.org/show_bug.cgi?id=107540>.
+
+
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 9]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
 
    [HTML5.Location]
               The World Wide Web Consortium, "HTML5", October 2014,
@@ -557,4 +547,14 @@ Author's Address
 
 
 
-Kerwin                    Expires June 21, 2019                [Page 10]
+
+
+
+
+
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                [Page 10]

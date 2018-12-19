@@ -377,9 +377,7 @@
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Notational Conventions">
 <link href="#rfc.section.2" rel="Chapter" title="2 Nonstandard Extensions">
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Query and Fragment Components">
-<link href="#rfc.section.2.1.1" rel="Chapter" title="2.1.1 Query">
-<link href="#rfc.section.2.1.2" rel="Chapter" title="2.1.2 Fragment">
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Query Components">
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 User Information">
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 MS-DOS and Windows Drive Letters">
 <link href="#rfc.section.2.3.1" rel="Chapter" title="2.3.1 Drive Letter Authority">
@@ -402,7 +400,7 @@
 
   <meta name="dct.creator" content="Kerwin, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-kerwin-rfc8089-bis-info-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-18" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-19" />
   <meta name="dct.abstract" content="This document describes common usages of file URIs, beyond those prescribed &#8211; and in some cases even allowed &#8211; in the core specification." />
   <meta name="description" content="This document describes common usages of file URIs, beyond those prescribed &#8211; and in some cases even allowed &#8211; in the core specification." />
 
@@ -423,14 +421,14 @@
 </tr>
 <tr>
 <td class="left">Obsoletes: 8089 (if approved)</td>
-<td class="right">December 18, 2018</td>
+<td class="right">December 19, 2018</td>
 </tr>
 <tr>
 <td class="left">Intended status: Informational</td>
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: June 21, 2019</td>
+<td class="left">Expires: June 22, 2019</td>
 <td class="right"></td>
 </tr>
 
@@ -449,7 +447,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on June 21, 2019.</p>
+<p>This Internet-Draft will expire on June 22, 2019.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -465,13 +463,9 @@
 </li>
 </ul><li>2.   <a href="#rfc.section.2">Nonstandard Extensions</a>
 </li>
-<ul><li>2.1.   <a href="#rfc.section.2.1">Query and Fragment Components</a>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Query Components</a>
 </li>
-<ul><li>2.1.1.   <a href="#rfc.section.2.1.1">Query</a>
-</li>
-<li>2.1.2.   <a href="#rfc.section.2.1.2">Fragment</a>
-</li>
-</ul><li>2.2.   <a href="#rfc.section.2.2">User Information</a>
+<li>2.2.   <a href="#rfc.section.2.2">User Information</a>
 </li>
 <li>2.3.   <a href="#rfc.section.2.3">MS-DOS and Windows Drive Letters</a>
 </li>
@@ -520,22 +514,15 @@
 </h1>
 <p id="rfc.section.2.p.1">These extensions might be encountered by existing usages of the file URI scheme, but are not supported by the core specification <a href="#draft-kerwin-rfc8089-bis-core" class="xref">[draft-kerwin-rfc8089-bis-core]</a>.</p>
 <h1 id="rfc.section.2.1">
-<a href="#rfc.section.2.1">2.1.</a> <a href="#query-fragment" id="query-fragment">Query and Fragment Components</a>
+<a href="#rfc.section.2.1">2.1.</a> <a href="#query-component" id="query-component">Query Components</a>
 </h1>
-<p id="rfc.section.2.1.p.1">Some resources include active scripts that interact with the resource&#8217;s URI, for example JavaScript accessing the Location interface <a href="#HTML5.Location" class="xref">[HTML5.Location]</a> in a HTML document.  These scripts often inspect and/or modify the query or fragment components (<a href="#RFC3986" class="xref">[RFC3986]</a>, Sections 3.4 and 3.5) of the URI.  To support this behaviour for resources with a file URI, query and fragment components may be handled thus.  [[FIXME]]</p>
-<h1 id="rfc.section.2.1.1">
-<a href="#rfc.section.2.1.1">2.1.1.</a> <a href="#query-component" id="query-component">Query</a>
-</h1>
-<p id="rfc.section.2.1.1.p.1">[[The query component should not be used when dereferencing a file URI.  This is a security risk, because multiple URIs can point at the same file.  It also breaks equivalence.]]</p>
-<p id="rfc.section.2.1.1.p.2">To allow a query component to be included in a file URI the core <samp>file-URI</samp> rule can be extended with the following definition:</p>
+<p id="rfc.section.2.1.p.1">Some resources include active scripts that interact with the resource&#8217;s URI, for example JavaScript accessing the Location interface <a href="#HTML5.Location" class="xref">[HTML5.Location]</a> in a HTML document.  These scripts can inspect and/or modify the query component (<a href="#RFC3986" class="xref">[RFC3986]</a>, Section 3.4) of the URI.  To support this behaviour, the file URI scheme may be extended to include a query component.</p>
+<p id="rfc.section.2.1.p.2">[[The query component should not be used when dereferencing a file URI.  This is a security risk, because multiple URIs can point at the same file.  It also breaks equivalence.]]</p>
+<p id="rfc.section.2.1.p.3">To allow a query component to be included in a file URI the core <samp>file-URI</samp> rule can be extended with the following definition:</p>
 <pre>
    file-URI       =/ file-scheme ":" file-hier-part "?" query
 </pre>
-<p id="rfc.section.2.1.1.p.3">This uses the <samp>query</samp> rule from <a href="#RFC3986" class="xref">[RFC3986]</a>.</p>
-<h1 id="rfc.section.2.1.2">
-<a href="#rfc.section.2.1.2">2.1.2.</a> <a href="#fragment-component" id="fragment-component">Fragment</a>
-</h1>
-<p id="rfc.section.2.1.2.p.1">Fragment components are already syntactically supported by <a href="#RFC3986" class="xref">[RFC3986]</a>, however the semantics of a fragment depend on the content type of the resource representation.  The file URI scheme does not have a mechanism for detecting or communicating the content type of resources, but file and operating systems often do.  [[TODO: expand, add security concerns]]</p>
+<p id="rfc.section.2.1.p.4">This uses the <samp>query</samp> rule from <a href="#RFC3986" class="xref">[RFC3986]</a>.</p>
 <h1 id="rfc.section.2.2">
 <a href="#rfc.section.2.2">2.2.</a> <a href="#userinfo" id="userinfo">User Information</a>
 </h1>

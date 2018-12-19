@@ -4,9 +4,9 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 8089 (if approved)                          December 13, 2018
+Obsoletes: 8089 (if approved)                          December 19, 2018
 Intended status: Standards Track
-Expires: June 16, 2019
+Expires: June 22, 2019
 
 
                           The file URI Scheme
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 16, 2019.
+   This Internet-Draft will expire on June 22, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Kerwin                    Expires June 16, 2019                 [Page 1]
+Kerwin                    Expires June 22, 2019                 [Page 1]
 
 Internet-Draft              rfc8089-bis-core               December 2018
 
@@ -70,23 +70,25 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
    2.  Syntax  . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     2.1.  Case Sensitivity  . . . . . . . . . . . . . . . . . . . .   5
+     2.2.  Fragment  . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Operations Involving file URIs  . . . . . . . . . . . . . . .   5
    4.  File System Name Encoding . . . . . . . . . . . . . . . . . .   5
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
      8.2.  Informative References  . . . . . . . . . . . . . . . . .   8
-   Appendix A.  Differences from Previous Specifications . . . . . .   9
+   Appendix A.  Differences from Previous Specifications . . . . . .  10
    Appendix B.  Example URIs . . . . . . . . . . . . . . . . . . . .  10
-   Appendix C.  Similar Technologies . . . . . . . . . . . . . . . .  10
+   Appendix C.  Similar Technologies . . . . . . . . . . . . . . . .  11
    Appendix D.  System-Specific Operations . . . . . . . . . . . . .  11
      D.1.  POSIX Systems . . . . . . . . . . . . . . . . . . . . . .  11
-     D.2.  MS-DOS and Windows Systems  . . . . . . . . . . . . . . .  11
+     D.2.  MS-DOS and Windows Systems  . . . . . . . . . . . . . . .  12
      D.3.  Mac OS X Systems  . . . . . . . . . . . . . . . . . . . .  12
      D.4.  OpenVMS Files-11 Systems  . . . . . . . . . . . . . . . .  12
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  12
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
 
@@ -103,17 +105,17 @@ Table of Contents
    by more recent specifications.  Appendix A lists significant changes
    from historical syntax definitions.
 
-   Extensions to the syntax which might be encountered in practice are
-   listed in [draft-kerwin-rfc8089-bis-info]; those extensions are given
 
 
 
 
-Kerwin                    Expires June 16, 2019                 [Page 2]
+Kerwin                    Expires June 22, 2019                 [Page 2]
 
 Internet-Draft              rfc8089-bis-core               December 2018
 
 
+   Extensions to the syntax which might be encountered in practice are
+   listed in [draft-kerwin-rfc8089-bis-info]; those extensions are given
    for informational purposes and are not a requirement of
    implementation.
 
@@ -163,9 +165,7 @@ Internet-Draft              rfc8089-bis-core               December 2018
 
 
 
-
-
-Kerwin                    Expires June 16, 2019                 [Page 3]
+Kerwin                    Expires June 22, 2019                 [Page 3]
 
 Internet-Draft              rfc8089-bis-core               December 2018
 
@@ -221,13 +221,15 @@ Internet-Draft              rfc8089-bis-core               December 2018
 
 
 
-Kerwin                    Expires June 16, 2019                 [Page 4]
+Kerwin                    Expires June 22, 2019                 [Page 4]
 
 Internet-Draft              rfc8089-bis-core               December 2018
 
 
    convention, and MAY be omitted before the drive letter when
    representing an absolute path in a MS-DOS or Windows file system.
+
+2.1.  Case Sensitivity
 
    Some file systems have case-sensitive file naming and some do not.
    As such the file URI scheme supports case sensitivity, in order to
@@ -236,6 +238,17 @@ Internet-Draft              rfc8089-bis-core               December 2018
    case-insensitive form is solely the responsibility of the
    implementation processing the file URI on behalf of the referenced
    file system.
+
+2.2.  Fragment
+
+   Fragment components ([RFC3986], Section 3.5) are supported according
+   to [RFC3986], however the specific syntax and semantics of a fragment
+   depend on the media type of the representation of the retrieved
+   resource.  As the file URI scheme does not have a mechanism for
+   detecting or communicating the content type of resources, any
+   fragment on a file URI is inherently meaningless.  However in
+   practice there are mechanisms to detect or guess the media type of a
+   file.  [[TODO: are there any security concerns here?]]
 
 3.  Operations Involving file URIs
 
@@ -261,6 +274,14 @@ Internet-Draft              rfc8089-bis-core               December 2018
 
    When a file URI is produced that represents textual data consisting
    of characters from the Unicode Standard coded character set
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 5]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
    [UNICODE], the data SHOULD be encoded as octets according to the
    UTF-8 character encoding scheme [STD63] before percent-encoding is
    applied; as per [RFC3986], Section 2.5.
@@ -273,14 +294,6 @@ Internet-Draft              rfc8089-bis-core               December 2018
 
    There are many security considerations for URI schemes discussed in
    [RFC3986].
-
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 5]
-
-Internet-Draft              rfc8089-bis-core               December 2018
-
 
    File access and the granting of privileges for specific operations
    are complex topics, and the use of file URIs can complicate the
@@ -316,6 +329,15 @@ Internet-Draft              rfc8089-bis-core               December 2018
    only differences between file paths or URIs, or from mismatched
    encodings or Unicode equivalences [UAX15] (see Section 4).
 
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 6]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
 6.  IANA Considerations
 
    This document defines the following URI scheme, so the "Permanent URI
@@ -329,15 +351,6 @@ Internet-Draft              rfc8089-bis-core               December 2018
       permanent
 
    Applications/protocols that use this scheme name:
-
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 6]
-
-Internet-Draft              rfc8089-bis-core               December 2018
-
-
       Commonly used in hypertext documents to refer to files without
       depending on network access.  Supported by major browsers.
 
@@ -371,6 +384,16 @@ Internet-Draft              rfc8089-bis-core               December 2018
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 7]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, DOI 10.17487/RFC3986, January 2005,
@@ -384,15 +407,6 @@ Internet-Draft              rfc8089-bis-core               December 2018
    [RFC6454]  Barth, A., "The Web Origin Concept", RFC 6454,
               DOI 10.17487/RFC6454, December 2011,
               <https://www.rfc-editor.org/info/rfc6454>.
-
-
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 7]
-
-Internet-Draft              rfc8089-bis-core               December 2018
-
 
    [RFC6874]  Carpenter, B., Cheshire, S., and R. Hinden, "Representing
               IPv6 Zone Identifiers in Address Literals and Uniform
@@ -427,6 +441,15 @@ Internet-Draft              rfc8089-bis-core               December 2018
               UNC", October 2015,
               <https://msdn.microsoft.com/en-us/library/gg465305.aspx>.
 
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 8]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
    [POSIX]    IEEE, "IEEE 1003.1-2017 - IEEE Standard for Information
               Technology--Portable Operating System Interface (POSIX(R))
               Base Specifications, Issue 7", 2017.
@@ -439,16 +462,6 @@ Internet-Draft              rfc8089-bis-core               December 2018
               Resource Identifiers (URI): Generic Syntax", RFC 2396,
               DOI 10.17487/RFC2396, August 1998,
               <https://www.rfc-editor.org/info/rfc2396>.
-
-
-
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 8]
-
-Internet-Draft              rfc8089-bis-core               December 2018
-
 
    [RFC6838]  Freed, N., Klensin, J., and T. Hansen, "Media Type
               Specifications and Registration Procedures", BCP 13,
@@ -481,6 +494,18 @@ Internet-Draft              rfc8089-bis-core               December 2018
               <http://zsh.sourceforge.net/Doc/Release/
               Expansion.html#Filename-Expansion>.
 
+
+
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                 [Page 9]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
 Appendix A.  Differences from Previous Specifications
 
    The syntax definition in Section 2 inherits incremental differences
@@ -498,13 +523,6 @@ Appendix A.  Differences from Previous Specifications
    implementations the path component is often interpreted as a complete
    file path, including sequences of empty path segments (represented as
    subsequence slashes).
-
-
-
-Kerwin                    Expires June 16, 2019                 [Page 9]
-
-Internet-Draft              rfc8089-bis-core               December 2018
-
 
    The definition specified in [RFC8089] did not allow for file URIs
    with no authority component that start with a MS-DOS or Windows drive
@@ -537,6 +555,13 @@ Appendix B.  Example URIs
 
       *  "file://host.example.com/path/to/file"
 
+
+
+Kerwin                    Expires June 22, 2019                [Page 10]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
 Appendix C.  Similar Technologies
 
    o  The WHATWG URL specification [WHATWG-URL] defines browser behavior
@@ -552,15 +577,6 @@ Appendix C.  Similar Technologies
       describing the location of files, except that files located by UNC
       filespace selector strings are typically stored on a remote
       machine and accessed using a network protocol.
-
-
-
-
-
-Kerwin                    Expires June 16, 2019                [Page 10]
-
-Internet-Draft              rfc8089-bis-core               December 2018
-
 
    o  The Microsoft Windows API defines Win32 Namespaces
       [Win32-Namespaces] for interacting with files and devices using
@@ -593,6 +609,15 @@ D.1.  POSIX Systems
    (zsh) provide a function known as "tilde expansion" [Bash-Tilde] or
    "filename expansion" [Zsh-Tilde], where a path that begins with a
    tilde "~" character can be expanded out to a special directory name.
+
+
+
+
+Kerwin                    Expires June 22, 2019                [Page 11]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
    No such facility exists using the file URI scheme; a tilde in a file
    URI is always just a tilde.
 
@@ -609,14 +634,6 @@ D.2.  MS-DOS and Windows Systems
    Absolute file URIs without a drive letter are resolved relative to
    the current context (i.e. with the same drive letter as the base URL,
    or the current working environment if there is no base URL.)
-
-
-
-
-Kerwin                    Expires June 16, 2019                [Page 11]
-
-Internet-Draft              rfc8089-bis-core               December 2018
-
 
    URIs and relative references with a drive letter followed by a
    character other than a slash (e.g. "file:c:bar/baz.txt" or
@@ -646,6 +663,17 @@ D.4.  OpenVMS Files-11 Systems
    transcribed into the authority using a nonstandard extension
    described in [draft-kerwin-rfc8089-bis-info].
 
+
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                [Page 12]
+
+Internet-Draft              rfc8089-bis-core               December 2018
+
+
 Author's Address
 
    Matthew Kerwin
@@ -669,4 +697,32 @@ Author's Address
 
 
 
-Kerwin                    Expires June 16, 2019                [Page 12]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kerwin                    Expires June 22, 2019                [Page 13]
