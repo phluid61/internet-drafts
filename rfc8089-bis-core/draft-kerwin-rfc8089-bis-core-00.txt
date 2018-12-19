@@ -71,7 +71,7 @@ Table of Contents
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
    2.  Syntax  . . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.1.  Case Sensitivity  . . . . . . . . . . . . . . . . . . . .   5
-     2.2.  Fragment  . . . . . . . . . . . . . . . . . . . . . . . .   5
+     2.2.  Fragments . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Operations Involving file URIs  . . . . . . . . . . . . . . .   5
    4.  File System Name Encoding . . . . . . . . . . . . . . . . . .   5
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
@@ -239,7 +239,7 @@ Internet-Draft              rfc8089-bis-core               December 2018
    implementation processing the file URI on behalf of the referenced
    file system.
 
-2.2.  Fragment
+2.2.  Fragments
 
    Fragment components ([RFC3986], Section 3.5) are supported according
    to [RFC3986], however the specific syntax and semantics of a fragment
@@ -248,7 +248,8 @@ Internet-Draft              rfc8089-bis-core               December 2018
    detecting or communicating the content type of resources, any
    fragment on a file URI is inherently meaningless.  However in
    practice there are mechanisms to detect or guess the media type of a
-   file.  [[TODO: are there any security concerns here?]]
+   file, which can provide meaning for fragment components.  [[TODO: are
+   there any security concerns here?]]
 
 3.  Operations Involving file URIs
 
@@ -272,8 +273,7 @@ Internet-Draft              rfc8089-bis-core               December 2018
    encoded string often depends on the user's localization settings or
    defaults to UTF-8 [STD63].
 
-   When a file URI is produced that represents textual data consisting
-   of characters from the Unicode Standard coded character set
+
 
 
 
@@ -282,6 +282,8 @@ Kerwin                    Expires June 22, 2019                 [Page 5]
 Internet-Draft              rfc8089-bis-core               December 2018
 
 
+   When a file URI is produced that represents textual data consisting
+   of characters from the Unicode Standard coded character set
    [UNICODE], the data SHOULD be encoded as octets according to the
    UTF-8 character encoding scheme [STD63] before percent-encoding is
    applied; as per [RFC3986], Section 2.5.
@@ -328,8 +330,6 @@ Internet-Draft              rfc8089-bis-core               December 2018
    avoid issues resulting from possibly unexpected aliasing from case-
    only differences between file paths or URIs, or from mismatched
    encodings or Unicode equivalences [UAX15] (see Section 4).
-
-
 
 
 
