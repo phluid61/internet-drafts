@@ -259,12 +259,25 @@ file system.  In `local-path` it solely represents the {{POSIX}}
 convention, and MAY be omitted before the drive letter when
 representing an absolute path in a MS-DOS or Windows file system.
 
+## Case Sensitivity {#syntax.case}
+
 Some file systems have case-sensitive file naming and some do not.  As
 such the file URI scheme supports case sensitivity, in order to retain
 the case as given.  Any transport-related handling of the file URI
 scheme MUST retain the case as given.  Any mapping to or from a
 case-insensitive form is solely the responsibility of the implementation
 processing the file URI on behalf of the referenced file system.
+
+## Fragment {#syntax.fragment}
+
+Fragment components ({{RFC3986}}, Section 3.5) are supported according
+to {{RFC3986}}, however the specific syntax and semantics of a fragment
+depend on the media type of the representation of the retrieved
+resource.  As the file URI scheme does not have a mechanism for
+detecting or communicating the content type of resources, any fragment
+on a file URI is inherently meaningless.  However in practice there are
+mechanisms to detect or guess the media type of a file.  \[\[TODO: are
+there any security concerns here?\]\]
 
 
 # Operations Involving file URIs  {#operations}

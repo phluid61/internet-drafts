@@ -109,18 +109,14 @@ scheme, but are not supported by the core specification
 {{draft-kerwin-rfc8089-bis-core}}.
 
 
-## Query and Fragment Components  {#query-fragment}
+## Query Components  {#query-component}
 
 Some resources include active scripts that interact with the resource's
 URI, for example JavaScript accessing the Location interface
-{{HTML5.Location}} in a HTML document.  These scripts often inspect
-and/or modify the query or fragment components ({{RFC3986}}, Sections
-3.4 and 3.5) of the URI.  To support this behaviour for resources with
-a file URI, query and fragment components may be handled thus.
-\[\[FIXME\]\]
-
-
-### Query  {#query-component}
+{{HTML5.Location}} in a HTML document.  These scripts can inspect
+and/or modify the query component ({{RFC3986}}, Section 3.4) of the URI.
+To support this behaviour, the file URI scheme may be extended to include
+a query component.
 
 \[\[The query component should not be used when dereferencing a file
 URI.  This is a security risk, because multiple URIs can point at the
@@ -134,16 +130,6 @@ rule can be extended with the following definition:
 ~~~~~~~~~~
 
 This uses the `query` rule from {{!RFC3986}}.
-
-
-### Fragment  {#fragment-component}
-
-Fragment components are already syntactically supported by
-{{!RFC3986}}, however the semantics of a fragment depend on the content
-type of the resource representation.  The file URI scheme does not
-have a mechanism for detecting or communicating the content type of
-resources, but file and operating systems often do.
-\[\[TODO: expand, add security concerns\]\]
 
 
 ## User Information  {#userinfo}
