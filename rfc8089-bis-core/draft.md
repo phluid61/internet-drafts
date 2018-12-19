@@ -268,7 +268,7 @@ scheme MUST retain the case as given.  Any mapping to or from a
 case-insensitive form is solely the responsibility of the implementation
 processing the file URI on behalf of the referenced file system.
 
-## Fragment {#syntax-fragment}
+## Fragments {#syntax-fragment}
 
 Fragment components ({{RFC3986}}, Section 3.5) are supported according
 to {{RFC3986}}, however the specific syntax and semantics of a fragment
@@ -276,8 +276,9 @@ depend on the media type of the representation of the retrieved
 resource.  As the file URI scheme does not have a mechanism for
 detecting or communicating the content type of resources, any fragment
 on a file URI is inherently meaningless.  However in practice there are
-mechanisms to detect or guess the media type of a file.  \[\[TODO: are
-there any security concerns here?\]\]
+mechanisms to detect or guess the media type of a file, which can
+provide meaning for fragment components.
+\[\[TODO: are there any security concerns here?\]\]
 
 
 # Operations Involving file URIs  {#operations}
