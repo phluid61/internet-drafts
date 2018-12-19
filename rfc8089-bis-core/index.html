@@ -378,7 +378,7 @@
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Notational Conventions">
 <link href="#rfc.section.2" rel="Chapter" title="2 Syntax">
 <link href="#rfc.section.2.1" rel="Chapter" title="2.1 Case Sensitivity">
-<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Fragment">
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Fragments">
 <link href="#rfc.section.3" rel="Chapter" title="3 Operations Involving file URIs">
 <link href="#rfc.section.4" rel="Chapter" title="4 File System Name Encoding">
 <link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations">
@@ -468,7 +468,7 @@
 </li>
 <ul><li>2.1.   <a href="#rfc.section.2.1">Case Sensitivity</a>
 </li>
-<li>2.2.   <a href="#rfc.section.2.2">Fragment</a>
+<li>2.2.   <a href="#rfc.section.2.2">Fragments</a>
 </li>
 </ul><li>3.   <a href="#rfc.section.3">Operations Involving file URIs</a>
 </li>
@@ -561,9 +561,9 @@
 </h1>
 <p id="rfc.section.2.1.p.1">Some file systems have case-sensitive file naming and some do not.  As such the file URI scheme supports case sensitivity, in order to retain the case as given.  Any transport-related handling of the file URI scheme MUST retain the case as given.  Any mapping to or from a case-insensitive form is solely the responsibility of the implementation processing the file URI on behalf of the referenced file system.</p>
 <h1 id="rfc.section.2.2">
-<a href="#rfc.section.2.2">2.2.</a> <a href="#syntax-fragment" id="syntax-fragment">Fragment</a>
+<a href="#rfc.section.2.2">2.2.</a> <a href="#syntax-fragment" id="syntax-fragment">Fragments</a>
 </h1>
-<p id="rfc.section.2.2.p.1">Fragment components (<a href="#RFC3986" class="xref">[RFC3986]</a>, Section 3.5) are supported according to <a href="#RFC3986" class="xref">[RFC3986]</a>, however the specific syntax and semantics of a fragment depend on the media type of the representation of the retrieved resource.  As the file URI scheme does not have a mechanism for detecting or communicating the content type of resources, any fragment on a file URI is inherently meaningless.  However in practice there are mechanisms to detect or guess the media type of a file.  [[TODO: are there any security concerns here?]]</p>
+<p id="rfc.section.2.2.p.1">Fragment components (<a href="#RFC3986" class="xref">[RFC3986]</a>, Section 3.5) are supported according to <a href="#RFC3986" class="xref">[RFC3986]</a>, however the specific syntax and semantics of a fragment depend on the media type of the representation of the retrieved resource.  As the file URI scheme does not have a mechanism for detecting or communicating the content type of resources, any fragment on a file URI is inherently meaningless.  However in practice there are mechanisms to detect or guess the media type of a file, which can provide meaning for fragment components.  [[TODO: are there any security concerns here?]]</p>
 <h1 id="rfc.section.3">
 <a href="#rfc.section.3">3.</a> <a href="#operations" id="operations">Operations Involving file URIs</a>
 </h1>
