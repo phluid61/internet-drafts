@@ -10,7 +10,7 @@ area: General
 workgroup: Applications Area Working Group
 keyword: Internet-Draft
 
-obsoletes: 8089
+#obsoletes: 8089
 
 stand_alone: yes #_
 pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
