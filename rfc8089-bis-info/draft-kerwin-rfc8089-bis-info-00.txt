@@ -4,9 +4,8 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Obsoletes: 8089 (if approved)                          December 19, 2018
-Intended status: Informational
-Expires: June 22, 2019
+Intended status: Informational                         December 21, 2018
+Expires: June 24, 2019
 
 
                        Using the file URI Scheme
@@ -39,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 22, 2019.
+   This Internet-Draft will expire on June 24, 2019.
 
 Copyright Notice
 
@@ -50,15 +49,15 @@ Copyright Notice
    Provisions Relating to IETF Documents
    (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
 
 
 
-Kerwin                    Expires June 22, 2019                 [Page 1]
+Kerwin                    Expires June 24, 2019                 [Page 1]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
 
-   carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
@@ -109,7 +108,8 @@ Table of Contents
 
 
 
-Kerwin                    Expires June 22, 2019                 [Page 2]
+
+Kerwin                    Expires June 24, 2019                 [Page 2]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
@@ -136,9 +136,13 @@ Internet-Draft              rfc8089-bis-info               December 2018
    the URI.  To support this behaviour, the file URI scheme may be
    extended to include a query component.
 
-   [[The query component should not be used when dereferencing a file
-   URI.  This is a security risk, because multiple URIs can point at the
-   same file.  It also breaks equivalence.]]
+   As the absolute path to a file is represented by the hierarchical
+   part of a file URI ([draft-kerwin-rfc8089-bis-core], Section 2), the
+   query component, if present, is not used when dereferencing a file
+   URI.  As a result, multiple file URIs can point to the same file if
+   they differ only in the presence and/or value of the query
+   components.  Care must be taken to avoid issues resulting from
+   possibly unexpected aliasing in such cases.
 
    To allow a query component to be included in a file URI the core
    "file-URI" rule can be extended with the following definition:
@@ -158,18 +162,18 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
       file-auth      =/ userinfo "@" host
 
-   This uses the "userinfo" rule from [RFC3986].
-
-   The presence of a password in a "user:password" userinfo field is
-   deprecated by [RFC3986], Section 3.2.1.  Implementers MUST take care
 
 
 
-Kerwin                    Expires June 22, 2019                 [Page 3]
+Kerwin                    Expires June 24, 2019                 [Page 3]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
 
+   This uses the "userinfo" rule from [RFC3986].
+
+   The presence of a password in a "user:password" userinfo field is
+   deprecated by [RFC3986], Section 3.2.1.  Implementers MUST take care
    when dealing with information that can be used to identify a user or
    grant access to a system, including generation, transmission, and
    storage of said information.
@@ -213,18 +217,19 @@ Internet-Draft              rfc8089-bis-info               December 2018
    unescaped in any portion of a URI, however it might be necessary to
    interpret or update old file URIs that include it.
 
+
+
+
+
+Kerwin                    Expires June 24, 2019                 [Page 4]
+
+Internet-Draft              rfc8089-bis-info               December 2018
+
+
    To accommodate historical file URIs that have a vertical line "|"
    character instead of a colon ":" in the drive letter construct the
    "auth-path", "local-path", and "drive-letter" rules in the core
    specification can be extended with the following definitions:
-
-
-
-
-Kerwin                    Expires June 22, 2019                 [Page 4]
-
-Internet-Draft              rfc8089-bis-info               December 2018
-
 
       auth-path      =/ [ file-auth ] file-absolute
 
@@ -270,17 +275,14 @@ Internet-Draft              rfc8089-bis-info               December 2018
    It can also be paired with the expansion in Section 2.3.1.  For
    example:
 
-   o  "file://c/path/to/file"
 
 
-
-
-
-
-Kerwin                    Expires June 22, 2019                 [Page 5]
+Kerwin                    Expires June 24, 2019                 [Page 5]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
+
+   o  "file://c/path/to/file"
 
    Care MUST be taken when interpreting all such file URIs, as this
    interpretation can only be applied if it can be determined with
@@ -331,9 +333,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
 
 
-
-
-Kerwin                    Expires June 22, 2019                 [Page 6]
+Kerwin                    Expires June 24, 2019                 [Page 6]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
@@ -389,7 +389,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
 
 
-Kerwin                    Expires June 22, 2019                 [Page 7]
+Kerwin                    Expires June 24, 2019                 [Page 7]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
@@ -445,7 +445,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
 
 
-Kerwin                    Expires June 22, 2019                 [Page 8]
+Kerwin                    Expires June 24, 2019                 [Page 8]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
@@ -501,7 +501,7 @@ Internet-Draft              rfc8089-bis-info               December 2018
 
 
 
-Kerwin                    Expires June 22, 2019                 [Page 9]
+Kerwin                    Expires June 24, 2019                 [Page 9]
 
 Internet-Draft              rfc8089-bis-info               December 2018
 
@@ -557,4 +557,4 @@ Author's Address
 
 
 
-Kerwin                    Expires June 22, 2019                [Page 10]
+Kerwin                    Expires June 24, 2019                [Page 10]
