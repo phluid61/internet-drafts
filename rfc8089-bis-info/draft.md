@@ -118,9 +118,13 @@ and/or modify the query component ({{RFC3986}}, Section 3.4) of the URI.
 To support this behaviour, the file URI scheme may be extended to include
 a query component.
 
-\[\[The query component should not be used when dereferencing a file
-URI.  This is a security risk, because multiple URIs can point at the
-same file.  It also breaks equivalence.\]\]
+As the absolute path to a file is represented by the hierarchical part
+of a file URI ({{draft-kerwin-rfc8089-bis-core}}, Section 2), the query
+component, if present, is not used when dereferencing a file URI.  As
+a result, multiple file URIs can point to the same file if they differ
+only in the presence and/or value of the query components.  Care must
+be taken to avoid issues resulting from possibly unexpected aliasing
+in such cases.
 
 To allow a query component to be included in a file URI the core `file-URI`
 rule can be extended with the following definition:
