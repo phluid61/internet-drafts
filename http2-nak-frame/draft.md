@@ -71,7 +71,9 @@ This document introduces a new HTTP/2 frame type ({{RFC7540}}, Section 11.2).
 
 ## DROPPED\_FRAME {#dropped-frame}
 
-DROPPED\_FRAME frames (type code=0xTBA) can be sent on a connection at any time after the
+<cref anchor="NOTE-1" source="MK">This is an experimental value; if standardised, a permanent value will be assigned.</cref>
+
+DROPPED\_FRAME frames (type code=0xf001) can be sent on a connection at any time after the
 connection preface except in the middle of a header block ({{RFC7540}}, Section 4.3) to indicate
 that a received extension frame was discarded without any other action being taken.
 
@@ -109,8 +111,8 @@ connection error ({{RFC7540}}, Section 5.4.1) of type PROTOCOL\_ERROR.
 Receipt of a DROPPED\_FRAME frame with a length field value other than 1 MUST be treated as a
 connection error ({{RFC7540}}, Section 5.4.1) of type FRAME\_SIZE\_ERROR.
 
-An endpoint MUST NOT send a DROPPED\_FRAME frame with a Type of DROPPED\_FRAME (0xTBA).  If a
-DROPPED\_FRAME frame is received with a Type field value of 0xTBA, the recipient MUST respond with
+An endpoint MUST NOT send a DROPPED\_FRAME frame with a Type of DROPPED\_FRAME (0xf001).  If a
+DROPPED\_FRAME frame is received with a Type field value of 0xf001, the recipient MUST respond with
 a connection error ({{RFC7540}}, Section 5.4.1) of type PROTOCOL\_ERROR.
 <!-- FIXME: what about core frame types / explicitly negotiated ones / etc? -->
 
@@ -147,3 +149,15 @@ in the following table are registered by this document.
 
 
 --- back
+
+# Changelog
+
+Since -01:
+
+* use experimental value for frame ID
+
+Since -00:
+
+* Largely editorial; clarifications about when a frame can be received and what it
+  can reasonably contain.
+
