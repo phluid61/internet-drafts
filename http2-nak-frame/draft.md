@@ -1,7 +1,7 @@
 ---
 title: HTTP/2 "Dropped Frame" Frame
 abbrev: http2-nak-frame
-docname: draft-kerwin-http2-nak-frame-02
+docname: draft-kerwin-http2-nak-frame-03
 date: 2019
 category: std
 
@@ -155,6 +155,8 @@ in the following table are registered by this document.
 --- back
 
 # Changelog
+
+Since -02:
 
 Since -01:
 
