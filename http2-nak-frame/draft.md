@@ -115,7 +115,7 @@ An endpoint MUST NOT send a DROPPED\_FRAME frame with a Type of DROPPED\_FRAME (
 DROPPED\_FRAME frame is received with a Type field value of 0xf1, the recipient MUST respond with
 a connection error ({{RFC7540}}, Section 5.4.1) of type PROTOCOL\_ERROR.
 
-Likewise, an endpoint MUST NOT send a DROPPED\_FRAME frame for a type it does not discard, including
+Likewise, an endpoint MUST NOT send a DROPPED\_FRAME frame for a type it does not discard -- including
 the frame types defined in {{RFC7540}}, Section 6, unless otherwise negotiated.  If a
 DROPPED\_FRAME frame is received for a type that can not be discarded by the sending peer, the
 recipient MUST respond with a connection error ({{RFC7540}}, Section 5.4.1) of type PROTOCOL\_ERROR.
@@ -159,6 +159,7 @@ in the following table are registered by this document.
 Since -01:
 
 * use experimental value for frame ID
+* forbid sending a DROPPED\_FRAME for any frame that isn't dropped
 
 Since -00:
 
