@@ -2,7 +2,7 @@
 title: HTTP/2 "Dropped Frame" Frame
 abbrev: http2-nak-frame
 docname: draft-kerwin-http2-nak-frame-02
-date: 2017
+date: 2019
 category: std
 
 ipr: trust200902
