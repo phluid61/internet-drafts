@@ -96,7 +96,7 @@ frames that may already be in flight.
 
 <cref anchor="NOTE-2" source="MK">This is an experimental value; if standardised, a permanent value will be assigned.</cref>
 
-GZIPPED\_DATA frames (type code=0xf000) are semantically identical to DATA frames
+GZIPPED\_DATA frames (type code=0xf0) are semantically identical to DATA frames
 ({{RFC7540}}, Section 6.1), but their payload is encoded using gzip compression.
 Significantly: the order of DATA and GZIPPED\_DATA frames is semantically significant; and
 GZIPPED\_DATA frames are subject to flow control ({{RFC7540}}, Section 5.2).
