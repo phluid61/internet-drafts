@@ -20,11 +20,11 @@ Abstract
 Note to Readers
 
    The issues list for this draft can be found at
-   https://github.com/phluid61/internet-drafts/labels/
-   HTTP%2F2%20NAK%20Frame [1]
+   <https://github.com/phluid61/internet-drafts/labels/
+   HTTP%2F2%20NAK%20Frame>
 
    The most recent (often unpublished) draft is at
-   https://phluid61.github.io/internet-drafts/http2-nak-frame/ [2]
+   <https://phluid61.github.io/internet-drafts/http2-nak-frame/>
 
 Status of This Memo
 
@@ -250,12 +250,6 @@ Internet-Draft               http2-nak-frame                 August 2019
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-5.2.  URIs
-
-   [1] https://github.com/phluid61/internet-drafts/labels/
-       HTTP%2F2%20NAK%20Frame
-
-   [2] https://phluid61.github.io/internet-drafts/http2-nak-frame/
 
 Appendix A.  Changelog
 
@@ -269,6 +263,12 @@ Appendix A.  Changelog
 
    o  Largely editorial; clarifications about when a frame can be
       received and what it can reasonably contain.
+
+
+
+
+
+
 
 
 
