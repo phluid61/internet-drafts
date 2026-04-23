@@ -10,7 +10,9 @@
 /.*.mk
 /.gems/
 /.refcache
+**/.refcache
 /.venv/
+/lib/
 /.vscode/
 /.idea/
 /node_modules/
@@ -18,5 +20,6 @@
 Gemfile.lock
 archive.json
 package-lock.json
+output.log
 report.xml
 !requirements.txt
