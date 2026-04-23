@@ -18,30 +18,3 @@ View [saved issues](issues.html), or the latest GitHub [issues](https://github.c
 | Draft |     |     |     |
 | ----- | --- | --- | --- |
 |||||||||||||||||||||||
-## Preview for branch [rfc8089-bis-core](rfc8089-bis-core)
-
-| Draft |     |     |     |
-| ----- | --- | --- | --- |
-|
-## Preview for branch [rfc8089-bis-info](rfc8089-bis-info)
-
-| Draft |     |     |     |
-| ----- | --- | --- | --- |
-|
-## Preview for branch [_data](_data)
-
-## Preview for branch [http2-encoded-data](http2-encoded-data)
-
-| Draft |     |     |     |
-| ----- | --- | --- | --- |
-|||||||||||
-## Preview for branch [http2-nak-frame](http2-nak-frame)
-
-| Draft |     |     |     |
-| ----- | --- | --- | --- |
-|||
-## Preview for branch [http2-segments](http2-segments)
-
-| Draft |     |     |     |
-| ----- | --- | --- | --- |
-||||
