@@ -1,0 +1,12 @@
+<reference anchor="RFC1952" target="https://www.rfc-editor.org/info/rfc1952">
+  <front>
+    <title>GZIP file format specification version 4.3</title>
+    <author fullname="P. Deutsch" initials="P." surname="Deutsch"/>
+    <date month="May" year="1996"/>
+    <abstract>
+      <t>This specification defines a lossless compressed data format that is compatible with the widely used GZIP utility. This memo provides information for the Internet community. This memo does not specify an Internet standard of any kind.</t>
+    </abstract>
+  </front>
+  <seriesInfo name="RFC" value="1952"/>
+  <seriesInfo name="DOI" value="10.17487/RFC1952"/>
+</reference>

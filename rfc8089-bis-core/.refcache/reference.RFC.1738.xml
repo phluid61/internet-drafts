@@ -1,0 +1,14 @@
+<reference anchor="RFC1738" target="https://www.rfc-editor.org/info/rfc1738">
+  <front>
+    <title>Uniform Resource Locators (URL)</title>
+    <author fullname="T. Berners-Lee" initials="T." surname="Berners-Lee"/>
+    <author fullname="L. Masinter" initials="L." surname="Masinter"/>
+    <author fullname="M. McCahill" initials="M." surname="McCahill"/>
+    <date month="December" year="1994"/>
+    <abstract>
+      <t>This document specifies a Uniform Resource Locator (URL), the syntax and semantics of formalized information for location and access of resources via the Internet. [STANDARDS-TRACK]</t>
+    </abstract>
+  </front>
+  <seriesInfo name="RFC" value="1738"/>
+  <seriesInfo name="DOI" value="10.17487/RFC1738"/>
+</reference>
