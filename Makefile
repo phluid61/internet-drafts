@@ -5,13 +5,23 @@ INDEX_FORMAT := md
 # Override the index.md rule to prepend Jekyll front matter and
 # post-process the generated content:
 #  - remove the first markdown heading (the theme layout provides it)
-#  - replace the file-scheme "branch preview" with an archive link
+#  - strip all "Preview for branch" sections (subdirectories on gh-pages
+#    are archives, not branch previews)
+#  - append an Archive section listing any subdirectories
 $(GHPAGES_TARGET)/index.md: $(GHPAGES_INSTALLED) $(DEPS_FILES) | cleanup-ghpages
 	printf -- '---\nlayout: default\n---\n' >$@
 	$(LIBDIR)/build-index.sh md "$(dir $@)" "$(SOURCE_BRANCH)" "$(GITHUB_HOST)" "$(GITHUB_USER)" "$(GITHUB_REPO)" $(drafts_source) \
 	  | sed '1{/^# /d;}' \
-	  | sed '/^## Preview for branch \[file-scheme\]/,/^## /{/^## Preview for branch \[file-scheme\]/c\## Archive\n\n- [file-scheme](file-scheme/) — The file URI Scheme (RFC 8089)\n' -e '/^## /!d;}' \
+	  | sed '/^## Preview for branch /,$$d' \
 	  >>$@
+	@archives=$$(find $(GHPAGES_TARGET) -mindepth 1 -maxdepth 1 -type d \
+	  ! -name '.*' ! -name '_*' -printf '%f\n' | sort); \
+	if [ -n "$$archives" ]; then \
+	  printf '\n## Archive\n\n' >>$@; \
+	  for d in $$archives; do \
+	    printf -- '- [%s](%s/)\n' "$$d" "$$d" >>$@; \
+	  done; \
+	fi
 
 $(LIBDIR)/main.mk:
 ifneq (,$(shell grep "path *= *$(LIBDIR)" .gitmodules 2>/dev/null))
