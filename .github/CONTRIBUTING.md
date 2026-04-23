@@ -20,5 +20,5 @@ this particular repository is subject to its own
 [nb]: <https://www.ietf.org/about/note-well.html>
 [BCP78]: <http://tools.ietf.org/html/bcp78>
 [BCP79]: <http://tools.ietf.org/html/bcp79>
-[coc]: <https://github.com/phluid61/internet-drafts/blob/master/code_of_conduct.md>
+[coc]: <https://github.com/phluid61/internet-drafts/blob/main/code_of_conduct.md>
 

@@ -1,8 +1,9 @@
 #!/bin/bash -
 
-for f in http2-* ; do
-	pushd $f
-	make
+for f in */ ; do
+	[ -f "$f/draft.md" ] || continue
+	pushd "$f"
+	make "$@"
 	popd
 done
 
