@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Using the file URI Scheme</title>
+<meta content="Matthew Kerwin" name="author">
+<meta content="
+       This document describes common usages of file URIs, beyond those
+prescribed -- and in some cases even allowed -- in the core
+specification. 
+    " name="description">
+<meta content="xml2rfc 3.33.0" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-kerwin-rfc8089-bis-info-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.33.0
+    Python 3.12.13
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.1
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.0.2
+    platformdirs 4.9.6
+    pycountry 24.6.1
+    PyYAML 6.0.3
+    requests 2.32.5
+    wcwidth 0.6.0
+-->
+<link href="draft-kerwin-rfc8089-bis-info.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+}
+
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 680;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+  & li {
+    margin-top: 0.5em;
+  }
+}
+:is(ul, ol).compact, .ulCompact, .olCompact {
+  margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
+}
+
+/* definition lists */
+dl {
+  clear: left;
+  --indent: 3ch;
+  /* --indent: attr(indent ch); not supported in any browser, but we can dream */
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+    }
+  }
+  &.olPercent > dt {
+    float: none;
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+}
+dl:not(.dlNewline) > dt {
+  float: left;
+  margin-right: 2ch;
+  min-width: 8ch;
+}
+dl > dd {
+  margin-bottom: .8em;
+  margin-left: var(--indent) !important; /* stupid element overrides */
+  min-height: 2ex;
+}
+:is(dl.compact, .dlCompact) > dd {
+  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
+}
+:is(dd, span).break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
+  line-height: 0;
+}
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+  caption-side: bottom;
+}
+@media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
+  pre, svg {
+    display: inline-block;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  :is(pre, svg) + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
+  background-color: var(--background-color);
+}
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
+  background-color: var(--highlight-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
+}
+@media not print {
+  :hover > a.pilcrow, a.pilcrow:focus {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: var(--small-font-size);
+}
+.role {
+  font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 15ch;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
+}
+
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
+}
+
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
+}
+
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* Comments */
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+
+@media screen {
+  #toc nav {
+    font-family: var(--font-title);
+    font-weight: 360;
+    & > ul { margin-bottom: 2em; }
+    & ul {
+      margin: 0 0 0 4px;
+      & :is(p, li) {
+        margin: 2px 0;
+      }
+    }
+  }
+  #toc a.toplink {
+    float: right;
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 1px 0 0 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    &::before { /* css hamburger */
+      float: right;
+      position: relative;
+      width: 1em;
+      height: 1px;
+      left: -164px;
+      margin: 8px 0 0 0;
+      background: white none repeat scroll 0 0;
+      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+      content: "";
+    }
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active {
+    opacity: 1;
+    & nav { display: block; }
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:is(:link, :focus, :hover),
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin: 2px 0.5em 0;
+  }
+}
+
+/* TOC layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+  #toc a.toplink {
+    margin: 8px 0.5em 0;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre, .vcard {
+    page-break-inside: avoid;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  :is(h2, h3, h4, h5, h6)+*, dd {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
+  stroke: var(--text-color);
+}
+svg :is([stroke="white"], [stroke^="#fff"]) {
+  stroke: var(--background-color);
+}
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
+  fill: var(--text-color);
+}
+svg :is([fill="white"], [fill^="#fff"]) {
+  fill: var(--background-color);
+}
+</style>
+
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">rfc8089-bis-info</td>
+<td class="right">April 2018</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Kerwin</td>
+<td class="center">Expires 25 October 2018</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Applications Area Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-kerwin-rfc8089-bis-info-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2018-04-23" class="published">23 April 2018</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2018-10-25">25 October 2018</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">M. Kerwin</div>
+<div class="org">QUT</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Using the file URI Scheme</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document describes common usages of file URIs, beyond those
+prescribed -- and in some cases even allowed -- in the core
+specification.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<section class="note" id="section-note.1">
+      <h2 id="name-note-to-readers">
+<a href="#name-note-to-readers" class="section-name selfRef">Note to Readers</a>
+      </h2>
+<p id="section-note.1-1">This draft should be discussed on the GitHub repository
+&lt;https://github.com/phluid61/internet-drafts/labels/rfc8089-bis-info&gt;.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 25 October 2018.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2018 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-notational-conventions" class="internal xref">Notational Conventions</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-nonstandard-extensions" class="internal xref">Nonstandard Extensions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-query-components" class="internal xref">Query Components</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-user-information" class="internal xref">User Information</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-ms-dos-and-windows-drive-le" class="internal xref">MS-DOS and Windows Drive Letters</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.1">
+                    <p id="section-toc.1-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="auto internal xref">2.3.1</a>.  <a href="#name-drive-letter-authority" class="internal xref">Drive Letter Authority</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.2">
+                    <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="auto internal xref">2.3.2</a>.  <a href="#name-vertical-line-character" class="internal xref">Vertical Line Character</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.3">
+                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="auto internal xref">2.3.3</a>.  <a href="#name-letter-only-drive-letter" class="internal xref">Letter-Only Drive Letter</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-ms-dos-and-windows-relative" class="internal xref">MS-DOS and Windows Relative Resolution</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="auto internal xref">2.5</a>.  <a href="#name-unc-strings" class="internal xref">UNC Strings</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5.2.1">
+                    <p id="section-toc.1-1.2.2.5.2.1.1"><a href="#section-2.5.1" class="auto internal xref">2.5.1</a>.  <a href="#name-file-uri-with-unc-path" class="internal xref">file URI with UNC Path</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5.2.2">
+                    <p id="section-toc.1-1.2.2.5.2.2.1"><a href="#section-2.5.2" class="auto internal xref">2.5.2</a>.  <a href="#name-file-uri-with-authority" class="internal xref">file URI with Authority</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-backslash-as-separator" class="internal xref">Backslash as Separator</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">The file URI scheme is specified in <span>[<a href="#draft-kerwin-rfc8089-bis-core" class="cite xref">draft-kerwin-rfc8089-bis-core</a>]</span>.
+That specification defines the syntax and describes operations that
+can be performed on a core subset of file URIs, necessary for basic
+interoperability.  However in the real world there are many uses of
+file URIs that do not conform with the core specification, but do
+nevertheless exhibit common traits and behaviours.  This document
+describes those cases, to provide a pathway for interoperability
+beyond the core specification.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<div id="notational-conventions">
+<section id="section-1.1">
+        <h3 id="name-notational-conventions">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-notational-conventions" class="section-name selfRef">Notational Conventions</a>
+        </h3>
+<p id="section-1.1-1">This is not a standard, so any prescriptive or normative language is
+intended to provide interoperability and/or security, but does not
+describe an actual standard requirement.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in
+BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in
+all capitals, as shown here.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Syntax elements are defined in Augmented Backus-Naur Form (ABNF)
+<span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, where possible using incremental alternative syntax to
+extend the core syntax rather than replacing existing definitions.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="extensions">
+<section id="section-2">
+      <h2 id="name-nonstandard-extensions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-nonstandard-extensions" class="section-name selfRef">Nonstandard Extensions</a>
+      </h2>
+<p id="section-2-1">These extensions might be encountered by existing usages of the file URI
+scheme, but are not supported by the core specification
+<span>[<a href="#draft-kerwin-rfc8089-bis-core" class="cite xref">draft-kerwin-rfc8089-bis-core</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div id="query-component">
+<section id="section-2.1">
+        <h3 id="name-query-components">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-query-components" class="section-name selfRef">Query Components</a>
+        </h3>
+<p id="section-2.1-1">Some resources include active scripts that interact with the resource's
+URI, for example JavaScript accessing the Location interface
+<span>[<a href="#HTML5.Location" class="cite xref">HTML5.Location</a>]</span> in a HTML document.  These scripts can inspect
+and/or modify the query component (<span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Section 3.4) of the URI.
+To support this behaviour, the file URI scheme may be extended to include
+a query component.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">As the absolute path to a file is represented by the hierarchical part
+of a file URI (<span>[<a href="#draft-kerwin-rfc8089-bis-core" class="cite xref">draft-kerwin-rfc8089-bis-core</a>]</span>, Section 2), the query
+component, if present, is not used when dereferencing a file URI.  As
+a result, multiple file URIs can point to the same file if they differ
+only in the presence and/or value of the query components.  Care must
+be taken to avoid issues resulting from possibly unexpected aliasing
+in such cases.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">To allow a query component to be included in a file URI the core <code>file-URI</code>
+rule can be extended with the following definition:<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.1-4">
+<pre>
+   file-URI       =/ file-scheme ":" file-hier-part "?" query
+</pre><a href="#section-2.1-4" class="pilcrow">¶</a>
+</div>
+<p id="section-2.1-5">This uses the <code>query</code> rule from <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="userinfo">
+<section id="section-2.2">
+        <h3 id="name-user-information">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-user-information" class="section-name selfRef">User Information</a>
+        </h3>
+<p id="section-2.2-1">It might be necessary to include user information such as a user name in
+a file URI, for example when representing a VMS file path with a node
+reference that includes an access control string.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">To allow user information to be included in a file URI the core <code>file-auth</code>
+rule can be extended with the following definition:<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2-3">
+<pre>
+   file-auth      =/ userinfo "@" host
+</pre><a href="#section-2.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2-4">This uses the <code>userinfo</code> rule from <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2-5">The presence of a password in a "user:password" userinfo field is
+deprecated by <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Section 3.2.1.  Implementers MUST take
+care when dealing with information that can be used to identify a
+user or grant access to a system, including generation, transmission,
+and storage of said information.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="drives">
+<section id="section-2.3">
+        <h3 id="name-ms-dos-and-windows-drive-le">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-ms-dos-and-windows-drive-le" class="section-name selfRef">MS-DOS and Windows Drive Letters</a>
+        </h3>
+<p id="section-2.3-1">On MS-DOS or Windows file systems an absolute file path can begin
+with a drive letter.  This is supported by the core syntax
+explicitly in the <code>local-path</code> rule and implicitly in <code>auth-path</code>.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">Note that comparison of drive letters in MS-DOS or Windows file paths
+is case-insensitive.  In some usages of file URIs drive letters are
+canonicalized by converting them to uppercase, and other usages treat
+URIs that differ only in the case of the drive letter as identical.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">Historically some usages of file URIs have misused drive letters in
+several ways:<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3-4.1">
+            <p id="section-2.3-4.1.1">Encoding the drive letter in the URI's authority component.<a href="#section-2.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.3-4.2">
+            <p id="section-2.3-4.2.1">Omitting the colon ":" from the drive letter, or replacing it with
+a vertical line "|" character.<a href="#section-2.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.3-4.3">
+            <p id="section-2.3-4.3.1">A combination of the two.<a href="#section-2.3-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div id="drive-authority">
+<section id="section-2.3.1">
+          <h4 id="name-drive-letter-authority">
+<a href="#section-2.3.1" class="section-number selfRef">2.3.1. </a><a href="#name-drive-letter-authority" class="section-name selfRef">Drive Letter Authority</a>
+          </h4>
+<p id="section-2.3.1-1">To accommodate historical file URIs that have a drive letter encoded
+in the authority, the core <code>file-auth</code> rule case be extended with the
+following definition:<a href="#section-2.3.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.3.1-2">
+<pre>
+   file-auth      =/ drive-letter
+</pre><a href="#section-2.3.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2.3.1-3">For example:<a href="#section-2.3.1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3.1-4.1">
+              <p id="section-2.3.1-4.1.1"><code>file://c:/file/to/path</code><a href="#section-2.3.1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="pipe">
+<section id="section-2.3.2">
+          <h4 id="name-vertical-line-character">
+<a href="#section-2.3.2" class="section-number selfRef">2.3.2. </a><a href="#name-vertical-line-character" class="section-name selfRef">Vertical Line Character</a>
+          </h4>
+<p id="section-2.3.2-1"><span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> forbids the vertical line "|" character from appearing
+unescaped in any portion of a URI, however it might be necessary to
+interpret or update old file URIs that include it.<a href="#section-2.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.2-2">To accommodate historical file URIs that have a vertical line "|"
+character instead of a colon ":" in the drive letter construct the
+<code>auth-path</code>, <code>local-path</code>, and <code>drive-letter</code> rules in the core
+specification can be extended with the following definitions:<a href="#section-2.3.2-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.3.2-3">
+<pre>
+   auth-path      =/ [ file-auth ] file-absolute
+
+   local-path     =/ file-absolute
+
+   drive-letter   =/ ALPHA "|"
+
+   file-absolute  = "/" drive-letter path-absolute
+</pre><a href="#section-2.3.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-2.3.2-4">This is intended to support MS-DOS or Windows file URIs with vertical
+line characters in the drive letter construct.  For example:<a href="#section-2.3.2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3.2-5.1">
+              <p id="section-2.3.2-5.1.1"><code>file:///c|/path/to/file</code><a href="#section-2.3.2-5.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-2.3.2-5.2">
+              <p id="section-2.3.2-5.2.1"><code>file:/c|/path/to/file</code><a href="#section-2.3.2-5.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-2.3.2-5.3">
+              <p id="section-2.3.2-5.3.1"><code>file:c|/path/to/file</code><a href="#section-2.3.2-5.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-2.3.2-6">It can also be paired with the expansion in <a href="#drive-authority" class="auto internal xref">Section 2.3.1</a>.  For
+example:<a href="#section-2.3.2-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3.2-7.1">
+              <p id="section-2.3.2-7.1.1"><code>file://c|/path/to/file</code><a href="#section-2.3.2-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-2.3.2-8">To update such an old URI, replace the vertical line "|" character
+with a colon ":".<a href="#section-2.3.2-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="letter-only">
+<section id="section-2.3.3">
+          <h4 id="name-letter-only-drive-letter">
+<a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-letter-only-drive-letter" class="section-name selfRef">Letter-Only Drive Letter</a>
+          </h4>
+<p id="section-2.3.3-1">To accommodate historical file URIs that don't use either a colon ":"
+or vertical line "|" character in the drive letter construct the
+core <code>drive-letter</code> rule can be expanded with the following
+definition:<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.3.3-2">
+<pre>
+   drive-letter   =/ ALPHA
+</pre><a href="#section-2.3.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2.3.3-3">For example:<a href="#section-2.3.3-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3.3-4.1">
+              <p id="section-2.3.3-4.1.1"><code>file:///c/path/to/file</code><a href="#section-2.3.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-2.3.3-4.2">
+              <p id="section-2.3.3-4.2.1"><code>file:/c/path/to/file</code><a href="#section-2.3.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-2.3.3-4.3">
+              <p id="section-2.3.3-4.3.1"><code>file:c/path/to/file</code><a href="#section-2.3.3-4.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-2.3.3-5">It can also be paired with the expansion in <a href="#drive-authority" class="auto internal xref">Section 2.3.1</a>.  For
+example:<a href="#section-2.3.3-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.3.3-6.1">
+              <p id="section-2.3.3-6.1.1"><code>file://c/path/to/file</code><a href="#section-2.3.3-6.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-2.3.3-7">Care MUST be taken when interpreting all such file URIs, as this
+interpretation can only be applied if it can be determined with
+reasonable certainty that the drive letters are intended as such.<a href="#section-2.3.3-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="dos-relative">
+<section id="section-2.4">
+        <h3 id="name-ms-dos-and-windows-relative">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-ms-dos-and-windows-relative" class="section-name selfRef">MS-DOS and Windows Relative Resolution</a>
+        </h3>
+<p id="section-2.4-1">To mimic the behaviour of MS-DOS or Windows file systems, relative
+references beginning with a slash "/" SHOULD be resolved relative to
+the drive letter, when present;  and resolution of ".." dot segments
+(per Section 5.2.4 of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>) SHOULD be modified to not ever
+overwrite the drive letter.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">For example:<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.4-3">
+<pre>
+   base URI:   file:///c:/path/to/file.txt
+   rel. ref.:  /some/other/thing.bmp
+   resolved:   file:///c:/some/other/thing.bmp
+
+   base URI:   file:///c:/foo.txt
+   rel. ref.:  ../bar.txt
+   resolved:   file:///c:/bar.txt
+</pre><a href="#section-2.4-3" class="pilcrow">¶</a>
+</div>
+<p id="section-2.4-4">However given that this behaviour is not supported by the core
+specification nor the generic URI specification in <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>,
+implementations MUST take care when implementing this extension.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="unc">
+<section id="section-2.5">
+        <h3 id="name-unc-strings">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-unc-strings" class="section-name selfRef">UNC Strings</a>
+        </h3>
+<p id="section-2.5-1">Some usages of the file URI scheme allow UNC filespace selector strings
+<span>[<a href="#MS-DTYP" class="cite xref">MS-DTYP</a>]</span> to be translated to and from file URIs, either by mapping
+the entire UNC string to the path segment of a URI, or by mapping the
+equivalent segments of the two schemes (hostname &lt;=&gt; authority,
+sharename+objectnames &lt;=&gt; path),<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.5-2">In either case it is not uncommon to encounter a dollar sign "$" in
+the sharename segment of a UNC filespace selector string, for example
+"\\localhost\c$\foo.txt", or the equivalent position in a file URI.
+The dollar sign symbol is a reserved character (<span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Section
+2.2) but does not carry special meaning when it appears in these
+positions without percent-encoding (<span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Section 2.1).<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<div id="unc-path">
+<section id="section-2.5.1">
+          <h4 id="name-file-uri-with-unc-path">
+<a href="#section-2.5.1" class="section-number selfRef">2.5.1. </a><a href="#name-file-uri-with-unc-path" class="section-name selfRef">file URI with UNC Path</a>
+          </h4>
+<p id="section-2.5.1-1">It is common to encounter file URIs that encode entire UNC strings in
+the path, usually with all backslash "\" characters replaced with
+slashes "/".<a href="#section-2.5.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.5.1-2">To interpret such URIs, the core <code>auth-path</code> rule can be extended
+with the following definitions:<a href="#section-2.5.1-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.5.1-3">
+<pre>
+   auth-path      =/ unc-authority path-absolute
+
+   unc-authority  = 2*3"/" file-host
+
+   file-host      = inline-IP / IPv4address / reg-name
+
+   inline-IP      = "%5B" ( IPv6address / IPvFuture ) "%5D"
+</pre><a href="#section-2.5.1-3" class="pilcrow">¶</a>
+</div>
+<p id="section-2.5.1-4">This syntax uses the <code>IPv4address</code>, <code>IPv6address</code>, <code>IPvFuture</code>,
+and <code>reg-name</code> rules from <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-2.5.1-4" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-2.5.1-5.1">
+              <p id="section-2.5.1-5.1.1">Note that the <code>file-host</code> rule is the same as <code>host</code> but with
+percent-encoding applied to "[" and "]" characters.<a href="#section-2.5.1-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-2.5.1-6">This extended syntax is intended to support URIs that take the
+following forms:<a href="#section-2.5.1-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.5.1-7.1">
+              <p id="section-2.5.1-7.1.1">The representation of a non-local file, with an empty authority and
+a complete (transformed) UNC string in the path.  E.g.:<a href="#section-2.5.1-7.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.5.1-7.1.2.1">
+                  <p id="section-2.5.1-7.1.2.1.1"><code>file:////host.example.com/path/to/file</code><a href="#section-2.5.1-7.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-2.5.1-7.2">
+              <p id="section-2.5.1-7.2.1">As above, with an extra slash between the empty authority and the
+two slashes of the transformed UNC string, as per the syntax
+defined in <span>[<a href="#RFC1738" class="cite xref">RFC1738</a>]</span>.  E.g.:<a href="#section-2.5.1-7.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.5.1-7.2.2.1">
+                  <p id="section-2.5.1-7.2.2.1.1"><code>file://///host.example.com/path/to/file</code><a href="#section-2.5.1-7.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+<p id="section-2.5.1-7.2.3">
+This representation is notably used by the Firefox web browser.
+See Bugzilla#107540 <span>[<a href="#Bug107540" class="cite xref">Bug107540</a>]</span>.<a href="#section-2.5.1-7.2.3" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-2.5.1-8">It also further limits the definition of a "local file URI"
+(<span>[<a href="#draft-kerwin-rfc8089-bis-core" class="cite xref">draft-kerwin-rfc8089-bis-core</a>]</span>, Section 1.1) by excluding any
+file URI with a path that encodes a UNC string.<a href="#section-2.5.1-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="unc-map">
+<section id="section-2.5.2">
+          <h4 id="name-file-uri-with-authority">
+<a href="#section-2.5.2" class="section-number selfRef">2.5.2. </a><a href="#name-file-uri-with-authority" class="section-name selfRef">file URI with Authority</a>
+          </h4>
+<p id="section-2.5.2-1">It is less common, but not unheard of, to encounter implementations
+that transform UNC filespace selector strings into file URIs and
+vice versa by mapping the equivalent segments of the two schemes.<a href="#section-2.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.5.2-2">The following is an algorithmic description of the process of
+translating a UNC filespace selector string to a file URI.  It
+uses the syntactic elements defined in <span>[<a href="#MS-DTYP" class="cite xref">MS-DTYP</a>]</span>.<a href="#section-2.5.2-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.5.2-3">
+<li id="section-2.5.2-3.1">
+              <p id="section-2.5.2-3.1.1">Initialize a new URI with the "file:" scheme identifier.<a href="#section-2.5.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-2.5.2-3.2">
+              <p id="section-2.5.2-3.2.1">Append the authority:<a href="#section-2.5.2-3.2.1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.5.2-3.2.2">
+<li id="section-2.5.2-3.2.2.1">
+                  <p id="section-2.5.2-3.2.2.1.1">Append the "//" authority sigil to the URI.<a href="#section-2.5.2-3.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li id="section-2.5.2-3.2.2.2">
+                  <p id="section-2.5.2-3.2.2.2.1">Append the host-name field of the UNC string to the URI
+as its <code>host</code> component.  If the host-name field is the
+string "localhost" this can produce an ambiguous file URI,
+and the field SHOULD be replaced with a fully qualified
+domain name or address.<a href="#section-2.5.2-3.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ol>
+</li>
+            <li id="section-2.5.2-3.3">
+              <p id="section-2.5.2-3.3.1">Append the share-name:<a href="#section-2.5.2-3.3.1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.5.2-3.3.2">
+<li id="section-2.5.2-3.3.2.1">
+                  <p id="section-2.5.2-3.3.2.1.1">Transform the share-name to a path segment (<span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>,
+Section 3.3) to conform to the encoding rules of Section 2 of
+<span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-2.5.2-3.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li id="section-2.5.2-3.3.2.2">
+                  <p id="section-2.5.2-3.3.2.2.1">Append a delimiting slash character "/" and the transformed
+segment to the URI.<a href="#section-2.5.2-3.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ol>
+</li>
+            <li id="section-2.5.2-3.4">
+              <p id="section-2.5.2-3.4.1">For each object-name:<a href="#section-2.5.2-3.4.1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.5.2-3.4.2">
+<li id="section-2.5.2-3.4.2.1">
+                  <p id="section-2.5.2-3.4.2.1.1">Transform the object-name to a path segment as above.<a href="#section-2.5.2-3.4.2.1.1" class="pilcrow">¶</a></p>
+<p id="section-2.5.2-3.4.2.1.2">
+The colon character ":" is allowed as a delimiter before
+stream-name and stream-type in the file-name, if present.<a href="#section-2.5.2-3.4.2.1.2" class="pilcrow">¶</a></p>
+</li>
+                <li id="section-2.5.2-3.4.2.2">
+                  <p id="section-2.5.2-3.4.2.2.1">Append a delimiting slash character "/" and the transformed
+segment to the URI.<a href="#section-2.5.2-3.4.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ol>
+</li>
+          </ol>
+<p id="section-2.5.2-4">For example:<a href="#section-2.5.2-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.5.2-5">
+<pre>
+   UNC String:   \\host.example.com\Share\path\to\file.txt
+   URI:          file://host.example.com/Share/path/to/file.txt
+</pre><a href="#section-2.5.2-5" class="pilcrow">¶</a>
+</div>
+<p id="section-2.5.2-6">The inverse algorithm, for translating a file URI to a UNC filespace
+selector string, is left as an exercise for the reader.<a href="#section-2.5.2-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="backslash">
+<section id="section-2.6">
+        <h3 id="name-backslash-as-separator">
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-backslash-as-separator" class="section-name selfRef">Backslash as Separator</a>
+        </h3>
+<p id="section-2.6-1">Historically some usages of file URIs have naively copied entire file
+paths into the path components of file URIs.  Where MS-DOS or Windows
+file paths were thus copied the resulting URI strings contained
+unencoded backslash "\" characters, which are forbidden by both
+<span>[<a href="#RFC1738" class="cite xref">RFC1738</a>]</span> and <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-2">It might be possible to translate or update such an invalid file URI by
+replacing all backslashes "\" with slashes "/", if it can be
+determined with reasonable certainty that the backslashes are intended
+as path separators.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-3">
+      <h2 id="name-security-considerations">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-3-1">TO DO<a href="#section-3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-4">
+      <h2 id="name-references">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<div id="sec-normative-references">
+<section id="section-4.1">
+        <h3 id="name-normative-references">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="draft-kerwin-rfc8089-bis-core">[draft-kerwin-rfc8089-bis-core]</dt>
+        <dd>
+<span class="refAuthor">Kerwin, M.</span>, <span class="refTitle">"The file URI Scheme"</span>, <time datetime="2018" class="refDate">2018</time>. </dd>
+<dd class="break"></dd>
+<dt id="MS-DTYP">[MS-DTYP]</dt>
+        <dd>
+<span class="refAuthor">Microsoft Open Specifications</span>, <span class="refTitle">"Windows Data Types, 2.2.57 UNC"</span>, <time datetime="2015-10-16" class="refDate">16 October 2015</time>, <span>&lt;<a href="https://msdn.microsoft.com/en-us/library/gg465305.aspx">https://msdn.microsoft.com/en-us/library/gg465305.aspx</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3986">[RFC3986]</dt>
+        <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5234">[RFC5234]</dt>
+        <dd>
+<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-4.2">
+        <h3 id="name-informative-references">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="Bug107540">[Bug107540]</dt>
+        <dd>
+<span class="refAuthor">Bugzilla@Mozilla</span>, <span class="refTitle">"Bug 107540"</span>, <time datetime="2007-10" class="refDate">October 2007</time>, <span>&lt;<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=107540">https://bugzilla.mozilla.org/show_bug.cgi?id=107540</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="HTML5.Location">[HTML5.Location]</dt>
+        <dd>
+<span class="refAuthor">The World Wide Web Consortium</span>, <span class="refTitle">"HTML5"</span>, <time datetime="2014-10-28" class="refDate">28 October 2014</time>, <span>&lt;<a href="https://www.w3.org/TR/html50/browsers.html#the-location-interface">https://www.w3.org/TR/html50/browsers.html#the-location-interface</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC1738">[RFC1738]</dt>
+      <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Masinter, L.</span>, and <span class="refAuthor">M. McCahill</span>, <span class="refTitle">"Uniform Resource Locators (URL)"</span>, <span class="seriesInfo">RFC 1738</span>, <span class="seriesInfo">DOI 10.17487/RFC1738</span>, <time datetime="1994-12" class="refDate">December 1994</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc1738">https://www.rfc-editor.org/rfc/rfc1738</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Matthew Kerwin</span></div>
+<div dir="auto" class="left"><span class="org">Queensland University of Technology</span></div>
+<div dir="auto" class="left"><span class="street-address">Victoria Park Road</span></div>
+<div dir="auto" class="left">
+<span class="locality">Kelvin Grove</span> <span class="region">QLD</span> <span class="postal-code">4059</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Australia</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:matthew.kerwin@qut.edu.au" class="email">matthew.kerwin@qut.edu.au</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
