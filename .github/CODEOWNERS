@@ -1,0 +1,7 @@
+# Automatically generated CODEOWNERS
+# Regenerate with `make update-codeowners`
+draft-kerwin-http2-encoded-data.md matthew@kerwin.net.au
+draft-kerwin-http2-nak-frame.md matthew@kerwin.net.au
+draft-kerwin-http2-segments.md matthew@kerwin.net.au
+draft-kerwin-rfc8089-bis-core.md matthew.kerwin@qut.edu.au
+draft-kerwin-rfc8089-bis-info.md matthew.kerwin@qut.edu.au

@@ -1,58 +1,61 @@
-Where I keep my Internet-Drafts.
+<!-- regenerate: on (set to off if you edit this file) -->
 
-In general, these Internet-Drafts are submitted in full conformance with
-the provisions of [BCP 78][1], [BCP 79][2], and the [IETF Trust Legal
-Provisions (TLP)][3].
+# HTTP2 Drafts
 
-[1]: <http://tools.ietf.org/html/bcp78>
-[2]: <http://tools.ietf.org/html/bcp79>
-[3]: <http://trustee.ietf.org/trust-legal-provisions.html>
+This is the working area for individual Internet-Drafts.
 
-See the [LICENSE](LICENSE.md) file.
+## HTTP/2 Gzipped Data
 
-Contributing
-------------
+* [Editor's Copy](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-http2-encoded-data.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kerwin-http2-encoded-data)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kerwin-http2-encoded-data)
+* [Compare Editor's Copy to Individual Draft](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-http2-encoded-data.diff)
 
-Each draft contains in its abstract a pointer to the place where
-discussion about that draft is held.  Pull requests are welcome.
+## HTTP/2 "Dropped Frame" Frame
 
-Please try to ensure that pull requests update the `draft.md`
-documents.
+* [Editor's Copy](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-http2-nak-frame.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kerwin-http2-nak-frame)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kerwin-http2-nak-frame)
+* [Compare Editor's Copy to Individual Draft](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-http2-nak-frame.diff)
 
-### Code of Conduct
+## HTTP/2 Segments
 
-Further to the standards, guidelines, and expectations of the IETF,
-this particular repository is subject to its own
-[Contributor Code of Conduct](code_of_conduct.md)
+* [Editor's Copy](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-http2-segments.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kerwin-http2-segments)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kerwin-http2-segments)
+* [Compare Editor's Copy to Individual Draft](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-http2-segments.diff)
 
+## The file URI Scheme
 
-Tool Chain
-----------
+* [Editor's Copy](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-rfc8089-bis-core.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kerwin-rfc8089-bis-core)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kerwin-rfc8089-bis-core)
+* [Compare Editor's Copy to Individual Draft](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-rfc8089-bis-core.diff)
 
-    markdown --> xml --> txt
+## Using the file URI Scheme
 
-The ultimate source file for each draft is `draft.md`
-
-It is interpreted using the [kramdown-rfc2629][4] parser to produce a
-standard [RFC 2629][5] XML file.
-
-The XML file is transformed using [xml2rfc][6] to produce a plain text
-internet draft, and a beautiful HTML document.
-
-There is a Makefile in the same directory as each draft to automate
-the process.
-
-The entire toolchain was copied from https://github.com/mnot/I-D/
+* [Editor's Copy](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-rfc8089-bis-info.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kerwin-rfc8089-bis-info)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kerwin-rfc8089-bis-info)
+* [Compare Editor's Copy to Individual Draft](https://phluid61.github.io/internet-drafts/#go.draft-kerwin-rfc8089-bis-info.diff)
 
 
-Notes to self
--------------
+## Contributing
 
-* <https://tools.ietf.org/tools/idnits/> check for nits
-* <https://datatracker.ietf.org/submit/> submit draft
+See the
+[guidelines for contributions](https://github.com/phluid61/internet-drafts/blob/main/CONTRIBUTING.md).
 
+The contributing file also has tips on how to make contributions, if you
+don't already know how to do that.
 
-[4]: https://github.com/cabo/kramdown-rfc2629
-[5]: https://tools.ietf.org/html/rfc2629
-[6]: http://xml2rfc.ietf.org/
+## Command Line Usage
+
+Formatted text and HTML versions of the draft can be built using `make`.
+
+```sh
+$ make
+```
+
+Command line usage requires that you have the necessary software installed.  See
+[the instructions](https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md).
 

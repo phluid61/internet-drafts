@@ -1,4 +1,4 @@
 # License
 
 See the
-[guidelines for contributions](https://github.com/{GITHUB_USER}/{GITHUB_REPO}/blob/{GITHUB_BRANCH}/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/phluid61/internet-drafts/blob/main/CONTRIBUTING.md).
