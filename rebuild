@@ -1,9 +1,0 @@
-#!/bin/bash -
-
-for f in */ ; do
-	[ -f "$f/draft.md" ] || continue
-	pushd "$f"
-	make "$@"
-	popd
-done
-

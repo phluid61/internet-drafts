@@ -1,11 +1,6 @@
+LIBDIR := lib
+include $(LIBDIR)/main.mk
 
-# Create a new draft
-# Usage: make [draft-short-name]
-#
-# Copied from https://github.com/mnot/I-D/
-
-%::
-	cp -a Tools/skel $@
-	mv $@/draft-kerwin--00.xml $@/draft-kerwin-$@-00.xml
-	sed -i -e"s/draft-kerwin--00/draft-kerwin-$@-00/" $@/draft-kerwin-$@-00.xml
-
+$(LIBDIR)/main.mk:
+	git clone -q --depth 10 -b main \
+	    https://github.com/martinthomson/i-d-template $(LIBDIR)
