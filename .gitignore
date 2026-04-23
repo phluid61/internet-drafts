@@ -14,7 +14,6 @@ Gemfile.lock
 /lib/
 /.*.mk
 /node_modules/
-output.log
 package-lock.json
 *.pdf
 *.redxml
