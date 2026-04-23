@@ -7,7 +7,7 @@ category: exp
 
 ipr: trust200902
 area: General
-workgroup: 
+workgroup:
 keyword: Internet-Draft
 
 stand_alone: yes
@@ -16,7 +16,7 @@ pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
 author:
  - ins: M. Kerwin
    name: Matthew Kerwin
-   organization: 
+   organization:
    email: matthew@kerwin.net.au
    uri: http://matthew.kerwin.net.au/
 

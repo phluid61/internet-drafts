@@ -7,7 +7,7 @@ category: std
 
 ipr: trust200902
 area: Applications and Real-Time
-workgroup: 
+workgroup:
 keyword:
  - HTTP
  - H2
@@ -18,7 +18,7 @@ pi: [toc, tocindent, sortrefs, symrefs, strict, compact, comments, inline]
 author:
  - ins: M. Kerwin
    name: Matthew Kerwin
-   organization: 
+   organization:
    email: matthew@kerwin.net.au
    uri: https://matthew.kerwin.net.au/
 
