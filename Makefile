@@ -6,7 +6,7 @@ INDEX_FORMAT := md
 
 # Override the index.md rule to prepend Jekyll front matter and
 # post-process the generated content:
-#  - remove the first markdown heading (the theme layout provides it)
+#  - remove the first markdown heading (the theme layout provides one)
 #  - trim table rows to five columns, removing the phantom sixth column
 #    that build-index.sh declares in the header but never populates
 #  - strip all "Preview for branch" sections (subdirectories on gh-pages
@@ -39,12 +39,12 @@ $(GHPAGES_TARGET)/index.md: $(GHPAGES_INSTALLED) $(DEPS_FILES) | cleanup-ghpages
 	@printf '<https://www.contributor-covenant.org/version/3/0/>\n' >>$@
 	@printf '\n## Licence\n\n' >>$@
 	@printf 'See the [guidelines for contributions](CONTRIBUTING).\n' >>$@
-	@printf -- '---\nlayout: default\ntitle: "Contributor Code of Conduct"\npage_heading: "Contributor Covenant 3.0 Code of Conduct"\n---\n\n' \
+	@printf -- '---\nlayout: default\ntitle: "Contributor Code of Conduct"\n---\n\n' \
 	  >$(GHPAGES_TARGET)/code_of_conduct.md
-	@sed '1{/^# /d;}' code_of_conduct.md >>$(GHPAGES_TARGET)/code_of_conduct.md
+	@cat code_of_conduct.md >>$(GHPAGES_TARGET)/code_of_conduct.md
 	@printf -- '---\nlayout: default\ntitle: "Contributing"\n---\n\n' \
 	  >$(GHPAGES_TARGET)/CONTRIBUTING.md
-	@sed '1{/^# /d;}' CONTRIBUTING.md >>$(GHPAGES_TARGET)/CONTRIBUTING.md
+	@cat CONTRIBUTING.md >>$(GHPAGES_TARGET)/CONTRIBUTING.md
 	@git -C $(GHPAGES_ROOT) add -f \
 	  $(GHPAGES_TARGET)/code_of_conduct.md \
 	  $(GHPAGES_TARGET)/CONTRIBUTING.md
