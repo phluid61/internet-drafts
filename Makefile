@@ -10,6 +10,9 @@ INDEX_FORMAT := md
 #  - strip all "Preview for branch" sections (subdirectories on gh-pages
 #    are archives, not branch previews)
 #  - append an Archive section listing any subdirectories
+# Also fetches _data/navigation.yml from the base site and stages it,
+# because jekyll-remote-theme only copies _layouts/_includes/_sass, not
+# _data, so navigation must be provided explicitly.
 $(GHPAGES_TARGET)/index.md: $(GHPAGES_INSTALLED) $(DEPS_FILES) | cleanup-ghpages
 	printf -- '---\nlayout: default\n---\n' >$@
 	$(LIBDIR)/build-index.sh md "$(dir $@)" "$(SOURCE_BRANCH)" "$(GITHUB_HOST)" "$(GITHUB_USER)" "$(GITHUB_REPO)" $(drafts_source) \
@@ -25,16 +28,11 @@ $(GHPAGES_TARGET)/index.md: $(GHPAGES_INSTALLED) $(DEPS_FILES) | cleanup-ghpages
 	    printf -- '- [%s](%s/)\n' "$$d" "$$d" >>$@; \
 	  done; \
 	fi
-
-# Provide navigation data for gh-pages Jekyll builds.
-# jekyll-remote-theme only copies _layouts, _includes, and _sass from the
-# remote theme — not _data — so we fetch navigation.yml from the base site.
-ifneq (,$(GHPAGES_TARGET))
-GHPAGES_ALL += $(GHPAGES_TARGET)/_data/navigation.yml
-$(GHPAGES_TARGET)/_data/navigation.yml: | $(GHPAGES_TARGET)
-	@mkdir -p $(dir $@)
-	curl -sLf https://raw.githubusercontent.com/phluid61/phluid61.github.io/master/_data/navigation.yml -o $@ || touch $@
-endif
+	@mkdir -p $(GHPAGES_TARGET)/_data && \
+	  (curl -sLf https://raw.githubusercontent.com/phluid61/phluid61.github.io/master/_data/navigation.yml \
+	    -o $(GHPAGES_TARGET)/_data/navigation.yml || \
+	    touch $(GHPAGES_TARGET)/_data/navigation.yml) && \
+	  git -C $(GHPAGES_ROOT) add -f $(GHPAGES_TARGET)/_data/navigation.yml
 
 $(LIBDIR)/main.mk:
 ifneq (,$(shell grep "path *= *$(LIBDIR)" .gitmodules 2>/dev/null))
