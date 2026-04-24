@@ -1,4 +1,4 @@
-<!-- regenerate: on (set to off if you edit this file) -->
+<!-- regenerate: off (set to off if you edit this file) -->
 
 # HTTP2 Drafts
 
