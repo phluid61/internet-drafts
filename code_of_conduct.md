@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Contributor Covenant Code of Conduct
-page_heading: Contributor Covenant 3.0 Code of Conduct
+title: "Contributor Code of Conduct"
+page_heading: "Contributor Covenant 3.0 Code of Conduct"
 ---
+
 
 ## Our Pledge
 
