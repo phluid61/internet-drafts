@@ -1,5 +1,7 @@
 LIBDIR := lib
 INDEX_FORMAT := md
+# Opt into markdown-format index pages; the rule below adds Jekyll front
+# matter and extra sections that the default html format does not need.
 -include $(LIBDIR)/main.mk
 
 # Override the index.md rule to prepend Jekyll front matter and
