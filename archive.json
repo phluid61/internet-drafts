@@ -1,0 +1,294 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2026-04-26T01:44:18.137687+00:00",
+  "repo": "phluid61/internet-drafts",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "",
+      "color": "ffaf02"
+    },
+    {
+      "name": "duplicate",
+      "description": "",
+      "color": "d8d8d8"
+    },
+    {
+      "name": "enhancement",
+      "description": "",
+      "color": "b2eaf7"
+    },
+    {
+      "name": "help wanted",
+      "description": "",
+      "color": "5fea4d"
+    },
+    {
+      "name": "invalid",
+      "description": null,
+      "color": "e6e6e6"
+    },
+    {
+      "name": "question",
+      "description": "",
+      "color": "f9f0ac"
+    },
+    {
+      "name": "wontfix",
+      "description": null,
+      "color": "ffffff"
+    },
+    {
+      "name": "HTTP/2 Gzipped Data",
+      "description": "",
+      "color": "0e487f"
+    },
+    {
+      "name": "editorial",
+      "description": "",
+      "color": "dfbbf7"
+    },
+    {
+      "name": "'file' URI scheme",
+      "description": "",
+      "color": "0e487f"
+    },
+    {
+      "name": "HTTP/2 NAK Frame",
+      "description": "",
+      "color": "0e487f"
+    },
+    {
+      "name": "HTTP/2 Segments",
+      "description": "",
+      "color": "0e487f"
+    },
+    {
+      "name": "rfc8089-bis-core",
+      "description": "",
+      "color": "0e487f"
+    },
+    {
+      "name": "rfc8089-bis-info",
+      "description": "",
+      "color": "0e487f"
+    }
+  ],
+  "issues": [
+    {
+      "number": 4,
+      "id": "MDU6SXNzdWU1NDAyNTAyNA==",
+      "title": "hostname in UNC-in-path URI should use 'host' ABNF rule",
+      "url": "https://github.com/phluid61/internet-drafts/issues/4",
+      "state": "CLOSED",
+      "author": "phluid61",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "'file' URI scheme"
+      ],
+      "body": "So far I've hand-waved the authority-in-path issue by deferring to Microsoft's UNC definition, but it seems people would prefer to use the `host` ABNF construct to detect UNC-in-path URIs, and then have guidance for translating the host to something UNC accepts (or not) before dereferencing.\n",
+      "createdAt": "2015-01-12T06:44:48Z",
+      "updatedAt": "2015-05-28T06:00:03Z",
+      "closedAt": "2015-05-28T06:00:03Z",
+      "comments": [
+        {
+          "author": "nicowilliams",
+          "authorAssociation": "NONE",
+          "body": "I have no specific preference here.  But you _must_ pick one since otherwise we'd have two different ways of encoding IDNs in file URIs.\n\nEDIT: Add emphasis :)\n",
+          "createdAt": "2015-01-12T17:17:06Z",
+          "updatedAt": "2015-01-12T17:17:34Z"
+        },
+        {
+          "author": "phluid61",
+          "authorAssociation": "OWNER",
+          "body": "Revision -01 moves UNC-in-path to an optional (non-normative) extension. However the issue still remains open. It's important to note that, according to RFC 3986:\n\n```\nhost        = IP-literal / IPv4address / reg-name\nIP-literal = \"[\" ( IPv6address / IPvFuture  ) \"]\"\nIPvFuture  = \"v\" 1*HEXDIG \".\" 1*( unreserved / sub-delims / \":\" )\n```\n\nbut path doesn't allow \"[\" or \"]\", so I can't even use `host` in the path.\n\nPerhaps I need to recreate the whole thing with `%5B` and `%5D`\n",
+          "createdAt": "2015-04-14T11:19:41Z",
+          "updatedAt": "2015-04-14T11:19:41Z"
+        },
+        {
+          "author": "phluid61",
+          "authorAssociation": "OWNER",
+          "body": "Regarding IDNA, RFC 3986 says:\n\n```\nThe reg-name syntax allows percent-encoded octets in order to\nrepresent non-ASCII registered names [...].  Non-ASCII\ncharacters must first be encoded according to UTF-8 [STD63], and then\neach octet of the corresponding UTF-8 sequence must be percent-\nencoded to be represented as URI characters.\n```\n\nSo IDNA in `host` is already percent-encoded. That would still hold true for the path.\n",
+          "createdAt": "2015-04-14T11:26:45Z",
+          "updatedAt": "2015-04-14T11:26:45Z"
+        },
+        {
+          "author": "phluid61",
+          "authorAssociation": "OWNER",
+          "body": "Resolved by e8b5c99\n",
+          "createdAt": "2015-05-28T06:00:03Z",
+          "updatedAt": "2015-05-28T06:00:03Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "MDU6SXNzdWU1NDEyNzYzNw==",
+      "title": "don't use IPR-encumbered normative references",
+      "url": "https://github.com/phluid61/internet-drafts/issues/5",
+      "state": "CLOSED",
+      "author": "phluid61",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "'file' URI scheme"
+      ],
+      "body": "In its current form, the draft has normative references to two non-IETF\ndocuments that don't have clear licensing terms, specifically MS-DTYP and MS-\nNBTE.  As nearly as I can determine, these are not covered by the Microsoft\nOpen Specification Promise [1].  Given that these are normative references, I\nthink it's essential that their IPR status be clear.  I don't think it's\nappropriate on something as fundamental as the file URI scheme to end up with a\ndocument that's IPR constrained.\n\nBefore this document is accepted, it should either be reworked to no require\nthese as normative references or the IPR status of the references should be\nclarified to make it clear that their use is not encumbered (adding them to the\nOSP would be a great way to do this).\n\nScott K\n\n[1] http://www.microsoft.com/openspecifications/en/us/programs/osp/default.aspx\n",
+      "createdAt": "2015-01-13T00:05:35Z",
+      "updatedAt": "2015-04-14T10:56:50Z",
+      "closedAt": "2015-04-14T10:56:50Z",
+      "comments": [
+        {
+          "author": "phluid61",
+          "authorAssociation": "OWNER",
+          "body": "Revision -01 moves a bunch of references (including the Microsoft ones) to Informative.\n",
+          "createdAt": "2015-04-14T10:56:49Z",
+          "updatedAt": "2015-04-14T10:56:49Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "MDU6SXNzdWU2ODMzODEzNQ==",
+      "title": "\"/\" relative URI with Windows root",
+      "url": "https://github.com/phluid61/internet-drafts/issues/6",
+      "state": "CLOSED",
+      "author": "phluid61",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "'file' URI scheme"
+      ],
+      "body": "From: https://www.w3.org/Bugs/Public/show_bug.cgi?id=23550\n\n```\nvar base = new URL(\"file:///C:/path/to/file.txt\");\nvar resolved = new URL(\"/\", base);\nconsole.log(resolved.href);\n```\n\nGives `\"file:///\"`, but should give `\"file:///C:/\"`.\n\nEnsure this is explicitly handled in the I-D.\n",
+      "createdAt": "2015-04-14T10:50:28Z",
+      "updatedAt": "2015-04-14T12:23:40Z",
+      "closedAt": "2015-04-14T12:23:40Z",
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "MDU6SXNzdWUxNDc5NTY0ODU=",
+      "title": "use of \"localhost\" authority in Windows",
+      "url": "https://github.com/phluid61/internet-drafts/issues/7",
+      "state": "CLOSED",
+      "author": "phluid61",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "'file' URI scheme"
+      ],
+      "body": "## Draft\n\ndraft-ietf-appsawg-file-scheme\n## Scope\n\nSUBSTANTIVE\n## Description\n\nFrom Dave Risney:\n\n\u201cIf the authority component is omitted, or has either of the\nspecial values \"localhost\" or the empty string (\"\"), it is\ninterpreted as \"the machine from which the URI is being\ninterpreted\".\u201d\nAt least in IE/Windows shell, an empty authority identifies the local file system, while an authority of localhost identifies the UNC server running on the local machine. So this statement seems somewhat misleading in that empty string and localhost don\u2019t really refer to the same thing (at least in IE/Windows shell)\n## Related Tickets\n- copy of https://github.com/phluid61/file-uri-scheme/issues/22\n",
+      "createdAt": "2016-04-13T06:11:32Z",
+      "updatedAt": "2016-11-23T21:39:45Z",
+      "closedAt": "2016-11-23T21:39:45Z",
+      "comments": [
+        {
+          "author": "phluid61",
+          "authorAssociation": "OWNER",
+          "body": "At some point this was handwaved away with:\r\n\r\n> Some current usages of the scheme incorrectly interpret all values in\r\n> the authority of a file URI, including \"localhost\", as non-local.",
+          "createdAt": "2016-11-23T21:39:45Z",
+          "updatedAt": "2016-11-23T21:39:45Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "MDExOlB1bGxSZXF1ZXN0MTc2MDQzMzQ=",
+      "title": "minor editorial changes; updated the iana section",
+      "url": "https://github.com/phluid61/internet-drafts/pull/1",
+      "state": "CLOSED",
+      "author": "shearl",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "HTTP/2 Gzipped Data",
+        "editorial"
+      ],
+      "body": "minor editorial changes; updated the iana section\n",
+      "createdAt": "2014-06-25T17:26:56Z",
+      "updatedAt": "2014-07-01T11:07:54Z",
+      "baseRepository": "phluid61/internet-drafts",
+      "baseRefName": "master",
+      "baseRefOid": "9399d1b7eca656f9ce012738a9f7759488511c74",
+      "headRepository": "shearl/internet-drafts-1",
+      "headRefName": "master",
+      "headRefOid": "e72c12a6c4ad7bd8d391a4cb4062943a71a70b30",
+      "closedAt": "2014-07-01T11:07:54Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "shearl",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Redacting.\n",
+          "createdAt": "2014-07-01T11:07:54Z",
+          "updatedAt": "2014-07-01T11:07:54Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "MDExOlB1bGxSZXF1ZXN0MTc4MjU5Mzg=",
+      "title": "minor editorial changes; updated the iana section",
+      "url": "https://github.com/phluid61/internet-drafts/pull/2",
+      "state": "MERGED",
+      "author": "shearl",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "HTTP/2 Gzipped Data",
+        "editorial"
+      ],
+      "body": "",
+      "createdAt": "2014-07-01T11:59:56Z",
+      "updatedAt": "2014-07-02T07:17:18Z",
+      "baseRepository": "phluid61/internet-drafts",
+      "baseRefName": "master",
+      "baseRefOid": "9399d1b7eca656f9ce012738a9f7759488511c74",
+      "headRepository": "shearl/internet-drafts-1",
+      "headRefName": "master",
+      "headRefOid": "2d9c61a21662c2c961cbac623496bf37cb908838",
+      "closedAt": "2014-07-02T07:17:18Z",
+      "mergedAt": "2014-07-02T07:17:18Z",
+      "mergedBy": "phluid61",
+      "mergeCommit": {
+        "oid": "d345a7fbbffa6e4fed824394c64ee5b32f251535"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 3,
+      "id": "MDExOlB1bGxSZXF1ZXN0MTg5NTAyNTg=",
+      "title": "20140725 continue segment",
+      "url": "https://github.com/phluid61/internet-drafts/pull/3",
+      "state": "MERGED",
+      "author": "phluid61",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2014-07-28T05:25:15Z",
+      "updatedAt": "2014-07-28T05:25:27Z",
+      "baseRepository": "phluid61/internet-drafts",
+      "baseRefName": "master",
+      "baseRefOid": "4d44c6002790b6fc174e28cc11bcea0d2487c260",
+      "headRepository": "phluid61/internet-drafts",
+      "headRefName": "20140725-continue_segment",
+      "headRefOid": "47d2700a0471c926c0db0ec6a4b562d0d0870a03",
+      "closedAt": "2014-07-28T05:25:25Z",
+      "mergedAt": "2014-07-28T05:25:25Z",
+      "mergedBy": "phluid61",
+      "mergeCommit": {
+        "oid": "5b66c2a24f27efb96cc8ba3d9898833d183f165c"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
