@@ -4,8 +4,8 @@
 
 Applications Area Working Group                                M. Kerwin
 Internet-Draft                                                       QUT
-Intended status: Informational                             24 April 2018
-Expires: 26 October 2018
+Intended status: Informational                             30 April 2018
+Expires: 1 November 2018
 
 
                        Using the file URI Scheme
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 October 2018.
+   This Internet-Draft will expire on 1 November 2018.
 
 Copyright Notice
 

@@ -3,9 +3,9 @@
 
 
 Network Working Group                                          M. Kerwin
-Internet-Draft                                             24 April 2016
+Internet-Draft                                             30 April 2016
 Intended status: Experimental                                           
-Expires: 26 October 2016
+Expires: 1 November 2016
 
 
                             HTTP/2 Segments
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 October 2016.
+   This Internet-Draft will expire on 1 November 2016.
 
 Copyright Notice
 
